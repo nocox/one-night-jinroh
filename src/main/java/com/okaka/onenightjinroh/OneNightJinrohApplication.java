@@ -94,4 +94,8 @@ public class OneNightJinrohApplication {
 		return tUserDao.selectTUserProfileAll();
 	}
 
+	@RequestMapping(path = "/event_participant", params = "eventId")
+	List<TUserProfile> eventParticipant(@RequestParam Integer eventId) {
+		return tUserDao.selectEventParticipantAll(eventId);
+	}
 }

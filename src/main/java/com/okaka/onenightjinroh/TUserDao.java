@@ -18,6 +18,9 @@ public interface TUserDao {
     @Select
     List<TUserProfile> selectTUserProfileAll();
 
+    @Select
+    List<TUserProfile> selectEventParticipantAll(Integer tEventId);
+
     @Insert
     @Transactional
     int insert(TUser tUser);

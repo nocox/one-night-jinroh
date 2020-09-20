@@ -32,6 +32,9 @@ public class OneNightJinrohApplication {
 	@Autowired
 	TPhoneDao tPhoneDao;
 
+	@Autowired
+	TEventParticipantDao tEventParticipantDao;
+
 	// Insert data at initailizing phase using ReservationDao#insert
 	@Bean
 	CommandLineRunner runner() {
@@ -62,6 +65,21 @@ public class OneNightJinrohApplication {
 		tPhone.t_phone_number = "09033334444";
 		tPhone.t_user_id = 2;
 		tPhoneDao.insert(tPhone);
+
+		TEventParticipant tEventParticipant = new TEventParticipant();
+		tEventParticipant.t_event_id = 1;
+		tEventParticipant.t_user_id = 1;
+		tEventParticipantDao.insert(tEventParticipant);
+
+		tEventParticipant.t_user_id = 2;
+		tEventParticipantDao.insert(tEventParticipant);
+
+		tEventParticipant.t_user_id = 3;
+		tEventParticipantDao.insert(tEventParticipant);
+
+		tEventParticipant.t_event_id = 2;
+		tEventParticipant.t_user_id = 1;
+		tEventParticipantDao.insert(tEventParticipant);
 
 		return null;
 	}

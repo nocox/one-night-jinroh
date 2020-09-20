@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS T_PHONE
 (
     t_phone_id     IDENTITY,
     t_phone_number varchar(255),
-    t_user_id      BIGINT,
+    t_user_id      BIGINT UNIQUE,
     FOREIGN KEY (t_user_id) REFERENCES T_USER (t_user_id)
 );
 

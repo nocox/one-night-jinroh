@@ -29,6 +29,9 @@ public class OneNightJinrohApplication {
 	@Autowired
 	TUserDao tUserDao;
 
+	@Autowired
+	TPhoneDao tPhoneDao;
+
 	// Insert data at initailizing phase using ReservationDao#insert
 	@Bean
 	CommandLineRunner runner() {
@@ -50,6 +53,15 @@ public class OneNightJinrohApplication {
 			tUser.t_user_name = name;
 			tUserDao.insert(tUser);
 		});
+
+		TPhone tPhone = new TPhone();
+		tPhone.t_phone_number = "09011112222";
+		tPhone.t_user_id = 1;
+		tPhoneDao.insert(tPhone);
+
+		tPhone.t_phone_number = "09033334444";
+		tPhone.t_user_id = 2;
+		tPhoneDao.insert(tPhone);
 
 		return null;
 	}

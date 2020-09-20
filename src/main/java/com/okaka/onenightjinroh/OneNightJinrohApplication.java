@@ -88,4 +88,10 @@ public class OneNightJinrohApplication {
 	List<TUser> allUser() {
 		return tUserDao.selectTUserAll();
 	}
+
+	@RequestMapping(path = "/all_user_profile")
+	List<TUserProfile> allUserProfile() {
+		return tUserDao.selectTUserProfileAll();
+	}
+
 }

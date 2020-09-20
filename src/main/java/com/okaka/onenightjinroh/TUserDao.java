@@ -15,6 +15,9 @@ public interface TUserDao {
     @Select
     List<TUser> selectTUserAll();
 
+    @Select
+    List<TUserProfile> selectTUserProfileAll();
+
     @Insert
     @Transactional
     int insert(TUser tUser);

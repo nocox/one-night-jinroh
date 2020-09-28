@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 @RestController
@@ -115,5 +117,20 @@ public class OneNightJinrohApplication {
 	@RequestMapping(path = "/event_participant", params = "eventId")
 	List<TUserProfile> eventParticipant(@RequestParam Integer eventId) {
 		return tUserDao.selectEventParticipantAll(eventId);
+	}
+
+	@RequestMapping(path = "/phone_list", params = "userId")
+	List<TPhone> phoneListByUserId(@RequestParam List<Integer> userId){
+		return tPhoneDao.selectByTUserIds(userId);
+	}
+
+	@RequestMapping(path = "/event_list", params = "userId")
+	List<TEvent> eventListByUserId(@RequestParam List<Integer> userId){
+		return tEventDao.selectByUserIds(userId, s -> s.collect(Collectors.toList()));
+	}
+
+	@RequestMapping(path = "/user_participant_event_list", params = "userId")
+	Map<Integer, List<TEventParticipant>> userParticipantEventListByUserId(@RequestParam List<Integer> userId){
+		return tEventParticipantDao.selectByUserIds(userId, Collectors.groupingBy(s -> s.t_user_id));
 	}
 }

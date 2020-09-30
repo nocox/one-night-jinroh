@@ -1,0 +1,63 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+	id 'com.diffplug.eclipse.apt' version '3.25.0'
+	id 'org.seasar.doma.compile' version '1.1.0'
+}
+
+group = 'com.okaka'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+repositories {
+		mavenCentral()
+		mavenLocal()
+		maven {url 'https://oss.sonatype.org/content/repositories/snapshots/'}
+}
+
+dependencies {
+	annotationProcessor "org.seasar.doma:doma-processor:${domaVersion}"
+	implementation "org.seasar.doma:doma-core:${domaVersion}"
+	implementation 'org.seasar.doma.boot:doma-spring-boot-starter:1.4.0'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+eclipse {
+    classpath {
+        file {
+            whenMerged { classpath ->
+                classpath.entries.removeAll { it.path == '.apt_generated' }
+            }
+            withXml { provider ->
+                def node = provider.asNode()
+                // specify output path for .apt_generated
+                node.appendNode( 'classpathentry', [ kind: 'src', output: 'bin/main', path: '.apt_generated'])
+            }
+        }
+    }
+    jdt {
+        javaRuntimeName = 'JavaSE-11'
+    }
+}

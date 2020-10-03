@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 @ConfigAutowireable
@@ -20,4 +21,7 @@ public interface TEventDao {
 
     @Select(strategy = SelectType.STREAM)
     <R> R selectByUserIds(List<Integer> tUserIds, Function<Stream<TEvent>, R> func);
+
+    @Select(strategy = SelectType.COLLECT)
+    <R> R selectByUserIds(List<Integer> tUserIds, Collector<TEvent, ?, R> collector);
 }

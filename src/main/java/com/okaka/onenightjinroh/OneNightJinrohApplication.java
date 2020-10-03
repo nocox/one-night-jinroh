@@ -37,6 +37,9 @@ public class OneNightJinrohApplication {
 	@Autowired
 	TEventParticipantDao tEventParticipantDao;
 
+	@Autowired
+	UserProfileAndParticipantEventBuilder userProfileAndParticipantEventBuilder;
+
 	// Insert data at initailizing phase using ReservationDao#insert
 	@Bean
 	CommandLineRunner runner() {
@@ -129,8 +132,13 @@ public class OneNightJinrohApplication {
 		return tEventDao.selectByUserIds(userId, s -> s.collect(Collectors.toList()));
 	}
 
-	@RequestMapping(path = "/user_participant_event_list", params = "userId")
-	Map<Integer, List<TEventParticipant>> userParticipantEventListByUserId(@RequestParam List<Integer> userId){
+	@RequestMapping(path = "/user_participant_list", params = "userId")
+	Map<Integer, List<TEventParticipant>> userParticipantListByUserId(@RequestParam List<Integer> userId){
 		return tEventParticipantDao.selectByUserIds(userId, Collectors.groupingBy(s -> s.t_user_id));
+	}
+
+	@RequestMapping(path = "/user_participant_event_list", params = "userId")
+	List<UserProfileAndParticipantEvent> userParticipantListEventByUserId(@RequestParam List<Integer> userId){
+		return userProfileAndParticipantEventBuilder.build(userId);
 	}
 }

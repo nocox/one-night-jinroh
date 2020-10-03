@@ -19,6 +19,9 @@ public interface TUserDao {
     List<TUserProfile> selectTUserProfileAll();
 
     @Select
+    List<TUserProfile> selectTUserProfileByUserIds(List<Integer> tUserIds);
+
+    @Select
     List<TUserProfile> selectEventParticipantAll(Integer tEventId);
 
     @Insert

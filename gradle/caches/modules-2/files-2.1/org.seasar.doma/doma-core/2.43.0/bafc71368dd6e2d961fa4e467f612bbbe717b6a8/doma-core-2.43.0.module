@@ -1,0 +1,101 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.seasar.doma",
+    "module": "doma-core",
+    "version": "2.43.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.6.1",
+      "buildId": "ydqcout5yva6pp6qdffrlj4o3q"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "doma-core-2.43.0.jar",
+          "url": "doma-core-2.43.0.jar",
+          "size": 1242572,
+          "sha512": "0d341e4ddc3d8371d85de92debb59188e63a908da7ab2b0c9cbf38bc9f92679c17b41041b89506540286888b9d6a9ee7116941bcbc5aeac24fe96e4bdbf1bfc6",
+          "sha256": "90d11c95f9690cf0e8a5eba4bb37e31f2c93d0c988b66314fddad8cad00691b3",
+          "sha1": "d890456715377b7d794884b1d3663c383162988d",
+          "md5": "d191f3b7df1d43d7d17b0d4a6d656116"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "doma-core-2.43.0.jar",
+          "url": "doma-core-2.43.0.jar",
+          "size": 1242572,
+          "sha512": "0d341e4ddc3d8371d85de92debb59188e63a908da7ab2b0c9cbf38bc9f92679c17b41041b89506540286888b9d6a9ee7116941bcbc5aeac24fe96e4bdbf1bfc6",
+          "sha256": "90d11c95f9690cf0e8a5eba4bb37e31f2c93d0c988b66314fddad8cad00691b3",
+          "sha1": "d890456715377b7d794884b1d3663c383162988d",
+          "md5": "d191f3b7df1d43d7d17b0d4a6d656116"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "doma-core-2.43.0-javadoc.jar",
+          "url": "doma-core-2.43.0-javadoc.jar",
+          "size": 3622619,
+          "sha512": "df8e39c4fbd570651fc5b16d812fdc9ce0a6507bdeebd4c555c384599b2d1bfbcea1bb2988603d599e0373bb0c2f1bff5531e3f5bd14f8b7cf12dd6f043dd818",
+          "sha256": "6f1fc6f888ed03d1b42b9fedbaba06f8507acbbcf7a696dcc56972cf0e3008af",
+          "sha1": "f530d3b8c390061989e80af1522de3d67e771d54",
+          "md5": "dc0b565c7184137764558416064fd398"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "doma-core-2.43.0-sources.jar",
+          "url": "doma-core-2.43.0-sources.jar",
+          "size": 573095,
+          "sha512": "6294f4ebca3724890a9d23befe0d784260c95fd0c5c025b7850c7fd96c481c9b075a0a3b12a4f1719df6217cb35b073341e65bae440420b2536476e27ad2f90d",
+          "sha256": "7f847718287c06f453a4200a51ec16d04da6c49492036244917eebfee564ba65",
+          "sha1": "e733f24a0b333d33cd511607c459e368b46fc10e",
+          "md5": "847be0a8ead986c126c5d7a5a28c4dd6"
+        }
+      ]
+    }
+  ]
+}

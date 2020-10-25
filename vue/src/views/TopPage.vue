@@ -1,13 +1,15 @@
 <template>
   <div class="TopPage">
-    <div>
-    <h1>ワンナイト人狼</h1>  
+    <div class="Top">
+      <div class="TopTitle">
+        <div class="TitleText">ワンナイト人狼</div>  
+        <div class="SubTitleText">たのしくてかわいい人狼です</div>
+      </div>
+      <div class="TopButton">
+        <a>ルームを作成</a>
+        <a>ルームに参加</a>
+      </div>    
     </div>
-
-    <div>
-      <button>ルームを作成</button>
-      <button>ルームに参加</button>
-    </div>    
 
     <div>
       <p>
@@ -39,3 +41,52 @@ export default {
   }
   }
 </script>
+
+<style>
+.Top{
+  height:300px;  
+  background: linear-gradient(108.54deg, rgb(220, 255, 203), rgb(225, 255, 237), rgb(184, 229, 255));
+  padding: 40px 0px 40px 0px;
+}
+
+.TitleText{
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.SubTitleText{
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: rgb(102, 102, 102);
+}
+
+.TopButton{
+  width: 100%;
+  margin: 30px auto;    
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.TopButton a{
+  margin-top:10px;  
+  display: grid;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  width: 280px;
+  height: 60px;
+  background-color: rgb(108, 204, 235);
+  font-size: 16px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  backface-visibility: hidden;
+  box-shadow: rgba(108, 204, 235, 0.8) 0px 10px 20px;
+  border-radius: 30px;
+  transition: box-shadow 0.3s cubic-bezier(0.85, 1.97, 0.46, 0.4) 0s, transform;
+}
+
+
+</style>

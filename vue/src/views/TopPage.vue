@@ -7,7 +7,17 @@
       </div>
       <div class="TopButton">
         <a>ルームを作成</a>
-        <a>ルームに参加</a>
+        <a v-on:click="show">ルームに参加</a>
+          <modal name="hello-world" >
+            <div class="modal-header">
+              <h2>ルームに参加</h2>
+            </div>
+            <div class="modal-body">
+              <p>you're reading this text in a modal!</p>
+              <button v-on:click="hide">閉じる</button>
+            </div>  
+          </modal>
+
       </div>    
     </div>
 
@@ -38,8 +48,16 @@ export default {
   name: 'TopPage',
   components:{
     RoleDescription
-  }
-  }
+  },
+  methods: {
+    show : function() {
+      this.$modal.show('hello-world');
+    },
+    hide : function () {
+      this.$modal.hide('hello-world');
+    },
+  }  
+}
 </script>
 
 <style>

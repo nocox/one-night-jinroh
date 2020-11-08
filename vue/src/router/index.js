@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import SamplePage from '../pages/SamplePage.vue'
+import TopPage from '../views/TopPage.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     path: '/sample',
     name: 'SamplePage',
     component: SamplePage
+  },
+  {
+    path: '/top',
+    name: 'TopPage',
+    component: TopPage
   }
 ]
 

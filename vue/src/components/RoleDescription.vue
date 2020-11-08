@@ -79,15 +79,17 @@ img {
 }
 
 .RoleList{
-    width:1080px;
+    min-width: 360px;
+    max-width: 720px;
     display: flex;
+    justify-content: center;
     margin:0 auto;
     flex-wrap: wrap;
     
 }
 
 .Role{
-    width:50%;
+    width:360px;
     display:flex;
 }
 

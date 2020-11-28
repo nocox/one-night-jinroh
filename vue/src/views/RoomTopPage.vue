@@ -3,19 +3,20 @@
         <IsMatch_rule_players />
 
         <div id="RoomNum">
-            部屋番号：
+            部屋番号：ｘｘｘｘ
         </div>
 
         <div id="player-area">
-            
+            プレイヤー表示エリア
+            <PlayerList />
 
         </div>        
         
-        <div>
+        <div id="rule-area">
             ルール設定エリア
         </div>        
         
-        <div>
+        <div id="btn-area">
             準備完了エリア
         </div>        
         
@@ -26,12 +27,14 @@
 <script>
 import GameDescription from "@/components/GameDescription.vue"
 import IsMatch_rule_players from "@/components/IsMatch_rule_players.vue"
+import PlayerList from "@/components/PlayerList.vue"
 
 export default {
     name: "RoomTopPage",
     components:{
         GameDescription,
-        IsMatch_rule_players
+        IsMatch_rule_players,
+        PlayerList
     }
 }
 </script>

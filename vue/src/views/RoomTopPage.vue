@@ -47,4 +47,18 @@ export default {
         width:20rem;
         margin: 1rem auto;
     }
+
+    #player-area{
+        background-color: #b3b3b3;
+        padding:10rem;
+    }
+
+    #rule-area{
+        padding:10rem;
+    }
+
+    #btn-area{
+        background-color: #b3b3b3;
+        padding:10rem;
+    }
 </style>

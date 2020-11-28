@@ -2,6 +2,7 @@
     <div>
         <div class="player">
                 <div v-show="isHost" class="isHost">ホスト</div>
+                <div v-show="!isHost" class="NotHost"></div>
                 <div class="playerNum">PL{{ id }}</div>
                 <div class="playerName">{{ name }}</div>
         </div>
@@ -32,6 +33,11 @@ export default {
 
     .isHost{
         background-color: cornflowerblue;
+        padding: 1rem;
+        width:5rem;
+    }
+    .NotHost{
+        width: 5rem;
         padding: 1rem;
     }
 

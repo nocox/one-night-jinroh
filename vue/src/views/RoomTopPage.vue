@@ -6,8 +6,9 @@
             部屋番号：
         </div>
 
-        <div>
-            参加プレイヤー表示エリア
+        <div id="player-area">
+            
+
         </div>        
         
         <div>

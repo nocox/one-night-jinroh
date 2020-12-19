@@ -12,7 +12,8 @@
 <script>
 export default {
     name: "Player",
-    props:['id','isHost','name'],
+    // props:['id','isHost','name'],
+    props:['id','isHost',]
     
 }
 </script>

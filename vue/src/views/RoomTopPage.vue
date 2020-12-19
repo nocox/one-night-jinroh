@@ -1,6 +1,6 @@
 <template>
     <div>
-        <IsMatch_rule_players />
+        <!-- <IsMatch_rule_players /> -->
 
         <div id="RoomNum">
             部屋番号：ｘｘｘｘ
@@ -11,7 +11,7 @@
 
         </div>        
         
-        <div id="rule-area">
+        <!-- <div id="rule-area">
             <div class="change-member">
                 <a href="">
                     人数変更
@@ -20,12 +20,12 @@
             </div>
             <RoleSetting role="村人サイド" />
             <RoleSetting role="人狼サイド" />
-        </div>        
+        </div>         -->
         
         <div id="btn-area">
-            <a href="">
+            <!-- <a href="">
                 準備OK
-            </a>：{{ ready_num=1 }}/ {{ join_num }}人
+            </a>：{{ ready_num=1 }}/ {{ join_num }}人 -->
             <a href="">
                 ゲームスタート
             </a>
@@ -37,25 +37,23 @@
 
 <script>
 import GameDescription from "@/components/GameDescription.vue"
-import IsMatch_rule_players from "@/components/IsMatch_rule_players.vue"
+// import IsMatch_rule_players from "@/components/IsMatch_rule_players.vue"
 import PlayerList from "@/components/PlayerList.vue"
-import RoleSetting from "@/components/RoleSetting.vue"
+// import RoleSetting from "@/components/RoleSetting.vue"
 
 export default {
     name: "RoomTopPage",
     props:["join_num", "ready_num"],
     components:{
         GameDescription,
-        IsMatch_rule_players,
+        // IsMatch_rule_players,
         PlayerList,
-        RoleSetting
+        // RoleSetting
     }
 }
 </script>
 
 <style>
-
-
     #RoomNum{
         border: solid 1px #50A0F6;
         width:20rem;

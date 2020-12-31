@@ -6,7 +6,7 @@
         <div class="SubTitleText">たのしくてかわいい人狼です</div>
       </div>
       <div class="TopButton-layout">
-        <a class="TopButton">ルームを作成</a>
+        <a class="TopButton" v-on:click="createRoom">ルームを作成</a>
         <a class="TopButton" v-on:click="show">ルームに参加</a>
         <modal name="join-to-room">
           <div class="modal-header">
@@ -42,6 +42,7 @@
 <script>
 // @ is an alias to /src
 import RoleDescription from "@/components/RoleDescription.vue";
+import axios from "axios";
 
 export default {
   name: "TopPage",
@@ -55,6 +56,12 @@ export default {
     hide: function () {
       this.$modal.hide("join-to-room");
     },
+    createRoom: function () {
+      axios.get('http://localhost:8080/create-room')
+      .then((response) => {
+        console.log(response.data);
+      });
+    }
   },
 };
 </script>

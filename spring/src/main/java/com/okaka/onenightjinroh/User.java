@@ -11,5 +11,6 @@ import org.seasar.doma.Table;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer user_id;
+    public Long user_id;
+    public String user_name;
 }

@@ -11,7 +11,7 @@ import org.seasar.doma.Table;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer room_id;
+    public Long room_id;
     public String uuid;
     public String rule_id;
 }

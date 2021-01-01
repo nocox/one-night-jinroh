@@ -17,7 +17,7 @@
               <input v-model="roomNum" placeholder="ルーム番号" />
             </div>
             <div>
-              <a class="join">参加</a>
+              <a class="join" v-on:click="joinRoom">参加</a>
             </div>
             <div>
               <a v-on:click="hide">戻る</a>
@@ -46,6 +46,11 @@ import axios from "axios";
 
 export default {
   name: "TopPage",
+  data(){
+      return{
+          roomNum: ""
+      }
+  },
   components: {
     RoleDescription,
   },
@@ -58,6 +63,12 @@ export default {
     },
     createRoom: function () {
       axios.get('http://localhost:8080/create-room')
+      .then((response) => {
+        console.log(response.data);
+      });
+    },
+    joinRoom: function () {
+      axios.get('http://localhost:8080/join-room?uuid=' + this.roomNum)
       .then((response) => {
         console.log(response.data);
       });

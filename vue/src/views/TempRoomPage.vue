@@ -13,7 +13,7 @@
         </ul>
     </div>
     <div v-if="hostFlg">
-        <div class="start">スタート</div>
+        <div class="start" v-on:click="gameStart">スタート</div>
     </div>
 </div>
 </template>
@@ -32,6 +32,17 @@ export default {
                 hostFlg: true
             }],
             hostFlg: true
+        }
+    },
+    methods: {
+        gameStart: function() {
+            axios.get('http://localhost:8080/game-start',{withCredentials: true})
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch(() => {
+                this.$router.push('/temp-room')
+            })
         }
     },
     mounted(){

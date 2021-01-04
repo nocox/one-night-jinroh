@@ -1,10 +1,12 @@
 package com.okaka.onenightjinroh;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,7 +22,11 @@ public class TopController {
     @Autowired
     RoomParticipantDao roomParticipantDao;
 
+    @Autowired
+    HttpSession session;
+
     @RequestMapping(path = "/create-room")
+    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     int createRoom() {
         Room room = new Room();
         room.uuid = UUID.randomUUID().toString();
@@ -36,14 +42,19 @@ public class TopController {
         roomParticipant.user_id = user.user_id;
         roomParticipant.host_flg = true;
         roomParticipantDao.insert(roomParticipant);
+
+        session.setAttribute("user_id", user.user_id);
+        session.setAttribute("room_uuid", room.uuid);
+
         return 0;
     }
 
     @RequestMapping(path = "/join-room")
+    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     int joinedRoom(@RequestParam String uuid) {
         Optional<Room> optRoom = roomDao.selectRoomByUUID(uuid);
         if (optRoom.isPresent() == false) {
-            return 2;
+            throw new IllegalArgumentException();
         }
 
         int userCount = userDao.selectCount();
@@ -56,6 +67,10 @@ public class TopController {
         roomParticipant.user_id = user.user_id;
         roomParticipant.host_flg = false;
         roomParticipantDao.insert(roomParticipant);
+
+        session.setAttribute("user_id", user.user_id);
+        session.setAttribute("room_uuid", optRoom.get().uuid);
+
         return 0;
     }
 }

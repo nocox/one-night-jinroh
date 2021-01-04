@@ -62,15 +62,17 @@ export default {
       this.$modal.hide("join-to-room");
     },
     createRoom: function () {
-      axios.get('http://localhost:8080/create-room')
+      axios.get('http://localhost:8080/create-room' ,{withCredentials: true})
       .then((response) => {
         console.log(response.data);
+        this.$router.push('/temp-room')
       });
     },
     joinRoom: function () {
-      axios.get('http://localhost:8080/join-room?uuid=' + this.roomNum)
+      axios.get('http://localhost:8080/join-room?uuid=' + this.roomNum ,{withCredentials: true})
       .then((response) => {
         console.log(response.data);
+        this.$router.push('/temp-room')
       });
     }
   },

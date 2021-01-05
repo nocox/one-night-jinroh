@@ -15,6 +15,28 @@
     <div v-if="hostFlg">
         <div class="start" v-on:click="gameStart">スタート</div>
     </div>
+    <modal name="game-rule-modal" :clickToClose="false">
+        <div class="modal-header">
+            <h2>ゲームを開始します</h2>
+        </div>
+        <div>
+            <div>
+                <span>人数:</span>
+                <span>{{playerCount}}</span>
+            </div>
+            <div>
+                <div>役職一覧:</div>
+                <ul>
+                    <li v-for="role in roleList" v-bind:key="role.id">
+                        {{role.roleName}}
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <a v-on:click="hide">OK</a>
+            </div>
+        </div>
+    </modal>
 </div>
 </template>
 
@@ -33,18 +55,29 @@ export default {
                 name: "xxxxx",
                 hostFlg: true
             }],
-            hostFlg: true
+            hostFlg: true,
+            roleList: [],
+            playerCount: 0
         }
     },
     methods: {
+        show: function () {
+            this.$modal.show("game-rule-modal");
+        },
+        hide: function () {
+            this.$modal.hide("game-rule-modal");
+        },
         configWebSocket: function() {
             this.socket = new SockJS('http://localhost:8080/jinroh-websocket');
             this.stompClient = Stomp.over(this.socket);
             this.stompClient.connect({}, frame => {
                 console.log('Connected: ' + frame);
                 console.log('Room name: ' + this.uuid);
-                this.stompClient.subscribe('/topic/' + this.uuid, function (value) {
+                this.stompClient.subscribe('/topic/' + this.uuid, (value) => {
                     console.log('##### subscribe!!: ' + value.body);
+                    this.roleList = JSON.parse(value.body).roleList
+                    this.playerCount = JSON.parse(value.body).playerCount
+                    this.$modal.show("game-rule-modal");
                 });
             });
 

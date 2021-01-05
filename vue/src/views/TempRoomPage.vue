@@ -20,6 +20,8 @@
 
 <script>
 import axios from "axios";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 export default {
     name: "TempRoomPage",
@@ -35,6 +37,18 @@ export default {
         }
     },
     methods: {
+        configWebSocket: function() {
+            this.socket = new SockJS('http://localhost:8080/jinroh-websocket');
+            this.stompClient = Stomp.over(this.socket);
+            this.stompClient.connect({}, frame => {
+                console.log('Connected: ' + frame);
+                console.log('Room name: ' + this.uuid);
+                this.stompClient.subscribe('/topic/' + this.uuid, function (value) {
+                    console.log('##### subscribe!!: ' + value.body);
+                });
+            });
+
+        },
         gameStart: function() {
             axios.get('http://localhost:8080/game-start',{withCredentials: true})
             .then((response) => {
@@ -52,6 +66,7 @@ export default {
             this.uuid = response.data.uuid;
             this.playerList = response.data.userList;
             this.hostFlg = response.data.hostFlg;
+            this.configWebSocket()
       }).catch(() => {
         this.$router.push('/top');
       });

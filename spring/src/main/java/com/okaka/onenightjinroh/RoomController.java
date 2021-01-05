@@ -1,6 +1,7 @@
 package com.okaka.onenightjinroh;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,9 @@ public class RoomController {
 
     @Autowired
     GameParticipationDao gameParticipationDao;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @RequestMapping(path = "/room-index")
     @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
@@ -82,7 +86,7 @@ public class RoomController {
         game.rule_id = RULE_MAP.get(participantCount);
         gameDao.insert(game);
 
-        List<ROLE> roleList = roleSelectDao.selectRoleListByRuleId(game.rule_id);
+        List<Role> roleList = roleSelectDao.selectRoleListByRuleId(game.rule_id);
         Collections.shuffle(roleList);
         List<User> userList = userDao.selectByRoom(room.room_id);
 
@@ -95,6 +99,13 @@ public class RoomController {
             gameParticipationDao.insert(gameParticipation);
         }
 
+        // ここでブロードキャストする
+        GameStartBean gameStartBean = new GameStartBean(
+                roleSelectDao.selectRoleListByRuleId(game.rule_id),
+                userList.size(),
+                game.game_id
+        );
+        this.messagingTemplate.convertAndSend("/topic/" + room.uuid, gameStartBean);
         return 0;
     }
 

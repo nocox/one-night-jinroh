@@ -10,5 +10,5 @@ import java.util.List;
 @Dao
 public interface RoleSelectDao {
     @Select
-    List<ROLE> selectRoleListByRuleId(Long ruleId);
+    List<Role> selectRoleListByRuleId(Long ruleId);
 }

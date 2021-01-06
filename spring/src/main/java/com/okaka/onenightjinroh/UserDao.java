@@ -18,6 +18,9 @@ public interface UserDao {
     @Select
     List<User> selectByRoom(Long roomId);
 
+    @Select
+    List<User> selectByGame(Long gameId);
+
     @Insert
     @Transactional
     int insert(User user);

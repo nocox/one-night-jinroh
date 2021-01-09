@@ -33,7 +33,7 @@
                 </ul>
             </div>
             <div>
-                <a v-on:click="hide">OK</a>
+                <a v-on:click="gotoGamePage">OK</a>
             </div>
         </div>
     </modal>
@@ -66,6 +66,10 @@ export default {
         },
         hide: function () {
             this.$modal.hide("game-rule-modal");
+        },
+        gotoGamePage: function () {
+            this.$modal.hide("game-rule-modal");
+            this.$router.push('/temp-night');
         },
         configWebSocket: function() {
             this.socket = new SockJS('http://localhost:8080/jinroh-websocket');

@@ -6,7 +6,7 @@
         <div class="SubTitleText">たのしくてかわいい人狼です</div>
       </div>
       <div class="TopButton-layout">
-        <a class="TopButton">ルームを作成</a>
+        <a class="TopButton" v-on:click="createRoom">ルームを作成</a>
         <a class="TopButton" v-on:click="show">ルームに参加</a>
         <modal name="join-to-room">
           <div class="modal-header">
@@ -17,7 +17,7 @@
               <input v-model="roomNum" placeholder="ルーム番号" />
             </div>
             <div>
-              <a class="join">参加</a>
+              <a class="join" v-on:click="joinRoom">参加</a>
             </div>
             <div>
               <a v-on:click="hide">戻る</a>
@@ -42,9 +42,15 @@
 <script>
 // @ is an alias to /src
 import RoleDescription from "@/components/RoleDescription.vue";
+import axios from "axios";
 
 export default {
   name: "TopPage",
+  data(){
+      return{
+          roomNum: ""
+      }
+  },
   components: {
     RoleDescription,
   },
@@ -55,6 +61,20 @@ export default {
     hide: function () {
       this.$modal.hide("join-to-room");
     },
+    createRoom: function () {
+      axios.get('http://localhost:8080/create-room' ,{withCredentials: true})
+      .then((response) => {
+        console.log(response.data);
+        this.$router.push('/temp-room')
+      });
+    },
+    joinRoom: function () {
+      axios.get('http://localhost:8080/join-room?uuid=' + this.roomNum ,{withCredentials: true})
+      .then((response) => {
+        console.log(response.data);
+        this.$router.push('/temp-room')
+      });
+    }
   },
 };
 </script>

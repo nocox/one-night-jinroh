@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import SamplePage from '../pages/SamplePage.vue'
 import TopPage from '../views/TopPage.vue'
 import RoomTopPage from '../views/RoomTopPage.vue'
+import TempRoomPage from '../views/TempRoomPage.vue'
+import TempNightPage from '../views/TempNightPage.vue'
 
 Vue.use(VueRouter)
 
@@ -35,6 +37,16 @@ const routes = [
     path: '/roomtop',
     name: 'RoomTopPage',
     component: RoomTopPage
+  },
+  {
+    path: '/temp-room',
+    name: 'TempRoomPage',
+    component: TempRoomPage
+  },
+  {
+    path: '/temp-night',
+    name: 'TempNightPage',
+    component: TempNightPage
   }
 ]
 

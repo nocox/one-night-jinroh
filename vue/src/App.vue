@@ -5,7 +5,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/sample">Sample</router-link> |
-      <router-link to="/top">Top Page</router-link>
+      <router-link to="/top">Top Page</router-link> |
+      <router-link to="/roomtop">Room Top Page</router-link>
     </div>
   </div>
 </template>

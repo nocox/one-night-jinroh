@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import SamplePage from '../pages/SamplePage.vue'
 import TopPage from '../views/TopPage.vue'
+import RoomTopPage from '../views/RoomTopPage.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ const routes = [
     path: '/top',
     name: 'TopPage',
     component: TopPage
+  },
+  {
+    path: '/roomtop',
+    name: 'RoomTopPage',
+    component: RoomTopPage
   }
 ]
 

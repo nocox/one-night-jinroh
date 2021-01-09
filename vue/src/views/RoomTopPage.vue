@@ -26,9 +26,20 @@
             <!-- <a href="">
                 準備OK
             </a>：{{ ready_num=1 }}/ {{ join_num }}人 -->
-            <a href="">
+            <a v-on:click="show" >
                 ゲームスタート
             </a>
+            <modal name="start">
+                <p>このルールで開始します</p>
+                <p>人数：{{ player_num }}人</p>
+                <div class="">
+                    <div>村人サイド</div>
+
+                    <p>VS</p>
+                    <div>人狼サイド</div>
+                </div>
+                <a v-on:click="hide">戻る</a>
+            </modal>
         </div>        
         
         <GameDescription />
@@ -43,12 +54,25 @@ import PlayerList from "@/components/PlayerList.vue"
 
 export default {
     name: "RoomTopPage",
-    props:["join_num", "ready_num"],
+    props:["join_num", "ready_num", ],
+    data: function(){
+        return {
+            player_num : 3,
+        }
+    },
     components:{
         GameDescription,
         // IsMatch_rule_players,
         PlayerList,
         // RoleSetting
+    },
+    methods: {
+        show: function(){
+            this.$modal.show("start");
+        },
+        hide: function(){
+            this.$modal.hide("start");
+        }
     }
 }
 </script>

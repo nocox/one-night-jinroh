@@ -2,7 +2,7 @@
   <div>
     <h2>役職紹介</h2>
     <div class="RoleList">
-      <div class="Role" v-for="role in RoleList" v-bind:key="role">
+      <div class="Role" v-for="(role, index) in RoleList" v-bind:key=index>
         <div class="RoleImage">
           <img v-bind:src="role.img" />
         </div>

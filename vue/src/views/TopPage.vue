@@ -5,20 +5,25 @@
         <div class="TitleText">ワンナイト人狼</div>
         <div class="SubTitleText">たのしくてかわいい人狼です</div>
       </div>
+
       <div class="TopButton-layout">
         <a class="TopButton" v-on:click="createRoom">ルームを作成</a>
         <a class="TopButton" v-on:click="show">ルームに参加</a>
+
         <modal name="join-to-room">
           <div class="modal-header">
             <h2>ルームに参加</h2>
           </div>
+
           <div class="modal-body">
             <div>
               <input v-model="roomNum" placeholder="ルーム番号" />
             </div>
+
             <div>
               <a class="join" v-on:click="joinRoom">参加</a>
             </div>
+
             <div>
               <a v-on:click="hide">戻る</a>
             </div>
@@ -46,10 +51,10 @@ import axios from "axios";
 
 export default {
   name: "TopPage",
-  data(){
-      return{
-          roomNum: ""
-      }
+  data() {
+    return {
+      roomNum: "",
+    };
   },
   components: {
     RoleDescription,
@@ -62,19 +67,23 @@ export default {
       this.$modal.hide("join-to-room");
     },
     createRoom: function () {
-      axios.get('http://localhost:8080/create-room' ,{withCredentials: true})
-      .then((response) => {
-        console.log(response.data);
-        this.$router.push('/temp-room')
-      });
+      axios
+        .get("http://localhost:8080/create-room", { withCredentials: true })
+        .then((response) => {
+          console.log(response.data);
+          this.$router.push("/temp-room");
+        });
     },
     joinRoom: function () {
-      axios.get('http://localhost:8080/join-room?uuid=' + this.roomNum ,{withCredentials: true})
-      .then((response) => {
-        console.log(response.data);
-        this.$router.push('/temp-room')
-      });
-    }
+      axios
+        .get("http://localhost:8080/join-room?uuid=" + this.roomNum, {
+          withCredentials: true,
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.$router.push("/temp-room");
+        });
+    },
   },
 };
 </script>
@@ -152,18 +161,18 @@ export default {
   margin-top: 10px;
   padding: 5px 40px;
   background-color: white;
-  color: #50A0F6;
+  color: #50a0f6;
   border-radius: 30px;
   cursor: pointer;
 }
 
 .join {
   border: solid 1px;
-  border-color: #50A0F6;
+  border-color: #50a0f6;
 }
 
 .modal-body a:hover {
-  background-color: #50A0F6;
+  background-color: #50a0f6;
   transition: 0.3s;
   color: white;
 }

@@ -8,7 +8,7 @@
     </div>
     <!-- 参加者一覧を表示 -->
     <div class="player">
-      <h2>参加者一覧:</h2>
+      <h2>参加者一覧</h2>
       <div class="player-list">
         <ul>
           <li v-for="player in playerList" v-bind:key="player.id">
@@ -19,8 +19,8 @@
     </div>
 
     <!-- スタートボタンを表示（ホストのみ）n -->
-    <div v-if="hostFlg">
-      <button class="start" v-on:click="gameStart">スタート</button>
+    <div class="start" v-if="hostFlg">
+      <a v-on:click="gameStart">スタート</a>
     </div>
 
     <!-- ゲーム開始を通知するモーダル -->
@@ -41,7 +41,7 @@
           </ul>
         </div>
 
-        <a v-on:click="gotoGamePage"><button>OK</button></a>
+        <a v-on:click="gotoGamePage">OK</a>
       </div>
     </modal>
 
@@ -134,4 +134,39 @@ export default {
 </script>
 
 <style scoped>
+  #room-page{
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 8rem;
+  }
+  #room-page .player{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .start a{
+    display: block;    
+    
+    width: 10rem;    
+    height: 2rem;
+
+    margin: 0 auto;
+    
+    background-color: aqua;    
+  }
+  .start a:hover{
+    cursor: pointer;
+  }
+
+  #room-page .player .player-list ul li{
+    display: inline-block;
+
+    background-color: aqua;
+
+    margin: 0 1rem;
+
+    list-style: none;
+  }
+
 </style>

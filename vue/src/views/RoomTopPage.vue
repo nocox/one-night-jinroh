@@ -1,127 +1,137 @@
 <template>
-    <div>
-        <!-- <IsMatch_rule_players /> -->
+  <div id="room-page">
+    <h1>ルームトップページ</h1>
 
-        <div id="RoomNum">
-            部屋番号：ｘｘｘｘ
+    <!-- ルーム番号を表示 -->
+    <div class="room-num">
+      <h2>部屋番号:{{ uuid }}</h2>
+    </div>
+    <!-- 参加者一覧を表示 -->
+    <div class="player">
+      <h2>参加者一覧:</h2>
+      <div class="player-list">
+        <ul>
+          <li v-for="player in playerList" v-bind:key="player.id">
+            {{ player.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- スタートボタンを表示（ホストのみ）n -->
+    <div v-if="hostFlg">
+      <button class="start" v-on:click="gameStart">スタート</button>
+    </div>
+
+    <!-- ゲーム開始を通知するモーダル -->
+    <modal name="game-rule-modal" :clickToClose="false">
+      <div class="modal-header">
+        <h2>ゲームを開始します</h2>
+      </div>
+
+      <div class="modal-content">
+        <h3>人数:{{ playerCount }}</h3>
+
+        <div class="role-list">
+          <h3>役職一覧:</h3>
+          <ul>
+            <li v-for="role in roleList" v-bind:key="role.id">
+              {{ role.roleName }}
+            </li>
+          </ul>
         </div>
 
-        <div id="player-area">
-            <PlayerList />
+        <a v-on:click="gotoGamePage"><button>OK</button></a>
+      </div>
+    </modal>
 
-        </div>        
-        
-        <!-- <div id="rule-area">
-            <div class="change-member">
-                <a href="">
-                    人数変更
-                </a>
-                ：{{ join_num=3 }}人
-            </div>
-            <RoleSetting role="村人サイド" />
-            <RoleSetting role="人狼サイド" />
-        </div>         -->
-        
-        <div id="btn-area">
-            <!-- <a href="">
-                準備OK
-            </a>：{{ ready_num=1 }}/ {{ join_num }}人 -->
-            <a v-on:click="show" >
-                ゲームスタート
-            </a>
-            <modal name="start">
-                <p>このルールで開始します</p>
-                <p>人数：{{ player_num }}人</p>
-                <div class="">
-                    <div>村人サイド</div>
-
-                    <p>VS</p>
-                    <div>人狼サイド</div>
-                </div>
-                <a v-on:click="hide">戻る</a>
-            </modal>
-        </div>        
-        
-        <GameDescription />
-    </div>
+    <!-- ゲームの説明 -->
+    <GameDescription />
+  </div>
 </template>
 
 <script>
-import GameDescription from "@/components/GameDescription.vue"
-// import IsMatch_rule_players from "@/components/IsMatch_rule_players.vue"
-import PlayerList from "@/components/PlayerList.vue"
-// import RoleSetting from "@/components/RoleSetting.vue"
+import axios from "axios";
+import SockJS from "sockjs-client"
+import Stomp from "webstomp-client"
+
+import GameDescription from "@/components/GameDescription.vue";
 
 export default {
-    name: "RoomTopPage",
-    props:["join_num", "ready_num", ],
-    data: function(){
-        return {
-            player_num : 3,
-        }
-    },
-    components:{
-        GameDescription,
-        // IsMatch_rule_players,
-        PlayerList,
-        // RoleSetting
-    },
-    methods: {
-        show: function(){
-            this.$modal.show("start");
+  name: "RoomTopPage",
+  data() {
+    return {
+      uuid: "yyyyy",
+      playerList: [
+        {
+          userID: 1,
+          name: "xxxxx",
+          hostFlg: true,
         },
-        hide: function(){
-            this.$modal.hide("start");
-        }
-    }
-}
+      ],
+      hostFlg: true,
+      roleList: [],
+      playerCount: 0,
+    };
+  },
+  components: {
+    GameDescription,
+  },
+  methods: {
+    // ホストがスタートボタンを押下した時の処理
+    gameStart: function () {
+      axios
+        .get("http://localhost:8080/game-start", { withCredentials: true })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch(() => {
+          this.$router.push("/temp-room");
+        });
+    },
+    // モーダル関係の処理
+    show: function () {
+      this.$modal.show("game-rule-modal");
+    },
+    hide: function () {
+      this.$modal.hide("game-rule-modal");
+    },
+    gotoGamePage: function () {
+      // モーダルを隠してページ遷移
+      this.$modal.hide("game-rule-modal")
+      this.$router.push("/temp-night")
+    },
+    configWebSocket: function(){
+      this.socket = new SockJS("http://localhost:8080/jinroh-websocket")
+      this.stompClient = Stomp.over(this.socket)
+      this.stompClient.connect({}, (frame) => {
+        console.log("Connected: " + frame)
+        console.log("Room name: " + this.uuid)
+        this.stompClient.subscribe("/topic/" + this.uuid, (value) => {
+          console.log('##### subscribe!!: ' + value.body)
+          this.roleList = JSON.parse(value.body).roleList
+          this.playerCount = JSON.parse(value.body).playerCount
+          this.$modal.show("game-rule-modal")
+        })
+      })
+    },
+  },
+  mounted() {
+    axios
+      .get("http://localhost:8080/room-index", { withCredentials: true })
+      .then((response) => {
+        console.log(response.data);
+        this.uuid = response.data.uuid;
+        this.playerList = response.data.userList;
+        this.hostFlg = response.data.hostFlg;
+        this.configWebSocket();
+      })
+      .catch(() => {
+        this.$router.push("/top");
+      });
+  },
+};
 </script>
 
-<style>
-    #RoomNum{
-        border: solid 1px #50A0F6;
-        width:20rem;
-        margin: 1rem auto;
-    }
-
-    #player-area{
-        background-color: #b3b3b3;
-        padding:10rem;
-    }
-
-    #rule-area{
-        padding:10rem;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    #rule-area .change-member a{
-        font-weight: bold;
-        display: inline-block;
-        text-decoration: none;
-        color: #50A0F6;
-        border: 1px solid #50A0F6;
-        border-radius: 1rem;
-        padding: 1rem;
-    }
-
-    #btn-area{
-        background-color: #b3b3b3;
-        padding:10rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    #btn-area a{
-        display: inline-block;
-        width: 8rem;
-        background-color: white;
-        padding: 2rem;
-        margin: 0 2rem;
-        text-decoration: none;
-        color: #50A0F6;
-        border:1px solid #50A0F6;
-        border-radius: 1rem;
-    }
+<style scoped>
 </style>

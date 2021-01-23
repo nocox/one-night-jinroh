@@ -50,7 +50,7 @@ export default {
         this.otherPlayerList = response.data.otherPlayerList;
       })
       .catch(() => {
-        this.$router.push("/roomtop");
+        this.$router.push("/room-top");
       });
   },
 };

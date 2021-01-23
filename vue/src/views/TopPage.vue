@@ -71,7 +71,7 @@ export default {
         .get("http://localhost:8080/create-room", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
-          this.$router.push("/temp-room");
+          this.$router.push("/room-top");
         });
     },
     joinRoom: function () {
@@ -81,7 +81,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
-          this.$router.push("/temp-room");
+          this.$router.push("/room-top");
         });
     },
   },

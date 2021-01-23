@@ -86,7 +86,7 @@ export default {
           console.log(response.data);
         })
         .catch(() => {
-          this.$router.push("/temp-room");
+          this.$router.push("/room-top");
         });
     },
     // モーダル関係の処理
@@ -152,7 +152,7 @@ export default {
       }
     }
   }
-  
+
   .start {
     a {
       display: block;

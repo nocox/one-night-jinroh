@@ -35,12 +35,12 @@ const routes = [
     component: TopPage
   },
   {
-    path: '/roomtop',
+    path: '/room-top',
     name: 'RoomTopPage',
     component: RoomTopPage
   },
   {
-    path: '/nightpage',
+    path: '/night-page',
     name: 'NightPage',
     component: NightPage
   },

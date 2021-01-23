@@ -52,8 +52,8 @@
 
 <script>
 import axios from "axios";
-import SockJS from "sockjs-client"
-import Stomp from "webstomp-client"
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 import GameDescription from "@/components/GameDescription.vue";
 
@@ -98,22 +98,22 @@ export default {
     },
     gotoGamePage: function () {
       // モーダルを隠してページ遷移
-      this.$modal.hide("game-rule-modal")
-      this.$router.push("/temp-night")
+      this.$modal.hide("game-rule-modal");
+      this.$router.push("/temp-night");
     },
-    configWebSocket: function(){
-      this.socket = new SockJS("http://localhost:8080/jinroh-websocket")
-      this.stompClient = Stomp.over(this.socket)
+    configWebSocket: function () {
+      this.socket = new SockJS("http://localhost:8080/jinroh-websocket");
+      this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect({}, (frame) => {
-        console.log("Connected: " + frame)
-        console.log("Room name: " + this.uuid)
+        console.log("Connected: " + frame);
+        console.log("Room name: " + this.uuid);
         this.stompClient.subscribe("/topic/" + this.uuid, (value) => {
-          console.log('##### subscribe!!: ' + value.body)
-          this.roleList = JSON.parse(value.body).roleList
-          this.playerCount = JSON.parse(value.body).playerCount
-          this.$modal.show("game-rule-modal")
-        })
-      })
+          console.log("##### subscribe!!: " + value.body);
+          this.roleList = JSON.parse(value.body).roleList;
+          this.playerCount = JSON.parse(value.body).playerCount;
+          this.$modal.show("game-rule-modal");
+        });
+      });
     },
   },
   mounted() {
@@ -133,40 +133,40 @@ export default {
 };
 </script>
 
-<style scoped>
-  #room-page{
-    max-width: 1024px;
-    margin: 0 auto;
-    padding: 0 8rem;
-  }
-  #room-page .player{
+<style lang="scss" scoped>
+#room-page {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 8rem;
+
+  .player {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    .player-list {
+      ul li {
+        display: inline-block;
+        background-color: aqua;
+        margin: 0 1rem;
+        list-style: none;
+      }
+    }
   }
   
-  .start a{
-    display: block;    
-    
-    width: 10rem;    
-    height: 2rem;
+  .start {
+    a {
+      display: block;
 
-    margin: 0 auto;
-    
-    background-color: aqua;    
+      width: 10rem;
+      height: 2rem;
+
+      margin: 0 auto;
+
+      background-color: aqua;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
-  .start a:hover{
-    cursor: pointer;
-  }
-
-  #room-page .player .player-list ul li{
-    display: inline-block;
-
-    background-color: aqua;
-
-    margin: 0 1rem;
-
-    list-style: none;
-  }
-
+}
 </style>

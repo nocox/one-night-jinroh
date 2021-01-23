@@ -19,9 +19,10 @@
     </div>
 
     <!-- スタートボタンを表示（ホストのみ）n -->
-    <div class="start" v-if="hostFlg">
-      <a v-on:click="gameStart">スタート</a>
+    <div>
+      <myButton :text="'スタート'" :method="gameStart" v-if="hostFlg" />
     </div>
+
 
     <!-- ゲーム開始を通知するモーダル -->
     <modal name="game-rule-modal" :clickToClose="false">
@@ -56,6 +57,7 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
 import GameDescription from "@/components/GameDescription.vue";
+import myButton from "@/components/Button.vue";
 
 export default {
   name: "RoomTopPage",
@@ -76,6 +78,7 @@ export default {
   },
   components: {
     GameDescription,
+    myButton
   },
   methods: {
     // ホストがスタートボタンを押下した時の処理

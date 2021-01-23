@@ -19,13 +19,11 @@
             <div>
               <input v-model="roomNum" placeholder="ルーム番号" />
             </div>
-
             <div>
-              <a class="join" v-on:click="joinRoom">参加</a>
+              <myButton :text="'参加'" :method="joinRoom" />
             </div>
-
             <div>
-              <a v-on:click="hide">戻る</a>
+              <myButton class="cancel-btn" :text="'戻る'" :method="hide" />
             </div>
           </div>
         </modal>
@@ -47,6 +45,7 @@
 <script>
 // @ is an alias to /src
 import RoleDescription from "@/components/RoleDescription.vue";
+import myButton from "@/components/Button.vue"
 import axios from "axios";
 
 export default {
@@ -58,6 +57,7 @@ export default {
   },
   components: {
     RoleDescription,
+    myButton
   },
   methods: {
     show: function () {
@@ -75,6 +75,7 @@ export default {
         });
     },
     joinRoom: function () {
+      alert('test!')
       axios
         .get("http://localhost:8080/join-room?uuid=" + this.roomNum, {
           withCredentials: true,
@@ -180,5 +181,9 @@ export default {
 .modal-body a:active {
   background-color: #9dcafa;
   transition: 0.1s;
+}
+
+.cancel-btn a{
+  border: none;
 }
 </style>

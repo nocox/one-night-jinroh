@@ -4,7 +4,11 @@
 
     <!-- ルーム番号を表示 -->
     <div class="room-num">
-      <h2>部屋番号:{{ uuid }}</h2>
+      <h2>
+        部屋番号:
+        <input id="copyTarget" type="text" :value="uuid" readonly />
+        <button @click="copyToClipboard">コピー</button>
+      </h2>
     </div>
     <!-- 参加者一覧を表示 -->
     <div class="player">
@@ -18,14 +22,13 @@
       </div>
     </div>
 
-    <!-- スタートボタンを表示（ホストのみ）n -->
+    <!-- スタートボタンを表示（ホストのみ）-->
     <div>
       <myButton :text="'スタート'" :method="gameStart" v-if="hostFlg" />
     </div>
 
-
     <!-- ゲーム開始を通知するモーダル -->
-    <modal name="game-rule-modal" :clickToClose="false">
+    <modal name="game-rule-modal" :clickToClose="false" :scrollable="true">
       <div class="modal-header">
         <h2>ゲームを開始します</h2>
       </div>
@@ -41,13 +44,9 @@
             </li>
           </ul>
         </div>
-
-        <a v-on:click="gotoGamePage">OK</a>
+        <myButton :text="'OK'" :method="gotoGamePage" />
       </div>
     </modal>
-
-    <!-- ゲームの説明 -->
-    <GameDescription />
   </div>
 </template>
 
@@ -56,7 +55,6 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
-import GameDescription from "@/components/GameDescription.vue";
 import myButton from "@/components/Button.vue";
 
 export default {
@@ -77,8 +75,7 @@ export default {
     };
   },
   components: {
-    GameDescription,
-    myButton
+    myButton,
   },
   methods: {
     // ホストがスタートボタンを押下した時の処理
@@ -117,6 +114,11 @@ export default {
           this.$modal.show("game-rule-modal");
         });
       });
+    },
+    copyToClipboard: function () {
+      let copyTarget = document.getElementById("copyTarget");
+      copyTarget.select();
+      document.execCommand("Copy");
     },
   },
   mounted() {
@@ -169,6 +171,21 @@ export default {
       &:hover {
         cursor: pointer;
       }
+    }
+  }
+}
+
+.role-list {
+  ul {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    li {
+      margin: auto;
+      text-align: center;
+      list-style: none;
+      width: 5rem;
+      background-color: aqua;
     }
   }
 }

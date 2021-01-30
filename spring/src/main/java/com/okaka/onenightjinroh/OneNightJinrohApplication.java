@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.List;
 
-@SpringBootApplication(scanBasePackages = "com.okaka.jinroh.persistence")
+@SpringBootApplication(scanBasePackages = "com.okaka")
 @RestController
 public class OneNightJinrohApplication {
 

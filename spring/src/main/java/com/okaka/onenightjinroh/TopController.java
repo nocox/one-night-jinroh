@@ -14,7 +14,6 @@ import com.okaka.jinroh.persistence.RoomParticipantDao;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 public class TopController {
@@ -29,35 +28,20 @@ public class TopController {
     RoomParticipantDao roomParticipantDao;
 
     @Autowired
-    HttpSession session;
+    CreateRoomUseCase createRoomUseCase;
 
     @RequestMapping(path = "/create-room")
     @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
-    int createRoom() {
-        Room room = new Room();
-        room.uuid = UUID.randomUUID().toString();
-        room.rule_id = null;
-        roomDao.insert(room);
-
-        User user = new User();
-        user.user_name = "ホスト";
-        userDao.insert(user);
-
-        RoomParticipant roomParticipant = new RoomParticipant();
-        roomParticipant.room_id = room.room_id;
-        roomParticipant.user_id = user.user_id;
-        roomParticipant.host_flg = true;
-        roomParticipantDao.insert(roomParticipant);
-
-        session.setAttribute("user_id", user.user_id);
-        session.setAttribute("room_uuid", room.uuid);
-
+    int createRoom(HttpSession session) {
+        CreateRoomUseCaseDto dto = createRoomUseCase.createRoom();
+        session.setAttribute("user_id", dto.getUser().user_id);
+        session.setAttribute("room_uuid", dto.getRoom().uuid);
         return 0;
     }
 
     @RequestMapping(path = "/join-room")
     @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
-    int joinedRoom(@RequestParam String uuid) {
+    int joinedRoom(@RequestParam String uuid, HttpSession session) {
         Optional<Room> optRoom = roomDao.selectRoomByUUID(uuid);
         if (optRoom.isPresent() == false) {
             throw new IllegalArgumentException();

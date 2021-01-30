@@ -13,7 +13,7 @@ export default {
 <style lang="scss" scoped>
 .card-wrapper {
   img {
-    height: 150px;
+    height: 9.6rem;
     width: auto;
   }
 }

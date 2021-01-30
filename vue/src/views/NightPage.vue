@@ -2,32 +2,33 @@
   <div class="night-page">
     <h1>夜の行動を行ってください</h1>
 
-    <div class="board-cards">
-      <ul>
-        <li
-          class="board-card"
-          v-for="board_card in BoardCards"
-          :key="board_card.index"
-        >
-          <RoleCard />
-        </li>
-      </ul>
-    </div>
+    <div class="grid-container">
+      <div class="board-cards">
+        <h2>場のカード</h2>
+        <ul>
+          <li
+            class="board-card"
+            v-for="board_card in BoardCards"
+            :key="board_card.index"
+          >
+            <RoleCard />
+          </li>
+        </ul>
+      </div>
 
-    <hr />
-
-    <div class="player-cards">
       <div class="me">
-        <RoleCard/>
-        <span> {{ playerName }} </span>
-        <span> {{ playerRole.roleName }} </span>
+        <h2>あなたです</h2>
+        <RoleCard />
+        <p>{{ playerName }}</p>
+        <p>役職：{{ playerRole.roleName }}</p>
       </div>
       <div class="others">
+        <h2>他のプレイヤー</h2>  
         <ul>
           <li v-for="player in otherPlayerList" :key="player.id">
             <RoleCard />
-            <span> {{ player.name }} </span>
-            <span> {{ player.role.roleName }} </span>
+            <p>{{ player.name }}</p>
+            <p>役職：{{ player.role.roleName }}</p>
           </li>
         </ul>
       </div>
@@ -90,17 +91,46 @@ export default {
 
 
 <style lang="scss" scoped>
-
-ul{
-  display:flex;
+ul {
+  display: flex;
+  flex-wrap: wrap;
   padding: 0;
   margin: 0;
 }
 
-li{
+li {
   list-style: none;
+  margin: auto;
+  text-align: center;
 }
-.player-cards{
-  display: flex;
+
+p{
+  margin:0;
+}
+
+.grid-container {
+  max-width: 1200px;
+  margin:auto;
+
+  display: grid;
+  grid-template-rows: 20rem auto;
+  grid-template-columns: 20rem 1fr;
+  align-items: center;
+
+  .board-cards{
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+  .me{
+    grid-column: 1/2;
+    grid-row: 1/3;
+  }
+  .others{
+    grid-column: 2/3;
+    grid-row: 2/3;
+    ul li{
+      margin-top: 2rem;
+    }
+  }
 }
 </style>

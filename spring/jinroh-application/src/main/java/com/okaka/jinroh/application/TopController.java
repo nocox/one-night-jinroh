@@ -1,16 +1,10 @@
 package com.okaka.onenightjinroh;
 
-import com.okaka.jinroh.persistence.Room;
-import com.okaka.jinroh.persistence.RoomDao;
-import com.okaka.jinroh.persistence.RoomParticipant;
-import com.okaka.jinroh.persistence.User;
-import com.okaka.jinroh.persistence.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.okaka.jinroh.persistence.RoomParticipantDao;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;

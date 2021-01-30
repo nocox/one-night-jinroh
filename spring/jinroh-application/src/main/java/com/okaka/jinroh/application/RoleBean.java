@@ -1,7 +1,5 @@
 package com.okaka.onenightjinroh;
 
-import com.okaka.jinroh.persistence.Role;
-
 public class RoleBean {
     private Long roleId;
     private String roleName;

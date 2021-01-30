@@ -1,15 +1,5 @@
 package com.okaka.onenightjinroh;
 
-import com.okaka.jinroh.persistence.GameDao;
-import com.okaka.jinroh.persistence.GameParticipation;
-import com.okaka.jinroh.persistence.GameParticipationDao;
-import com.okaka.jinroh.persistence.Role;
-import com.okaka.jinroh.persistence.RoleSelectDao;
-import com.okaka.jinroh.persistence.Room;
-import com.okaka.jinroh.persistence.RoomDao;
-import com.okaka.jinroh.persistence.User;
-import com.okaka.jinroh.persistence.UserDao;
-import com.okaka.jinroh.persistence.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;

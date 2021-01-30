@@ -1,5 +1,9 @@
 package com.okaka.onenightjinroh;
 
+import com.okaka.jinroh.persistence.GameParticipation;
+import com.okaka.jinroh.persistence.Role;
+import com.okaka.jinroh.persistence.User;
+
 import java.util.List;
 import java.util.stream.Collectors;
 

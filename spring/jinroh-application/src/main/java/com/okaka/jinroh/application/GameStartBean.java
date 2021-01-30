@@ -1,7 +1,5 @@
 package com.okaka.onenightjinroh;
 
-import com.okaka.jinroh.persistence.Role;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

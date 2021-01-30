@@ -1,8 +1,5 @@
 package com.okaka.onenightjinroh;
 
-import com.okaka.jinroh.persistence.Room;
-import com.okaka.jinroh.persistence.User;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

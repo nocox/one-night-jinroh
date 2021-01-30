@@ -1,12 +1,5 @@
 package com.okaka.onenightjinroh;
 
-import com.okaka.jinroh.persistence.Reservation;
-import com.okaka.jinroh.persistence.ReservationAdapter;
-import com.okaka.jinroh.persistence.ReservationDao;
-import com.okaka.jinroh.persistence.TEvent;
-import com.okaka.jinroh.persistence.TEventDao;
-import com.okaka.jinroh.persistence.TUser;
-import com.okaka.jinroh.persistence.TUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.List;
 
-@SpringBootApplication(scanBasePackages = "com.okaka.jinroh.persistence")
+@SpringBootApplication
 @RestController
 public class OneNightJinrohApplication {
 
@@ -29,7 +22,7 @@ public class OneNightJinrohApplication {
 	}
 
 	@Autowired
-	ReservationAdapter reservationAdapter;
+	ReservationDao reservationDao;
 
 	@Autowired
 	TEventDao tEventDao;
@@ -41,7 +34,9 @@ public class OneNightJinrohApplication {
 	@Bean
 	CommandLineRunner runner() {
 		Arrays.asList("spring", "spring boot", "spring cloud", "doma").forEach(s -> {
-			reservationAdapter.insert(s);
+			Reservation r = new Reservation();
+			r.name = s;
+			reservationDao.insert(r);
 		});
 
 		Arrays.asList("ライブ", "握手会").forEach(s -> {
@@ -63,20 +58,22 @@ public class OneNightJinrohApplication {
 	@RequestMapping(path = "/")
 	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> all() {
-		return reservationAdapter.selectAll();
+		return reservationDao.selectAll();
 	}
 
 	@RequestMapping(path = "/", params = "name")
 	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> name(@RequestParam String name) {
-		return reservationAdapter.selectByName(name);
+		return reservationDao.selectByName(name);
 	}
 
 	@RequestMapping(path = "/insert", params = "name")
 	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> insert(@RequestParam String name) {
-		reservationAdapter.insert(name);
-		return reservationAdapter.selectAll();
+		Reservation reservation = new Reservation();
+		reservation.name = name;
+		reservationDao.insert(reservation);
+		return reservationDao.selectAll();
 	}
 
 	@RequestMapping(path = "/all_user")

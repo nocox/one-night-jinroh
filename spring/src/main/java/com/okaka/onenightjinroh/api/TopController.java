@@ -1,6 +1,11 @@
-package com.okaka.onenightjinroh;
+package com.okaka.onenightjinroh.api;
 
 import com.okaka.jinroh.persistence.Room;
+import com.okaka.onenightjinroh.application.service.top.CreateRoomUseCase;
+import com.okaka.onenightjinroh.application.service.top.CreateRoomUseCaseDto;
+import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
+import com.okaka.onenightjinroh.application.service.top.JoinedRoomUseCase;
+import com.okaka.onenightjinroh.application.service.top.JoinedRoomUseCaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;

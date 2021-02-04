@@ -1,4 +1,4 @@
-package com.okaka.onenightjinroh;
+package com.okaka.onenightjinroh.api;
 
 import com.okaka.jinroh.persistence.Game;
 import com.okaka.jinroh.persistence.GameDao;
@@ -11,6 +11,8 @@ import com.okaka.jinroh.persistence.RoomDao;
 import com.okaka.jinroh.persistence.RoomParticipantDao;
 import com.okaka.jinroh.persistence.User;
 import com.okaka.jinroh.persistence.UserDao;
+import com.okaka.onenightjinroh.GameStartBean;
+import com.okaka.onenightjinroh.RoomBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;

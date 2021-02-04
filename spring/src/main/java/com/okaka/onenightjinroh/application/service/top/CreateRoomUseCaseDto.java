@@ -1,4 +1,4 @@
-package com.okaka.onenightjinroh;
+package com.okaka.onenightjinroh.application.service.top;
 
 import com.okaka.jinroh.persistence.Room;
 import com.okaka.jinroh.persistence.User;

@@ -11,22 +11,22 @@
             v-for="board_card in BoardCards"
             :key="board_card.index"
           >
-            <RoleCard />
+            <RoleCard :roleName="'不明'" />
           </li>
         </ul>
       </div>
 
       <div class="me">
         <h2>あなたです</h2>
-        <RoleCard />
+        <RoleCard :roleName="playerRole.roleName" />
         <p>{{ playerName }}</p>
         <p>役職：{{ playerRole.roleName }}</p>
       </div>
       <div class="others">
-        <h2>他のプレイヤー</h2>  
+        <h2>他のプレイヤー</h2>
         <ul>
           <li v-for="player in otherPlayerList" :key="player.id">
-            <RoleCard />
+            <RoleCard :roleName="player.role.roleName" />
             <p>{{ player.name }}</p>
             <p>役職：{{ player.role.roleName }}</p>
           </li>
@@ -104,31 +104,31 @@ li {
   text-align: center;
 }
 
-p{
-  margin:0;
+p {
+  margin: 0;
 }
 
 .grid-container {
   max-width: 1200px;
-  margin:auto;
+  margin: auto;
 
   display: grid;
   grid-template-rows: 20rem auto;
   grid-template-columns: 20rem 1fr;
   align-items: center;
 
-  .board-cards{
+  .board-cards {
     grid-column: 2/3;
     grid-row: 1/2;
   }
-  .me{
+  .me {
     grid-column: 1/2;
     grid-row: 1/3;
   }
-  .others{
+  .others {
     grid-column: 2/3;
     grid-row: 2/3;
-    ul li{
+    ul li {
       margin-top: 2rem;
     }
   }

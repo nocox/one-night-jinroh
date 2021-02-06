@@ -99,7 +99,7 @@ export default {
     gotoGamePage: function () {
       // モーダルを隠してページ遷移
       this.$modal.hide("game-rule-modal");
-      this.$router.push("/temp-night");
+      this.$router.push("/night-page");
     },
     configWebSocket: function () {
       this.socket = new SockJS("http://localhost:8080/jinroh-websocket");

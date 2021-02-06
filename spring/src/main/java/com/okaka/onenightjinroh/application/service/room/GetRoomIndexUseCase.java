@@ -4,7 +4,6 @@ import com.okaka.jinroh.persistence.Room;
 import com.okaka.jinroh.persistence.RoomParticipantDao;
 import com.okaka.jinroh.persistence.User;
 import com.okaka.jinroh.persistence.UserDao;
-import com.okaka.onenightjinroh.RoomIndexBean;
 import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
 import org.springframework.stereotype.Service;
 

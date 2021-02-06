@@ -6,15 +6,15 @@ import com.okaka.jinroh.persistence.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RoomBean {
+public class RoomIndexBean {
     private String uuid;
     private List<UserBean> userList;
     private boolean hostFlg;
 
-    public RoomBean(Room room, List<User> userList, boolean hostFlg, Long hostUserId) {
+    public RoomIndexBean(Room room, List<User> userList, Long userId, Long hostUserId) {
         this.uuid = room.uuid;
         this.userList = userList.stream().map(user -> new UserBean(user, hostUserId)).collect(Collectors.toList());
-        this.hostFlg = hostFlg;
+        this.hostFlg = userId.equals(hostUserId);
     }
 
     public String getUuid() {

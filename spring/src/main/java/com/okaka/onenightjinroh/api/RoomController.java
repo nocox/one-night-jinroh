@@ -12,7 +12,8 @@ import com.okaka.jinroh.persistence.RoomParticipantDao;
 import com.okaka.jinroh.persistence.User;
 import com.okaka.jinroh.persistence.UserDao;
 import com.okaka.onenightjinroh.GameStartBean;
-import com.okaka.onenightjinroh.RoomBean;
+import com.okaka.onenightjinroh.RoomIndexBean;
+import com.okaka.onenightjinroh.application.service.room.GetRoomIndexUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -53,24 +54,17 @@ public class RoomController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    @Autowired
+    GetRoomIndexUseCase getRoomIndexUseCase;
+
     @RequestMapping(path = "/room-index")
     @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
-    RoomBean getRoom() {
+    RoomIndexBean getRoom() {
         String uuid = session.getAttribute("room_uuid").toString();
         String strUserId = session.getAttribute("user_id").toString();
         Long userId = Long.valueOf(strUserId);
 
-        Optional<Room> optRoom = roomDao.selectRoomByUUID(uuid);
-
-        if (optRoom.isPresent() == false) {
-            throw new IllegalArgumentException();
-        }
-
-        List<User> users = userDao.selectByRoom(optRoom.get().room_id);
-        Long hostUserId = roomParticipantDao.selectHostUserIdByRoom(optRoom.get().room_id);
-        boolean hostFlg = (hostUserId.equals(userId));
-
-        return new RoomBean(optRoom.get(), users, hostFlg, hostUserId);
+        return getRoomIndexUseCase.getRoomIndex(userId, uuid);
     }
 
     @RequestMapping(path = "/game-start")

@@ -34,8 +34,7 @@
       <p>テキストテキストテキストテキストテキスト</p>
     </div>
     <div>
-      <h2>ワンナイト人狼とは？</h2>
-      <p>テキストテキストテキストテキストテキスト</p>
+      <GameDescription/>
     </div>
 
     <RoleDescription />
@@ -47,6 +46,7 @@
 import RoleDescription from "@/components/RoleDescription.vue";
 import myButton from "@/components/Button.vue"
 import axios from "axios";
+import GameDescription from "@/components/GameDescription.vue";
 
 export default {
   name: "TopPage",
@@ -57,7 +57,8 @@ export default {
   },
   components: {
     RoleDescription,
-    myButton
+    myButton,
+    GameDescription
   },
   methods: {
     show: function () {
@@ -75,7 +76,6 @@ export default {
         });
     },
     joinRoom: function () {
-      alert('test!')
       axios
         .get("http://localhost:8080/join-room?uuid=" + this.roomNum, {
           withCredentials: true,

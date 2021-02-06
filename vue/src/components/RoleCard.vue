@@ -1,12 +1,33 @@
 <template>
   <div class="card-wrapper">
-    <img src="../assets/card.png" alt="カードの裏側" />
+    <img :src="RoleList[roleName]" :alt="RoleList[roleName]"/>
   </div>
 </template>
 
 <script>
 export default {
   name: "rolecard",
+  props: {
+    roleName: String,
+  },
+  data() {
+    return {
+      RoleCard: {
+        id: 0,
+        name: "---",
+        img: "---",
+      },
+      RoleList: {
+        "不明": require("../assets/card.png"),
+        "人狼": require("../assets/chara/chara1.png"),
+        "村人": require("../assets/chara/chara2.png"),
+        "占い師": require("../assets/chara/chara3.png"),
+        "怪盗": require("../assets/chara/chara4.png"),
+        "狂人": require("../assets/chara/chara5.png"),
+        "吊り人": require("../assets/chara/chara6.png"),
+      },
+    };
+  },
 };
 </script>
 

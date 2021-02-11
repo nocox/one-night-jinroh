@@ -1,18 +1,19 @@
-package com.okaka.onenightjinroh;
+package com.okaka.onenightjinroh.application.service.night;
 
 import com.okaka.jinroh.persistence.GameParticipation;
 import com.okaka.jinroh.persistence.Role;
 import com.okaka.jinroh.persistence.User;
+import com.okaka.onenightjinroh.application.service.room.RoleBean;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GameBean {
+public class NightTermIndexBean {
     private String playerName;
     private RoleBean playerRole;
     private List<GamePlayerBean> otherPlayerList;
 
-    public GameBean(Long playerId, List<Role> roleList, List<GameParticipation> gameParticipationList, List<User> userList) {
+    public NightTermIndexBean(Long playerId, List<Role> roleList, List<GameParticipation> gameParticipationList, List<User> userList) {
         this.playerName = userList.stream()
                 .filter(user -> user.user_id == playerId)
                 .findFirst().get().user_name;

@@ -1,7 +1,6 @@
 package com.okaka.onenightjinroh.application.service.room;
 
 import com.okaka.jinroh.persistence.Role;
-import com.okaka.onenightjinroh.RoleBean;
 
 import java.util.List;
 import java.util.stream.Collectors;

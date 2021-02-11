@@ -1,24 +1,15 @@
 package com.okaka.onenightjinroh.api;
 
-import com.okaka.jinroh.persistence.GameDao;
-import com.okaka.jinroh.persistence.GameParticipation;
-import com.okaka.jinroh.persistence.GameParticipationDao;
-import com.okaka.jinroh.persistence.Role;
-import com.okaka.jinroh.persistence.RoleSelectDao;
 import com.okaka.jinroh.persistence.Room;
-import com.okaka.jinroh.persistence.RoomDao;
-import com.okaka.jinroh.persistence.User;
-import com.okaka.jinroh.persistence.UserDao;
-import com.okaka.jinroh.persistence.Game;
-import com.okaka.onenightjinroh.GameBean;
+import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
+import com.okaka.onenightjinroh.application.service.night.GetNightTermIndexUseCase;
+import com.okaka.onenightjinroh.application.service.night.NightTermIndexBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class NightController {
@@ -26,39 +17,20 @@ public class NightController {
     HttpSession session;
 
     @Autowired
-    UserDao userDao;
+    ExistRoomValidate existRoomValidate;
 
     @Autowired
-    RoomDao roomDao;
-
-    @Autowired
-    GameDao gameDao;
-
-    @Autowired
-    GameParticipationDao gameParticipationDao;
-
-    @Autowired
-    RoleSelectDao roleSelectDao;
-
+    GetNightTermIndexUseCase getNightTermIndexUseCase;
 
     @RequestMapping(path = "/night-index")
     @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
-    GameBean getRoom() {
+    NightTermIndexBean getNightTermIndex() {
         String uuid = session.getAttribute("room_uuid").toString();
         String strUserId = session.getAttribute("user_id").toString();
         Long userId = Long.valueOf(strUserId);
 
-        Optional<Room> optRoom = roomDao.selectRoomByUUID(uuid);
+        Room room = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
 
-        if (optRoom.isPresent() == false) {
-            throw new IllegalArgumentException();
-        }
-
-        Game game = gameDao.selectByRoomId(optRoom.get().room_id);
-        List<Role> roleList = roleSelectDao.selectRoleListByRuleId(game.rule_id);
-        List<GameParticipation> gameParticipationList = gameParticipationDao.selectGameParticipationByGameId(game.game_id);
-        List<User> userList = userDao.selectByGame(game.game_id);
-
-        return new GameBean(userId, roleList, gameParticipationList, userList);
+        return getNightTermIndexUseCase.getNightTermIndex(userId, room.room_id);
     }
 }

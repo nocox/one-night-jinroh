@@ -5,7 +5,7 @@ import SamplePage from '../pages/SamplePage.vue'
 import TopPage from '../views/TopPage.vue'
 import RoomTopPage from '../views/RoomTopPage.vue'
 import TempRoomPage from '../views/TempRoomPage.vue'
-import TempNightPage from '../views/TempNightPage.vue'
+import TempNightTermPage from '../views/TempNightTermPage.vue'
 
 Vue.use(VueRouter)
 
@@ -45,8 +45,8 @@ const routes = [
   },
   {
     path: '/temp-night',
-    name: 'TempNightPage',
-    component: TempNightPage
+    name: 'TempNightTermPage',
+    component: TempNightTermPage
   }
 ]
 

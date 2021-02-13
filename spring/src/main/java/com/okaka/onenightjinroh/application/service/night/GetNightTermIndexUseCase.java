@@ -30,7 +30,7 @@ public class GetNightTermIndexUseCase {
     public NightTermIndexBean getNightTermIndex(Long userId, Long roomId) {
         Game game = gameDao.selectByRoomId(roomId);
         List<Role> roleList = roleSelectDao.selectRoleListByRuleId(game.rule_id);
-        List<GameParticipation> gameParticipationList = gameParticipationDao.selectGameParticipationByGameId(game.game_id);
+        List<GameParticipation> gameParticipationList = gameParticipationDao.selectGameParticipantsByGameId(game.game_id);
         List<User> userList = userDao.selectByGame(game.game_id);
 
         return new NightTermIndexBean(userId, roleList, gameParticipationList, userList);

@@ -2,12 +2,12 @@ package com.okaka.onenightjinroh.api;
 
 import com.okaka.jinroh.persistence.Game;
 import com.okaka.jinroh.persistence.GameDao;
-import com.okaka.jinroh.persistence.GameParticipation;
+import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.GameParticipationDao;
-import com.okaka.jinroh.persistence.NightAct;
 import com.okaka.jinroh.persistence.NightActDao;
 import com.okaka.jinroh.persistence.Room;
 import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
+import com.okaka.onenightjinroh.application.service.night.DoneNightTermActUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightTermIndexUseCase;
 import com.okaka.onenightjinroh.application.service.night.NightTermIndexBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,9 @@ public class NightController {
     GetNightTermIndexUseCase getNightTermIndexUseCase;
 
     @Autowired
+    DoneNightTermActUseCase doneNightTermActUseCase;
+
+    @Autowired
     GameDao gameDao;
 
     @Autowired
@@ -47,10 +50,10 @@ public class NightController {
         Room room = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
 
         Game game = gameDao.selectByRoomId(room.room_id);
-        GameParticipation gameParticipation = gameParticipationDao.selectGameParticipant(game.game_id, userId);
+        GameParticipationEntity gameParticipationEntity = gameParticipationDao.selectGameParticipant(game.game_id, userId);
 
         session.setAttribute("game_id", game.game_id);
-        session.setAttribute("game_participation_id", gameParticipation.game_participation_id);
+        session.setAttribute("game_participation_id", gameParticipationEntity.game_participation_id);
 
         return getNightTermIndexUseCase.getNightTermIndex(userId, room.room_id);
     }
@@ -60,10 +63,7 @@ public class NightController {
     int doneNightTermAct() {
         String strGameParticipationId = session.getAttribute("game_participation_id").toString();
         Long gameParticipantId = Long.valueOf(strGameParticipationId);
-
-        NightAct nightAct = new NightAct();
-        nightAct.game_participation_id = gameParticipantId;
-        nightActDao.insert(nightAct);
+        doneNightTermActUseCase.done(gameParticipantId);
 
         return 0;
     }

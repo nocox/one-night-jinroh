@@ -1,7 +1,7 @@
 package com.okaka.onenightjinroh.application.service.room;
 
-import com.okaka.jinroh.persistence.Room;
-import com.okaka.jinroh.persistence.User;
+import com.okaka.jinroh.persistence.RoomEntity;
+import com.okaka.jinroh.persistence.UserEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,9 +11,9 @@ public class RoomIndexBean {
     private List<UserBean> userList;
     private boolean hostFlg;
 
-    public RoomIndexBean(Room room, List<User> userList, Long userId, Long hostUserId) {
-        this.uuid = room.uuid;
-        this.userList = userList.stream().map(user -> new UserBean(user, hostUserId)).collect(Collectors.toList());
+    public RoomIndexBean(RoomEntity roomEntity, List<UserEntity> userEntityList, Long userId, Long hostUserId) {
+        this.uuid = roomEntity.uuid;
+        this.userList = userEntityList.stream().map(user -> new UserBean(user, hostUserId)).collect(Collectors.toList());
         this.hostFlg = userId.equals(hostUserId);
     }
 
@@ -34,10 +34,10 @@ public class RoomIndexBean {
         private String name;
         private boolean hostFlg;
 
-        public UserBean(User user, Long hostUserId) {
-            this.userId = user.user_id;
-            this.name = user.user_name;
-            this.hostFlg = user.user_id.equals(hostUserId);
+        public UserBean(UserEntity userEntity, Long hostUserId) {
+            this.userId = userEntity.user_id;
+            this.name = userEntity.user_name;
+            this.hostFlg = userEntity.user_id.equals(hostUserId);
         }
 
         public Long getUserId() {

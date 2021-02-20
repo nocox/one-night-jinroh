@@ -13,9 +13,9 @@ import java.util.Optional;
 public interface RoomDao {
 
     @Select
-    Optional<Room> selectRoomByUUID(String uuid);
+    Optional<RoomEntity> selectRoomByUUID(String uuid);
 
     @Insert
     @Transactional
-    int insert(Room room);
+    int insert(RoomEntity roomEntity);
 }

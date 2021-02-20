@@ -1,6 +1,6 @@
 package com.okaka.onenightjinroh.api;
 
-import com.okaka.jinroh.persistence.Room;
+import com.okaka.jinroh.persistence.RoomEntity;
 import com.okaka.onenightjinroh.application.service.room.GameStartWebSocketBean;
 import com.okaka.onenightjinroh.application.service.room.RoomIndexBean;
 import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
@@ -52,15 +52,15 @@ public class RoomController {
         String uuid = session.getAttribute("room_uuid").toString();
         Long userId = Long.valueOf(session.getAttribute("user_id").toString());
 
-        Room room = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
-        if (startGameValidate.run(userId, room.room_id)) {
+        RoomEntity roomEntity = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
+        if (startGameValidate.run(userId, roomEntity.room_id)) {
             throw new IllegalArgumentException();
         }
 
-        GameStartWebSocketBean gameStartWebSocketBean = startGameUseCase.startGame(room.room_id, userId);
+        GameStartWebSocketBean gameStartWebSocketBean = startGameUseCase.startGame(roomEntity.room_id, userId);
 
         // ここでブロードキャストする
-        this.messagingTemplate.convertAndSend("/topic/" + room.uuid, gameStartWebSocketBean);
+        this.messagingTemplate.convertAndSend("/topic/" + roomEntity.uuid, gameStartWebSocketBean);
         return 0;
     }
 }

@@ -1,22 +1,22 @@
 package com.okaka.onenightjinroh.application.service.top;
 
-import com.okaka.jinroh.persistence.Room;
-import com.okaka.jinroh.persistence.User;
+import com.okaka.jinroh.persistence.RoomEntity;
+import com.okaka.jinroh.persistence.UserEntity;
 
 public class CreateRoomUseCaseDto {
-    private User user;
-    private Room room;
+    private UserEntity userEntity;
+    private RoomEntity roomEntity;
 
-    public CreateRoomUseCaseDto(User user, Room room) {
-        this.user = user;
-        this.room = room;
+    public CreateRoomUseCaseDto(UserEntity userEntity, RoomEntity roomEntity) {
+        this.userEntity = userEntity;
+        this.roomEntity = roomEntity;
     }
 
-    public User getUser() {
-        return user;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public Room getRoom() {
-        return room;
+    public RoomEntity getRoomEntity() {
+        return roomEntity;
     }
 }

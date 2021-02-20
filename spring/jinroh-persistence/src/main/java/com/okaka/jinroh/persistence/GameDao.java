@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 public interface GameDao {
 
     @Select
-    Game selectByRoomId(Long roomId);
+    GameEntity selectByRoomId(Long roomId);
 
     @Insert
     @Transactional
-    int insert(Game game);
+    int insert(GameEntity gameEntity);
 }

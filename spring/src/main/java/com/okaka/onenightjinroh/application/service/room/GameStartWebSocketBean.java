@@ -1,6 +1,6 @@
 package com.okaka.onenightjinroh.application.service.room;
 
-import com.okaka.jinroh.persistence.Role;
+import com.okaka.jinroh.persistence.RoleEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,8 +10,8 @@ public class GameStartWebSocketBean {
     private int playerCount;
     private Long gameId;
 
-    public GameStartWebSocketBean(List<Role> roleList, int playerCount, Long gameId) {
-        this.roleList = roleList.stream().map(RoleBean::new).collect(Collectors.toList());
+    public GameStartWebSocketBean(List<RoleEntity> roleEntityList, int playerCount, Long gameId) {
+        this.roleList = roleEntityList.stream().map(RoleBean::new).collect(Collectors.toList());
         this.playerCount = playerCount;
         this.gameId = gameId;
     }

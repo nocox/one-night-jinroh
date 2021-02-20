@@ -1,13 +1,13 @@
 package com.okaka.onenightjinroh.application.service.room;
 
-import com.okaka.jinroh.persistence.Game;
+import com.okaka.jinroh.persistence.GameEntity;
 import com.okaka.jinroh.persistence.GameDao;
-import com.okaka.jinroh.persistence.GameParticipation;
+import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.GameParticipationDao;
-import com.okaka.jinroh.persistence.Role;
+import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.RoleSelectDao;
 import com.okaka.jinroh.persistence.RoomParticipantDao;
-import com.okaka.jinroh.persistence.User;
+import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.jinroh.persistence.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,28 +52,28 @@ public class StartGameUseCase {
     public GameStartWebSocketBean startGame(Long roomId, Long hostUserId) {
         int participantCount = roomParticipantDao.selectParticipantCount(roomId);
 
-        Game game = new Game();
-        game.room_id = roomId;
-        game.rule_id = RULE_MAP.get(participantCount);
-        gameDao.insert(game);
+        GameEntity gameEntity = new GameEntity();
+        gameEntity.room_id = roomId;
+        gameEntity.rule_id = RULE_MAP.get(participantCount);
+        gameDao.insert(gameEntity);
 
-        List<Role> roleList = roleSelectDao.selectRoleListByRuleId(game.rule_id);
-        Collections.shuffle(roleList);
-        List<User> userList = userDao.selectByRoom(roomId);
+        List<RoleEntity> roleEntityList = roleSelectDao.selectRoleListByRuleId(gameEntity.rule_id);
+        Collections.shuffle(roleEntityList);
+        List<UserEntity> userEntityList = userDao.selectByRoom(roomId);
 
-        for (int i = 0; i < userList.size(); i ++) {
-            GameParticipation gameParticipation = new GameParticipation();
-            gameParticipation.game_id = game.game_id;
-            gameParticipation.user_id = userList.get(i).user_id;
-            gameParticipation.host_flg = userList.get(i).user_id.equals(hostUserId);
-            gameParticipation.role_id = roleList.get(i).role_id;
-            gameParticipationDao.insert(gameParticipation);
+        for (int i = 0; i < userEntityList.size(); i ++) {
+            GameParticipationEntity gameParticipationEntity = new GameParticipationEntity();
+            gameParticipationEntity.game_id = gameEntity.game_id;
+            gameParticipationEntity.user_id = userEntityList.get(i).user_id;
+            gameParticipationEntity.host_flg = userEntityList.get(i).user_id.equals(hostUserId);
+            gameParticipationEntity.role_id = roleEntityList.get(i).role_id;
+            gameParticipationDao.insert(gameParticipationEntity);
         }
 
         return new GameStartWebSocketBean(
-                roleSelectDao.selectRoleListByRuleId(game.rule_id),
-                userList.size(),
-                game.game_id
+                roleSelectDao.selectRoleListByRuleId(gameEntity.rule_id),
+                userEntityList.size(),
+                gameEntity.game_id
         );
     }
 }

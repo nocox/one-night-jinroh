@@ -1,6 +1,6 @@
 package com.okaka.onenightjinroh.api;
 
-import com.okaka.jinroh.persistence.Room;
+import com.okaka.jinroh.persistence.RoomEntity;
 import com.okaka.onenightjinroh.application.service.top.CreateRoomUseCase;
 import com.okaka.onenightjinroh.application.service.top.CreateRoomUseCaseDto;
 import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
@@ -30,18 +30,18 @@ public class TopController {
     int createRoom(HttpSession session) {
         CreateRoomUseCaseDto dto = createRoomUseCase.createRoom();
 
-        session.setAttribute("user_id", dto.getUser().user_id);
-        session.setAttribute("room_uuid", dto.getRoom().uuid);
+        session.setAttribute("user_id", dto.getUserEntity().user_id);
+        session.setAttribute("room_uuid", dto.getRoomEntity().uuid);
         return 0;
     }
 
     @RequestMapping(path = "/join-room")
     @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     int joinedRoom(@RequestParam String uuid, HttpSession session) {
-        Room room = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
-        JoinedRoomUseCaseDto dto = joinedRoomUseCase.joinedRoom(room.room_id);
+        RoomEntity roomEntity = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
+        JoinedRoomUseCaseDto dto = joinedRoomUseCase.joinedRoom(roomEntity.room_id);
 
-        session.setAttribute("user_id", dto.getUser().user_id);
+        session.setAttribute("user_id", dto.getUserEntity().user_id);
         session.setAttribute("room_uuid", uuid);
         return 0;
     }

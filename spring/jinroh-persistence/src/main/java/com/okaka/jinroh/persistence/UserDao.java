@@ -16,12 +16,12 @@ public interface UserDao {
     int selectCount();
 
     @Select
-    List<User> selectByRoom(Long roomId);
+    List<UserEntity> selectByRoom(Long roomId);
 
     @Select
-    List<User> selectByGame(Long gameId);
+    List<UserEntity> selectByGame(Long gameId);
 
     @Insert
     @Transactional
-    int insert(User user);
+    int insert(UserEntity userEntity);
 }

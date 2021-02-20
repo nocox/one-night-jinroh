@@ -1,11 +1,11 @@
 package com.okaka.onenightjinroh.api;
 
-import com.okaka.jinroh.persistence.Game;
+import com.okaka.jinroh.persistence.GameEntity;
 import com.okaka.jinroh.persistence.GameDao;
 import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.GameParticipationDao;
 import com.okaka.jinroh.persistence.NightActDao;
-import com.okaka.jinroh.persistence.Room;
+import com.okaka.jinroh.persistence.RoomEntity;
 import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
 import com.okaka.onenightjinroh.application.service.night.DoneNightTermActUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightTermIndexUseCase;
@@ -47,23 +47,25 @@ public class NightController {
         String strUserId = session.getAttribute("user_id").toString();
         Long userId = Long.valueOf(strUserId);
 
-        Room room = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
+        RoomEntity roomEntity = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
 
-        Game game = gameDao.selectByRoomId(room.room_id);
-        GameParticipationEntity gameParticipationEntity = gameParticipationDao.selectGameParticipant(game.game_id, userId);
+        GameEntity gameEntity = gameDao.selectByRoomId(roomEntity.room_id);
+        GameParticipationEntity gameParticipationEntity = gameParticipationDao.selectGameParticipant(gameEntity.game_id, userId);
 
-        session.setAttribute("game_id", game.game_id);
+        session.setAttribute("game_id", gameEntity.game_id);
         session.setAttribute("game_participation_id", gameParticipationEntity.game_participation_id);
 
-        return getNightTermIndexUseCase.getNightTermIndex(userId, room.room_id);
+        return getNightTermIndexUseCase.getNightTermIndex(userId, roomEntity.room_id);
     }
 
     @RequestMapping(path = "/done-night-act")
     @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     int doneNightTermAct() {
+        String strGameId = session.getAttribute("game_id").toString();
+        Long gameId = Long.valueOf(strGameId);
         String strGameParticipationId = session.getAttribute("game_participation_id").toString();
         Long gameParticipantId = Long.valueOf(strGameParticipationId);
-        doneNightTermActUseCase.done(gameParticipantId);
+        doneNightTermActUseCase.done(gameParticipantId, gameId);
 
         return 0;
     }

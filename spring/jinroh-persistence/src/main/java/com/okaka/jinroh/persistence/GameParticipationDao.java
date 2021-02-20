@@ -12,12 +12,12 @@ import java.util.List;
 @Dao
 public interface GameParticipationDao {
     @Select
-    List<GameParticipation> selectGameParticipantsByGameId(Long gameId);
+    List<GameParticipationEntity> selectGameParticipantsByGameId(Long gameId);
 
     @Select
-    GameParticipation selectGameParticipant(Long gameId, Long userId);
+    GameParticipationEntity selectGameParticipant(Long gameId, Long userId);
 
     @Insert
     @Transactional
-    int insert(GameParticipation gameParticipation);
+    int insert(GameParticipationEntity gameParticipationEntity);
 }

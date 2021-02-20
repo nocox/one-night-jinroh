@@ -1,15 +1,15 @@
 package com.okaka.onenightjinroh.application.service.top;
 
-import com.okaka.jinroh.persistence.User;
+import com.okaka.jinroh.persistence.UserEntity;
 
 public class JoinedRoomUseCaseDto {
-    private User user;
+    private UserEntity userEntity;
 
-    public JoinedRoomUseCaseDto(User user) {
-        this.user = user;
+    public JoinedRoomUseCaseDto(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
-    public User getUser() {
-        return user;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 }

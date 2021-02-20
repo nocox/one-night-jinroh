@@ -1,12 +1,12 @@
 package com.okaka.onenightjinroh.application.service.night;
 
-import com.okaka.jinroh.persistence.Game;
+import com.okaka.jinroh.persistence.GameEntity;
 import com.okaka.jinroh.persistence.GameDao;
-import com.okaka.jinroh.persistence.GameParticipation;
+import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.GameParticipationDao;
-import com.okaka.jinroh.persistence.Role;
+import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.RoleSelectDao;
-import com.okaka.jinroh.persistence.User;
+import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.jinroh.persistence.UserDao;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +28,11 @@ public class GetNightTermIndexUseCase {
     }
 
     public NightTermIndexBean getNightTermIndex(Long userId, Long roomId) {
-        Game game = gameDao.selectByRoomId(roomId);
-        List<Role> roleList = roleSelectDao.selectRoleListByRuleId(game.rule_id);
-        List<GameParticipation> gameParticipationList = gameParticipationDao.selectGameParticipantsByGameId(game.game_id);
-        List<User> userList = userDao.selectByGame(game.game_id);
+        GameEntity gameEntity = gameDao.selectByRoomId(roomId);
+        List<RoleEntity> roleEntityList = roleSelectDao.selectRoleListByRuleId(gameEntity.rule_id);
+        List<GameParticipationEntity> gameParticipationEntityList = gameParticipationDao.selectGameParticipantsByGameId(gameEntity.game_id);
+        List<UserEntity> userEntityList = userDao.selectByGame(gameEntity.game_id);
 
-        return new NightTermIndexBean(userId, roleList, gameParticipationList, userList);
+        return new NightTermIndexBean(userId, roleEntityList, gameParticipationEntityList, userEntityList);
     }
 }

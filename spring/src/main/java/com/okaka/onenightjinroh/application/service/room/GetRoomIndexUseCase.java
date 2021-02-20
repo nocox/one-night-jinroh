@@ -1,8 +1,8 @@
 package com.okaka.onenightjinroh.application.service.room;
 
-import com.okaka.jinroh.persistence.Room;
+import com.okaka.jinroh.persistence.RoomEntity;
 import com.okaka.jinroh.persistence.RoomParticipantDao;
-import com.okaka.jinroh.persistence.User;
+import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.jinroh.persistence.UserDao;
 import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
 import org.springframework.stereotype.Service;
@@ -22,9 +22,9 @@ public class GetRoomIndexUseCase {
     }
 
     public RoomIndexBean getRoomIndex(Long userId, String uuid) {
-        Room room = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
-        List<User> users = userDao.selectByRoom(room.room_id);
-        Long hostUserId = roomParticipantDao.selectHostUserIdByRoom(room.room_id);
-        return new RoomIndexBean(room, users, userId, hostUserId);
+        RoomEntity roomEntity = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
+        List<UserEntity> userEntities = userDao.selectByRoom(roomEntity.room_id);
+        Long hostUserId = roomParticipantDao.selectHostUserIdByRoom(roomEntity.room_id);
+        return new RoomIndexBean(roomEntity, userEntities, userId, hostUserId);
     }
 }

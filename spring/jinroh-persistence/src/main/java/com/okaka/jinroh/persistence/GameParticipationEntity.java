@@ -7,10 +7,13 @@ import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 
 @Entity
-@Table(name = "NIGHT_ACT")
-public class NightAct {
+@Table(name = "GAME_PARTICIPATION")
+public class GameParticipationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long night_act_id;
     public Long game_participation_id;
+    public Long game_id;
+    public Long user_id;
+    public Long role_id;
+    public boolean host_flg;
 }

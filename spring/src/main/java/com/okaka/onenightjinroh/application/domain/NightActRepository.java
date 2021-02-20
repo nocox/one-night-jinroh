@@ -27,6 +27,12 @@ public class NightActRepository {
                 .collect(Collectors.toList());
     }
 
+    public void create(Long gameParticipantId){
+        NightActEntity nightActEntity = new NightActEntity();
+        nightActEntity.game_participation_id = gameParticipantId;
+        nightActDao.insert(nightActEntity);
+    }
+
     private static NightAct toDomain(NightActEntity entity) {
         NightAct nightAct = new NightAct();
         nightAct.setNightActId(entity.night_act_id);

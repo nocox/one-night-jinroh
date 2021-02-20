@@ -15,11 +15,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class DoneNightTermActUseCase {
-    @Autowired
-    NightActDao nightActDao;
-
-    @Autowired
-    GameParticipationDao gameParticipationDao;
 
     @Autowired
     GameParticipantRepository gameParticipantRepository;
@@ -27,12 +22,8 @@ public class DoneNightTermActUseCase {
     @Autowired
     NightActRepository nightActRepository;
 
-
     public void done(Long gameParticipantId, Long gameId){
-        NightActEntity nightActEntity = new NightActEntity();
-        nightActEntity.game_participation_id = gameParticipantId;
-        nightActDao.insert(nightActEntity);
-
+        nightActRepository.create(gameParticipantId);
         if (allDoneNightAct(gameId)) {
             System.out.println("all done !!!");
         }

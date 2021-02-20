@@ -60,7 +60,7 @@ public class RoomController {
         GameStartWebSocketBean gameStartWebSocketBean = startGameUseCase.startGame(roomEntity.room_id, userId);
 
         // ここでブロードキャストする
-        this.messagingTemplate.convertAndSend("/topic/" + roomEntity.uuid, gameStartWebSocketBean);
+        messagingTemplate.convertAndSend("/topic/" + roomEntity.uuid, gameStartWebSocketBean);
         return 0;
     }
 }

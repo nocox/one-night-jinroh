@@ -55,7 +55,7 @@ public class NightController {
         session.setAttribute("game_id", gameEntity.game_id);
         session.setAttribute("game_participation_id", gameParticipationEntity.game_participation_id);
 
-        return getNightTermIndexUseCase.getNightTermIndex(userId, roomEntity.room_id);
+        return getNightTermIndexUseCase.getNightTermIndex(userId, roomEntity.room_id, gameEntity.game_id);
     }
 
     @RequestMapping(path = "/done-night-act")
@@ -63,6 +63,7 @@ public class NightController {
     int doneNightTermAct() {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);
+
         String strGameParticipationId = session.getAttribute("game_participation_id").toString();
         Long gameParticipantId = Long.valueOf(strGameParticipationId);
         doneNightTermActUseCase.done(gameParticipantId, gameId);

@@ -27,12 +27,12 @@ public class GetNightTermIndexUseCase {
         this.gameParticipationDao = gameParticipationDao;
     }
 
-    public NightTermIndexBean getNightTermIndex(Long userId, Long roomId) {
+    public NightTermIndexBean getNightTermIndex(Long userId, Long roomId, Long gameId) {
         GameEntity gameEntity = gameDao.selectByRoomId(roomId);
         List<RoleEntity> roleEntityList = roleSelectDao.selectRoleListByRuleId(gameEntity.rule_id);
         List<GameParticipationEntity> gameParticipationEntityList = gameParticipationDao.selectGameParticipantsByGameId(gameEntity.game_id);
         List<UserEntity> userEntityList = userDao.selectByGame(gameEntity.game_id);
 
-        return new NightTermIndexBean(userId, roleEntityList, gameParticipationEntityList, userEntityList);
+        return new NightTermIndexBean(userId, roleEntityList, gameParticipationEntityList, userEntityList, gameId);
     }
 }

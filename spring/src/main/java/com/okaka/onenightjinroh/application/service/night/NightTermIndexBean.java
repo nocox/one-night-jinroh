@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class NightTermIndexBean {
+    private Long gameId;
     private String playerName;
     private RoleBean playerRole;
     private List<GamePlayerBean> otherPlayerList;
 
-    public NightTermIndexBean(Long playerId, List<RoleEntity> roleEntityList, List<GameParticipationEntity> gameParticipationEntityList, List<UserEntity> userEntityList) {
+    public NightTermIndexBean(Long playerId, List<RoleEntity> roleEntityList, List<GameParticipationEntity> gameParticipationEntityList, List<UserEntity> userEntityList, Long gameId) {
+        this.gameId = gameId;
         this.playerName = userEntityList.stream()
                 .filter(user -> user.user_id == playerId)
                 .findFirst().get().user_name;
@@ -46,13 +48,17 @@ public class NightTermIndexBean {
         return playerRole;
     }
 
+    public Long getGameId() {
+        return gameId;
+    }
+
     public List<GamePlayerBean> getOtherPlayerList() {
         return otherPlayerList;
     }
-
     public class GamePlayerBean {
         private Long id;
         private String name;
+
         private RoleBean role;
 
         public GamePlayerBean(UserEntity userEntity, RoleEntity roleEntity) {
@@ -68,10 +74,9 @@ public class NightTermIndexBean {
         public String getName() {
             return name;
         }
-
         public RoleBean getRole() {
             return role;
         }
-    }
 
+    }
 }

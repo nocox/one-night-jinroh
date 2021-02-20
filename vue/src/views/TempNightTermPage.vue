@@ -23,11 +23,14 @@
 
 <script>
 import axios from "axios";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 export default {
     name: "TempNightTermPage",
     data(){
         return{
+            uuid: "yyyyy",
             playerName: "xxxxx",
             playerRole: "xxxxx",
             otherPlayerList: [{
@@ -45,11 +48,23 @@ export default {
             this.playerRole = response.data.playerRole;
 
             this.otherPlayerList = response.data.otherPlayerList;
+            this.configWebSocket(response.data.gameId);
       }).catch(() => {
         this.$router.push('/temp-room');
       });
     },
     methods: {
+        configWebSocket: function(gameId) {
+            this.socket = new SockJS('http://localhost:8080/jinroh-websocket');
+            this.stompClient = Stomp.over(this.socket);
+            this.stompClient.connect({}, frame => {
+                console.log('Connected: ' + frame);
+                console.log('Room name: ' + gameId);
+                this.stompClient.subscribe('/topic/' + gameId, () => {
+                    this.$router.push('/temp-talk');
+                });
+            });
+        },
         doneNightAct: () => {
             axios.get('http://localhost:8080/done-night-act',{withCredentials: true})
             .then((response) => {
@@ -58,7 +73,8 @@ export default {
             }).catch(() => {
                 console.log("夜の行動完了に失敗しました");
             });
-        }
+        },
+
     }
 
 }

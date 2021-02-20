@@ -1,13 +1,11 @@
 package com.okaka.onenightjinroh.application.service.night;
 
-import com.okaka.jinroh.persistence.GameParticipationDao;
-import com.okaka.jinroh.persistence.NightActEntity;
-import com.okaka.jinroh.persistence.NightActDao;
 import com.okaka.onenightjinroh.application.domain.GameParticipant;
 import com.okaka.onenightjinroh.application.domain.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.domain.NightAct;
 import com.okaka.onenightjinroh.application.domain.NightActRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +13,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class DoneNightTermActUseCase {
+    @Autowired
+    SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     GameParticipantRepository gameParticipantRepository;
@@ -26,6 +26,7 @@ public class DoneNightTermActUseCase {
         nightActRepository.create(gameParticipantId);
         if (allDoneNightAct(gameId)) {
             System.out.println("all done !!!");
+            messagingTemplate.convertAndSend("/topic/" + gameId, "test");
         }
     }
 

@@ -1,14 +1,12 @@
 package com.okaka.onenightjinroh.application.domain;
 
 import com.okaka.jinroh.persistence.GameParticipationDao;
-import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.NightActDao;
 import com.okaka.jinroh.persistence.NightActEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository

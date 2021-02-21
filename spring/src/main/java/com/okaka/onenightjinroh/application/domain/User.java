@@ -8,4 +8,16 @@ public class User {
         this.userId = userId;
         this.userName = null;
     }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }

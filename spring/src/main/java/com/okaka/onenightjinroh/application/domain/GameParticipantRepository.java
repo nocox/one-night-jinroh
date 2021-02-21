@@ -1,5 +1,6 @@
 package com.okaka.onenightjinroh.application.domain;
 
+import com.okaka.jinroh.persistence.GameDao;
 import com.okaka.jinroh.persistence.GameParticipationDao;
 import com.okaka.jinroh.persistence.GameParticipationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,30 @@ public class GameParticipantRepository {
     @Autowired
     GameParticipationDao gameParticipationDao;
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
     public List<GameParticipant> findByGameId(Long gameId) {
         return gameParticipationDao.selectGameParticipantsByGameId(gameId).stream()
                 .map(GameParticipantRepository::toDomainFromEntity)
                 .collect(Collectors.toList());
+    }
+
+    public List<GameParticipant> findByGameIdWithUserAndRole(Long gameId) {
+        List<GameParticipant> gps = findByGameId(gameId);
+        Map<Long, User> usersMap = userRepository.toMapUsersByGameId(gameId);
+        Map<Long, Role> rolesMap = roleRepository.toMapRoles();
+
+        gps.forEach(gameParticipant -> {
+            Long userId = gameParticipant.getUser().getUserId();
+            gameParticipant.setUser(usersMap.get(userId));
+            Long roleId = gameParticipant.getRole().getRoleId();
+            gameParticipant.setRole(rolesMap.get(roleId));
+        });
+        return gps;
     }
 
     public static Map<Long, GameParticipant> toMapGameParticipant(List<GameParticipationEntity> gameParticipationEntities){

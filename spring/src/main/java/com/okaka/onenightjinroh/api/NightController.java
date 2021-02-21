@@ -55,7 +55,7 @@ public class NightController {
         session.setAttribute("game_id", gameEntity.game_id);
         session.setAttribute("game_participation_id", gameParticipationEntity.game_participation_id);
 
-        return getNightTermIndexUseCase.getNightTermIndex(userId, roomEntity.room_id, gameEntity.game_id);
+        return getNightTermIndexUseCase.get(gameEntity.game_id, gameParticipationEntity.game_participation_id);
     }
 
     @RequestMapping(path = "/done-night-act")

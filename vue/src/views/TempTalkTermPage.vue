@@ -1,7 +1,20 @@
 <template>
 <div class="talk_page">
+    <h1>話し合いページ</h1>
     <div>
-        話し合いページ
+        <span>自分:</span>
+        <span>{{playerName}}</span>
+        <span>({{playerRole.roleName}})</span>
+    </div>
+    <hr>
+    <div>
+        他のプレイヤー
+        <ul>
+            <li v-for="player in otherPlayerList" v-bind:key="player.id">
+                <span>{{player.name}}</span>
+                <span>({{player.role.roleName}})</span>
+            </li>
+        </ul>
     </div>
     <modal name="talk-start-modal">
         <div class="modal-header">
@@ -15,6 +28,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "TempTalkPage",
     data() {
@@ -29,8 +44,17 @@ export default {
         }
     },
     mounted() {
-        console.log("test");
-        this.$modal.show("talk-start-modal");
+        axios.get('http://localhost:8080/talk-index',{withCredentials: true})
+        .then((response) => {
+            console.log(response.data);
+            this.playerName = response.data.gameIndex.playerName;
+            this.playerRole = response.data.gameIndex.playerRole;
+
+            this.otherPlayerList = response.data.gameIndex.otherPlayerList;
+            this.$modal.show("talk-start-modal");
+        }).catch(() => {
+            this.$router.push('/temp-room');
+        });
     },
     methods: {
         closeModal() {

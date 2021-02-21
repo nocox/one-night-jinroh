@@ -1,14 +1,15 @@
 package com.okaka.onenightjinroh.application.service.room;
 
 import com.okaka.jinroh.persistence.RoleEntity;
+import com.okaka.onenightjinroh.application.domain.Role;
 
 public class RoleBean {
     private Long roleId;
     private String roleName;
 
-    public RoleBean(RoleEntity roleEntity) {
-        this.roleId = roleEntity.role_id;
-        this.roleName = roleEntity.role_name;
+    public RoleBean(Role role) {
+        this.roleId = role.getRoleId();
+        this.roleName = role.getRoleName();
     }
 
     public Long getRoleId() {

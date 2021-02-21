@@ -1,5 +1,6 @@
 <template>
 <div class="night_page">
+    <h1>夜の行動ページ</h1>
     <div>
         <span>自分:</span>
         <span>{{playerName}}</span>
@@ -44,10 +45,10 @@ export default {
         axios.get('http://localhost:8080/night-index',{withCredentials: true})
         .then((response) => {
             console.log(response.data);
-            this.playerName = response.data.playerName;
-            this.playerRole = response.data.playerRole;
+            this.playerName = response.data.gameIndex.playerName;
+            this.playerRole = response.data.gameIndex.playerRole;
 
-            this.otherPlayerList = response.data.otherPlayerList;
+            this.otherPlayerList = response.data.gameIndex.otherPlayerList;
             this.configWebSocket(response.data.gameId);
       }).catch(() => {
         this.$router.push('/temp-room');

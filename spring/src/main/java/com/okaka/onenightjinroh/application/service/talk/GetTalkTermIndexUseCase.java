@@ -1,4 +1,4 @@
-package com.okaka.onenightjinroh.application.service.night;
+package com.okaka.onenightjinroh.application.service.talk;
 
 import com.okaka.onenightjinroh.application.domain.GameIndexBean;
 import com.okaka.onenightjinroh.application.domain.GameParticipant;
@@ -9,14 +9,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GetNightTermIndexUseCase {
+public class GetTalkTermIndexUseCase {
 
     @Autowired
     GameParticipantRepository gameParticipantRepository;
 
-    public NightTermIndexBean get(Long gameId, Long gameParticipantId) {
+    public TalkTermIndexBean get(Long gameId, Long gameParticipantId) {
         List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
-        GameIndexBean gameIndexBean = new GameIndexBean(gameParticipants, gameParticipantId);
-        return new NightTermIndexBean(gameId, gameIndexBean);
+        return new TalkTermIndexBean(new GameIndexBean(gameParticipants, gameParticipantId));
     }
 }

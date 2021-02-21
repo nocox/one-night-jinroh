@@ -16,6 +16,7 @@ public class GetTalkTermIndexUseCase {
 
     public TalkTermIndexBean get(Long gameId, Long gameParticipantId) {
         List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
-        return new TalkTermIndexBean(new GameIndexBean(gameParticipants, gameParticipantId));
+        GameIndexBean gameIndex = new GameIndexBean(gameParticipants, gameParticipantId);
+        return new TalkTermIndexBean(gameIndex, gameId);
     }
 }

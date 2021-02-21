@@ -7,6 +7,7 @@ import RoomTopPage from '../views/RoomTopPage.vue'
 import TempRoomPage from '../views/TempRoomPage.vue'
 import TempNightTermPage from '../views/TempNightTermPage.vue'
 import TempTalkTermPage from '../views/TempTalkTermPage.vue'
+import TempVoteTermPage from '../views/TempVoteTermPage.vue'
 
 Vue.use(VueRouter)
 
@@ -53,6 +54,11 @@ const routes = [
     path: '/temp-talk',
     name: 'TempTalkTermPage',
     component: TempTalkTermPage
+  },
+  {
+    path: '/temp-vote',
+    name: 'TempVoteTermPage',
+    component: TempVoteTermPage
   }
 ]
 

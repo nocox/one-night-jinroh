@@ -9,7 +9,8 @@
       <router-link to="/roomtop">Room Top Page</router-link> |
       <router-link to="/temp-room">Temp Room Page</router-link> |
       <router-link to="/temp-night">Temp Night Page</router-link> |
-      <router-link to="/temp-talk">Temp Talk Page</router-link>
+      <router-link to="/temp-talk">Temp Talk Page</router-link> |
+      <router-link to="/temp-vote">Temp Vote Page</router-link>
     </div>
   </div>
 </template>

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 public class GameIndexBean {
     private String playerName;
     private RoleBean playerRole;
+    private Boolean hostFlag;
     private List<GameParticipantBean> otherPlayerList;
 
     public GameIndexBean(List<GameParticipant> gameParticipants, Long gameParticipantId) {
@@ -22,6 +23,7 @@ public class GameIndexBean {
                 .orElseThrow(() -> new IllegalArgumentException("例外"));
         this.playerName = player.getName();
         this.playerRole = player.getRole();
+        this.hostFlag = player.getHostFlag();
         this.otherPlayerList = gameParticipantsBean;
     }
 
@@ -35,5 +37,9 @@ public class GameIndexBean {
 
     public List<GameParticipantBean> getOtherPlayerList() {
         return otherPlayerList;
+    }
+
+    public Boolean getHostFlag() {
+        return hostFlag;
     }
 }

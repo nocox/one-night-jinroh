@@ -1,0 +1,21 @@
+package com.okaka.onenightjinroh.application.service.vote;
+
+import com.okaka.onenightjinroh.application.domain.GameIndexBean;
+import com.okaka.onenightjinroh.application.domain.GameParticipant;
+import com.okaka.onenightjinroh.application.domain.GameParticipantRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class GetVoteTermIndexUseCase {
+    @Autowired
+    GameParticipantRepository gameParticipantRepository;
+
+    public VoteTermIndexBean get(Long gameId, Long gameParticipantId) {
+        List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
+        GameIndexBean gameIndex = new GameIndexBean(gameParticipants, gameParticipantId);
+        return new VoteTermIndexBean(gameId, gameIndex);
+    }
+}

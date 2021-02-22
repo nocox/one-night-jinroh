@@ -16,6 +16,18 @@
             </li>
         </ul>
     </div>
+    <div>
+        投票してください
+        <ul>
+            <li v-for="player in canVotePlayers" v-bind:key="player.id">
+                <label>
+                    <input type="radio" v-model="checkPlayerId" v-bind:value="player.id">
+                    {{player.name}}
+                </label>
+            </li>
+        </ul>
+        <button v-on:click="vote">確定</button>
+    </div>
     <modal name="vote-start-modal">
         <div class="modal-header">
             <h2>話し合いが終了しました．投票してください</h2>
@@ -42,6 +54,12 @@ export default {
                 name: "xxxxx",
                 role: "---"
             }],
+            canVotePlayers: [{
+                id: 1,
+                name: "xxxxx",
+                role: "---"
+            }],
+            checkPlayerId: 0
         }
     },
     mounted() {
@@ -52,7 +70,10 @@ export default {
             this.playerRole = response.data.gameIndex.playerRole;
             this.hostFlag = response.data.gameIndex.hostFlag;
             this.otherPlayerList = response.data.gameIndex.otherPlayerList;
+
+            this.canVotePlayers = response.data.voteIndex.canVotePlayers;
             this.$modal.show("vote-start-modal");
+
         }).catch(() => {
             this.$router.push('/temp-room');
         });
@@ -62,6 +83,22 @@ export default {
         closeModal() {
             this.$modal.hide("vote-start-modal");
         },
+        vote() {
+            axios.post('http://localhost:8080/vote', 
+                JSON.stringify({gameParticipantId: this.checkPlayerId}), 
+                {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
+            .then((response) => {
+                console.log(response.data);
+            }).catch(() => {
+                this.$router.push('/temp-room');
+            });
+        }
     }
 }
 </script>

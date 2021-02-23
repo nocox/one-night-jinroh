@@ -11,7 +11,7 @@ import org.seasar.doma.Table;
 public class VoteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long voteId;
+    public Long vote_id;
     public Long game_participation_id;
     public Long to_game_participation_id;
     public boolean peace_village_flg;

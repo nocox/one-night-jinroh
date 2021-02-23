@@ -8,6 +8,7 @@ import TempRoomPage from '../views/TempRoomPage.vue'
 import TempNightTermPage from '../views/TempNightTermPage.vue'
 import TempTalkTermPage from '../views/TempTalkTermPage.vue'
 import TempVoteTermPage from '../views/TempVoteTermPage.vue'
+import TempTallyTermPage from '../views/TempTallyTermPage.vue'
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,11 @@ const routes = [
     path: '/temp-vote',
     name: 'TempVoteTermPage',
     component: TempVoteTermPage
+  },
+  {
+    path: '/temp-tally',
+    name: 'TempTallyTermPage',
+    component: TempTallyTermPage
   }
 ]
 

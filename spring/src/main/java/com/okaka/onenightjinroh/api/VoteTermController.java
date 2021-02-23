@@ -1,10 +1,12 @@
 package com.okaka.onenightjinroh.api;
 
 import com.okaka.onenightjinroh.application.service.vote.GetVoteTermIndexUseCase;
+import com.okaka.onenightjinroh.application.service.vote.IsAllVoteUseCase;
 import com.okaka.onenightjinroh.application.service.vote.VoteForm;
 import com.okaka.onenightjinroh.application.service.vote.VoteTermIndexBean;
 import com.okaka.onenightjinroh.application.service.vote.VoteUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +20,16 @@ public class VoteTermController {
     HttpSession session;
 
     @Autowired
+    SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
     GetVoteTermIndexUseCase getVoteTermIndexUseCase;
 
     @Autowired
     VoteUseCase voteUseCase;
+
+    @Autowired
+    IsAllVoteUseCase isAllVoteUseCase;
 
     @RequestMapping(path = "/vote-index")
     @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
@@ -41,6 +49,12 @@ public class VoteTermController {
         String strGameParticipationId = session.getAttribute("game_participation_id").toString();
         Long gameParticipantId = Long.valueOf(strGameParticipationId);
         voteUseCase.vote(gameParticipantId, voteForm.getGameParticipantId());
+
+        String strGameId = session.getAttribute("game_id").toString();
+        Long gameId = Long.valueOf(strGameId);
+        if (isAllVoteUseCase.is(gameId)) {
+            messagingTemplate.convertAndSend("/topic/done-tally/" + gameId, "");
+        }
         return 0;
     }
 }

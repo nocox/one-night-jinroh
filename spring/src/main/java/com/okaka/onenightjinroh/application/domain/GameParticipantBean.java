@@ -10,7 +10,7 @@ public class GameParticipantBean {
 
     public GameParticipantBean(GameParticipant gameParticipant) {
         User user = gameParticipant.getUser();
-        this.id = user.getUserId();
+        this.id = gameParticipant.getGameParticipationId();
         this.name = user.getUserName();
         this.role = new RoleBean(gameParticipant.getRole());
         this.hostFlag = gameParticipant.isHostFlg();

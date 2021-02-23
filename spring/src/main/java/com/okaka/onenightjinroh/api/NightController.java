@@ -1,9 +1,9 @@
 package com.okaka.onenightjinroh.api;
 
-import com.okaka.jinroh.persistence.GameEntity;
 import com.okaka.jinroh.persistence.GameDao;
-import com.okaka.jinroh.persistence.GameParticipationEntity;
+import com.okaka.jinroh.persistence.GameEntity;
 import com.okaka.jinroh.persistence.GameParticipationDao;
+import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.NightActDao;
 import com.okaka.jinroh.persistence.RoomEntity;
 import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
@@ -49,6 +49,7 @@ public class NightController {
 
         RoomEntity roomEntity = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
 
+        // TODO: 最新のgameを取得する必要がある．
         GameEntity gameEntity = gameDao.selectByRoomId(roomEntity.room_id);
         GameParticipationEntity gameParticipationEntity = gameParticipationDao.selectGameParticipant(gameEntity.game_id, userId);
 

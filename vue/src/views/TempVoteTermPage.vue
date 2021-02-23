@@ -41,6 +41,8 @@
 
 <script>
 import axios from "axios";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 export default {
     name: "TempTalkPage",
@@ -73,7 +75,7 @@ export default {
 
             this.canVotePlayers = response.data.voteIndex.canVotePlayers;
             this.$modal.show("vote-start-modal");
-
+            this.configWebSocket(response.data.gameId);
         }).catch(() => {
             this.$router.push('/temp-room');
         });
@@ -98,7 +100,17 @@ export default {
             }).catch(() => {
                 this.$router.push('/temp-room');
             });
-        }
+        },
+        configWebSocket: function(gameId) {
+            this.socket = new SockJS('http://localhost:8080/jinroh-websocket');
+            this.stompClient = Stomp.over(this.socket);
+            this.stompClient.connect({}, frame => {
+                console.log('Connected: ' + frame);
+                this.stompClient.subscribe('/topic/done-tally/' + gameId, () => {
+                    this.$router.push('/temp-tally');
+                });
+            });
+        },
     }
 }
 </script>

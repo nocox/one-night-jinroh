@@ -15,12 +15,31 @@
 </template>
 
 <style>
+@font-face {
+    font-family: "Mamelon";
+    src: url("./assets/fonts/Mamelon-3-Hi-Regular.woff2") format("woff2");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Mamelon";
+    src: url("./assets/fonts/Mamelon-5-Hi-Regular.woff2") format("woff2");
+    font-weight: 700;
+}
+
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Mamelon, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #212121;
+}
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 #nav {
@@ -35,4 +54,5 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
 </style>

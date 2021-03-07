@@ -1,5 +1,7 @@
 package com.okaka.onenightjinroh.api;
 
+import com.okaka.onenightjinroh.application.service.tally.TallyResultBean;
+import com.okaka.onenightjinroh.application.service.tally.TallyUseCase;
 import com.okaka.onenightjinroh.application.service.vote.GetVoteTermIndexUseCase;
 import com.okaka.onenightjinroh.application.service.vote.IsAllVoteUseCase;
 import com.okaka.onenightjinroh.application.service.vote.VoteForm;
@@ -31,6 +33,9 @@ public class VoteTermController {
     @Autowired
     IsAllVoteUseCase isAllVoteUseCase;
 
+    @Autowired
+    TallyUseCase tallyUseCase;
+
     @RequestMapping(path = "/vote-index")
     @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     public VoteTermIndexBean getVoteTermIndex() {
@@ -53,6 +58,7 @@ public class VoteTermController {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);
         if (isAllVoteUseCase.is(gameId)) {
+            TallyResultBean tallyResultBean = tallyUseCase.tally(gameId);
             messagingTemplate.convertAndSend("/topic/done-tally/" + gameId, "");
         }
         return 0;

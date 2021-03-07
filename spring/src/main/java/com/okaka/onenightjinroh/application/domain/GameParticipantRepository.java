@@ -1,6 +1,5 @@
 package com.okaka.onenightjinroh.application.domain;
 
-import com.okaka.jinroh.persistence.GameDao;
 import com.okaka.jinroh.persistence.GameParticipationDao;
 import com.okaka.jinroh.persistence.GameParticipationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +42,10 @@ public class GameParticipantRepository {
         return gps;
     }
 
-    public static Map<Long, GameParticipant> toMapGameParticipant(List<GameParticipationEntity> gameParticipationEntities){
+    public static Map<Long, GameParticipant> toMapGameParticipant(List<GameParticipant> GameParticipants){
         Map<Long, GameParticipant> gameParticipantMap = new HashMap<>();
-        gameParticipationEntities.forEach(entity -> {
-            GameParticipant gameParticipant = toDomainFromEntity(entity);
-            gameParticipantMap.put(entity.game_participation_id, gameParticipant);
+        GameParticipants.forEach(gameParticipant -> {
+            gameParticipantMap.put(gameParticipant.getGameParticipationId(), gameParticipant);
         });
         return gameParticipantMap;
     }

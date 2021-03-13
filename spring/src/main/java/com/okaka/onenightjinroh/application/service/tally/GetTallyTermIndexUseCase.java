@@ -20,6 +20,6 @@ public class GetTallyTermIndexUseCase {
         GameIndexBean gameIndex = new GameIndexBean(gameParticipants, gameParticipantId);
         TallyResultBean tallyResult = tallyUseCase.tally(gameId);
 
-        return new TallyTermIndexBean(gameIndex, tallyResult);
+        return new TallyTermIndexBean(gameId, gameIndex, tallyResult);
     }
 }

@@ -30,6 +30,9 @@
             <span>: {{player.voteCount}}</span>
         </li>
     </ul>
+    <div v-if="hostFlag">
+        <div class="start" v-on:click="gotoResult">結果ページに移動する</div>
+    </div>
 
     <modal name="done-tally-modal">
         <div class="modal-header">
@@ -44,11 +47,11 @@
 
 <script>
 import axios from "axios";
-// import SockJS from "sockjs-client";
-// import Stomp from "webstomp-client";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 export default {
-    name: "TempTalkPage",
+    name: "TempTallyTermPage",
     data() {
         return{
             playerName: "xxxxx",
@@ -84,6 +87,7 @@ export default {
 
             this.tallyResult = response.data.tallyResult;
             this.$modal.show("done-tally-modal");
+            this.configWebSocket(response.data.gameId)
         }).catch(() => {
             this.$router.push('/temp-room');
         });
@@ -92,6 +96,24 @@ export default {
         closeModal() {
             this.$modal.hide("done-tally-modal");
         },
+        configWebSocket: function(gameId) {
+            this.socket = new SockJS('http://localhost:8080/jinroh-websocket');
+            this.stompClient = Stomp.over(this.socket);
+            this.stompClient.connect({}, frame => {
+                console.log('Connected: ' + frame);
+                this.stompClient.subscribe('/topic/result/' + gameId, () => {
+                    this.$router.push('/temp-result');
+                });
+            });
+        },
+        gotoResult: function() {
+            axios.get('http://localhost:8080/show-result',{withCredentials: true})
+            .then((response) => {
+                console.log(response.data);
+            }).catch(() => {
+                this.$router.push('/temp-room');
+            });
+        }
     }
 }
 </script>

@@ -1,52 +1,47 @@
 <template>
-  <div class="TopPage">
-    <div class="Top">
-      <div class="TopTitle">
-        <div class="TitleText">ワンナイト人狼</div>
-        <div class="SubTitleText">たのしくてかわいい人狼です</div>
+  <main class="TopPage">
+    <Title />
+
+    <section class="chara-image-list">
+      <div>
+        <img class="pc" src="../assets/images/chara/chara_sort_pc.png" alt="" />
+        <img class="sp" src="../assets/images/chara/chara_sort_sp.png" alt="" />
       </div>
+    </section>
 
-      <div class="TopButton-layout">
-        <a class="TopButton" v-on:click="createRoom">ルームを作成</a>
-        <a class="TopButton" v-on:click="show">ルームに参加</a>
+    <NewsField />
 
-        <modal name="join-to-room">
-          <div class="modal-header">
-            <h2>ルームに参加</h2>
-          </div>
+    <section class="game-description">
+      <h2>ゆるふわ人狼とは</h2>
+      <p>
+        殺伐とした心理戦を楽しむ「人狼ゲーム」をかわいいキャラ、シンプルなルールにアレンジしたゲームです。
+      </p>
+      <p>3～7人でふわっと簡単に短時間で遊べます。</p>
+    </section>
 
-          <div class="modal-body">
-            <div>
-              <input v-model="roomNum" placeholder="ルーム番号" />
-            </div>
-            <div>
-              <myButton :text="'参加'" :method="joinRoom" />
-            </div>
-            <div>
-              <myButton class="cancel-btn" :text="'戻る'" :method="hide" />
-            </div>
-          </div>
-        </modal>
-      </div>
-    </div>
-
-    <div>
-      <p>テキストテキストテキストテキストテキスト</p>
-    </div>
-    <div>
-      <GameDescription/>
-    </div>
+    <section class="rule">
+      <h2>あそびかた</h2>
+      <p>
+        本ゲームはPC、スマートフォン両ブラウザで遊ぶことができます。通常の人狼ゲームとは異なり、襲撃や処刑による途中脱落はなく、一晩で1ゲームが決着するシンプルルールになっています。
+      </p>
+      <p>
+        各プレイヤーは6つの役職のうち、ひとつがランダムに割り振られ、各役職に対応する陣営のプレイヤーとして、それぞれの陣営ごとの勝利条件を目指します。
+      </p>
+      <p>各役職と対応する陣営は以下の通りです。</p>
+    </section>
 
     <RoleDescription />
-  </div>
+  </main>
 </template>
 
 <script>
 // @ is an alias to /src
 import RoleDescription from "@/components/RoleDescription.vue";
-import myButton from "@/components/Button.vue"
+
 import axios from "axios";
-import GameDescription from "@/components/GameDescription.vue";
+
+import Title from "@/components/Title";
+import NewsField from "@/components/NewsField";
 
 export default {
   name: "TopPage",
@@ -57,8 +52,9 @@ export default {
   },
   components: {
     RoleDescription,
-    myButton,
-    GameDescription
+
+    Title,
+    NewsField,
   },
   methods: {
     show: function () {
@@ -89,8 +85,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .Top {
+  margin-top: 100rem;
   height: 300px;
   background: linear-gradient(
     108.54deg,
@@ -183,7 +180,13 @@ export default {
   transition: 0.1s;
 }
 
-.cancel-btn a{
+.cancel-btn a {
   border: none;
+}
+
+.chara-image-list {
+  div img {
+    width: 100%;
+  }
 }
 </style>

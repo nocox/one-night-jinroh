@@ -20,7 +20,9 @@
     <h2>集計結果</h2>
     <div>
         <span>選ばれたのは,</span>
-        <u><span>{{tallyResult.selectedPlayer.name}}</span></u>
+        <span v-for="player in tallyResult.selectedPlayers" v-bind:key="player.id">
+            {{player.name}}
+        </span>
         <span>です．</span>
     </div>
     <h2>投票数</h2>
@@ -63,11 +65,11 @@ export default {
                 role: "---"
             }],
             tallyResult: {
-                selectedPlayer: {
+                selectedPlayer: [{
                     id: 1,
                     name: "xxxxx",
                     voteCount: 0
-                },
+                }],
                 players: [{
                     id: 1,
                     name: "xxxxx",

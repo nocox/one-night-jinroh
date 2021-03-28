@@ -22,7 +22,15 @@ public class UserRepository {
         return usersMap;
     }
 
-    private User toDomain(UserEntity entity) {
+    public Map<Long, UserEntity> toMapUserEntitiesByGameId(Long gameId) {
+        Map<Long, UserEntity> usersMap = new HashMap<>();
+        userDao.selectByGame(gameId).forEach(entity -> {
+            usersMap.put(entity.user_id, entity);
+        });
+        return usersMap;
+    }
+
+    public static User toDomain(UserEntity entity) {
         User user = new User(entity.user_id);
         user.setUserName(entity.user_name);
         return user;

@@ -4,14 +4,14 @@ import com.okaka.onenightjinroh.application.domain.GameParticipant;
 import com.okaka.onenightjinroh.application.domain.GameParticipantBean;
 
 public class GameParticipantWithVoteBean extends GameParticipantBean {
-    private Long voteCount;
+    private Integer voteCount;
 
-    public GameParticipantWithVoteBean(GameParticipant gameParticipant, Long voteCount) {
+    public GameParticipantWithVoteBean(GameParticipant gameParticipant, Integer voteCount) {
         super(gameParticipant);
         this.voteCount = voteCount;
     }
 
-    public Long getVoteCount() {
+    public Integer getVoteCount() {
         return voteCount;
     }
 }

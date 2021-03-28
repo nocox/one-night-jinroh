@@ -2,6 +2,7 @@ package com.okaka.onenightjinroh.application.domain;
 
 import com.okaka.jinroh.persistence.GameParticipationDao;
 import com.okaka.jinroh.persistence.GameParticipationEntity;
+import com.okaka.jinroh.persistence.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -50,12 +51,29 @@ public class GameParticipantRepository {
         return gameParticipantMap;
     }
 
-    private static GameParticipant toDomainFromEntity(GameParticipationEntity entity){
+    public static Map<Long, GameParticipationEntity> toMapGameParticipantEntity(List<GameParticipationEntity> gameParticipationEntities){
+        Map<Long, GameParticipationEntity> gameParticipantMap = new HashMap<>();
+        gameParticipationEntities.forEach(entity -> {
+            gameParticipantMap.put(entity.game_participation_id, entity);
+        });
+        return gameParticipantMap;
+    }
+
+    public static GameParticipant toDomainFromEntity(GameParticipationEntity entity){
         GameParticipant gameParticipant = new GameParticipant(entity.game_participation_id);
         gameParticipant.setHostFlg(entity.host_flg);
         gameParticipant.setGame(new Game(entity.game_id));
         gameParticipant.setRole(new Role(entity.role_id));
         gameParticipant.setUser(new User(entity.user_id));
+        return gameParticipant;
+    }
+
+    public static GameParticipant toDomainFromEntity(GameParticipationEntity entity, UserEntity userEntity){
+        GameParticipant gameParticipant = new GameParticipant(entity.game_participation_id);
+        gameParticipant.setHostFlg(entity.host_flg);
+        gameParticipant.setGame(new Game(entity.game_id));
+        gameParticipant.setRole(new Role(entity.role_id));
+        gameParticipant.setUser(UserRepository.toDomain(userEntity));
         return gameParticipant;
     }
 }

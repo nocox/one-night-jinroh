@@ -10,4 +10,16 @@ public class Game {
         this.room = null;
         this.rule = null;
     }
+
+    public Long getGameId() {
+        return gameId;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public Rule getRule() {
+        return rule;
+    }
 }

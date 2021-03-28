@@ -3,19 +3,18 @@ package com.okaka.onenightjinroh.application.service.tally;
 import java.util.List;
 
 public class TallyResultBean {
-    private GameParticipantWithVoteBean selectedPlayer;
+    private List<GameParticipantWithVoteBean> selectedPlayers;
     private List<GameParticipantWithVoteBean> players;
 
-    public GameParticipantWithVoteBean getSelectedPlayer() {
-        return selectedPlayer;
+    public List<GameParticipantWithVoteBean> getSelectedPlayers() {
+        return selectedPlayers;
     }
-
     public List<GameParticipantWithVoteBean> getPlayers() {
         return players;
     }
 
-    public void setSelectedPlayer(GameParticipantWithVoteBean selectedPlayer) {
-        this.selectedPlayer = selectedPlayer;
+    public void setSelectedPlayers(List<GameParticipantWithVoteBean> selectedPlayers) {
+        this.selectedPlayers = selectedPlayers;
     }
 
     public void setPlayers(List<GameParticipantWithVoteBean> players) {

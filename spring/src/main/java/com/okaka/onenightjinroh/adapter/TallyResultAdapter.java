@@ -4,8 +4,10 @@ import com.okaka.jinroh.persistence.GameParticipationDao;
 import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.GameVoteTallyDao;
 import com.okaka.jinroh.persistence.GameVoteTallyEntity;
+import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.onenightjinroh.application.domain.GameParticipantRepository;
+import com.okaka.onenightjinroh.application.domain.RoleRepository;
 import com.okaka.onenightjinroh.application.domain.TallyResult;
 import com.okaka.onenightjinroh.application.domain.UserRepository;
 import com.okaka.onenightjinroh.application.port.TallyResultPort;
@@ -24,6 +26,8 @@ public class TallyResultAdapter implements TallyResultPort {
     GameParticipationDao gameParticipationDao;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
     @Override
     public TallyResult load(Long gameParticipationId) {
@@ -35,12 +39,19 @@ public class TallyResultAdapter implements TallyResultPort {
     public List<TallyResult> searchTallyResults(Long gameId) {
         List<GameVoteTallyEntity> gameVoteTallyEntities = gameVoteTallyDao.selectByGameId(gameId);
         List<GameParticipationEntity> gameParticipationEntities = gameParticipationDao.selectGameParticipantsByGameId(gameId);
-        Map<Long, GameParticipationEntity> mapGameParticipantEntity = GameParticipantRepository.toMapGameParticipantEntity(gameParticipationEntities);
-        Map<Long, UserEntity> mapUserEntities = userRepository.toMapUserEntitiesByGameId(gameId);
+        Map<Long, GameParticipationEntity> participantMap = GameParticipantRepository.toMapGameParticipantEntity(gameParticipationEntities);
+        Map<Long, UserEntity> usersMap = userRepository.toMapUserEntitiesByGameId(gameId);
+        Map<Long, RoleEntity> rolesMap = roleRepository.toMapRoleEntities();
 
         return gameVoteTallyEntities.stream().map(gameVoteTallyEntity -> {
             Long gameParticipationId = gameVoteTallyEntity.game_participation_id;
-            return TallyResultMapper.mapToDomain(gameVoteTallyEntity, mapGameParticipantEntity.get(gameParticipationId), mapUserEntities.get(gameParticipationId));
+            GameParticipationEntity gameParticipationEntity = participantMap.get(gameParticipationId);
+            return TallyResultMapper.mapToDomain(
+                    gameVoteTallyEntity,
+                    gameParticipationEntity,
+                    usersMap.get(gameParticipationEntity.user_id),
+                    rolesMap.get(gameParticipationEntity.role_id)
+            );
         }).collect(Collectors.toList());
     }
 

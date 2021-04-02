@@ -2,6 +2,7 @@ package com.okaka.onenightjinroh.adapter;
 
 import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.GameVoteTallyEntity;
+import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.onenightjinroh.application.domain.Game;
 import com.okaka.onenightjinroh.application.domain.GameParticipant;
@@ -10,9 +11,9 @@ import com.okaka.onenightjinroh.application.domain.TallyResult;
 
 public class TallyResultMapper {
 
-    public static TallyResult mapToDomain(GameVoteTallyEntity gameVoteTallyEntity, GameParticipationEntity gameParticipationEntity, UserEntity userEntity) {
+    public static TallyResult mapToDomain(GameVoteTallyEntity gameVoteTallyEntity, GameParticipationEntity gameParticipationEntity, UserEntity userEntity, RoleEntity roleEntity) {
         Game game = new Game(gameVoteTallyEntity.game_id);
-        GameParticipant gameParticipant = GameParticipantRepository.toDomainFromEntity(gameParticipationEntity, userEntity);
+        GameParticipant gameParticipant = GameParticipantRepository.toDomainFromEntity(gameParticipationEntity, userEntity, roleEntity);
         Integer voteCount = gameVoteTallyEntity.vote_count;
         boolean selected = gameVoteTallyEntity.selected;
 

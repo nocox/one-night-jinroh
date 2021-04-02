@@ -1,6 +1,7 @@
 package com.okaka.onenightjinroh.application.domain;
 
 import com.okaka.jinroh.persistence.RoleDao;
+import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.RoleSelectDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,6 +24,20 @@ public class RoleRepository {
             rolesMap.put(entity.role_id, role);
         });
         return rolesMap;
+    }
+
+    public Map<Long, RoleEntity> toMapRoleEntities() {
+        Map<Long, RoleEntity> rolesMap = new HashMap<>();
+        roleDao.selectAll().forEach(entity -> {
+            rolesMap.put(entity.role_id, entity);
+        });
+        return rolesMap;
+    }
+
+    public static Role toDomains(RoleEntity entity) {
+        Role role = new Role(entity.role_id);
+        role.setRoleName(entity.role_name);
+        return role;
     }
 
     public Map<Long, Role> toMapRolesByRuleId(Long ruleId) {

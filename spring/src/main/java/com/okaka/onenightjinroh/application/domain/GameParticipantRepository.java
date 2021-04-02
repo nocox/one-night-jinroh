@@ -2,6 +2,7 @@ package com.okaka.onenightjinroh.application.domain;
 
 import com.okaka.jinroh.persistence.GameParticipationDao;
 import com.okaka.jinroh.persistence.GameParticipationEntity;
+import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -68,11 +69,11 @@ public class GameParticipantRepository {
         return gameParticipant;
     }
 
-    public static GameParticipant toDomainFromEntity(GameParticipationEntity entity, UserEntity userEntity){
+    public static GameParticipant toDomainFromEntity(GameParticipationEntity entity, UserEntity userEntity, RoleEntity roleEntity){
         GameParticipant gameParticipant = new GameParticipant(entity.game_participation_id);
         gameParticipant.setHostFlg(entity.host_flg);
         gameParticipant.setGame(new Game(entity.game_id));
-        gameParticipant.setRole(new Role(entity.role_id));
+        gameParticipant.setRole(RoleRepository.toDomains(roleEntity));
         gameParticipant.setUser(UserRepository.toDomain(userEntity));
         return gameParticipant;
     }

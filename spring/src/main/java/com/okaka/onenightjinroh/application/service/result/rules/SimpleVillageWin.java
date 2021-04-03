@@ -1,7 +1,5 @@
 package com.okaka.onenightjinroh.application.service.result.rules;
 
-import com.okaka.onenightjinroh.application.domain.GameParticipant;
-import com.okaka.onenightjinroh.application.domain.Role;
 import com.okaka.onenightjinroh.application.domain.TallyResult;
 import com.okaka.onenightjinroh.application.service.result.WinLoseConditionBase;
 
@@ -18,11 +16,7 @@ public class SimpleVillageWin implements WinLoseConditionBase {
         if (selectedPlayers.size() > 2) {
             return false;
         }
-        return selectedPlayers.stream()
-                .map(TallyResult::getGameParticipant)
-                .map(GameParticipant::getRole)
-                .map(Role::getRoleId)
-                .anyMatch(roleId -> roleId == 2); // 2: 人狼
+        return RuleUtils.containsRole(selectedPlayers, 2L);
     }
 
     @Override

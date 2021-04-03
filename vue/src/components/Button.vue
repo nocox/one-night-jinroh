@@ -14,7 +14,7 @@ $color: #50a0f6;
 
 a {
   display: inline-block;
-  max-width: 120px;
+  // max-width: 120px;
   margin-top: 10px;
   padding: 5px 40px;
   border-radius: 30px;

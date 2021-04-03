@@ -5,15 +5,15 @@ import com.okaka.onenightjinroh.application.service.result.WinLoseConditionBase;
 
 import java.util.List;
 
-public class SimpleVillageWin implements WinLoseConditionBase {
+public class SuccessHideJinrohWin implements WinLoseConditionBase {
     @Override
     public boolean condition(List<TallyResult> tallyResults) {
-        // 選ばれた人が2人以下で，その中に人狼がいた
+        // 選ばれた人が3人以上で，村の中に人狼がいる．
         List<TallyResult> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
-        if (selectedPlayers.size() > 2) {
+        if (selectedPlayers.size() < 3) {
             return false;
         }
-        return RuleUtils.containsRole(selectedPlayers, 2L);
+        return RuleUtils.containsRole(tallyResults, 2L);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class SimpleVillageWin implements WinLoseConditionBase {
 
     @Override
     public String getResultText() {
-        return "村人側の勝利";
+        return "人狼側の勝利(潜伏成功)";
     }
 }

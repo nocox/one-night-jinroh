@@ -2,8 +2,11 @@ package com.okaka.onenightjinroh.application.service.result;
 
 import com.okaka.onenightjinroh.application.domain.TallyResult;
 import com.okaka.onenightjinroh.application.port.TallyResultPort;
+import com.okaka.onenightjinroh.application.service.result.rules.FailPeaceVillage;
 import com.okaka.onenightjinroh.application.service.result.rules.SimpleJinrohWin;
 import com.okaka.onenightjinroh.application.service.result.rules.SimpleVillageWin;
+import com.okaka.onenightjinroh.application.service.result.rules.SuccessHideJinrohWin;
+import com.okaka.onenightjinroh.application.service.result.rules.SuccessPeaceVillage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +21,10 @@ public class JudgeResultUseCase {
 
     List<WinLoseConditionBase> winLoseConditions = Arrays.asList(
             new SimpleVillageWin(),
-            new SimpleJinrohWin()
+            new SimpleJinrohWin(),
+            new SuccessPeaceVillage(),
+            new FailPeaceVillage(),
+            new SuccessHideJinrohWin()
     );
 
     public WinLoseConditionBase judge(Long gameId) {

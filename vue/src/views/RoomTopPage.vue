@@ -1,53 +1,63 @@
 <template>
-  <div id="room-page">
-    <h1>ルームトップページ</h1>
-
+  <main id="room-page">
     <!-- ルーム番号を表示 -->
-    <div class="room-num">
-      <h2>
-        部屋番号:
+    <section class="room-num">
+      <h2>へやばんごう</h2>
+      <div class="copy-area">
         <input id="copyTarget" type="text" :value="uuid" readonly />
-        <button @click="copyToClipboard">コピー</button>
-      </h2>
-    </div>
-    <!-- 参加者一覧を表示 -->
-    <div class="player">
-      <h2>参加者一覧</h2>
-      <div class="player-list">
-        <ul>
-          <li v-for="player in playerList" v-bind:key="player.id">
-            {{ player.name }}
-          </li>
-        </ul>
+        <button @click="copyToClipboard">
+          <span class="material-icons"> content_copy </span>
+        </button>
       </div>
-    </div>
+      <p>この番号を友達に教えてあげてね！</p>
+      <p v-show="is_copied">コピーできました！</p>
+    </section>
+
+    <!-- 参加者一覧を表示 -->
+
+    <section class="player-list">
+      <h2>さんかしゃ</h2>
+      <ul>
+        <li v-for="player in playerList" v-bind:key="player.id">
+          {{ player.name }}
+        </li>
+      </ul>
+    </section>
 
     <!-- スタートボタンを表示（ホストのみ）-->
-    <div>
-      <myButton :text="'スタート'" :method="gameStart" v-if="hostFlg" />
-    </div>
-
-    <!-- ゲーム開始を通知するモーダル -->
-    <modal name="game-rule-modal" :clickToClose="false" :scrollable="true">
-      <div class="modal-header">
-        <h2>ゲームを開始します</h2>
+    <section class="start">
+      <div class="button-area">
+        <myButton class="start-btn" :text="'はじめる！'" :method="gameStart" v-if="hostFlg" />
+        <p v-if="!hostFlg">
+          ホストがゲームを始めるまでお待ちください！
+        </p>
       </div>
 
-      <div class="modal-content">
-        <h3>人数:{{ playerCount }}</h3>
 
-        <div class="role-list">
-          <h3>役職一覧:</h3>
-          <ul>
-            <li v-for="role in roleList" v-bind:key="role.id">
-              {{ role.roleName }}
-            </li>
-          </ul>
+      <!-- ゲーム開始を通知するモーダル -->
+      <modal name="game-rule-modal" :clickToClose="false" :scrollable="true">
+        <div class="modal-header">
+          <h2>ゲームを開始します</h2>
         </div>
-        <myButton :text="'OK'" :method="gotoGamePage" />
-      </div>
-    </modal>
-  </div>
+
+
+
+        <div class="modal-content">
+          <h3>人数:{{ playerCount }}</h3>
+
+          <div class="role-list">
+            <h3>役職一覧:</h3>
+            <ul>
+              <li v-for="role in roleList" v-bind:key="role.id">
+                {{ role.roleName }}
+              </li>
+            </ul>
+          </div>
+          <myButton :text="'OK'" :method="gotoGamePage" />
+        </div>
+      </modal>
+    </section>
+  </main>
 </template>
 
 <script>
@@ -72,6 +82,7 @@ export default {
       hostFlg: true,
       roleList: [],
       playerCount: 0,
+      is_copied: false,
     };
   },
   components: {
@@ -119,6 +130,7 @@ export default {
       let copyTarget = document.getElementById("copyTarget");
       copyTarget.select();
       document.execCommand("Copy");
+      this.is_copied = true;
     },
   },
   mounted() {
@@ -140,34 +152,22 @@ export default {
 
 <style lang="scss" scoped>
 #room-page {
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 0 8rem;
+  text-align: center;
+}
 
-  .player {
+.room-num {
+  .copy-area {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    .player-list {
-      ul li {
-        display: inline-block;
-        background-color: aqua;
-        margin: 0 1rem;
-        list-style: none;
-      }
+    #copyTarget {
+      width: 16rem;
+      height: 2em;
     }
-  }
-
-  .start {
-    a {
-      display: block;
-
-      width: 10rem;
-      height: 2rem;
-
-      margin: 0 auto;
-
-      background-color: aqua;
+    button {
+      margin-left: 0.5rem;
+      border: none;
+      background: none;
       &:hover {
         cursor: pointer;
       }
@@ -175,18 +175,38 @@ export default {
   }
 }
 
-.role-list {
+.player-list {
+  height: 24rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  color: #fff;
+  background: url("../assets/images/room-top-bg.png") no-repeat center center;
+  background-size: contain;
   ul {
-    display: flex;
-    justify-content: center;
-    padding: 0;
     li {
-      margin: auto;
-      text-align: center;
       list-style: none;
-      width: 5rem;
-      background-color: aqua;
     }
   }
 }
+
+.start{
+  .button-area{
+
+    .start-btn{
+      width: 10rem;
+    padding:1rem 2rem;
+    background-color: #BD625A;
+    border:none;
+    border-radius: 10px;
+    color:#fff;
+  }
+  p{
+    margin-top: 2rem;
+  }
+    }
+}
+
 </style>

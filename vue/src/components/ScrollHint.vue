@@ -1,15 +1,14 @@
 <template>
-<div>
+  <div>
     <div class="scroll-hint-top" v-show="is_scrollableUp"></div>
     <div class="scroll-hint-bottom" v-show="is_scrollableDown"></div>
-</div>
-    
+  </div>
 </template>
 
 <script>
 export default {
-    name:"ScrollHint",
-    data() {
+  name: "ScrollHint",
+  data() {
     return {
       is_scrollableUp: false,
       is_scrollableDown: false,
@@ -17,7 +16,7 @@ export default {
   },
   methods: {
     check_scrollableUp: function () {
-      if (pageYOffset > 0) {
+      if (window.pageYOffset > 0) {
         this.is_scrollableUp = true;
       } else {
         this.is_scrollableUp = false;
@@ -32,8 +31,8 @@ export default {
         document.body.clientHeight,
         document.documentElement.clientHeight
       );
-      const pageMostBottom = scrollHeight - innerHeight;
-      const scrollTop = pageYOffset || document.documentElement.scrollTop;
+      const pageMostBottom = scrollHeight - window.innerHeight;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       if (scrollTop < pageMostBottom) {
         this.is_scrollableDown = true;
       } else {
@@ -41,19 +40,22 @@ export default {
       }
     },
   },
+  mounted: function () {
+      this.check_scrollableUp();
+      this.check_scrollableDown();
+  },
   created() {
-    addEventListener("scroll", this.check_scrollableUp);
-    addEventListener("scroll", this.check_scrollableDown);
+    addEventListener("scroll load resize", this.check_scrollableUp);
+    addEventListener("scroll load resize", this.check_scrollableDown);
   },
   destoryed() {
-    removeEventListener("scroll", this.check_scrollableUp);
-    removeEventListener("scroll", this.check_scrollableDown);
+    removeEventListener("scroll load resize", this.check_scrollableUp);
+    removeEventListener("scroll load resize", this.check_scrollableDown);
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-
 .scroll-hint-top {
   position: fixed;
   top: 0;

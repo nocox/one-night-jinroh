@@ -1,40 +1,23 @@
 <template>
-    <div>
-      <h2>ワンナイト人狼とは</h2>
-      <div class="list-container">
-
-        <ul>
-          <li>
-            ワンナイト人狼は、<a href="https://twitter.com/1nite_jinro">オオカミさん氏</a>作成のカードゲーム人狼を簡単にしたゲームです。<a href="http://1nite-jinro.com/">オフィシャルWEBサイト</a>
-          </li>  
-          <li>
-            <a href="http://commons.nicovideo.jp/material/nc63613">【ワンナイト人狼】ルールブック（公式）</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+  
+    <section class="game-description">
+      <h2>ゆるふわ人狼とは</h2>
+      <p>
+        殺伐とした心理戦を楽しむ「人狼ゲーム」をかわいいキャラ、シンプルなルールにアレンジしたゲームです。
+      </p>
+      <p>3～7人でふわっと簡単に短時間で遊べます。</p>
+    </section>
+  
 </template>
 
 <script>
-
 export default {
-    name:"GameDescription",
-}
+  name: "GameDescription",
+};
 </script>
 
-<style>
-
-.list-container{
-  display: flex;
-  justify-content: center;
+<style lang="scss" scoped>
+p{
+  margin-left:.5rem;
 }
-
-
-li{
-  margin: 0, auto;
-  text-align: left;
-  max-width: 60rem;
-}
-
-
 </style>

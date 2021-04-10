@@ -1,127 +1,212 @@
 <template>
-    <div>
-        <!-- <IsMatch_rule_players /> -->
+  <main id="room-page">
+    <!-- ルーム番号を表示 -->
+    <section class="room-num">
+      <h2>へやばんごう</h2>
+      <div class="copy-area">
+        <input id="copyTarget" type="text" :value="uuid" readonly />
+        <button @click="copyToClipboard">
+          <span class="material-icons"> content_copy </span>
+        </button>
+      </div>
+      <p>この番号を友達に教えてあげてね！</p>
+      <p v-show="is_copied">コピーできました！</p>
+    </section>
 
-        <div id="RoomNum">
-            部屋番号：ｘｘｘｘ
+    <!-- 参加者一覧を表示 -->
+
+    <section class="player-list">
+      <h2>さんかしゃ</h2>
+      <ul>
+        <li v-for="player in playerList" v-bind:key="player.id">
+          {{ player.name }}
+        </li>
+      </ul>
+    </section>
+
+    <!-- スタートボタンを表示（ホストのみ）-->
+    <section class="start">
+      <div class="button-area">
+        <myButton class="start-btn" :text="'はじめる！'" :method="gameStart" v-if="hostFlg" />
+        <p v-if="!hostFlg">
+          ホストがゲームを始めるまでお待ちください！
+        </p>
+      </div>
+
+
+      <!-- ゲーム開始を通知するモーダル -->
+      <modal name="game-rule-modal" :clickToClose="false" :scrollable="true">
+        <div class="modal-header">
+          <h2>ゲームを開始します</h2>
         </div>
 
-        <div id="player-area">
-            <PlayerList />
 
-        </div>        
-        
-        <!-- <div id="rule-area">
-            <div class="change-member">
-                <a href="">
-                    人数変更
-                </a>
-                ：{{ join_num=3 }}人
-            </div>
-            <RoleSetting role="村人サイド" />
-            <RoleSetting role="人狼サイド" />
-        </div>         -->
-        
-        <div id="btn-area">
-            <!-- <a href="">
-                準備OK
-            </a>：{{ ready_num=1 }}/ {{ join_num }}人 -->
-            <a v-on:click="show" >
-                ゲームスタート
-            </a>
-            <modal name="start">
-                <p>このルールで開始します</p>
-                <p>人数：{{ player_num }}人</p>
-                <div class="">
-                    <div>村人サイド</div>
 
-                    <p>VS</p>
-                    <div>人狼サイド</div>
-                </div>
-                <a v-on:click="hide">戻る</a>
-            </modal>
-        </div>        
-        
-        <GameDescription />
-    </div>
+        <div class="modal-content">
+          <h3>人数:{{ playerCount }}</h3>
+
+          <div class="role-list">
+            <h3>役職一覧:</h3>
+            <ul>
+              <li v-for="role in roleList" v-bind:key="role.id">
+                {{ role.roleName }}
+              </li>
+            </ul>
+          </div>
+          <myButton :text="'OK'" :method="gotoGamePage" />
+        </div>
+      </modal>
+    </section>
+  </main>
 </template>
 
 <script>
-import GameDescription from "@/components/GameDescription.vue"
-// import IsMatch_rule_players from "@/components/IsMatch_rule_players.vue"
-import PlayerList from "@/components/PlayerList.vue"
-// import RoleSetting from "@/components/RoleSetting.vue"
+import axios from "axios";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
+
+import myButton from "@/components/Button.vue";
 
 export default {
-    name: "RoomTopPage",
-    props:["join_num", "ready_num", ],
-    data: function(){
-        return {
-            player_num : 3,
-        }
-    },
-    components:{
-        GameDescription,
-        // IsMatch_rule_players,
-        PlayerList,
-        // RoleSetting
-    },
-    methods: {
-        show: function(){
-            this.$modal.show("start");
+  name: "RoomTopPage",
+  data() {
+    return {
+      uuid: "yyyyy",
+      playerList: [
+        {
+          userID: 1,
+          name: "xxxxx",
+          hostFlg: true,
         },
-        hide: function(){
-            this.$modal.hide("start");
-        }
-    }
-}
+      ],
+      hostFlg: true,
+      roleList: [],
+      playerCount: 0,
+      is_copied: false,
+    };
+  },
+  components: {
+    myButton,
+  },
+  methods: {
+    // ホストがスタートボタンを押下した時の処理
+    gameStart: function () {
+      axios
+        .get("http://localhost:8080/game-start", { withCredentials: true })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch(() => {
+          this.$router.push("/room-top");
+        });
+    },
+    // モーダル関係の処理
+    show: function () {
+      this.$modal.show("game-rule-modal");
+    },
+    hide: function () {
+      this.$modal.hide("game-rule-modal");
+    },
+    gotoGamePage: function () {
+      // モーダルを隠してページ遷移
+      this.$modal.hide("game-rule-modal");
+      this.$router.push("/night-page");
+    },
+    configWebSocket: function () {
+      this.socket = new SockJS("http://localhost:8080/jinroh-websocket");
+      this.stompClient = Stomp.over(this.socket);
+      this.stompClient.connect({}, (frame) => {
+        console.log("Connected: " + frame);
+        console.log("Room name: " + this.uuid);
+        this.stompClient.subscribe("/topic/" + this.uuid, (value) => {
+          console.log("##### subscribe!!: " + value.body);
+          this.roleList = JSON.parse(value.body).roleList;
+          this.playerCount = JSON.parse(value.body).playerCount;
+          this.$modal.show("game-rule-modal");
+        });
+      });
+    },
+    copyToClipboard: function () {
+      let copyTarget = document.getElementById("copyTarget");
+      copyTarget.select();
+      document.execCommand("Copy");
+      this.is_copied = true;
+    },
+  },
+  mounted() {
+    axios
+      .get("http://localhost:8080/room-index", { withCredentials: true })
+      .then((response) => {
+        console.log(response.data);
+        this.uuid = response.data.uuid;
+        this.playerList = response.data.userList;
+        this.hostFlg = response.data.hostFlg;
+        this.configWebSocket();
+      })
+      .catch(() => {
+        this.$router.push("/top");
+      });
+  },
+};
 </script>
 
-<style>
-    #RoomNum{
-        border: solid 1px #50A0F6;
-        width:20rem;
-        margin: 1rem auto;
-    }
+<style lang="scss" scoped>
+#room-page {
+  text-align: center;
+}
 
-    #player-area{
-        background-color: #b3b3b3;
-        padding:10rem;
+.room-num {
+  .copy-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    #copyTarget {
+      width: 16rem;
+      height: 2em;
     }
+    button {
+      margin-left: 0.5rem;
+      border: none;
+      background: none;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
 
-    #rule-area{
-        padding:10rem;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
+.player-list {
+  height: 24rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
-    #rule-area .change-member a{
-        font-weight: bold;
-        display: inline-block;
-        text-decoration: none;
-        color: #50A0F6;
-        border: 1px solid #50A0F6;
-        border-radius: 1rem;
-        padding: 1rem;
+  color: #fff;
+  background: url("../assets/images/room-top-bg.png") no-repeat center center;
+  background-size: contain;
+  ul {
+    li {
+      list-style: none;
     }
+  }
+}
 
-    #btn-area{
-        background-color: #b3b3b3;
-        padding:10rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+.start{
+  .button-area{
+
+    .start-btn{
+      width: 10rem;
+    padding:1rem 2rem;
+    background-color: #BD625A;
+    border:none;
+    border-radius: 10px;
+    color:#fff;
+  }
+  p{
+    margin-top: 2rem;
+  }
     }
-    #btn-area a{
-        display: inline-block;
-        width: 8rem;
-        background-color: white;
-        padding: 2rem;
-        margin: 0 2rem;
-        text-decoration: none;
-        color: #50A0F6;
-        border:1px solid #50A0F6;
-        border-radius: 1rem;
-    }
+}
+
 </style>

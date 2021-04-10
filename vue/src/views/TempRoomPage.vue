@@ -13,7 +13,7 @@
         </ul>
     </div>
     <div v-if="hostFlg">
-        <div class="start" v-on:click="gameStart">スタート</div>
+        <button class="start" v-on:click="gameStart">スタート</button>
     </div>
     <modal name="game-rule-modal" :clickToClose="false">
         <div class="modal-header">
@@ -33,7 +33,7 @@
                 </ul>
             </div>
             <div>
-                <a v-on:click="gotoGamePage">OK</a>
+                <button v-on:click="gotoGamePage">OK</button>
             </div>
         </div>
     </modal>

@@ -17,14 +17,14 @@
         </ul>
     </div>
     <div v-if="hostFlag">
-        <div class="start" v-on:click="endTalk">話し合いを終了する</div>
+        <button class="start" v-on:click="endTalk">話し合いを終了する</button>
     </div>
     <modal name="talk-start-modal">
         <div class="modal-header">
             <h2>話し合いを始めてください</h2>
         </div>
         <div>
-            <a v-on:click="closeModal">OK</a>
+            <button v-on:click="closeModal">OK</button>
         </div>
     </modal>
 </div>

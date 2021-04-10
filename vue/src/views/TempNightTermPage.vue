@@ -17,7 +17,7 @@
         </ul>
     </div>
     <div>
-        <a v-on:click="doneNightAct">完了</a>
+        <button v-on:click="doneNightAct">完了</button>
     </div>
 </div>
 </template>

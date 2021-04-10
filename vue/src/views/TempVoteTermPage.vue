@@ -33,7 +33,7 @@
             <h2>話し合いが終了しました．投票してください</h2>
         </div>
         <div>
-            <a v-on:click="closeModal">OK</a>
+            <button v-on:click="closeModal">OK</button>
         </div>
     </modal>
 </div>

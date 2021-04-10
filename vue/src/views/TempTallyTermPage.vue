@@ -33,7 +33,7 @@
         </li>
     </ul>
     <div v-if="hostFlag">
-        <div class="start" v-on:click="gotoResult">結果ページに移動する</div>
+        <button class="start" v-on:click="gotoResult">結果ページに移動する</button>
     </div>
 
     <modal name="done-tally-modal">
@@ -41,7 +41,7 @@
             <h2>全員投票が完了しました．集計結果を表示します．</h2>
         </div>
         <div>
-            <a v-on:click="closeModal">OK</a>
+            <button v-on:click="closeModal">OK</button>
         </div>
     </modal>
 </div>

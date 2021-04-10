@@ -35,13 +35,15 @@
     </div>
 
     <div>
-      <myButton :text="'完了'" />
+      <myButton :method="doneNightAct" :text="'完了'" />
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 import RoleCard from "@/components/RoleCard.vue";
 import myButton from "@/components/Button.vue";
@@ -78,13 +80,38 @@ export default {
       .get("http://localhost:8080/night-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        this.playerName = response.data.playerName;
-        this.playerRole = response.data.playerRole;
-        this.otherPlayerList = response.data.otherPlayerList;
+        this.playerName = response.data.gameIndex.playerName;
+        this.playerRole = response.data.gameIndex.playerRole;
+        this.otherPlayerList = response.data.gameIndex.otherPlayerList;
+        this.configWebSocket(response.data.gameId);
       })
       .catch(() => {
         this.$router.push("/room-top");
       });
+  },
+  methods: {
+    configWebSocket: function (gameId) {
+      this.socket = new SockJS("http://localhost:8080/jinroh-websocket");
+      this.stompClient = Stomp.over(this.socket);
+      this.stompClient.connect({}, (frame) => {
+        console.log("Connected: " + frame);
+        console.log("Room name: " + gameId);
+        this.stompClient.subscribe("/topic/" + gameId, () => {
+          this.$router.push("/temp-talk");
+        });
+      });
+    },
+    doneNightAct: () => {
+      axios
+        .get("http://localhost:8080/done-night-act", { withCredentials: true })
+        .then((response) => {
+          console.log(response.data);
+          console.log("夜の行動完了");
+        })
+        .catch(() => {
+          console.log("夜の行動完了に失敗しました");
+        });
+    },
   },
 };
 </script>

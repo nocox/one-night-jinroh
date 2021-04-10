@@ -10,7 +10,12 @@
       <router-link to="/room-top">Room Top Page</router-link> |
       <router-link to="/night-page">Night Page</router-link> |
       <router-link to="/temp-room">Temp Room Page</router-link> |
-      <router-link to="/temp-night">Temp Night Page</router-link>
+      <router-link to="/temp-night">Temp Night Page</router-link> |
+      <router-link to="/temp-talk">Temp Talk Page</router-link> |
+      <router-link to="/temp-vote">Temp Vote Page</router-link> |
+      <router-link to="/temp-tally">Temp Tally Page</router-link> |
+      <router-link to="/temp-result">Temp Result Page</router-link>
+
     </div>
     <div class="scroll-hint-bottom" v-show="is_scrollableDown"></div>
   </div>

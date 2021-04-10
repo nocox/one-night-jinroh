@@ -114,4 +114,4 @@ Caused by: java.io.IOException: Broken pipe
 	at org.gradle.internal.remote.internal.inet.SocketConnection$SocketOutputStream.write(SocketConnection.java:253)
 	at com.esotericsoftware.kryo.io.Output.flush(Output.java:163)
 	... 40 more
-Daemon vm is shutting down... The daemon has exited normally or was terminated in response to a user interrupt.
+Daemon vm is shutting down... The daemon has exited normally or was terminated in response to a userEntity interrupt.

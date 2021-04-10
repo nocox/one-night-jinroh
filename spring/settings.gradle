@@ -1,1 +1,2 @@
 rootProject.name = 'one-night-jinroh'
+include "jinroh-persistence"

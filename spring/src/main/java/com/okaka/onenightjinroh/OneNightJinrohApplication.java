@@ -1,5 +1,12 @@
 package com.okaka.onenightjinroh;
 
+import com.okaka.jinroh.persistence.Reservation;
+import com.okaka.jinroh.persistence.ReservationAdapter;
+import com.okaka.jinroh.persistence.ReservationDao;
+import com.okaka.jinroh.persistence.TEvent;
+import com.okaka.jinroh.persistence.TEventDao;
+import com.okaka.jinroh.persistence.TUser;
+import com.okaka.jinroh.persistence.TUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.List;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.okaka")
 @RestController
 public class OneNightJinrohApplication {
 
@@ -22,7 +29,7 @@ public class OneNightJinrohApplication {
 	}
 
 	@Autowired
-	ReservationDao reservationDao;
+	ReservationAdapter reservationAdapter;
 
 	@Autowired
 	TEventDao tEventDao;
@@ -34,9 +41,7 @@ public class OneNightJinrohApplication {
 	@Bean
 	CommandLineRunner runner() {
 		Arrays.asList("spring", "spring boot", "spring cloud", "doma").forEach(s -> {
-			Reservation r = new Reservation();
-			r.name = s;
-			reservationDao.insert(r);
+			reservationAdapter.insert(s);
 		});
 
 		Arrays.asList("ライブ", "握手会").forEach(s -> {
@@ -58,22 +63,20 @@ public class OneNightJinrohApplication {
 	@RequestMapping(path = "/")
 	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> all() {
-		return reservationDao.selectAll();
+		return reservationAdapter.selectAll();
 	}
 
 	@RequestMapping(path = "/", params = "name")
 	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> name(@RequestParam String name) {
-		return reservationDao.selectByName(name);
+		return reservationAdapter.selectByName(name);
 	}
 
 	@RequestMapping(path = "/insert", params = "name")
 	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> insert(@RequestParam String name) {
-		Reservation reservation = new Reservation();
-		reservation.name = name;
-		reservationDao.insert(reservation);
-		return reservationDao.selectAll();
+		reservationAdapter.insert(name);
+		return reservationAdapter.selectAll();
 	}
 
 	@RequestMapping(path = "/all_user")

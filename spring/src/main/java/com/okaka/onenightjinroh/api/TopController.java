@@ -1,9 +1,9 @@
 package com.okaka.onenightjinroh.api;
 
 import com.okaka.jinroh.persistence.RoomEntity;
+import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
 import com.okaka.onenightjinroh.application.service.top.CreateRoomUseCase;
 import com.okaka.onenightjinroh.application.service.top.CreateRoomUseCaseDto;
-import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
 import com.okaka.onenightjinroh.application.service.top.JoinedRoomUseCase;
 import com.okaka.onenightjinroh.application.service.top.JoinedRoomUseCaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class TopController {
     JoinedRoomUseCase joinedRoomUseCase;
 
     @RequestMapping(path = "/create-room")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     int createRoom(HttpSession session) {
         CreateRoomUseCaseDto dto = createRoomUseCase.createRoom();
 
@@ -36,7 +36,7 @@ public class TopController {
     }
 
     @RequestMapping(path = "/join-room")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     int joinedRoom(@RequestParam String uuid, HttpSession session) {
         RoomEntity roomEntity = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
         JoinedRoomUseCaseDto dto = joinedRoomUseCase.joinedRoom(roomEntity.room_id);

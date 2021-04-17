@@ -26,7 +26,7 @@ public class ShowResultTermController {
     GameParticipantRepository gameParticipantRepository;
 
     @RequestMapping(path = "/result-index")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     public ShowResultTermIndexBean getShowResultTermIndex() {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);

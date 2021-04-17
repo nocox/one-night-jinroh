@@ -18,7 +18,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/jinroh-websocket")
-                .setAllowedOrigins("http://localhost:8081")
+                .setAllowedOrigins("http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com")
                 .withSockJS();
     }
 }

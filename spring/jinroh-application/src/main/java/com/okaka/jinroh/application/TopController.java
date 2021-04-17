@@ -26,7 +26,7 @@ public class TopController {
     HttpSession session;
 
     @RequestMapping(path = "/create-room")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     int createRoom() {
         Room room = new Room();
         room.uuid = UUID.randomUUID().toString();
@@ -50,7 +50,7 @@ public class TopController {
     }
 
     @RequestMapping(path = "/join-room")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     int joinedRoom(@RequestParam String uuid) {
         Optional<Room> optRoom = roomDao.selectRoomByUUID(uuid);
         if (optRoom.isPresent() == false) {

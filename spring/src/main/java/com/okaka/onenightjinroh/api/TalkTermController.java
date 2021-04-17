@@ -22,7 +22,7 @@ public class TalkTermController {
     SimpMessagingTemplate messagingTemplate;
 
     @RequestMapping(path = "/talk-index")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     public TalkTermIndexBean getTalkTermIndex() {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);
@@ -34,7 +34,7 @@ public class TalkTermController {
     }
 
     @RequestMapping(path = "/end-talk")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     public int endTalk() {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);

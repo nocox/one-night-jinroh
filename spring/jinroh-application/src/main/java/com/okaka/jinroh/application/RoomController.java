@@ -41,7 +41,7 @@ public class RoomController {
     private SimpMessagingTemplate messagingTemplate;
 
     @RequestMapping(path = "/room-index")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     RoomBean getRoom() {
         String uuid = session.getAttribute("room_uuid").toString();
         String strUserId = session.getAttribute("user_id").toString();
@@ -61,7 +61,7 @@ public class RoomController {
     }
 
     @RequestMapping(path = "/game-start")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     int startGame() {
         String uuid = session.getAttribute("room_uuid").toString();
         Optional<Room> optRoom = roomDao.selectRoomByUUID(uuid);

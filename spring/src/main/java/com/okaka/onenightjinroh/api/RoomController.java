@@ -1,11 +1,11 @@
 package com.okaka.onenightjinroh.api;
 
 import com.okaka.jinroh.persistence.RoomEntity;
-import com.okaka.onenightjinroh.application.service.room.GameStartWebSocketBean;
-import com.okaka.onenightjinroh.application.service.room.RoomIndexBean;
 import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
 import com.okaka.onenightjinroh.application.domain.StartGameValidate;
+import com.okaka.onenightjinroh.application.service.room.GameStartWebSocketBean;
 import com.okaka.onenightjinroh.application.service.room.GetRoomIndexUseCase;
+import com.okaka.onenightjinroh.application.service.room.RoomIndexBean;
 import com.okaka.onenightjinroh.application.service.room.StartGameUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -37,7 +37,7 @@ public class RoomController {
     private StartGameValidate startGameValidate;
 
     @RequestMapping(path = "/room-index")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     RoomIndexBean getRoom() {
         String uuid = session.getAttribute("room_uuid").toString();
         String strUserId = session.getAttribute("user_id").toString();
@@ -47,7 +47,7 @@ public class RoomController {
     }
 
     @RequestMapping(path = "/game-start")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+    @CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"}, allowCredentials = "true")
     int startGame() {
         String uuid = session.getAttribute("room_uuid").toString();
         Long userId = Long.valueOf(session.getAttribute("user_id").toString());

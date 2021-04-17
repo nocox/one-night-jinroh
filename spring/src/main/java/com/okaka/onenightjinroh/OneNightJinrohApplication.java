@@ -2,7 +2,6 @@ package com.okaka.onenightjinroh;
 
 import com.okaka.jinroh.persistence.Reservation;
 import com.okaka.jinroh.persistence.ReservationAdapter;
-import com.okaka.jinroh.persistence.ReservationDao;
 import com.okaka.jinroh.persistence.TEvent;
 import com.okaka.jinroh.persistence.TEventDao;
 import com.okaka.jinroh.persistence.TUser;
@@ -61,26 +60,26 @@ public class OneNightJinrohApplication {
 	}
 
 	@RequestMapping(path = "/")
-	@CrossOrigin(origins = {"http://localhost:8081"})
+	@CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"})
 	List<Reservation> all() {
 		return reservationAdapter.selectAll();
 	}
 
 	@RequestMapping(path = "/", params = "name")
-	@CrossOrigin(origins = {"http://localhost:8081"})
+	@CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"})
 	List<Reservation> name(@RequestParam String name) {
 		return reservationAdapter.selectByName(name);
 	}
 
 	@RequestMapping(path = "/insert", params = "name")
-	@CrossOrigin(origins = {"http://localhost:8081"})
+	@CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"})
 	List<Reservation> insert(@RequestParam String name) {
 		reservationAdapter.insert(name);
 		return reservationAdapter.selectAll();
 	}
 
 	@RequestMapping(path = "/all_user")
-	@CrossOrigin(origins = {"http://localhost:8081"})
+	@CrossOrigin(origins = {"http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com"})
 	List<TUser> allUser() {
 		return tUserDao.selectTUserAll();
 	}

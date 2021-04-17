@@ -65,7 +65,7 @@ export default {
     },
     createRoom: function () {
       axios
-        .get("http://localhost:8080/create-room", { withCredentials: true })
+        .get("http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/create-room", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
           this.$router.push("/room-top");
@@ -73,7 +73,7 @@ export default {
     },
     joinRoom: function () {
       axios
-        .get("http://localhost:8080/join-room?uuid=" + this.roomNum, {
+        .get("http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/join-room?uuid=" + this.roomNum, {
           withCredentials: true,
         })
         .then((response) => {

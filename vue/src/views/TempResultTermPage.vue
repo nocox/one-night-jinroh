@@ -44,7 +44,7 @@ export default {
         }
     },
     mounted() {
-        axios.get('http://localhost:8080/result-index', {withCredentials: true})
+        axios.get('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/result-index', {withCredentials: true})
         .then((response) => {
             console.log(response.data);
             this.judgeText = response.data.judgeText;

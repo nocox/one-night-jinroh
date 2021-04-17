@@ -79,7 +79,7 @@ export default {
         }
     },
     mounted() {
-        axios.get('http://localhost:8080/tally-index', {withCredentials: true})
+        axios.get('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/tally-index', {withCredentials: true})
         .then((response) => {
             console.log(response.data);
             this.playerName = response.data.gameIndex.playerName;
@@ -99,7 +99,7 @@ export default {
             this.$modal.hide("done-tally-modal");
         },
         configWebSocket: function(gameId) {
-            this.socket = new SockJS('http://localhost:8080/jinroh-websocket');
+            this.socket = new SockJS('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/jinroh-websocket');
             this.stompClient = Stomp.over(this.socket);
             this.stompClient.connect({}, frame => {
                 console.log('Connected: ' + frame);
@@ -109,7 +109,7 @@ export default {
             });
         },
         gotoResult: function() {
-            axios.get('http://localhost:8080/show-result',{withCredentials: true})
+            axios.get('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/show-result',{withCredentials: true})
             .then((response) => {
                 console.log(response.data);
             }).catch(() => {

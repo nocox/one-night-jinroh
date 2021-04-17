@@ -77,7 +77,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/night-index", { withCredentials: true })
+      .get("http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com:8080/night-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         this.playerName = response.data.gameIndex.playerName;
@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     configWebSocket: function (gameId) {
-      this.socket = new SockJS("http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/jinroh-websocket");
+      this.socket = new SockJS("http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com:8080/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect({}, (frame) => {
         console.log("Connected: " + frame);
@@ -103,7 +103,7 @@ export default {
     },
     doneNightAct: () => {
       axios
-        .get("http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/done-night-act", { withCredentials: true })
+        .get("http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com:8080/done-night-act", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
           console.log("夜の行動完了");

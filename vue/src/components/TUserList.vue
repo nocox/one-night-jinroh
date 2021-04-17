@@ -24,14 +24,14 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/')
+    axios.get('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com:8080/')
       .then((response) => {
         this.tUserList = response.data;
       });
   },
   methods: {
     addTUser: function () {
-      axios.get('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/insert?name=' + this.userName)
+      axios.get('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com:8080/insert?name=' + this.userName)
       .then((response) => {
         this.tUserList = response.data;
       });

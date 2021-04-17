@@ -65,7 +65,7 @@ export default {
         }
     },
     mounted() {
-        axios.get('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/vote-index', {withCredentials: true})
+        axios.get('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com:8080/vote-index', {withCredentials: true})
         .then((response) => {
             console.log(response.data);
             this.playerName = response.data.gameIndex.playerName;
@@ -86,7 +86,7 @@ export default {
             this.$modal.hide("vote-start-modal");
         },
         vote() {
-            axios.post('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/vote', 
+            axios.post('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com:8080/vote', 
                 JSON.stringify({gameParticipantId: this.checkPlayerId}), 
                 {
                     withCredentials: true,
@@ -102,7 +102,7 @@ export default {
             });
         },
         configWebSocket: function(gameId) {
-            this.socket = new SockJS('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com/jinroh-websocket');
+            this.socket = new SockJS('http://ec2-52-198-98-214.ap-northeast-1.compute.amazonaws.com:8080/jinroh-websocket');
             this.stompClient = Stomp.over(this.socket);
             this.stompClient.connect({}, frame => {
                 console.log('Connected: ' + frame);

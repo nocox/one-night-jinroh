@@ -10,9 +10,9 @@
       <h3>他のプレイヤー</h3>
       <ul>
         <li v-for="player in otherPlayerList" :key="player.id">
-          <RoleCard :roleName="'不明'" />
+          <RoleCard :roleName="player.role.roleName" />
           <p>{{ player.name }}</p>
-          <p>役職： 不明</p>
+          <p>役職： {{ player.role.roleName }}</p>
         </li>
       </ul>
     </div>

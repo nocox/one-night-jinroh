@@ -5,12 +5,14 @@ import SamplePage from '../pages/SamplePage.vue'
 import TopPage from '../views/TopPage.vue'
 import RoomTopPage from '../views/RoomTopPage.vue'
 import NightPage from '../views/NightPage.vue'
+import TalkTermPage from '../views/TalkTermPage.vue'
 import TempRoomPage from '../views/TempRoomPage.vue'
 import TempNightTermPage from '../views/TempNightTermPage.vue'
 import TempTalkTermPage from '../views/TempTalkTermPage.vue'
 import TempVoteTermPage from '../views/TempVoteTermPage.vue'
 import TempTallyTermPage from '../views/TempTallyTermPage.vue'
 import TempResultTermPage from '../views/TempResultTermPage.vue'
+
 
 Vue.use(VueRouter)
 
@@ -47,6 +49,11 @@ const routes = [
     path: '/night-page',
     name: 'NightPage',
     component: NightPage
+  },
+  {
+    path: '/talk-page',
+    name: 'TalkTermPage',
+    component: TalkTermPage
   },
   {
     path: '/temp-room',

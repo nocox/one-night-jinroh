@@ -12,6 +12,7 @@
       <router-link to="/talk-page">Talk Page</router-link> |
       <router-link to="/vote-page">Vote Page</router-link> |
       <router-link to="/tally-page">Tally Page</router-link> |
+      <router-link to="/result-page">Result Page</router-link> |
       <router-link to="/temp-room">Temp Room Page</router-link> |
       <router-link to="/temp-night">Temp Night Page</router-link> |
       <router-link to="/temp-talk">Temp Talk Page</router-link> |

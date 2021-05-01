@@ -1,50 +1,48 @@
 <template>
-<div class="tally_page">
-    <h1>集計ページ</h1>
-    <div>
-        <span>自分:</span>
-        <span>{{playerName}}</span>
-        <span>({{playerRole.roleName}})</span>
-    </div>
-    <hr>
-    <div>
-        他のプレイヤー
-        <ul>
-            <li v-for="player in otherPlayerList" v-bind:key="player.id">
-                <span>{{player.name}}</span>
-                <span>({{player.role.roleName}})</span>
-            </li>
-        </ul>
-    </div>
-
-    <h2>集計結果</h2>
-    <div>
-        <span>選ばれたのは,</span>
-        <span v-for="player in tallyResult.selectedPlayers" v-bind:key="player.id">
-            {{player.name}}
+  <main class="tally_page">
+    <section class="vote_result">
+      <h2>
+        選ばれたのは,<br class="sp" />
+        <span
+          v-for="player in tallyResult.selectedPlayers"
+          v-bind:key="player.id"
+        >
+          {{ player.name }}<br class="sp" />
         </span>
-        <span>です．</span>
-    </div>
-    <h2>投票数</h2>
-    <ul>
-        <li v-for="player in tallyResult.players" v-bind:key="player.id">
-            <span>{{player.name}}</span>
-            <span>: {{player.voteCount}}</span>
-        </li>
-    </ul>
-    <div v-if="hostFlag">
-        <button class="start" v-on:click="gotoResult">結果ページに移動する</button>
-    </div>
+        です．
+      </h2>
+    </section>
 
-    <modal name="done-tally-modal">
-        <div class="modal-header">
-            <h2>全員投票が完了しました．集計結果を表示します．</h2>
-        </div>
-        <div>
-            <button v-on:click="closeModal">OK</button>
-        </div>
+    <RoleCardDisplay
+      :playerRole="playerRole"
+      :playerName="playerName"
+      :otherPlayerList="otherPlayerList"
+    />
+
+    <section class="vote_detail">
+      <h2>投票数</h2>
+      <div class="table">
+        <dl v-for="player in tallyResult.players" v-bind:key="player.id">
+          <dt>
+            {{ player.name }}
+          </dt>
+          <dd>
+            {{ player.voteCount }}
+          </dd>
+        </dl>
+      </div>
+    </section>
+
+    <myButton class="btn" :method="gotoResult" :text="'結果ページに移動する'" />
+
+    <modal width="90%" name="done-tally-modal">
+      <div class="modal-header">
+        <h3>全員投票が完了しました．<br />集計結果を表示します．</h3>
+
+        <myButton class="tally-modal-btn" :method="closeModal" :text="'OK'" />
+      </div>
     </modal>
-</div>
+  </main>
 </template>
 
 <script>
@@ -52,78 +50,162 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
-export default {
-    name: "TallyTermPage",
-    data() {
-        return{
-            playerName: "xxxxx",
-            playerRole: "xxxxx",
-            hostFlag: false,
-            otherPlayerList: [{
-                id: 1,
-                name: "xxxxx",
-                role: "---"
-            }],
-            tallyResult: {
-                selectedPlayer: [{
-                    id: 1,
-                    name: "xxxxx",
-                    voteCount: 0
-                }],
-                players: [{
-                    id: 1,
-                    name: "xxxxx",
-                    voteCount: 0
-                }]
-            }
-        }
-    },
-    mounted() {
-        axios.get('http://localhost:8080/tally-index', {withCredentials: true})
-        .then((response) => {
-            console.log(response.data);
-            this.playerName = response.data.gameIndex.playerName;
-            this.playerRole = response.data.gameIndex.playerRole;
-            this.hostFlag = response.data.gameIndex.hostFlag;
-            this.otherPlayerList = response.data.gameIndex.otherPlayerList;
+import RoleCardDisplay from "@/components/RoleCardDisplay";
+import myButton from "@/components/Button";
 
-            this.tallyResult = response.data.tallyResult;
-            this.$modal.show("done-tally-modal");
-            this.configWebSocket(response.data.gameId)
-        }).catch(() => {
-            this.$router.push('/temp-room');
+export default {
+  name: "TallyTermPage",
+  data() {
+    return {
+      playerName: "xxxxx",
+      playerRole: "xxxxx",
+      hostFlag: false,
+      otherPlayerList: [
+        {
+          id: 1,
+          name: "xxxxx",
+          role: "---",
+        },
+      ],
+      tallyResult: {
+        selectedPlayer: [
+          {
+            id: 1,
+            name: "xxxxx",
+            voteCount: 0,
+          },
+        ],
+        players: [
+          {
+            id: 1,
+            name: "xxxxx",
+            voteCount: 0,
+          },
+        ],
+      },
+    };
+  },
+  components: { RoleCardDisplay, myButton },
+  mounted() {
+    axios
+      .get("http://localhost:8080/tally-index", { withCredentials: true })
+      .then((response) => {
+        console.log(response.data);
+        this.playerName = response.data.gameIndex.playerName;
+        this.playerRole = response.data.gameIndex.playerRole;
+        this.hostFlag = response.data.gameIndex.hostFlag;
+        this.otherPlayerList = response.data.gameIndex.otherPlayerList;
+
+        this.tallyResult = response.data.tallyResult;
+        this.$modal.show("done-tally-modal");
+        this.configWebSocket(response.data.gameId);
+      })
+      .catch(() => {
+        this.$router.push("/temp-room");
+      });
+  },
+  methods: {
+    closeModal() {
+      this.$modal.hide("done-tally-modal");
+    },
+    configWebSocket: function (gameId) {
+      this.socket = new SockJS("http://localhost:8080/jinroh-websocket");
+      this.stompClient = Stomp.over(this.socket);
+      this.stompClient.connect({}, (frame) => {
+        console.log("Connected: " + frame);
+        this.stompClient.subscribe("/topic/result/" + gameId, () => {
+          this.$router.push("/temp-result");
+        });
+      });
+    },
+    gotoResult: function () {
+      axios
+        .get("http://localhost:8080/show-result", { withCredentials: true })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch(() => {
+          this.$router.push("/temp-room");
         });
     },
-    methods: {
-        closeModal() {
-            this.$modal.hide("done-tally-modal");
-        },
-        configWebSocket: function(gameId) {
-            this.socket = new SockJS('http://localhost:8080/jinroh-websocket');
-            this.stompClient = Stomp.over(this.socket);
-            this.stompClient.connect({}, frame => {
-                console.log('Connected: ' + frame);
-                this.stompClient.subscribe('/topic/result/' + gameId, () => {
-                    this.$router.push('/temp-result');
-                });
-            });
-        },
-        gotoResult: function() {
-            axios.get('http://localhost:8080/show-result',{withCredentials: true})
-            .then((response) => {
-                console.log(response.data);
-            }).catch(() => {
-                this.$router.push('/temp-room');
-            });
-        }
-    }
-}
+  },
+};
 </script>
 
-<style scoped>
-.tally_page {
-    text-align: left;
-    margin: 20px;
+<style lang="scss" scoped>
+h2 {
+  text-align: center;
+  font-weight: normal;
+  span {
+    font-size: 1.05em;
+    font-weight: bold;
+  }
 }
 
+.btn {
+  text-align: center;
+  display: block;
+  width: 16rem;
+  margin: 0 auto;
+}
+
+.vote_detail {
+  text-align: center;
+  h2 {
+    display: inline-block;
+    padding: 0 0.5em;
+    font-size: 1.5em;
+    border-bottom: 2px red solid;
+  }
+  .table {
+    display: flex;
+    justify-content: center;
+    dl {
+      display: flex;
+      flex-direction: column;
+      min-width: 20%;
+      dt {
+        padding: 0.5em;
+      }
+      dd {
+        padding: 0.5em;
+      }
+    }
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  height: 100%;
+  width: 100%;
+  text-align: center;
+
+  h3 {
+    margin: 0 auto;
+  }
+  .tally-modal-btn {
+    width: 10rem;
+    margin: 1em auto;
+    padding: 0.5em 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .vote_detail {
+    .table {
+      flex-direction: column;
+
+      dl {
+        flex-direction: row;
+        justify-content: center;
+        dt {
+          min-width: 10rem;
+        }
+      }
+    }
+  }
+}
 </style>

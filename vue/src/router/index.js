@@ -7,6 +7,7 @@ import RoomTopPage from '../views/RoomTopPage.vue'
 import NightPage from '../views/NightPage.vue'
 import TalkTermPage from '../views/TalkTermPage.vue'
 import VoteTermPage from '../views/VoteTermPage.vue'
+import TallyTermPage from '../views/TallyTermPage.vue'
 import TempRoomPage from '../views/TempRoomPage.vue'
 import TempNightTermPage from '../views/TempNightTermPage.vue'
 import TempTalkTermPage from '../views/TempTalkTermPage.vue'
@@ -60,6 +61,11 @@ const routes = [
     path: '/vote-page',
     name: 'VoteTermPage',
     component:VoteTermPage
+  },
+  {
+    path: '/tally-page',
+    name: 'TallyTermPage',
+    component:TallyTermPage
   },
   {
     path: '/temp-room',

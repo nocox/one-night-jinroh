@@ -31,7 +31,6 @@ public class NightController {
 
 
     @RequestMapping(path = "/night-index")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     GameBean getRoom() {
         String uuid = session.getAttribute("room_uuid").toString();
         String strUserId = session.getAttribute("user_id").toString();

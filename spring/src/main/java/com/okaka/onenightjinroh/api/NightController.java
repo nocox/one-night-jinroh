@@ -11,7 +11,6 @@ import com.okaka.onenightjinroh.application.service.night.DoneNightTermActUseCas
 import com.okaka.onenightjinroh.application.service.night.GetNightTermIndexUseCase;
 import com.okaka.onenightjinroh.application.service.night.NightTermIndexBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,7 +40,6 @@ public class NightController {
     NightActDao nightActDao;
 
     @RequestMapping(path = "/night-index")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     NightTermIndexBean getNightTermIndex() {
         String uuid = session.getAttribute("room_uuid").toString();
         String strUserId = session.getAttribute("user_id").toString();
@@ -60,7 +58,6 @@ public class NightController {
     }
 
     @RequestMapping(path = "/done-night-act")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     int doneNightTermAct() {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);

@@ -2,7 +2,6 @@ package com.okaka.onenightjinroh;
 
 import com.okaka.jinroh.persistence.Reservation;
 import com.okaka.jinroh.persistence.ReservationAdapter;
-import com.okaka.jinroh.persistence.ReservationDao;
 import com.okaka.jinroh.persistence.TEvent;
 import com.okaka.jinroh.persistence.TEventDao;
 import com.okaka.jinroh.persistence.TUser;
@@ -12,7 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,26 +59,22 @@ public class OneNightJinrohApplication {
 	}
 
 	@RequestMapping(path = "/")
-	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> all() {
 		return reservationAdapter.selectAll();
 	}
 
 	@RequestMapping(path = "/", params = "name")
-	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> name(@RequestParam String name) {
 		return reservationAdapter.selectByName(name);
 	}
 
 	@RequestMapping(path = "/insert", params = "name")
-	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> insert(@RequestParam String name) {
 		reservationAdapter.insert(name);
 		return reservationAdapter.selectAll();
 	}
 
 	@RequestMapping(path = "/all_user")
-	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<TUser> allUser() {
 		return tUserDao.selectTUserAll();
 	}

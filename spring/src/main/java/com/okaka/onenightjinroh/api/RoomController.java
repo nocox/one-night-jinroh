@@ -36,7 +36,6 @@ public class RoomController {
     private StartGameValidate startGameValidate;
 
     @RequestMapping(path = "/room-index")
-//    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     RoomIndexBean getRoom() {
         String uuid = session.getAttribute("room_uuid").toString();
         String strUserId = session.getAttribute("user_id").toString();
@@ -46,7 +45,6 @@ public class RoomController {
     }
 
     @RequestMapping(path = "/game-start")
-//    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     int startGame() {
         String uuid = session.getAttribute("room_uuid").toString();
         Long userId = Long.valueOf(session.getAttribute("user_id").toString());

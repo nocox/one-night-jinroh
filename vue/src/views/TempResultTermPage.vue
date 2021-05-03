@@ -25,6 +25,7 @@
 
 <script>
 import axios from "axios";
+import { JINROH_API_BASE_URL} from "../Env";
 // import SockJS from "sockjs-client";
 // import Stomp from "webstomp-client";
 
@@ -44,7 +45,7 @@ export default {
         }
     },
     mounted() {
-        axios.get('http://localhost:8080/result-index', {withCredentials: true})
+        axios.get(JINROH_API_BASE_URL + '/result-index', {withCredentials: true})
         .then((response) => {
             console.log(response.data);
             this.judgeText = response.data.judgeText;

@@ -26,6 +26,7 @@
 import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
+import { JINROH_API_BASE_URL} from "../Env";
 
 export default {
     name: "TempNightTermPage",
@@ -42,7 +43,7 @@ export default {
         }
     },
     mounted(){
-        axios.get('http://localhost:8080/night-index',{withCredentials: true})
+        axios.get(JINROH_API_BASE_URL + '/night-index',{withCredentials: true})
         .then((response) => {
             console.log(response.data);
             this.playerName = response.data.gameIndex.playerName;
@@ -56,7 +57,7 @@ export default {
     },
     methods: {
         configWebSocket: function(gameId) {
-            this.socket = new SockJS('http://localhost:8080/jinroh-websocket');
+            this.socket = new SockJS(JINROH_API_BASE_URL + '/jinroh-websocket');
             this.stompClient = Stomp.over(this.socket);
             this.stompClient.connect({}, frame => {
                 console.log('Connected: ' + frame);
@@ -67,7 +68,7 @@ export default {
             });
         },
         doneNightAct: () => {
-            axios.get('http://localhost:8080/done-night-act',{withCredentials: true})
+            axios.get(JINROH_API_BASE_URL + '/done-night-act',{withCredentials: true})
             .then((response) => {
                 console.log(response.data);
                 console.log("夜の行動完了");

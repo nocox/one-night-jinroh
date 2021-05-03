@@ -51,3 +51,6 @@ out/
 
 ### Vue ###
 node_modules
+
+### Env ###
+.env

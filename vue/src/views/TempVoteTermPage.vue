@@ -43,6 +43,7 @@
 import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
+import { JINROH_API_BASE_URL} from "../Env";
 
 export default {
     name: "TempTalkPage",
@@ -65,7 +66,7 @@ export default {
         }
     },
     mounted() {
-        axios.get('http://localhost:8080/vote-index', {withCredentials: true})
+        axios.get(JINROH_API_BASE_URL + '/vote-index', {withCredentials: true})
         .then((response) => {
             console.log(response.data);
             this.playerName = response.data.gameIndex.playerName;
@@ -86,7 +87,7 @@ export default {
             this.$modal.hide("vote-start-modal");
         },
         vote() {
-            axios.post('http://localhost:8080/vote', 
+            axios.post(JINROH_API_BASE_URL + '/vote', 
                 JSON.stringify({gameParticipantId: this.checkPlayerId}), 
                 {
                     withCredentials: true,
@@ -102,7 +103,7 @@ export default {
             });
         },
         configWebSocket: function(gameId) {
-            this.socket = new SockJS('http://localhost:8080/jinroh-websocket');
+            this.socket = new SockJS(JINROH_API_BASE_URL + '/jinroh-websocket');
             this.stompClient = Stomp.over(this.socket);
             this.stompClient.connect({}, frame => {
                 console.log('Connected: ' + frame);

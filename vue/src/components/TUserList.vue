@@ -14,6 +14,7 @@
 
 <script>
 import axios from "axios";
+import { JINROH_API_BASE_URL} from "../Env";
 
 export default {
   name: 'TUserList',
@@ -24,14 +25,14 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://localhost:8080/')
+    axios.get(JINROH_API_BASE_URL + '/')
       .then((response) => {
         this.tUserList = response.data;
       });
   },
   methods: {
     addTUser: function () {
-      axios.get('http://localhost:8080/insert?name=' + this.userName)
+      axios.get(JINROH_API_BASE_URL + '/insert?name=' + this.userName)
       .then((response) => {
         this.tUserList = response.data;
       });

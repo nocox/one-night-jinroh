@@ -49,6 +49,8 @@
 
 <script>
 import axios from "axios";
+import { JINROH_API_BASE_URL} from "../Env";
+
 export default {
   name: "Title",
   data() {
@@ -65,7 +67,7 @@ export default {
     },
     createRoom: function () {
       axios
-        .get("http://localhost:8080/create-room", { withCredentials: true })
+        .get(JINROH_API_BASE_URL + "/create-room", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
           this.$router.push("/room-top");
@@ -73,7 +75,7 @@ export default {
     },
     joinRoom: function () {
       axios
-        .get("http://localhost:8080/join-room?uuid=" + this.roomNum, {
+        .get(JINROH_API_BASE_URL + "/join-room?uuid=" + this.roomNum, {
           withCredentials: true,
         })
         .then((response) => {

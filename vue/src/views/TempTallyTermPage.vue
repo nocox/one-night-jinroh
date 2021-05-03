@@ -51,6 +51,7 @@
 import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
+import { JINROH_API_BASE_URL} from "../Env";
 
 export default {
     name: "TempTallyTermPage",
@@ -79,7 +80,7 @@ export default {
         }
     },
     mounted() {
-        axios.get('http://localhost:8080/tally-index', {withCredentials: true})
+        axios.get(JINROH_API_BASE_URL + '/tally-index', {withCredentials: true})
         .then((response) => {
             console.log(response.data);
             this.playerName = response.data.gameIndex.playerName;
@@ -99,7 +100,7 @@ export default {
             this.$modal.hide("done-tally-modal");
         },
         configWebSocket: function(gameId) {
-            this.socket = new SockJS('http://localhost:8080/jinroh-websocket');
+            this.socket = new SockJS(JINROH_API_BASE_URL + '/jinroh-websocket');
             this.stompClient = Stomp.over(this.socket);
             this.stompClient.connect({}, frame => {
                 console.log('Connected: ' + frame);
@@ -109,7 +110,7 @@ export default {
             });
         },
         gotoResult: function() {
-            axios.get('http://localhost:8080/show-result',{withCredentials: true})
+            axios.get(JINROH_API_BASE_URL + '/show-result',{withCredentials: true})
             .then((response) => {
                 console.log(response.data);
             }).catch(() => {

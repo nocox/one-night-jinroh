@@ -129,7 +129,7 @@ export default {
           console.log(response.data);
         })
         .catch(() => {
-          this.$router.push("/temp-room");
+          console.log("サーバ側でエラーが発生しました");
         });
     },
     configWebSocket: function (gameId) {

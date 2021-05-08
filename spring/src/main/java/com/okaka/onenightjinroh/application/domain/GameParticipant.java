@@ -11,6 +11,11 @@ public class GameParticipant {
         this.gameParticipationId = gameParticipationId;
     }
 
+    public GameParticipant setUnknownRole() {
+        this.role = ApparentRole.createUnknownRole();
+        return this;
+    }
+
     public void setGameParticipationId(Long gameParticipationId) {
         this.gameParticipationId = gameParticipationId;
     }

@@ -14,6 +14,7 @@ public class GameIndexBean {
     public GameIndexBean(List<GameParticipant> gameParticipants, Long gameParticipantId) {
         List<GameParticipantBean> gameParticipantsBean = gameParticipants.stream()
                 .filter(domain -> domain.getGameParticipationId().equals(gameParticipantId) == false)
+                .map(GameParticipant::setUnknownRole)
                 .map(GameParticipantBean::new)
                 .collect(Collectors.toList());
         GameParticipantBean player = gameParticipants.stream()

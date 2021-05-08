@@ -53,12 +53,12 @@ export default {
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
       })
       .catch(() => {
-        this.$router.push("/temp-room");
+        this.$router.push("/room");
       });
   },
   methods: {
     returnRoom() {
-      this.$router.push("/room-top");
+      this.$router.push("/room");
     },
   },
 };

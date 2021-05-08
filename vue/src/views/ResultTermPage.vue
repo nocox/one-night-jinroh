@@ -22,6 +22,7 @@ import axios from "axios";
 import RoleCardDisplay from "@/components/RoleCardDisplay";
 import resultImage from "@/components/resultImage.vue";
 import myButton from "@/components/Button.vue";
+import { JINROH_API_BASE_URL} from "../Env";
 
 export default {
   name: "TempResultTermPage",
@@ -43,7 +44,7 @@ export default {
   components: { resultImage, myButton,RoleCardDisplay },
   mounted() {
     axios
-      .get("http://localhost:8080/result-index", { withCredentials: true })
+      .get(JINROH_API_BASE_URL + "/result-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         this.judgeText = response.data.judgeText;

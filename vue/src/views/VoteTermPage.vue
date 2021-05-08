@@ -97,7 +97,7 @@ export default {
         this.configWebSocket(response.data.gameId);
       })
       .catch(() => {
-        this.$router.push("/temp-room");
+        this.$router.push("/room");
       });
   },
   methods: {
@@ -129,7 +129,7 @@ export default {
           console.log(response.data);
         })
         .catch(() => {
-          console.log("サーバ側でエラーが発生しました");
+          this.$router.push("/room");
         });
     },
     configWebSocket: function (gameId) {
@@ -138,7 +138,7 @@ export default {
       this.stompClient.connect({}, (frame) => {
         console.log("Connected: " + frame);
         this.stompClient.subscribe("/topic/done-tally/" + gameId, () => {
-          this.$router.push("/temp-tally");
+          this.$router.push("/tally");
         });
       });
     },

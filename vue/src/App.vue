@@ -4,21 +4,14 @@
     <router-view />
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
       <router-link to="/sample">Sample</router-link> |
       <router-link to="/top">Top Page</router-link> |
-      <router-link to="/room-top">Room Top Page</router-link> |
-      <router-link to="/night-page">Night Page</router-link> |
-      <router-link to="/talk-page">Talk Page</router-link> |
-      <router-link to="/vote-page">Vote Page</router-link> |
-      <router-link to="/tally-page">Tally Page</router-link> |
-      <router-link to="/temp-room">Temp Room Page</router-link> |
-      <router-link to="/temp-night">Temp Night Page</router-link> |
-      <router-link to="/temp-talk">Temp Talk Page</router-link> |
-      <router-link to="/temp-vote">Temp Vote Page</router-link> |
-      <router-link to="/temp-tally">Temp Tally Page</router-link> |
-      <router-link to="/temp-result">Temp Result Page</router-link>
-
+      <router-link to="/room">Room Top Page</router-link> |
+      <router-link to="/night">Night Page</router-link> |
+      <router-link to="/talk">Talk Page</router-link> |
+      <router-link to="/vote">Vote Page</router-link> |
+      <router-link to="/tally">Tally Page</router-link> |
+      <router-link to="/result">Result Page</router-link> |
     </div>
     <div class="scroll-hint-bottom" v-show="is_scrollableDown"></div>
   </div>

@@ -9,13 +9,6 @@ import TalkTermPage from '../views/TalkTermPage.vue'
 import VoteTermPage from '../views/VoteTermPage.vue'
 import TallyTermPage from '../views/TallyTermPage.vue'
 import ResultTermPage from '../views/ResultTermPage.vue'
-import TempRoomPage from '../views/TempRoomPage.vue'
-import TempNightTermPage from '../views/TempNightTermPage.vue'
-import TempTalkTermPage from '../views/TempTalkTermPage.vue'
-import TempVoteTermPage from '../views/TempVoteTermPage.vue'
-import TempTallyTermPage from '../views/TempTallyTermPage.vue'
-import TempResultTermPage from '../views/TempResultTermPage.vue'
-
 
 Vue.use(VueRouter)
 
@@ -73,36 +66,7 @@ const routes = [
     name: 'ResultTermPage',
     component:ResultTermPage
   },
-  {
-    path: '/temp-room',
-    name: 'TempRoomPage',
-    component: TempRoomPage
-  },
-  {
-    path: '/temp-night',
-    name: 'TempNightTermPage',
-    component: TempNightTermPage
-  },
-  {
-    path: '/temp-talk',
-    name: 'TempTalkTermPage',
-    component: TempTalkTermPage
-  },
-  {
-    path: '/temp-vote',
-    name: 'TempVoteTermPage',
-    component: TempVoteTermPage
-  },
-  {
-    path: '/temp-tally',
-    name: 'TempTallyTermPage',
-    component: TempTallyTermPage
-  },
-  {
-    path: '/temp-result',
-    name: 'TempResultTermPage',
-    component: TempResultTermPage
-  }
+  
 ]
 
 const router = new VueRouter({

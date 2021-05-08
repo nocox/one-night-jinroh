@@ -1,39 +1,27 @@
 <template>
   <main class="result_page">
-    <input type="text" v-model="judgeText">
+
     <h2>{{ judgeText }}</h2>
-    <!-- <img v-if="judgeText == '平和村成功'" src="../assets/images/result1.png" alt="">
-    <img v-if="judgeText == '人狼の勝利'" src="../assets/images/result1.png" alt=""> -->
 
-    <resultImage :result="judgeText" />    
-    
+    <resultImage :result="judgeText" />
 
-    <div>
-      <span>自分:</span>
-      <span>{{ playerName }}</span>
-      <span>({{ playerRole.roleName }})</span>
-    </div>
-    <hr />
-    <div>
-      他のプレイヤー
-      <ul>
-        <li v-for="player in otherPlayerList" v-bind:key="player.id">
-          <span>{{ player.name }}</span>
-          <span>({{ player.role.roleName }})</span>
-        </li>
-      </ul>
-    </div>
+    <myButton class="btn" :method="returnRoom" :text="'ルームに戻る'" />
 
-    <button v-on:click="returnRoom">ルームに戻る</button>
+    <RoleCardDisplay
+      :playerRole="playerRole"
+      :playerName="playerName"
+      :otherPlayerList="otherPlayerList"
+    />
+
   </main>
 </template>
 
 <script>
 import axios from "axios";
-// import SockJS from "sockjs-client";
-// import Stomp from "webstomp-client";
 
+import RoleCardDisplay from "@/components/RoleCardDisplay";
 import resultImage from "@/components/resultImage.vue";
+import myButton from "@/components/Button.vue";
 
 export default {
   name: "TempResultTermPage",
@@ -52,7 +40,7 @@ export default {
       ],
     };
   },
-  components:{ resultImage},
+  components: { resultImage, myButton,RoleCardDisplay },
   mounted() {
     axios
       .get("http://localhost:8080/result-index", { withCredentials: true })
@@ -70,7 +58,7 @@ export default {
   },
   methods: {
     returnRoom() {
-      this.$router.push("/temp-room");
+      this.$router.push("/room-top");
     },
   },
 };
@@ -80,5 +68,16 @@ export default {
 .result_page {
   text-align: left;
   margin: 20px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.btn {
+  text-align: center;
+  display: block;
+  width: 16rem;
+  margin: 0 auto;
 }
 </style>

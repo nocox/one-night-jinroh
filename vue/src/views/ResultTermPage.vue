@@ -1,7 +1,12 @@
 <template>
-  <div class="result_page">
-    <h1>結果ページ</h1>
+  <main class="result_page">
+    <input type="text" v-model="judgeText">
     <h2>{{ judgeText }}</h2>
+    <!-- <img v-if="judgeText == '平和村成功'" src="../assets/images/result1.png" alt="">
+    <img v-if="judgeText == '人狼の勝利'" src="../assets/images/result1.png" alt=""> -->
+
+    <resultImage :result="judgeText" />    
+    
 
     <div>
       <span>自分:</span>
@@ -20,13 +25,15 @@
     </div>
 
     <button v-on:click="returnRoom">ルームに戻る</button>
-  </div>
+  </main>
 </template>
 
 <script>
 import axios from "axios";
 // import SockJS from "sockjs-client";
 // import Stomp from "webstomp-client";
+
+import resultImage from "@/components/resultImage.vue";
 
 export default {
   name: "TempResultTermPage",
@@ -45,6 +52,7 @@ export default {
       ],
     };
   },
+  components:{ resultImage},
   mounted() {
     axios
       .get("http://localhost:8080/result-index", { withCredentials: true })

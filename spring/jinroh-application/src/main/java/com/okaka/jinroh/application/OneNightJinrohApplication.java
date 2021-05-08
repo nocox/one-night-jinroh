@@ -56,19 +56,16 @@ public class OneNightJinrohApplication {
 	}
 
 	@RequestMapping(path = "/")
-	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> all() {
 		return reservationDao.selectAll();
 	}
 
 	@RequestMapping(path = "/", params = "name")
-	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> name(@RequestParam String name) {
 		return reservationDao.selectByName(name);
 	}
 
 	@RequestMapping(path = "/insert", params = "name")
-	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<Reservation> insert(@RequestParam String name) {
 		Reservation reservation = new Reservation();
 		reservation.name = name;
@@ -77,7 +74,6 @@ public class OneNightJinrohApplication {
 	}
 
 	@RequestMapping(path = "/all_user")
-	@CrossOrigin(origins = {"http://localhost:8081"})
 	List<TUser> allUser() {
 		return tUserDao.selectTUserAll();
 	}

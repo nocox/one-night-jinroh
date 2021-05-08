@@ -101,7 +101,7 @@ export default {
         this.configWebSocket(response.data.gameId);
       })
       .catch(() => {
-        this.$router.push("/temp-room");
+        this.$router.push("/room");
       });
   },
   methods: {
@@ -114,7 +114,7 @@ export default {
       this.stompClient.connect({}, (frame) => {
         console.log("Connected: " + frame);
         this.stompClient.subscribe("/topic/result/" + gameId, () => {
-          this.$router.push("/temp-result");
+          this.$router.push("/result");
         });
       });
     },
@@ -125,7 +125,7 @@ export default {
           console.log(response.data);
         })
         .catch(() => {
-          this.$router.push("/temp-room");
+          this.$router.push("/room");
         });
     },
   },

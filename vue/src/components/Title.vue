@@ -70,7 +70,7 @@ export default {
         .get(JINROH_API_BASE_URL + "/create-room", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
-          this.$router.push("/room-top");
+          this.$router.push("/room");
         });
     },
     joinRoom: function () {
@@ -80,7 +80,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
-          this.$router.push("/room-top");
+          this.$router.push("/room");
         });
     },
   },

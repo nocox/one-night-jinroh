@@ -4,7 +4,6 @@ import com.okaka.onenightjinroh.application.service.tally.GetTallyTermIndexUseCa
 import com.okaka.onenightjinroh.application.service.tally.TallyTermIndexBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +21,6 @@ public class TallyTermController {
     SimpMessagingTemplate messagingTemplate;
 
     @RequestMapping(path = "/tally-index")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     public TallyTermIndexBean getTallyTermIndex() {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);
@@ -33,7 +31,6 @@ public class TallyTermController {
     }
 
     @RequestMapping(path = "/show-result")
-    @CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
     public int showResult() {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);

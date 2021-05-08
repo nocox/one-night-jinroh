@@ -54,6 +54,7 @@ import Stomp from "webstomp-client";
 
 import RoleCardDisplay from "@/components/RoleCardDisplay";
 import myButton from "@/components/Button";
+import { JINROH_API_BASE_URL} from "../Env";
 
 export default {
   name: "TempVotePage",
@@ -84,7 +85,7 @@ export default {
   components: { RoleCardDisplay, myButton },
   mounted() {
     axios
-      .get("http://localhost:8080/vote-index", { withCredentials: true })
+      .get(JINROH_API_BASE_URL + "/vote-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         this.playerName = response.data.gameIndex.playerName;
@@ -116,7 +117,7 @@ export default {
       }
       axios
         .post(
-          "http://localhost:8080/vote",
+          JINROH_API_BASE_URL + "/vote",
           JSON.stringify({ gameParticipantId: this.checkPlayerId }),
           {
             withCredentials: true,
@@ -133,7 +134,7 @@ export default {
         });
     },
     configWebSocket: function (gameId) {
-      this.socket = new SockJS("http://localhost:8080/jinroh-websocket");
+      this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect({}, (frame) => {
         console.log("Connected: " + frame);

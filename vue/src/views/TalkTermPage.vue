@@ -32,6 +32,7 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
+import { JINROH_API_BASE_URL} from "../Env";
 import RoleCardDisplay from "@/components/RoleCardDisplay.vue";
 // import RoleCard from "@/components/RoleCard.vue";
 import myButton from "@/components/Button.vue";
@@ -67,7 +68,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:8080/talk-index", { withCredentials: true })
+      .get( JINROH_API_BASE_URL + "/talk-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         this.playerName = response.data.gameIndex.playerName;
@@ -78,17 +79,17 @@ export default {
         this.configWebSocket(response.data.gameId);
       })
       .catch(() => {
-        this.$router.push("/temp-room");
+        this.$router.push("/room");
       });
   },
   methods: {
     configWebSocket: function (gameId) {
-      this.socket = new SockJS("http://localhost:8080/jinroh-websocket");
+      this.socket = new SockJS( JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect({}, (frame) => {
         console.log("Connected: " + frame);
         this.stompClient.subscribe("/topic/end-talk/" + gameId, () => {
-          this.$router.push("/temp-vote");
+          this.$router.push("/vote");
         });
       });
     },
@@ -97,12 +98,12 @@ export default {
     },
     endTalk() {
       axios
-        .get("http://localhost:8080/end-talk", { withCredentials: true })
+        .get( JINROH_API_BASE_URL + "/end-talk", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
         })
         .catch(() => {
-          this.$router.push("/temp-room");
+          this.$router.push("/room");
         });
     },
   },

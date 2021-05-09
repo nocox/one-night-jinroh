@@ -16,7 +16,7 @@ public class GetNightTermIndexUseCase {
 
     public NightTermIndexBean get(Long gameId, Long gameParticipantId) {
         List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
-        GameIndexBean gameIndexBean = new GameIndexBean(gameParticipants, gameParticipantId);
+        GameIndexBean gameIndexBean = GameIndexBean.createHideRole(gameParticipants, gameParticipantId);
         return new NightTermIndexBean(gameId, gameIndexBean);
     }
 }

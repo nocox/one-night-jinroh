@@ -34,7 +34,7 @@ public class ShowResultTermController {
         WinLoseConditionBase judge = judgeResultUseCase.judge(gameId);
 
         List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
-        GameIndexBean gameIndexBean = new GameIndexBean(gameParticipants, gameParticipantId);
+        GameIndexBean gameIndexBean = GameIndexBean.createAllOpen(gameParticipants, gameParticipantId);
 
         return new ShowResultTermIndexBean(judge.getResultText(), gameIndexBean);
     }

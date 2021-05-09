@@ -11,21 +11,38 @@ public class GameIndexBean {
     private Boolean hostFlag;
     private List<GameParticipantBean> otherPlayerList;
 
-    public GameIndexBean(List<GameParticipant> gameParticipants, Long gameParticipantId) {
+    public GameIndexBean(String playerName, RoleBean playerRole, Boolean hostFlag, List<GameParticipantBean> otherPlayerList) {
+        this.playerName = playerName;
+        this.playerRole = playerRole;
+        this.hostFlag = hostFlag;
+        this.otherPlayerList = otherPlayerList;
+    }
+
+    public static GameIndexBean createHideRole(List<GameParticipant> gameParticipants, Long gameParticipantId) {
         List<GameParticipantBean> gameParticipantsBean = gameParticipants.stream()
                 .filter(domain -> domain.getGameParticipationId().equals(gameParticipantId) == false)
                 .map(GameParticipant::setUnknownRole)
                 .map(GameParticipantBean::new)
                 .collect(Collectors.toList());
-        GameParticipantBean player = gameParticipants.stream()
+        GameParticipantBean player = extractMyPlayer(gameParticipants, gameParticipantId);
+        return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean);
+    }
+
+    public static GameIndexBean createAllOpen(List<GameParticipant> gameParticipants, Long gameParticipantId) {
+        List<GameParticipantBean> gameParticipantsBean = gameParticipants.stream()
+                .filter(domain -> domain.getGameParticipationId().equals(gameParticipantId) == false)
+                .map(GameParticipantBean::new)
+                .collect(Collectors.toList());
+        GameParticipantBean player = extractMyPlayer(gameParticipants, gameParticipantId);
+        return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean);
+    }
+
+    public static GameParticipantBean extractMyPlayer(List<GameParticipant> gameParticipants, Long gameParticipantId) {
+        return gameParticipants.stream()
                 .filter(domain -> domain.getGameParticipationId().equals(gameParticipantId))
                 .map(GameParticipantBean::new)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("例外"));
-        this.playerName = player.getName();
-        this.playerRole = player.getRole();
-        this.hostFlag = player.getHostFlag();
-        this.otherPlayerList = gameParticipantsBean;
     }
 
     public String getPlayerName() {

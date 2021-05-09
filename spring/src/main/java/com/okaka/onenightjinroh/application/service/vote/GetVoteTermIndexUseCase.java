@@ -17,7 +17,7 @@ public class GetVoteTermIndexUseCase {
 
     public VoteTermIndexBean get(Long gameId, Long gameParticipantId) {
         List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
-        GameIndexBean gameIndex = new GameIndexBean(gameParticipants, gameParticipantId);
+        GameIndexBean gameIndex = GameIndexBean.createHideRole(gameParticipants, gameParticipantId);
 
         List<GameParticipantBean> canVotePlayers = gameParticipants.stream()
                 .filter(participant -> participant.getGameParticipationId().equals(gameParticipantId) == false)

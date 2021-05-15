@@ -33,7 +33,7 @@
       </div>
     </section>
 
-    <myButton class="btn" :method="gotoResult" :text="'結果ページに移動する'" />
+    <myButton v-if="hostFlag" class="btn" :method="gotoResult" :text="'結果ページに移動する'" />
 
     <modal width="90%" name="done-tally-modal">
       <div class="modal-header">

@@ -98,7 +98,7 @@ export default {
           console.log(response.data);
         })
         .catch(() => {
-          this.$router.push("/room-top");
+          this.$router.push("/room");
         });
     },
     // モーダル関係の処理
@@ -111,7 +111,7 @@ export default {
     gotoGamePage: function () {
       // モーダルを隠してページ遷移
       this.$modal.hide("game-rule-modal");
-      this.$router.push("/night-page");
+      this.$router.push("/night");
     },
     configWebSocket: function () {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");

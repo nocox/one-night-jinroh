@@ -65,7 +65,7 @@ export default {
         this.configWebSocket(response.data.gameId);
       })
       .catch(() => {
-        this.$router.push("/room-top");
+        this.$router.push("/room");
       });
   },
   methods: {
@@ -76,7 +76,7 @@ export default {
         console.log("Connected: " + frame);
         console.log("Room name: " + gameId);
         this.stompClient.subscribe("/topic/" + gameId, () => {
-          this.$router.push("/temp-talk");
+          this.$router.push("/talk");
         });
       });
     },

@@ -52,6 +52,7 @@ import Stomp from "webstomp-client";
 
 import RoleCardDisplay from "@/components/RoleCardDisplay";
 import myButton from "@/components/Button";
+import { JINROH_API_BASE_URL} from "../Env";
 
 export default {
   name: "TallyTermPage",
@@ -88,7 +89,7 @@ export default {
   components: { RoleCardDisplay, myButton },
   mounted() {
     axios
-      .get("http://localhost:8080/tally-index", { withCredentials: true })
+      .get(JINROH_API_BASE_URL + "/tally-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         this.playerName = response.data.gameIndex.playerName;
@@ -101,7 +102,7 @@ export default {
         this.configWebSocket(response.data.gameId);
       })
       .catch(() => {
-        this.$router.push("/temp-room");
+        this.$router.push("/room");
       });
   },
   methods: {
@@ -109,23 +110,23 @@ export default {
       this.$modal.hide("done-tally-modal");
     },
     configWebSocket: function (gameId) {
-      this.socket = new SockJS("http://localhost:8080/jinroh-websocket");
+      this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect({}, (frame) => {
         console.log("Connected: " + frame);
         this.stompClient.subscribe("/topic/result/" + gameId, () => {
-          this.$router.push("/temp-result");
+          this.$router.push("/result");
         });
       });
     },
     gotoResult: function () {
       axios
-        .get("http://localhost:8080/show-result", { withCredentials: true })
+        .get(JINROH_API_BASE_URL + "/show-result", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
         })
         .catch(() => {
-          this.$router.push("/temp-room");
+          this.$router.push("/room");
         });
     },
   },

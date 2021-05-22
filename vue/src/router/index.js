@@ -1,20 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import SamplePage from '../pages/SamplePage.vue'
-import TopPage from '../views/TopPage.vue'
-import RoomTopPage from '../views/RoomTopPage.vue'
-import NightPage from '../views/NightPage.vue'
-import TalkTermPage from '../views/TalkTermPage.vue'
-import VoteTermPage from '../views/VoteTermPage.vue'
-import TallyTermPage from '../views/TallyTermPage.vue'
-import TempRoomPage from '../views/TempRoomPage.vue'
-import TempNightTermPage from '../views/TempNightTermPage.vue'
-import TempTalkTermPage from '../views/TempTalkTermPage.vue'
-import TempVoteTermPage from '../views/TempVoteTermPage.vue'
-import TempTallyTermPage from '../views/TempTallyTermPage.vue'
-import TempResultTermPage from '../views/TempResultTermPage.vue'
-
 
 Vue.use(VueRouter)
 
@@ -22,81 +7,48 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: ()=>import('../views/Home.vue')
   },
   {
     path: '/sample',
     name: 'SamplePage',
-    component: SamplePage
+    component: ()=> import('../pages/SamplePage.vue')
   },
   {
     path: '/top',
     name: 'TopPage',
-    component: TopPage
+    component: ()=> import('../views/TopPage.vue')
   },
   {
-    path: '/room-top',
+    path: '/room',
     name: 'RoomTopPage',
-    component: RoomTopPage
+    component:()=> import('../views/RoomTopPage.vue')
   },
   {
-    path: '/night-page',
+    path: '/night',
     name: 'NightPage',
-    component: NightPage
+    component:()=>import('../views/NightPage.vue')
   },
   {
-    path: '/talk-page',
+    path: '/talk',
     name: 'TalkTermPage',
-    component: TalkTermPage
+    component: ()=>import('../views/TalkTermPage.vue')
   },
   {
-    path: '/vote-page',
+    path: '/vote',
     name: 'VoteTermPage',
-    component:VoteTermPage
+    component: ()=>import('../views/VoteTermPage.vue')
   },
   {
-    path: '/tally-page',
+    path: '/tally',
     name: 'TallyTermPage',
-    component:TallyTermPage
+    component: ()=>import('../views/TallyTermPage.vue')
   },
   {
-    path: '/temp-room',
-    name: 'TempRoomPage',
-    component: TempRoomPage
+    path: '/result',
+    name: 'ResultTermPage',
+    component:()=>import('../views/ResultTermPage.vue')
   },
-  {
-    path: '/temp-night',
-    name: 'TempNightTermPage',
-    component: TempNightTermPage
-  },
-  {
-    path: '/temp-talk',
-    name: 'TempTalkTermPage',
-    component: TempTalkTermPage
-  },
-  {
-    path: '/temp-vote',
-    name: 'TempVoteTermPage',
-    component: TempVoteTermPage
-  },
-  {
-    path: '/temp-tally',
-    name: 'TempTallyTermPage',
-    component: TempTallyTermPage
-  },
-  {
-    path: '/temp-result',
-    name: 'TempResultTermPage',
-    component: TempResultTermPage
-  }
 ]
 
 const router = new VueRouter({

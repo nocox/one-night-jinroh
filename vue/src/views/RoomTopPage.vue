@@ -27,33 +27,38 @@
     <!-- スタートボタンを表示（ホストのみ）-->
     <section class="start">
       <div class="button-area">
-        <myButton class="start-btn" :text="'はじめる！'" :method="gameStart" v-if="hostFlg" />
-        <p v-if="!hostFlg">
-          ホストがゲームを始めるまでお待ちください！
-        </p>
+        <myButton
+          class="start-btn"
+          :text="'はじめる！'"
+          :method="gameStart"
+          v-if="hostFlg"
+        />
+        <p v-if="!hostFlg">ホストがゲームを始めるまでお待ちください！</p>
       </div>
 
-
       <!-- ゲーム開始を通知するモーダル -->
-      <modal name="game-rule-modal" :clickToClose="false" :scrollable="true">
+      <modal
+        name="game-rule-modal"
+        :clickToClose="false"
+        :height="'auto'"
+        :scrollable="true"
+      >
         <div class="modal-header">
           <h2>ゲームを開始します</h2>
         </div>
 
-
-
         <div class="modal-content">
-          <h3>人数:{{ playerCount }}</h3>
+          <p>参加人数 : {{ playerCount }}</p>
 
           <div class="role-list">
-            <h3>役職一覧:</h3>
+            <h3>役職一覧</h3>
             <ul>
               <li v-for="role in roleList" v-bind:key="role.id">
                 {{ role.roleName }}
               </li>
             </ul>
           </div>
-          <myButton :text="'OK'" :method="gotoGamePage" />
+          <myButton class="btn" :text="'OK'" :method="gotoGamePage" />
         </div>
       </modal>
     </section>
@@ -64,7 +69,7 @@
 import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
-import { JINROH_API_BASE_URL} from "../Env";
+import { JINROH_API_BASE_URL } from "../Env";
 
 import myButton from "@/components/Button.vue";
 
@@ -122,6 +127,11 @@ export default {
         this.stompClient.subscribe("/topic/" + this.uuid, (value) => {
           console.log("##### subscribe!!: " + value.body);
           this.roleList = JSON.parse(value.body).roleList;
+          this.roleList.sort((a, b) => {
+            if (a.roleId < b.roleId) return -1;
+            if (a.roleId > b.roleId) return 1;
+            return 0;
+          });
           this.playerCount = JSON.parse(value.body).playerCount;
           this.$modal.show("game-rule-modal");
         });
@@ -193,21 +203,37 @@ export default {
   }
 }
 
-.start{
-  .button-area{
-
-    .start-btn{
+.start {
+  .button-area {
+    .start-btn {
       width: 10rem;
-    padding:1rem 2rem;
-    background-color: #BD625A;
-    border:none;
-    border-radius: 10px;
-    color:#fff;
-  }
-  p{
-    margin-top: 2rem;
-  }
+      padding: 1rem 2rem;
+      background-color: #bd625a;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
     }
+    p {
+      margin-top: 2rem;
+    }
+  }
 }
 
+.modal-content {
+  .role-list {
+    h3 {
+      margin: 0.5em auto;
+    }
+    ul {
+      display: flex;
+      justify-content: space-evenly;
+      li {
+        list-style: none;
+      }
+    }
+  }
+  .btn {
+    margin: 1rem auto;
+  }
+}
 </style>

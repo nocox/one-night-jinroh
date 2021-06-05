@@ -1,13 +1,8 @@
 package com.okaka.onenightjinroh.api;
 
-import com.okaka.jinroh.persistence.GameDao;
-import com.okaka.jinroh.persistence.GameEntity;
-import com.okaka.jinroh.persistence.GameParticipationDao;
-import com.okaka.jinroh.persistence.GameParticipationEntity;
-import com.okaka.jinroh.persistence.NightActDao;
-import com.okaka.jinroh.persistence.RoomEntity;
-import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
 import com.okaka.onenightjinroh.application.service.night.DoneNightTermActUseCase;
+import com.okaka.onenightjinroh.application.service.night.GamePersonalBean;
+import com.okaka.onenightjinroh.application.service.night.GetGamePersonalUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightTermIndexUseCase;
 import com.okaka.onenightjinroh.application.service.night.NightTermIndexBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +17,13 @@ public class NightController {
     HttpSession session;
 
     @Autowired
-    ExistRoomValidate existRoomValidate;
-
-    @Autowired
     GetNightTermIndexUseCase getNightTermIndexUseCase;
 
     @Autowired
     DoneNightTermActUseCase doneNightTermActUseCase;
 
     @Autowired
-    GameDao gameDao;
-
-    @Autowired
-    GameParticipationDao gameParticipationDao;
-
-    @Autowired
-    NightActDao nightActDao;
+    GetGamePersonalUseCase getGamePersonalUseCase;
 
     @RequestMapping(path = "/night-index")
     NightTermIndexBean getNightTermIndex() {
@@ -45,16 +31,11 @@ public class NightController {
         String strUserId = session.getAttribute("user_id").toString();
         Long userId = Long.valueOf(strUserId);
 
-        RoomEntity roomEntity = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
+        GamePersonalBean gamePersonalBean = getGamePersonalUseCase.get(uuid, userId);
+        session.setAttribute("game_id", gamePersonalBean.getGameId());
+        session.setAttribute("game_participation_id", gamePersonalBean.getGameParticipationId());
 
-        // TODO: 最新のgameを取得する必要がある．
-        GameEntity gameEntity = gameDao.selectByRoomId(roomEntity.room_id);
-        GameParticipationEntity gameParticipationEntity = gameParticipationDao.selectGameParticipant(gameEntity.game_id, userId);
-
-        session.setAttribute("game_id", gameEntity.game_id);
-        session.setAttribute("game_participation_id", gameParticipationEntity.game_participation_id);
-
-        return getNightTermIndexUseCase.get(gameEntity.game_id, gameParticipationEntity.game_participation_id);
+        return getNightTermIndexUseCase.get(gamePersonalBean.getGameId(), gamePersonalBean.getGameParticipationId());
     }
 
     @RequestMapping(path = "/done-night-act")

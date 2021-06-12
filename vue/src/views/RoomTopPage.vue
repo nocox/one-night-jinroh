@@ -53,7 +53,9 @@
             <h3>役職一覧</h3>
             <ul>
               <li v-for="(role, name) in getRoleList()" v-bind:key="role">
-                {{ name }} : {{ role }}
+                <span> {{ name }}</span>
+                <span> : </span>
+                <span>{{ role }} </span>
               </li>
             </ul>
           </div>
@@ -232,6 +234,10 @@ export default {
       margin: 0.5em auto;
     }
     ul li {
+      justify-content: center;
+      display: grid;
+      text-align: left;      
+      grid-template-columns: 4em 1em 1em;
       list-style: none;
     }
   }

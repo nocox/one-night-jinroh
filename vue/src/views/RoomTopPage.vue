@@ -21,6 +21,7 @@
           {{ player.name }}
         </li>
       </ul>
+      <p>ページをリロードすると<br>最新の参加者を取得できます。</p>
     </section>
 
     <!-- スタートボタンを表示（ホストのみ）-->
@@ -209,6 +210,10 @@ export default {
   background-size: contain;
   ul li {
     list-style: none;
+  }
+  p{
+    margin-top: .8rem;
+    font-size:.8em;
   }
 }
 

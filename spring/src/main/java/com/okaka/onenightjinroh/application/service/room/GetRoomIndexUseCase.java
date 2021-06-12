@@ -2,9 +2,9 @@ package com.okaka.onenightjinroh.application.service.room;
 
 import com.okaka.jinroh.persistence.RoomEntity;
 import com.okaka.jinroh.persistence.RoomParticipantDao;
-import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.jinroh.persistence.UserDao;
-import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
+import com.okaka.jinroh.persistence.UserEntity;
+import com.okaka.onenightjinroh.application.validater.ExistRoomValidate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

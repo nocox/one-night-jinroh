@@ -1,7 +1,7 @@
 package com.okaka.onenightjinroh.application.service.tally;
 
+import com.okaka.onenightjinroh.application.bean.GameParticipantBean;
 import com.okaka.onenightjinroh.application.domain.GameParticipant;
-import com.okaka.onenightjinroh.application.domain.GameParticipantBean;
 
 public class GameParticipantWithVoteBean extends GameParticipantBean {
     private Integer voteCount;

@@ -6,11 +6,11 @@ import com.okaka.jinroh.persistence.GameVoteTallyDao;
 import com.okaka.jinroh.persistence.GameVoteTallyEntity;
 import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.UserEntity;
-import com.okaka.onenightjinroh.application.domain.GameParticipantRepository;
-import com.okaka.onenightjinroh.application.domain.RoleRepository;
 import com.okaka.onenightjinroh.application.domain.TallyResult;
-import com.okaka.onenightjinroh.application.domain.UserRepository;
 import com.okaka.onenightjinroh.application.port.TallyResultPort;
+import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
+import com.okaka.onenightjinroh.application.repository.RoleRepository;
+import com.okaka.onenightjinroh.application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

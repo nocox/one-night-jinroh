@@ -2,11 +2,11 @@ package com.okaka.onenightjinroh.application.service.tally;
 
 import com.okaka.onenightjinroh.application.domain.Game;
 import com.okaka.onenightjinroh.application.domain.GameParticipant;
-import com.okaka.onenightjinroh.application.domain.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.domain.TallyResult;
 import com.okaka.onenightjinroh.application.domain.Vote;
-import com.okaka.onenightjinroh.application.domain.VoteRepository;
 import com.okaka.onenightjinroh.application.port.TallyResultPort;
+import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
+import com.okaka.onenightjinroh.application.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

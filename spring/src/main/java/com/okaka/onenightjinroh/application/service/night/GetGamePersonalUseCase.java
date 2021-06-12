@@ -5,7 +5,7 @@ import com.okaka.jinroh.persistence.GameEntity;
 import com.okaka.jinroh.persistence.GameParticipationDao;
 import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.RoomEntity;
-import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
+import com.okaka.onenightjinroh.application.validater.ExistRoomValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

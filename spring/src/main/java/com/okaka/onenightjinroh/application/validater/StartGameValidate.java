@@ -1,4 +1,4 @@
-package com.okaka.onenightjinroh.application.domain;
+package com.okaka.onenightjinroh.application.validater;
 
 import com.okaka.jinroh.persistence.RoomParticipantDao;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,12 @@
 package com.okaka.onenightjinroh.api;
 
 import com.okaka.jinroh.persistence.RoomEntity;
-import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
-import com.okaka.onenightjinroh.application.domain.StartGameValidate;
 import com.okaka.onenightjinroh.application.service.room.GameStartWebSocketBean;
 import com.okaka.onenightjinroh.application.service.room.GetRoomIndexUseCase;
 import com.okaka.onenightjinroh.application.service.room.RoomIndexBean;
 import com.okaka.onenightjinroh.application.service.room.StartGameUseCase;
+import com.okaka.onenightjinroh.application.validater.ExistRoomValidate;
+import com.okaka.onenightjinroh.application.validater.StartGameValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;

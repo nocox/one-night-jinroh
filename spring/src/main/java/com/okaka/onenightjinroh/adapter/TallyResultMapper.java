@@ -6,8 +6,8 @@ import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.onenightjinroh.application.domain.Game;
 import com.okaka.onenightjinroh.application.domain.GameParticipant;
-import com.okaka.onenightjinroh.application.domain.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.domain.TallyResult;
+import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
 
 public class TallyResultMapper {
 

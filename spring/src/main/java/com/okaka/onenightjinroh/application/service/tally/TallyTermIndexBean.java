@@ -1,6 +1,6 @@
 package com.okaka.onenightjinroh.application.service.tally;
 
-import com.okaka.onenightjinroh.application.domain.GameIndexBean;
+import com.okaka.onenightjinroh.application.bean.GameIndexBean;
 
 public class TallyTermIndexBean {
     private Long gameId;

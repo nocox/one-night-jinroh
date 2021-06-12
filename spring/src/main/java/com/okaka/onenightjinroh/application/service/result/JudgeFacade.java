@@ -1,5 +1,6 @@
 package com.okaka.onenightjinroh.application.service.result;
 
+import com.okaka.onenightjinroh.application.domain.Judge;
 import com.okaka.onenightjinroh.application.domain.TallyResult;
 import com.okaka.onenightjinroh.application.port.TallyResultPort;
 import com.okaka.onenightjinroh.application.service.result.rules.FailPeaceVillage;
@@ -15,7 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class JudgeResultUseCase {
+public class JudgeFacade {
     @Autowired
     TallyResultPort tallyResultPort;
 
@@ -27,11 +28,12 @@ public class JudgeResultUseCase {
             new SuccessHideJinrohWin()
     );
 
-    public WinLoseConditionBase judge(Long gameId) {
+    public Judge judge(Long gameId) {
         List<TallyResult> tallyResults = tallyResultPort.searchTallyResults(gameId);
-        return winLoseConditions.stream()
+        WinLoseConditionBase winLoseConditionBase = winLoseConditions.stream()
                 .filter(conditionBase -> conditionBase.condition(tallyResults))
                 .min(Comparator.comparing(WinLoseConditionBase::priority))
                 .orElseThrow();
+        return new Judge(winLoseConditionBase.getResultText());
     }
 }

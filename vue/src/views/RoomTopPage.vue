@@ -14,7 +14,6 @@
     </section>
 
     <!-- 参加者一覧を表示 -->
-
     <section class="player-list">
       <h2>さんかしゃ</h2>
       <ul>
@@ -41,20 +40,20 @@
         name="game-rule-modal"
         :clickToClose="false"
         :height="'auto'"
+        :width="'100%'"
         :scrollable="true"
       >
         <div class="modal-header">
           <h2>ゲームを開始します</h2>
         </div>
-
         <div class="modal-content">
           <p>参加人数 : {{ playerCount }}</p>
 
           <div class="role-list">
             <h3>役職一覧</h3>
             <ul>
-              <li v-for="role in roleList" v-bind:key="role.id">
-                {{ role.roleName }}
+              <li v-for="(role, name) in getRoleList()" v-bind:key="role">
+                {{ name }} : {{ role }}
               </li>
             </ul>
           </div>
@@ -95,6 +94,16 @@ export default {
     myButton,
   },
   methods: {
+    getRoleList: function () {
+      const roleNameList = this.roleList.map((role) => role.roleName);
+      const cnt = roleNameList.reduce((prev, current) => {
+        // const cnt = this.roleList.reduce((prev, current)=>{
+        prev[current] = (prev[current] || 0) + 1;
+        return prev;
+      }, {});
+
+      return cnt;
+    },
     // ホストがスタートボタンを押下した時の処理
     gameStart: function () {
       axios
@@ -196,10 +205,8 @@ export default {
   color: #fff;
   background: url("../assets/images/room-top-bg.png") no-repeat center center;
   background-size: contain;
-  ul {
-    li {
-      list-style: none;
-    }
+  ul li {
+    list-style: none;
   }
 }
 
@@ -224,12 +231,8 @@ export default {
     h3 {
       margin: 0.5em auto;
     }
-    ul {
-      display: flex;
-      justify-content: space-evenly;
-      li {
-        list-style: none;
-      }
+    ul li {
+      list-style: none;
     }
   }
   .btn {

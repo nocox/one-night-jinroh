@@ -1,52 +1,29 @@
 <template>
-  <div class="night-page">
-    <h1>夜の行動を行ってください</h1>
+  <main class="night-page">
+    <h2>夜の行動を行ってください</h2>
 
-    <div class="grid-container">
-      <div class="board-cards">
-        <h2>場のカード</h2>
-        <ul>
-          <li
-            class="board-card"
-            v-for="board_card in BoardCards"
-            :key="board_card.index"
-          >
-            <RoleCard :roleName="'不明'" />
-          </li>
-        </ul>
-      </div>
+    <RoleCardDisplay
+      :playerRole="playerRole"
+      :playerName="playerName"
+      :otherPlayerList="otherPlayerList"
+    />
 
-      <div class="me">
-        <h2>あなたです</h2>
-        <RoleCard :roleName="playerRole.roleName" />
-        <p>{{ playerName }}</p>
-        <p>役職：{{ playerRole.roleName }}</p>
-      </div>
-      <div class="others">
-        <h2>他のプレイヤー</h2>
-        <ul>
-          <li v-for="player in otherPlayerList" :key="player.id">
-            <RoleCard :roleName="player.role.roleName" />
-            <p>{{ player.name }}</p>
-            <p>役職：{{ player.role.roleName }}</p>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div>
-      <myButton :method="doneNightAct" :text="'完了'" />
-    </div>
-  </div>
+    <myButton
+      :class="{ btn_disabled: isCompleted }"
+      class="btn"
+      :method="doneNightAct"
+      :text="'完了'"
+    />
+  </main>
 </template>
 
 <script>
 import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
-import { JINROH_API_BASE_URL} from "../Env";
+import { JINROH_API_BASE_URL } from "../Env";
 
-import RoleCard from "@/components/RoleCard.vue";
+import RoleCardDisplay from "@/components/RoleCardDisplay.vue";
 import myButton from "@/components/Button.vue";
 
 export default {
@@ -70,10 +47,11 @@ export default {
           role: "---",
         },
       ],
+      isCompleted: false,
     };
   },
   components: {
-    RoleCard,
+    RoleCardDisplay,
     myButton,
   },
   mounted() {
@@ -102,11 +80,12 @@ export default {
         });
       });
     },
-    doneNightAct: () => {
+    doneNightAct: function() {
       axios
         .get(JINROH_API_BASE_URL + "/done-night-act", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
+          this.isCompleted = true;
           console.log("夜の行動完了");
         })
         .catch(() => {
@@ -119,46 +98,19 @@ export default {
 
 
 <style lang="scss" scoped>
-ul {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  list-style: none;
-  margin: auto;
+h2 {
   text-align: center;
 }
 
-p {
-  margin: 0;
+.btn {
+  text-align: center;
+  display: block;
+  width: 12rem;
+  margin: 5rem auto;
 }
-
-.grid-container {
-  max-width: 1200px;
-  margin: auto;
-
-  display: grid;
-  grid-template-rows: 20rem auto;
-  grid-template-columns: 20rem 1fr;
-  align-items: center;
-
-  .board-cards {
-    grid-column: 2/3;
-    grid-row: 1/2;
-  }
-  .me {
-    grid-column: 1/2;
-    grid-row: 1/3;
-  }
-  .others {
-    grid-column: 2/3;
-    grid-row: 2/3;
-    ul li {
-      margin-top: 2rem;
-    }
-  }
+.btn_disabled {
+  pointer-events: none;
+  border-color: gray;
+  color: gray;
 }
 </style>

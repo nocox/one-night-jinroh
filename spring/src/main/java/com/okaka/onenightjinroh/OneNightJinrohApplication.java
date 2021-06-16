@@ -2,6 +2,12 @@ package com.okaka.onenightjinroh;
 
 import com.okaka.jinroh.persistence.Reservation;
 import com.okaka.jinroh.persistence.ReservationAdapter;
+import com.okaka.jinroh.persistence.RoleDao;
+import com.okaka.jinroh.persistence.RoleEntity;
+import com.okaka.jinroh.persistence.RoleSelectDao;
+import com.okaka.jinroh.persistence.RoleSelectEntity;
+import com.okaka.jinroh.persistence.RuleDao;
+import com.okaka.jinroh.persistence.RuleEntity;
 import com.okaka.jinroh.persistence.TEvent;
 import com.okaka.jinroh.persistence.TEventDao;
 import com.okaka.jinroh.persistence.TUser;
@@ -35,6 +41,15 @@ public class OneNightJinrohApplication {
 	@Autowired
 	TUserDao tUserDao;
 
+	@Autowired
+	RoleDao roleDao;
+
+	@Autowired
+	RuleDao ruleDao;
+
+	@Autowired
+	RoleSelectDao roleSelectDao;
+
 	// Insert data at initailizing phase using ReservationDao#insert
 	@Bean
 	CommandLineRunner runner() {
@@ -55,7 +70,35 @@ public class OneNightJinrohApplication {
 			tUserDao.insert(tUser);
 		});
 
+		if (roleDao.selectAll().size() != 6) {
+			Arrays.asList("村人","人狼","占い師","怪盗","狂人","吊り人").forEach(name -> {
+				RoleEntity roleEntity = new RoleEntity();
+				roleEntity.role_name = name;
+				roleDao.insert(roleEntity);
+			});
+		}
+
+		insertRole("デフォルト3人", Arrays.asList(1L, 2L, 3L, 4L, 5L));
+		insertRole("デフォルト4人", Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L));
+		insertRole("デフォルト5人", Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 1L));
+		insertRole("デフォルト6人", Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 1L, 2L));
+		insertRole("デフォルト7人", Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 1L, 2L, 3L));
 		return null;
+	}
+
+	private void insertRole(String ruleName, List<Long> RoleIdList) {
+		if (!ruleDao.existRule(ruleName)) {
+			RuleEntity ruleEntity = new RuleEntity();
+			ruleEntity.rule_name = ruleName;
+			ruleDao.insert(ruleEntity);
+
+			RoleIdList.forEach(id -> {
+				RoleSelectEntity roleSelectEntity = new RoleSelectEntity();
+				roleSelectEntity.rule_id = ruleEntity.rule_id;
+				roleSelectEntity.role_id = id;
+				roleSelectDao.insert(roleSelectEntity);
+			});
+		}
 	}
 
 	@RequestMapping(path = "/")

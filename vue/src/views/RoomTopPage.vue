@@ -21,7 +21,7 @@
           {{ player.name }}
         </li>
       </ul>
-      <p>ページをリロードすると<br>最新の参加者を取得できます。</p>
+      <p>ページをリロードすると<br />最新の参加者を取得できます。</p>
     </section>
 
     <!-- スタートボタンを表示（ホストのみ）-->
@@ -53,7 +53,7 @@
           <div class="role-list">
             <h3>役職一覧</h3>
             <ul>
-              <li v-for="(role, name) in getRoleList()" v-bind:key="role">
+              <li v-for="(role, name) in getCountedRoles()" v-bind:key="role">
                 <span> {{ name }}</span>
                 <span> : </span>
                 <span>{{ role }} </span>
@@ -97,15 +97,14 @@ export default {
     myButton,
   },
   methods: {
-    getRoleList: function () {
-      const roleNameList = this.roleList.map((role) => role.roleName);
-      const cnt = roleNameList.reduce((prev, current) => {
-        // const cnt = this.roleList.reduce((prev, current)=>{
-        prev[current] = (prev[current] || 0) + 1;
-        return prev;
-      }, {});
-
-      return cnt;
+    getCountedRoles: function () {
+      const roleNames = this.roleList.map((role) => role.roleName);
+      let countedRoles = {};
+      for (let i = 0; i < roleNames.length; i++) {
+        let key = roleNames[i];
+        countedRoles[key] = countedRoles[key] ? countedRoles[key] + 1 : 1;
+      }
+      return countedRoles;
     },
     // ホストがスタートボタンを押下した時の処理
     gameStart: function () {
@@ -211,9 +210,9 @@ export default {
   ul li {
     list-style: none;
   }
-  p{
-    margin-top: .8rem;
-    font-size:.8em;
+  p {
+    margin-top: 0.8rem;
+    font-size: 0.8em;
   }
 }
 
@@ -241,7 +240,7 @@ export default {
     ul li {
       justify-content: center;
       display: grid;
-      text-align: left;      
+      text-align: left;
       grid-template-columns: 4em 1em 1em;
       list-style: none;
     }

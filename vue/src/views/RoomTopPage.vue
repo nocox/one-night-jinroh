@@ -53,10 +53,10 @@
           <div class="role-list">
             <h3>役職一覧</h3>
             <ul>
-              <li v-for="(role, name) in getCountedRoles()" v-bind:key="role">
+              <li v-for="(count, name) in getCountedRoles()" v-bind:key="name">
                 <span> {{ name }}</span>
                 <span> : </span>
-                <span>{{ role }} </span>
+                <span>{{ count }} </span>
               </li>
             </ul>
           </div>

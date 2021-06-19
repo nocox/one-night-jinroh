@@ -14,7 +14,6 @@
     </section>
 
     <!-- 参加者一覧を表示 -->
-
     <section class="player-list">
       <h2>さんかしゃ</h2>
       <ul>
@@ -22,6 +21,7 @@
           {{ player.name }}
         </li>
       </ul>
+      <p>ページをリロードすると<br />最新の参加者を取得できます。</p>
     </section>
 
     <!-- スタートボタンを表示（ホストのみ）-->
@@ -41,20 +41,22 @@
         name="game-rule-modal"
         :clickToClose="false"
         :height="'auto'"
+        :width="'100%'"
         :scrollable="true"
       >
         <div class="modal-header">
           <h2>ゲームを開始します</h2>
         </div>
-
         <div class="modal-content">
           <p>参加人数 : {{ playerCount }}</p>
 
           <div class="role-list">
             <h3>役職一覧</h3>
             <ul>
-              <li v-for="role in roleList" v-bind:key="role.id">
-                {{ role.roleName }}
+              <li v-for="(count, name) in getCountedRoles()" v-bind:key="name">
+                <span> {{ name }}</span>
+                <span> : </span>
+                <span>{{ count }} </span>
               </li>
             </ul>
           </div>
@@ -95,6 +97,15 @@ export default {
     myButton,
   },
   methods: {
+    getCountedRoles: function () {
+      const roleNames = this.roleList.map((role) => role.roleName);
+      let countedRoles = {};
+      for (let i = 0; i < roleNames.length; i++) {
+        let key = roleNames[i];
+        countedRoles[key] = countedRoles[key] ? countedRoles[key] + 1 : 1;
+      }
+      return countedRoles;
+    },
     // ホストがスタートボタンを押下した時の処理
     gameStart: function () {
       axios
@@ -196,10 +207,12 @@ export default {
   color: #fff;
   background: url("../assets/images/room-top-bg.png") no-repeat center center;
   background-size: contain;
-  ul {
-    li {
-      list-style: none;
-    }
+  ul li {
+    list-style: none;
+  }
+  p {
+    margin-top: 0.8rem;
+    font-size: 0.8em;
   }
 }
 
@@ -224,12 +237,12 @@ export default {
     h3 {
       margin: 0.5em auto;
     }
-    ul {
-      display: flex;
-      justify-content: space-evenly;
-      li {
-        list-style: none;
-      }
+    ul li {
+      justify-content: center;
+      display: grid;
+      text-align: left;
+      grid-template-columns: 4em 1em 1em;
+      list-style: none;
     }
   }
   .btn {

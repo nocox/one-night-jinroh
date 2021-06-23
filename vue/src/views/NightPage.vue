@@ -31,19 +31,14 @@ export default {
   data() {
     return {
       playerName: "xxxxx",
-      playerRole: "xxxxx",
+      playerRole: {
+        roleId: -1,
+        roleName: "不明",
+      },
       otherPlayerList: [
         {
           id: 1,
           name: "xxxxx",
-          role: "---",
-        },
-      ],
-      BoardCards: [
-        {
-          role: "---",
-        },
-        {
           role: "---",
         },
       ],

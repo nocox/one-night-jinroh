@@ -21,10 +21,10 @@
       <ul>
         <li
           class="board-card"
-          v-for="board_card in BoardCards"
-          :key="board_card.index"
+          v-for="boardCard in boardCards"
+          :key="boardCard.index"
         >
-          <RoleCard :roleName="'不明'" />
+          <RoleCard :roleName="boardCard.roleName" />
         </li>
       </ul>
     </div>
@@ -37,19 +37,35 @@ import RoleCard from "@/components/RoleCard.vue";
 export default {
   name: "RoleCardDisplay",
   components: { RoleCard },
-  props: ["playerRole", "playerName", "otherPlayerList"],
-  data() {
-    return {
-      BoardCards: [
-        {
-          role: "---",
-        },
-        {
-          role: "---",
-        },
-      ],
-    };
-  },
+  props: {
+    playerRole: {
+      type: Object,
+      required: true
+    },
+    playerName: {
+      type: String,
+      required: true
+    },
+    otherPlayerList: {
+      type: Array,
+      required: true
+    },
+    boardCards: {
+      type: Array,
+      default: () => {
+        return [
+          {
+            roleId: -1,
+            roleName: "不明"
+          },
+          {
+            roleId: -1,
+            roleName: "不明"
+          },
+        ]
+      }
+    }
+  }
 };
 </script>
 

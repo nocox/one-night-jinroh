@@ -10,14 +10,11 @@ import java.util.List;
 
 @ConfigAutowireable
 @Dao
-public interface RoleDao {
+public interface HolidayRoleDao {
     @Select
-    List<RoleEntity> selectAll();
-
-    @Select
-    List<RoleEntity> selectByRoleIds(List<Long> roleIds);
+    List<HolidayRoleEntity> selectByGameId(Long gameId);
 
     @Insert
     @Transactional
-    int insert(RoleEntity roleEntity);
+    int insert(HolidayRoleEntity holidayRoleEntity);
 }

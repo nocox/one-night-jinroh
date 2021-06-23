@@ -1,6 +1,14 @@
 package com.okaka.onenightjinroh.application.domain;
 
 public class Rule {
-    public Long ruleId;
-    public String ruleName;
+    private Long ruleId;
+    private String ruleName;
+
+    public Long getRuleId() {
+        return ruleId;
+    }
+
+    public String getRuleName() {
+        return ruleName;
+    }
 }

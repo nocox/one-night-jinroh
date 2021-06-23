@@ -9,6 +9,9 @@ import com.okaka.jinroh.persistence.RoleSelectDao;
 import com.okaka.jinroh.persistence.RoomParticipantDao;
 import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.jinroh.persistence.UserDao;
+import com.okaka.onenightjinroh.application.domain.HolidayRoles;
+import com.okaka.onenightjinroh.application.domain.Role;
+import com.okaka.onenightjinroh.application.port.HolidayRolesPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class StartGameUseCase {
@@ -49,6 +53,9 @@ public class StartGameUseCase {
     private RoomParticipantDao roomParticipantDao;
 
 
+    @Autowired
+    private HolidayRolesPort holidayRolesPort;
+
     public GameStartWebSocketBean startGame(Long roomId, Long hostUserId) {
         int participantCount = roomParticipantDao.selectParticipantCount(roomId);
 
@@ -69,6 +76,12 @@ public class StartGameUseCase {
             gameParticipationEntity.role_id = roleEntityList.get(i).role_id;
             gameParticipationDao.insert(gameParticipationEntity);
         }
+
+        List<Role> notUseRoles = roleEntityList.subList(userEntityList.size(), roleEntityList.size())
+                .stream().map(roleEntity -> new Role(roleEntity.role_id, roleEntity.role_name))
+                .collect(Collectors.toList());
+        HolidayRoles holidayRoles = new HolidayRoles(gameEntity.game_id, notUseRoles);
+        holidayRolesPort.save(holidayRoles);
 
         return new GameStartWebSocketBean(
                 roleSelectDao.selectRoleListByRuleId(gameEntity.rule_id),

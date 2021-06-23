@@ -7,14 +7,14 @@ public class GameResult {
     private final Long gameParticipantId;
     private final Judge judge;
     private final List<GameParticipant> gameParticipants;
-    private final List<Role> holidayCard;
+    private final HolidayRoles holidayRoles;
 
-    public GameResult(Long gameId, Long gameParticipantId, Judge judge, List<GameParticipant> gameParticipants, List<Role> holidayCard) {
+    public GameResult(Long gameId, Long gameParticipantId, Judge judge, List<GameParticipant> gameParticipants, HolidayRoles holidayRoles) {
         this.gameId = gameId;
         this.gameParticipantId = gameParticipantId;
         this.judge = judge;
         this.gameParticipants = gameParticipants;
-        this.holidayCard = holidayCard;
+        this.holidayRoles = holidayRoles;
     }
 
     public Long getGameId() {
@@ -33,7 +33,7 @@ public class GameResult {
         return gameParticipants;
     }
 
-    public List<Role> getHolidayCard() {
-        return holidayCard;
+    public HolidayRoles getHolidayRoles() {
+        return holidayRoles;
     }
 }

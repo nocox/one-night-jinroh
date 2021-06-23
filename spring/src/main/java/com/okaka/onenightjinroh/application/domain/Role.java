@@ -9,6 +9,11 @@ public class Role {
         this.roleName = null;
     }
 
+    public Role(Long roleId, String roleName) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+    }
+
     public Long getRoleId() {
         return roleId;
     }

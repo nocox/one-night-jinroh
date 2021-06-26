@@ -23,11 +23,12 @@
       name="join-to-room"
       :classes="'join-modal'"
       :width="'75%'"
-      :height="'240px'"
+      :height="'auto'"
     >
       <h2>ルームに参加</h2>
       <div class="form">
         <input v-model="roomNum" placeholder="ルーム番号" />
+        <p v-if="!roomExists" class="error">ルームが見つかりません</p>
         <div class="modal_btn-wrapper">
           <a class="join btn" v-on:click="joinRoom">参加</a>
           <a class="cancel btn" v-on:click="hide">戻る</a>
@@ -51,6 +52,7 @@ export default {
   data() {
     return {
       roomNum: "",
+      roomExists: true,
     };
   },
   methods: {
@@ -76,6 +78,9 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.$router.push("/room");
+        })
+        .catch(()=>{
+          this.roomExists = false;
         });
     },
   },
@@ -132,7 +137,7 @@ h1 {
       margin: auto;
     }
     .modal_btn-wrapper {
-      margin-top: 2rem;
+      margin : 2rem auto;
       display: flex;
       justify-content: center;
       .btn {
@@ -178,6 +183,10 @@ h1 {
   }
   .join-modal {
     .form {
+      .error{
+        color:red;
+        text-align: center;
+      }
       .modal_btn-wrapper {
         margin-top: 0.4rem;
         flex-direction: column;

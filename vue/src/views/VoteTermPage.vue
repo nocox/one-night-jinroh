@@ -61,7 +61,10 @@ export default {
   data() {
     return {
       playerName: "xxxxx",
-      playerRole: "xxxxx",
+      playerRole: {
+        roleId: -1,
+        roleName: "不明",
+      },
       hostFlag: false,
       otherPlayerList: [
         {

@@ -1,7 +1,8 @@
-package com.okaka.onenightjinroh.application.domain;
+package com.okaka.onenightjinroh.application.repository;
 
 import com.okaka.jinroh.persistence.UserDao;
 import com.okaka.jinroh.persistence.UserEntity;
+import com.okaka.onenightjinroh.application.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

@@ -32,22 +32,23 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
-import { JINROH_API_BASE_URL} from "../Env";
+import { JINROH_API_BASE_URL } from "../Env";
 import RoleCardDisplay from "@/components/RoleCardDisplay.vue";
-// import RoleCard from "@/components/RoleCard.vue";
 import myButton from "@/components/Button.vue";
 
 export default {
   name: "TempTalkPage",
   components: {
     RoleCardDisplay,
-    // RoleCard,
     myButton,
   },
   data() {
     return {
       playerName: "xxxxx",
-      playerRole: "xxxxx",
+      playerRole: {
+        roleId: -1,
+        roleName: "不明",
+      },
       hostFlag: false,
       otherPlayerList: [
         {
@@ -56,19 +57,11 @@ export default {
           role: "---",
         },
       ],
-      BoardCards: [
-        {
-          role: "---",
-        },
-        {
-          role: "---",
-        },
-      ],
     };
   },
   mounted() {
     axios
-      .get( JINROH_API_BASE_URL + "/talk-index", { withCredentials: true })
+      .get(JINROH_API_BASE_URL + "/talk-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         this.playerName = response.data.gameIndex.playerName;
@@ -84,7 +77,7 @@ export default {
   },
   methods: {
     configWebSocket: function (gameId) {
-      this.socket = new SockJS( JINROH_API_BASE_URL + "/jinroh-websocket");
+      this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect({}, (frame) => {
         console.log("Connected: " + frame);
@@ -98,7 +91,7 @@ export default {
     },
     endTalk() {
       axios
-        .get( JINROH_API_BASE_URL + "/end-talk", { withCredentials: true })
+        .get(JINROH_API_BASE_URL + "/end-talk", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
         })
@@ -119,7 +112,6 @@ export default {
 h2 {
   text-align: center;
 }
-
 </style>
 
 

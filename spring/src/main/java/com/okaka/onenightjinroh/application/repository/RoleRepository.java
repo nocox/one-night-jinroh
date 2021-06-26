@@ -1,8 +1,9 @@
-package com.okaka.onenightjinroh.application.domain;
+package com.okaka.onenightjinroh.application.repository;
 
 import com.okaka.jinroh.persistence.RoleDao;
 import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.RoleSelectDao;
+import com.okaka.onenightjinroh.application.domain.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

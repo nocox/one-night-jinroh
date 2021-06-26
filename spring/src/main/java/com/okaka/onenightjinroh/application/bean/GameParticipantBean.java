@@ -1,5 +1,7 @@
-package com.okaka.onenightjinroh.application.domain;
+package com.okaka.onenightjinroh.application.bean;
 
+import com.okaka.onenightjinroh.application.domain.GameParticipant;
+import com.okaka.onenightjinroh.application.domain.User;
 import com.okaka.onenightjinroh.application.service.room.RoleBean;
 
 public class GameParticipantBean {

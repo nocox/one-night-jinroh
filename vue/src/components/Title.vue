@@ -24,6 +24,7 @@
       :classes="'join-modal'"
       :width="'90%'"
       :height="'auto'"
+      @closed="roomExists = true"
     >
       <h2>ルームに参加</h2>
       <div class="form">

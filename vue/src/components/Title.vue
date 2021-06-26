@@ -130,6 +130,11 @@ h1 {
     text-align: center;
   }
   .form {
+    .error {
+      color: red;
+      text-align: center;
+    }
+
     input {
       display: block;
       width: 75%;
@@ -183,10 +188,6 @@ h1 {
   }
   .join-modal {
     .form {
-      .error {
-        color: red;
-        text-align: center;
-      }
       .modal_btn-wrapper {
         margin-top: 0.4rem;
         flex-direction: column;

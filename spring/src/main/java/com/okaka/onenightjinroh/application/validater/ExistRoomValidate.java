@@ -1,7 +1,7 @@
-package com.okaka.onenightjinroh.application.domain;
+package com.okaka.onenightjinroh.application.validater;
 
-import com.okaka.jinroh.persistence.RoomEntity;
 import com.okaka.jinroh.persistence.RoomDao;
+import com.okaka.jinroh.persistence.RoomEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,5 @@
 <template>
   <main class="result_page">
-
     <h2>{{ judgeText }}</h2>
 
     <resultImage :result="judgeText" />
@@ -11,8 +10,8 @@
       :playerRole="playerRole"
       :playerName="playerName"
       :otherPlayerList="otherPlayerList"
+      :boardCards="holidayRoles"
     />
-
   </main>
 </template>
 
@@ -22,7 +21,7 @@ import axios from "axios";
 import RoleCardDisplay from "@/components/RoleCardDisplay";
 import resultImage from "@/components/resultImage.vue";
 import myButton from "@/components/Button.vue";
-import { JINROH_API_BASE_URL} from "../Env";
+import { JINROH_API_BASE_URL } from "../Env";
 
 export default {
   name: "TempResultTermPage",
@@ -30,7 +29,10 @@ export default {
     return {
       judgeText: "",
       playerName: "xxxxx",
-      playerRole: "xxxxx",
+      playerRole: {
+        roleId: -1,
+        roleName: "不明",
+      },
       hostFlag: false,
       otherPlayerList: [
         {
@@ -39,9 +41,19 @@ export default {
           role: "---",
         },
       ],
+      holidayRoles: [
+        {
+          roleId: -1,
+          roleName: "不明",
+        },
+        {
+          roleId: -1,
+          roleName: "不明",
+        },
+      ],
     };
   },
-  components: { resultImage, myButton,RoleCardDisplay },
+  components: { resultImage, myButton, RoleCardDisplay },
   mounted() {
     axios
       .get(JINROH_API_BASE_URL + "/result-index", { withCredentials: true })
@@ -52,6 +64,7 @@ export default {
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
+        this.holidayRoles = response.data.holidayRoles;
       })
       .catch(() => {
         this.$router.push("/room");

@@ -1,7 +1,8 @@
-package com.okaka.onenightjinroh.application.domain;
+package com.okaka.onenightjinroh.application.repository;
 
 import com.okaka.jinroh.persistence.VoteDao;
 import com.okaka.jinroh.persistence.VoteEntity;
+import com.okaka.onenightjinroh.application.domain.Vote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

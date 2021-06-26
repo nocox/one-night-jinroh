@@ -1,9 +1,9 @@
 package com.okaka.onenightjinroh.application.service.night;
 
 import com.okaka.onenightjinroh.application.domain.GameParticipant;
-import com.okaka.onenightjinroh.application.domain.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.domain.NightAct;
-import com.okaka.onenightjinroh.application.domain.NightActRepository;
+import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
+import com.okaka.onenightjinroh.application.repository.NightActRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,5 @@
 package com.okaka.onenightjinroh.application.service.room;
 
-import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.onenightjinroh.application.domain.Role;
 
 public class RoleBean {

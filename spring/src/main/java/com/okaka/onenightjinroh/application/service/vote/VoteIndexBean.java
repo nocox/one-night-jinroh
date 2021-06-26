@@ -1,6 +1,6 @@
 package com.okaka.onenightjinroh.application.service.vote;
 
-import com.okaka.onenightjinroh.application.domain.GameParticipantBean;
+import com.okaka.onenightjinroh.application.bean.GameParticipantBean;
 
 import java.util.List;
 

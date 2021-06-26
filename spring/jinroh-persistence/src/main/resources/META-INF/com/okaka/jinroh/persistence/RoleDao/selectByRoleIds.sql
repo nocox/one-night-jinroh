@@ -1,0 +1,3 @@
+SELECT *
+FROM ROLE
+WHERE ROLE_ID IN /*roleIds*/(1, 2)

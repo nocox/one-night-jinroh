@@ -38,7 +38,7 @@
       </p>
     </section>
 
-    <modal width="90%" name="vote-start-modal">
+    <modal :width="'90%'" :height="'auto'" name="vote-start-modal">
       <div class="modal-header">
         <h3>話し合いが終了しました。<br />投票してください。</h3>
         <myButton class="vote-modal-btn" :method="closeModal" :text="'OK'" />
@@ -189,11 +189,11 @@ h2 {
   text-align: center;
 
   h3 {
-    margin: 0 auto;
+    margin-top: 2rem;
   }
   .vote-modal-btn {
     width: 10rem;
-    margin: 1em auto;
+    margin: 2rem auto;
     padding: 0.5em 0;
   }
 }

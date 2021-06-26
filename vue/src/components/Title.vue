@@ -22,7 +22,7 @@
     <modal
       name="join-to-room"
       :classes="'join-modal'"
-      :width="'75%'"
+      :width="'90%'"
       :height="'auto'"
     >
       <h2>ルームに参加</h2>

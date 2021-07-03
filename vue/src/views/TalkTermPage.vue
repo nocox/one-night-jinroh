@@ -16,7 +16,7 @@
       />
     </div>
 
-    <modal name="talk-start-modal">
+    <modal :width="'90%'" :height="'auto'" name="talk-start-modal">
       <div class="modal-header">
         <h2>話し合いを始めてください</h2>
       </div>
@@ -112,6 +112,10 @@ export default {
 h2 {
   text-align: center;
 }
+
+.modal-header {
+  h2{
+    margin-top: 2rem;
+  }
+}
 </style>
-
-

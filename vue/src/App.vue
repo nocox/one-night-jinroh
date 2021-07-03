@@ -160,6 +160,9 @@ h2 {
 }
 
 @media screen and (max-width: 1024px) {
+  main{
+    max-width: 24rem;
+  }
   .pc {
     display: none;
   }

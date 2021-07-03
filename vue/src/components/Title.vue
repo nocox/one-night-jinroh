@@ -2,13 +2,8 @@
   <section class="title">
     <h1>
       <img
-        class="title-logo pc"
+        class="title-logo"
         src="../assets/images/logo.png"
-        alt="ゆるふわ人狼"
-      />
-      <img
-        class="title-logo sp"
-        src="../assets/images/logo-sp.png"
         alt="ゆるふわ人狼"
       />
     </h1>
@@ -27,12 +22,14 @@
     <modal
       name="join-to-room"
       :classes="'join-modal'"
-      :width="'75%'"
-      :height="'240px'"
+      :width="'90%'"
+      :height="'auto'"
+      @closed="roomExists = true"
     >
       <h2>ルームに参加</h2>
       <div class="form">
         <input v-model="roomNum" placeholder="ルーム番号" />
+        <p v-if="!roomExists" class="error">ルームが見つかりません</p>
         <div class="modal_btn-wrapper">
           <a class="join btn" v-on:click="joinRoom">参加</a>
           <a class="cancel btn" v-on:click="hide">戻る</a>
@@ -49,13 +46,14 @@
 
 <script>
 import axios from "axios";
-import { JINROH_API_BASE_URL} from "../Env";
+import { JINROH_API_BASE_URL } from "../Env";
 
 export default {
   name: "Title",
   data() {
     return {
       roomNum: "",
+      roomExists: true,
     };
   },
   methods: {
@@ -81,6 +79,9 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.$router.push("/room");
+        })
+        .catch(() => {
+          this.roomExists = false;
         });
     },
   },
@@ -90,23 +91,22 @@ export default {
 <style lang="scss" scoped>
 h1 {
   text-align: center;
-  .title-logo {
-    width: 100%;
-    height: auto;
-    margin: 1rem auto 0 -0.2rem;
-    filter: drop-shadow(0.1rem 0.1rem 0.1rem #956967);
-  }
+}
+
+.title-logo {
+  max-width: 40rem;
+  height: auto;
+  filter: drop-shadow(0.1rem 0.1rem 0.1rem #956967);
 }
 
 .title_btn-wrapper {
-  width: 100%;
+  max-width: 40rem;
   margin: auto;
   display: flex;
-  justify-content: space-evenly;
   .btn {
     display: block;
     width: 25%;
-    margin: 1rem auto 0 auto;
+    margin: 2rem auto;
 
     filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.2));
     transform: translateZ(0);
@@ -130,6 +130,11 @@ h1 {
     text-align: center;
   }
   .form {
+    .error {
+      color: red;
+      text-align: center;
+    }
+
     input {
       display: block;
       width: 75%;
@@ -137,7 +142,7 @@ h1 {
       margin: auto;
     }
     .modal_btn-wrapper {
-      margin-top: 2rem;
+      margin: 2rem auto;
       display: flex;
       justify-content: center;
       .btn {
@@ -167,11 +172,18 @@ h1 {
 .characters img {
   width: 100%;
 }
+
 @media screen and (max-width: 1024px) {
+  .title-logo {
+    max-width: 20rem;
+  }
+
   .title_btn-wrapper {
-    flex-direction: column;
+    width: 20rem;
     .btn {
-      width: 70%;
+      width: auto;
+      max-width: 8rem;
+      margin: 2rem auto;
     }
   }
   .join-modal {
@@ -183,6 +195,14 @@ h1 {
           margin: 0.8rem auto 0.4rem auto;
         }
       }
+    }
+  }
+
+  .characters {
+    display: flex;
+    justify-content: center;
+    img {
+      width: 20rem;
     }
   }
 }

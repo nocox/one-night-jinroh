@@ -2,13 +2,8 @@
   <section class="news-field">
     <h2>お知らせ</h2>
     <ul>
-      <li>20XX.XX.XX:〇〇の機能を追加しました。</li>
-      <li>20XX.XX.XX:〇〇の機能を追加しました。</li>
-      <li>20XX.XX.XX:〇〇の機能を追加しました。</li>
-      <li>20XX.XX.XX:〇〇の機能を追加しました。</li>
-      <li>20XX.XX.XX:〇〇の機能を追加しました。</li>
+      <li>20XX.XX.XX:ゆるふわじんろうリリース！</li>
     </ul>
-    <p><a href="">もっと見る</a></p>
   </section>
 </template>
 

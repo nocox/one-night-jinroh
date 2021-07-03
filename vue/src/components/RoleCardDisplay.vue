@@ -1,26 +1,30 @@
 <template>
   <section class="role-card-display-area">
     <div class="me">
-      <h3>あなたです</h3>
+      <h3 class="area-title">あなたです</h3>
       <RoleCard :roleName="playerRole.roleName" />
-      <p>{{ playerName }}</p>
-      <p>役職：{{ playerRole.roleName }}</p>
+      <p class="player-name">{{ playerName }}</p>
+      <p class="player-role">役職：{{ playerRole.roleName }}</p>
     </div>
     <div class="others">
-      <h3>他のプレイヤー</h3>
-      <ul>
-        <li v-for="player in otherPlayerList" :key="player.id">
+      <h3 class="area-title">他のプレイヤー</h3>
+      <ul class="card-list">
+        <li
+          class="card-list-item"
+          v-for="player in otherPlayerList"
+          :key="player.id"
+        >
           <RoleCard :roleName="player.role.roleName" />
-          <p>{{ player.name }}</p>
-          <p>役職： {{ player.role.roleName }}</p>
+          <p class="player-name">{{ player.name }}</p>
+          <p class="player-role">役職： {{ player.role.roleName }}</p>
         </li>
       </ul>
     </div>
     <div class="board-cards">
-      <h3>おやすみ中のカード</h3>
-      <ul>
+      <h3 class="area-title">おやすみ中のカード</h3>
+      <ul class="card-list">
         <li
-          class="board-card"
+          class="board-card card-list-item"
           v-for="boardCard in boardCards"
           :key="boardCard.index"
         >
@@ -40,15 +44,15 @@ export default {
   props: {
     playerRole: {
       type: Object,
-      required: true
+      required: true,
     },
     playerName: {
       type: String,
-      required: true
+      required: true,
     },
     otherPlayerList: {
       type: Array,
-      required: true
+      required: true,
     },
     boardCards: {
       type: Array,
@@ -56,45 +60,41 @@ export default {
         return [
           {
             roleId: -1,
-            roleName: "不明"
+            roleName: "不明",
           },
           {
             roleId: -1,
-            roleName: "不明"
+            roleName: "不明",
           },
-        ]
-      }
-    }
-  }
+        ];
+      },
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-h3 {
-  margin: 0.5em;
-}
-
-ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  li {
-    list-style: none;
-    text-align: center;
-    margin: 0 1.2rem;
-  }
-}
-
-p {
-  margin: 0;
-}
-
 .role-card-display-area {
   margin: auto;
   text-align: center;
 
   display: grid;
   align-items: center;
+
+  .area-title {
+    margin: 0.5em;
+  }
+
+  .card-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .card-list-item {
+      list-style: none;
+      text-align: center;
+      margin: 0 1.2rem;
+    }
+  }
 
   .board-cards {
     grid-column: 2/3;
@@ -109,10 +109,27 @@ p {
     grid-column: 2/3;
     grid-row: 2/3;
   }
+  .player-name,
+  .player-role {
+    margin: 0;
+  }
 }
 
 @media screen and (max-width: 639px) {
   .role-card-display-area {
+    .area-title {
+      font-size: 12px;
+    }
+    .player-name,
+    .player-role {
+      font-size: 12px;
+    }
+
+    .card-list {
+      .card-list-item {
+        margin: 0 auto;
+      }
+    }
     .me {
       grid-column: 1/2;
       grid-row: 1/2;
@@ -122,7 +139,7 @@ p {
       grid-row: 2/3;
     }
     .board-cards {
-      margin-top: 2.4rem;
+      // margin-top: 2.4rem;
       grid-column: 1/2;
       grid-row: 3/4;
     }

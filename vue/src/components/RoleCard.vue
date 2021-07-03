@@ -1,6 +1,6 @@
 <template>
   <div class="card-wrapper">
-    <img :src="RoleList[roleName]" :alt="RoleList[roleName]"/>
+    <img :src="RoleList[roleName]" :alt="RoleList[roleName]" />
   </div>
 </template>
 
@@ -33,9 +33,20 @@ export default {
 
 <style lang="scss" scoped>
 .card-wrapper {
+  margin: auto;
   img {
     height: 9.6rem;
     width: auto;
+  }
+}
+
+@media screen and (max-width: 639px) {
+  .card-wrapper {
+    max-width: 100px;
+    img {
+      height: auto;
+      width: 100%;
+    }
   }
 }
 </style>

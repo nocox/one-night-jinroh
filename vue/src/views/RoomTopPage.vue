@@ -41,7 +41,7 @@
         name="game-rule-modal"
         :clickToClose="false"
         :height="'auto'"
-        :width="'100%'"
+        :width="'90%'"
         :scrollable="true"
       >
         <div class="modal-header">

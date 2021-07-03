@@ -22,8 +22,9 @@
     <modal
       name="join-to-room"
       :classes="'join-modal'"
-      :width="'75%'"
+      :width="'90%'"
       :height="'auto'"
+      @closed="roomExists = true"
     >
       <h2>ルームに参加</h2>
       <div class="form">
@@ -79,7 +80,7 @@ export default {
           console.log(response.data);
           this.$router.push("/room");
         })
-        .catch(()=>{
+        .catch(() => {
           this.roomExists = false;
         });
     },
@@ -102,11 +103,10 @@ h1 {
   max-width: 40rem;
   margin: auto;
   display: flex;
-  // justify-content: space-evenly;
   .btn {
     display: block;
     width: 25%;
-    margin: 2rem auto ;
+    margin: 2rem auto;
 
     filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.2));
     transform: translateZ(0);
@@ -130,6 +130,11 @@ h1 {
     text-align: center;
   }
   .form {
+    .error {
+      color: red;
+      text-align: center;
+    }
+
     input {
       display: block;
       width: 75%;
@@ -137,7 +142,7 @@ h1 {
       margin: auto;
     }
     .modal_btn-wrapper {
-      margin : 2rem auto;
+      margin: 2rem auto;
       display: flex;
       justify-content: center;
       .btn {
@@ -183,10 +188,6 @@ h1 {
   }
   .join-modal {
     .form {
-      .error{
-        color:red;
-        text-align: center;
-      }
       .modal_btn-wrapper {
         margin-top: 0.4rem;
         flex-direction: column;

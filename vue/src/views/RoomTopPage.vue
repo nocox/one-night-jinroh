@@ -18,7 +18,7 @@
       <h2>さんかしゃ</h2>
       <ul>
         <li v-for="player in playerList" v-bind:key="player.id">
-          {{ player.name }}
+          {{ player.name }} <span v-if="myselfUserId === player.userId">（あなた）</span>
         </li>
       </ul>
       <p>ページをリロードすると<br />最新の参加者を取得できます。</p>
@@ -80,6 +80,7 @@ export default {
   data() {
     return {
       uuid: "yyyyy",
+      myselfUserId: 0,
       playerList: [
         {
           userID: 1,
@@ -163,6 +164,7 @@ export default {
         this.uuid = response.data.uuid;
         this.playerList = response.data.userList;
         this.hostFlg = response.data.hostFlg;
+        this.myselfUserId = response.data.myselfUserId;
         this.configWebSocket();
       })
       .catch(() => {
@@ -209,6 +211,7 @@ export default {
   background-size: contain;
   ul li {
     list-style: none;
+    text-align: left;
   }
   p {
     margin-top: 0.8rem;

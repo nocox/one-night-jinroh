@@ -17,17 +17,17 @@ export default {
 
 <style lang="scss" scoped>
 .chara-description {
-  max-width: 50rem;  
+  max-width: 640px;
   margin: 1rem auto 0 auto;
   display: grid;
-  grid-template-columns: 10rem 40rem;
+  grid-template-columns: 10rem 1fr;
   justify-content: center;
-  
+
   align-items: center;
-    
+
   figure {
-    text-align: center;  
- 
+    text-align: center;
+
     img {
       width: 8rem;
       height: auto;
@@ -35,7 +35,7 @@ export default {
   }
 }
 
-@media screen and(max-width: 1024px) {
+@media screen and (max-width: 639px) {
   .chara-description {
     grid-template-columns: 20rem;
   }

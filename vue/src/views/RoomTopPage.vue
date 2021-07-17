@@ -252,4 +252,10 @@ export default {
     margin: 1rem auto;
   }
 }
+
+@media screen and (max-width: 639px) {
+  .player-list {
+    background: url("../assets/images/room-top-bg-sp.png") repeat center center;
+  }
+}
 </style>

@@ -12,17 +12,12 @@
 <script>
 export default {
     name: "Player",
-    // props:['id','isHost','name'],
     props:['id','isHost',]
     
 }
 </script>
 
 <style>
-    /* btn{
-        background-color: grey;
-        cursor: pointer;
-    } */
     .player{
         border: solid 1px blue;
         margin: 1rem auto;

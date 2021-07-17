@@ -81,7 +81,7 @@ export default {
 <style scoped>
 .result_page {
   text-align: left;
-  margin: 20px;
+  margin: 20px auto;
 }
 
 h2 {

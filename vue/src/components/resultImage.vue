@@ -36,7 +36,9 @@ export default {
 div {
   text-align: center;
   .winner-image {
-    width: 40rem;
+    width: 100%;
+    height: auto;
+    max-width: 40rem;
   }
 }
 
@@ -44,7 +46,7 @@ form {
   text-align: center;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 639px) {
   div {
     .winner-image {
       width: 15rem;

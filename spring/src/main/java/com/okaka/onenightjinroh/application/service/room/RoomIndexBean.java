@@ -10,11 +10,13 @@ public class RoomIndexBean {
     private String uuid;
     private List<UserBean> userList;
     private boolean hostFlg;
+    private Long myselfUserId;
 
     public RoomIndexBean(RoomEntity roomEntity, List<UserEntity> userEntityList, Long userId, Long hostUserId) {
         this.uuid = roomEntity.uuid;
         this.userList = userEntityList.stream().map(user -> new UserBean(user, hostUserId)).collect(Collectors.toList());
         this.hostFlg = userId.equals(hostUserId);
+        this.myselfUserId = userId;
     }
 
     public String getUuid() {
@@ -27,6 +29,10 @@ public class RoomIndexBean {
 
     public boolean isHostFlg() {
         return hostFlg;
+    }
+
+    public Long getMyselfUserId() {
+        return myselfUserId;
     }
 
     public class UserBean {

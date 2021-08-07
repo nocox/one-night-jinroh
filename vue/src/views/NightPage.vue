@@ -8,6 +8,51 @@
       :otherPlayerList="otherPlayerList"
     />
 
+    <div v-if="playerRole.roleName == '占い師'">
+      <p>占うプレイヤーを選んでください</p>
+      <ul>
+        <li v-for="player in canSelectedPlayers" v-bind:key="player.id">
+          <label>
+            <input
+              type="radio"
+              v-model="selectedUranai"
+              v-bind:value="'PLAYER:' + player.id"
+              :disabled="isSelected"
+            />
+            {{ player.name }}
+          </label>
+        </li>
+        <li>
+          <label>
+            <input
+              type="radio"
+              v-model="selectedUranai"
+              value="HOLIDAY_ROLES"
+              :disabled="isSelected"
+            />
+            お休み中のロール
+          </label>
+        </li>
+      </ul>
+
+      <myButton
+        class="btn"
+        :method="uranai"
+        :text="'占う'"
+      />
+
+      <p>占い結果</p>
+      <div v-if="uranaiResult.status == 'PLAYER'">
+        <p>{{ uranaiResult.user.userName }}は，{{ uranaiResult.roles[0].roleName }}でした</p>
+      </div>
+      <div v-if="uranaiResult.status == 'HOLIDAY_ROLES'">
+        <p>お休み中のカードは，{{ uranaiResult.roles[0].roleName }}と{{ uranaiResult.roles[1].roleName }}でした</p>
+      </div>
+      <div v-if="uranaiResult.status == 'NOT_CHOOSE'">
+        <p>占いを実行しませんでした</p>
+      </div>
+    </div>
+
     <myButton
       :class="{ btn_disabled: isCompleted }"
       class="btn"
@@ -43,6 +88,28 @@ export default {
         },
       ],
       isCompleted: false,
+      canSelectedPlayers: [
+        {
+          id: 1,
+          name: "xxxxx",
+        }
+      ],
+      selectedUranai: "",
+      uranaiResult: {
+        status: "",
+        user: {
+          userId: null,
+          userName: ""
+        },
+        participantId: null,
+        roles: [
+          {
+            roleId: null,
+            roleName: "",
+          }
+        ],
+      },
+      isSelected: false,
     };
   },
   components: {
@@ -58,6 +125,7 @@ export default {
         this.playerRole = response.data.gameIndex.playerRole;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
         this.configWebSocket(response.data.gameId);
+        this.canSelectedPlayers = this.otherPlayerList;
       })
       .catch(() => {
         this.$router.push("/room");
@@ -74,6 +142,28 @@ export default {
           this.$router.push("/talk");
         });
       });
+    },
+    uranai: function() {
+      var uranaiStatus = this.selectedUranai != "" ? (this.selectedUranai.indexOf("PLAYER") != -1 ? "PLAYER" : "HOLIDAY_ROLES")  : "NOT_CHOOSE";
+      var playerId = this.selectedUranai.indexOf("PLAYER:") != -1 ? Number(this.selectedUranai.split(":")[1]) : null;
+
+      axios
+        .post(
+          JINROH_API_BASE_URL + "/night/uranai",
+          JSON.stringify({ status: uranaiStatus, participantId: playerId }),
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          this.uranaiResult = response.data
+          console.log(response.data);
+        })
+        .catch(() => {
+        });
     },
     doneNightAct: function() {
       axios

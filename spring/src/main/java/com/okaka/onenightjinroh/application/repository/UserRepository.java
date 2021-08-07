@@ -14,6 +14,10 @@ public class UserRepository {
     @Autowired
     UserDao userDao;
 
+    public User findByParticipantId(Long participantId) {
+        return toDomain(userDao.selectByParticipantId(participantId));
+    }
+
     public Map<Long, User> toMapUsersByGameId(Long gameId) {
         Map<Long, User> usersMap = new HashMap<>();
         userDao.selectByGame(gameId).forEach(entity -> {

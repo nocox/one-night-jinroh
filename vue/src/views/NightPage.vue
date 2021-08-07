@@ -2,7 +2,7 @@
   <main class="night-page">
     <h2>夜の行動を行ってください</h2>
 
-    <RoleCardDisplay
+    <NightDisplay
       :playerRole="playerRole"
       :playerName="playerName"
       :otherPlayerList="otherPlayerList"
@@ -68,7 +68,7 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 import { JINROH_API_BASE_URL } from "../Env";
 
-import RoleCardDisplay from "@/components/RoleCardDisplay.vue";
+import NightDisplay from "@/components/NightDisplay.vue";
 import myButton from "@/components/Button.vue";
 
 export default {
@@ -113,7 +113,7 @@ export default {
     };
   },
   components: {
-    RoleCardDisplay,
+    NightDisplay,
     myButton,
   },
   mounted() {

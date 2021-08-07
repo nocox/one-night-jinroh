@@ -95,6 +95,7 @@ h1 {
 
 .title-logo {
   max-width: 40rem;
+  width: 100%;
   height: auto;
   filter: drop-shadow(0.1rem 0.1rem 0.1rem #956967);
 }
@@ -173,7 +174,7 @@ h1 {
   width: 100%;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 639px) {
   .title-logo {
     max-width: 20rem;
   }

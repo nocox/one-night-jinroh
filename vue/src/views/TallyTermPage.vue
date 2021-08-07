@@ -196,7 +196,7 @@ h2 {
   }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 639px) {
   .vote_detail {
     .table {
       flex-direction: column;

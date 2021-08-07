@@ -1,32 +1,28 @@
 <template>
   <section class="role-card-display-area">
-    <div class="me">
+    <div class="player">
       <h3>あなたです</h3>
-      <RoleCard :roleName="playerRole.roleName" />
-      <p>{{ playerName }}</p>
-      <p>役職：{{ playerRole.roleName }}</p>
+      <RoleCard :roleName="playerRole.roleName" :playerName="playerName" />
     </div>
-    <div class="others">
-      <h3>他のプレイヤー</h3>
-      <ul>
-        <li v-for="player in otherPlayerList" :key="player.id">
-          <RoleCard :roleName="player.role.roleName" />
-          <p>{{ player.name }}</p>
-          <p>役職： {{ player.role.roleName }}</p>
-        </li>
-      </ul>
-    </div>
-    <div class="board-cards">
+
+    <div class="not-player">
       <h3>おやすみ中のカード</h3>
-      <ul>
-        <li
-          class="board-card"
-          v-for="boardCard in boardCards"
-          :key="boardCard.index"
-        >
-          <RoleCard :roleName="boardCard.roleName" />
-        </li>
-      </ul>
+      <RoleCard
+        v-for="boardCard in boardCards"
+        :key="boardCard.index"
+        :roleName="boardCard.roleName"
+      />
+    </div>
+
+    <div class="other-player">
+      <h3>他のプレイヤー</h3>
+      <RoleCard
+        v-for="player in otherPlayerList"
+        :key="player.id"
+        :roleName="'不明'"
+        :playerName="player.name"
+      />
+      <!-- :roleName="player.role.roleName" -->
     </div>
   </section>
 </template>
@@ -40,15 +36,15 @@ export default {
   props: {
     playerRole: {
       type: Object,
-      required: true
+      required: true,
     },
     playerName: {
       type: String,
-      required: true
+      required: true,
     },
     otherPlayerList: {
       type: Array,
-      required: true
+      required: true,
     },
     boardCards: {
       type: Array,
@@ -56,76 +52,89 @@ export default {
         return [
           {
             roleId: -1,
-            roleName: "不明"
+            roleName: "不明",
           },
           {
             roleId: -1,
-            roleName: "不明"
+            roleName: "不明",
           },
-        ]
-      }
-    }
-  }
+        ];
+      },
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-h3 {
-  margin: 0.5em;
-}
-
-ul {
+.role-card-display-area {
+  justify-content: center;
+  text-align: center;
   display: flex;
   flex-wrap: wrap;
+}
+
+.player {
+  display: flex;
+  width: 33%;
   justify-content: center;
-  li {
-    list-style: none;
-    text-align: center;
-    margin: 0 1.2rem;
+  flex-wrap: wrap;
+
+  h3 {
+    width: 100%;
+  }
+  .card-wrapper {
+    padding-top: 16px;
+    width: 100%;
   }
 }
 
-p {
-  margin: 0;
+.not-player {
+  width: 66%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  h3 {
+    width: 100%;
+  }
+  .card-wrapper {
+    padding-top: 16px;
+    width: 50%;
+  }
 }
 
-.role-card-display-area {
-  margin: auto;
-  text-align: center;
+.other-player {
+  padding-top: 24px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 
+  h3 {
+  text-align: left;  
+    width: 100%;
+  }
+  .card-wrapper {
+    padding-top: 16px;
+  }
+}
+
+@media screen and (max-width: 639px) {
+  h3 {
+    font-size: 16px;
+  }
+
+.other-player {
+  
+  
   display: grid;
-  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
 
-  .board-cards {
-    grid-column: 2/3;
-    grid-row: 1/2;
+  h3 {
+    width: 100%;
+    grid-column: 1/4;
   }
-  .me {
-    grid-column: 1/2;
-    grid-row: 1/3;
-  }
-  .others {
-    margin-top: 2.4rem;
-    grid-column: 2/3;
-    grid-row: 2/3;
+  .card-wrapper {
+    padding-top: 16px;
   }
 }
-
-@media screen and (max-width: 1024px) {
-  .role-card-display-area {
-    .me {
-      grid-column: 1/2;
-      grid-row: 1/2;
-    }
-    .others {
-      grid-column: 1/2;
-      grid-row: 2/3;
-    }
-    .board-cards {
-      margin-top: 2.4rem;
-      grid-column: 1/2;
-      grid-row: 3/4;
-    }
-  }
 }
 </style>

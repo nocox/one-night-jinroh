@@ -22,7 +22,7 @@ public class ExecuteNightUranaiUseCase {
     UserRepository userRepository;
 
     public NightUranaiResultDto invoke(Long gameId, Long participantId, NightUranaiStatus status) {
-        switch (status){
+        switch (status) {
             case PLAYER:
                 assert participantId != null;
                 User user = userRepository.findByParticipantId(participantId);

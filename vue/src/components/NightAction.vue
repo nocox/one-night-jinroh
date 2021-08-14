@@ -69,7 +69,7 @@ export default {
   },
   props: {
     roleName: {
-      type: Object,
+      type: String,
       required: true,
     },
     otherPlayerList: {

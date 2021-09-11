@@ -11,16 +11,7 @@
 
     <coButtonArea @getActive="coRole = $event" />
 
-    <div class="display-rolls">
-      <h2>この村にいる役職</h2>
-      <ul>
-        <li v-for="(count, name) in $store.state.rolls" v-bind:key="name">
-          <span> {{ name }}</span>
-          <span> : </span>
-          <span>{{ count }} </span>
-        </li>
-      </ul>
-    </div>
+    
 
     <div class="btn-area">
       <myButton
@@ -135,4 +126,5 @@ h2 {
     margin-top: 2rem;
   }
 }
+
 </style>

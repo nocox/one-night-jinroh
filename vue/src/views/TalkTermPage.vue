@@ -5,15 +5,22 @@
 
     <coArea
       :otherPlayerList="otherPlayerList"
-      :player="{ playerName: playerName, playerRole: playerRole 
-      }"
-      :coRole = this.coRole
+      :player="{ playerName: playerName, playerRole: playerRole }"
+      :coRole="this.coRole"
     />
 
-    <coButtonArea 
-      @getActive='coRole=$event'
-    />
-    
+    <coButtonArea @getActive="coRole = $event" />
+
+    <div class="display-rolls">
+      <h2>この村にいる役職</h2>
+      <ul>
+        <li v-for="(count, name) in $store.state.rolls" v-bind:key="name">
+          <span> {{ name }}</span>
+          <span> : </span>
+          <span>{{ count }} </span>
+        </li>
+      </ul>
+    </div>
 
     <div class="btn-area">
       <myButton
@@ -66,14 +73,14 @@ export default {
           role: "---",
         },
       ],
-      coRole: '村人'
+      coRole: "村人",
     };
   },
   mounted() {
     axios
       .get(JINROH_API_BASE_URL + "/talk-index", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
+        console.log("response data:", response.data);
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;

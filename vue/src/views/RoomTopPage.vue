@@ -53,7 +53,7 @@
           <div class="role-list">
             <h3>役職一覧</h3>
             <ul>
-              <li v-for="(count, name) in getCountedRoles()" v-bind:key="name">
+              <li v-for="(count, name) in $store.state.rolls" v-bind:key="name">
                 <span> {{ name }}</span>
                 <span> : </span>
                 <span>{{ count }} </span>
@@ -98,14 +98,14 @@ export default {
     myButton,
   },
   methods: {
-    getCountedRoles: function () {
+    updateRolls: function () {
       const roleNames = this.roleList.map((role) => role.roleName);
       let countedRoles = {};
       for (let i = 0; i < roleNames.length; i++) {
         let key = roleNames[i];
         countedRoles[key] = countedRoles[key] ? countedRoles[key] + 1 : 1;
       }
-      return countedRoles;
+      this.$store.commit('setRolls', countedRoles);
     },
     // ホストがスタートボタンを押下した時の処理
     gameStart: function () {
@@ -144,6 +144,7 @@ export default {
             if (a.roleId > b.roleId) return 1;
             return 0;
           });
+          this.updateRolls();
           this.playerCount = JSON.parse(value.body).playerCount;
           this.$modal.show("game-rule-modal");
         });
@@ -184,14 +185,17 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+
     #copyTarget {
       width: 16rem;
       height: 2em;
     }
+
     button {
       margin-left: 0.5rem;
-      border: none;
       background: none;
+      border: none;
+
       &:hover {
         cursor: pointer;
       }
@@ -200,19 +204,20 @@ export default {
 }
 
 .player-list {
-  height: 24rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-
+  height: 24rem;
   color: #fff;
   background: url("../assets/images/room-top-bg.png") no-repeat center center;
   background-size: contain;
+
   ul li {
-    list-style: none;
     text-align: left;
+    list-style: none;
   }
+
   p {
     margin-top: 0.8rem;
     font-size: 0.8em;
@@ -224,11 +229,12 @@ export default {
     .start-btn {
       width: 10rem;
       padding: 1rem 2rem;
+      color: #fff;
       background-color: #bd625a;
       border: none;
       border-radius: 10px;
-      color: #fff;
     }
+
     p {
       margin-top: 2rem;
     }
@@ -240,14 +246,16 @@ export default {
     h3 {
       margin: 0.5em auto;
     }
+
     ul li {
-      justify-content: center;
       display: grid;
-      text-align: left;
       grid-template-columns: 4em 1em 1em;
+      justify-content: center;
+      text-align: left;
       list-style: none;
     }
   }
+
   .btn {
     margin: 1rem auto;
   }

@@ -26,31 +26,7 @@
       <myButton :text="'仲間を確認する'" :method="''" />
     </div>
     <div class="uranai" v-else-if="roleName == '占い師'">
-      <p>占う相手を選んでください。</p>
-      <form action="">
-        <ul>
-          <li>
-            <label
-              ><input type="radio" v-model="checkedPlayerID" :value="0" />
-              場のカード2枚</label
-            >
-          </li>
-          <li
-            v-for="otherPlayer in otherPlayerList"
-            v-bind:key="otherPlayer.id"
-          >
-            <label>
-              <input
-                type="radio"
-                v-model="checkedPlayerID"
-                :value="otherPlayer.id"
-              />
-              {{ otherPlayer.name }}
-            </label>
-          </li>
-        </ul>
-        <myButton :text="'選んだ相手を占う'" :method="''" />
-      </form>
+      <nightUranaiAction :canSelectedPlayers="otherPlayerList" />
     </div>
     <div class="no-action" v-else>村人・狂人・吊人はアクションなし</div>
   </div>
@@ -58,10 +34,11 @@
 
 <script>
 import myButton from "@/components/Button.vue";
+import nightUranaiAction from "@/components/NightUranaiAction.vue"
 
 export default {
   name: "RoleCardDisplay",
-  components: { myButton },
+  components: { myButton, nightUranaiAction },
   data() {
     return {
       checkedPlayerID: 0,

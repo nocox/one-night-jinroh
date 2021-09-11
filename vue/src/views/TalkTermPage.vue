@@ -1,12 +1,19 @@
 <template>
   <main class="talk_page">
     <h2>朝になりました。話し合いを行ってください。</h2>
+    <p>夜の行動結果：UserName2は『人狼』でした。</p>
 
-    <RoleCardDisplay
-      :playerRole="playerRole"
-      :playerName="playerName"
+    <coArea
       :otherPlayerList="otherPlayerList"
+      :player="{ playerName: playerName, playerRole: playerRole 
+      }"
+      :coRole = this.coRole
     />
+
+    <coButtonArea 
+      @getActive='coRole=$event'
+    />
+    
 
     <div class="btn-area">
       <myButton
@@ -33,14 +40,16 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
 import { JINROH_API_BASE_URL } from "../Env";
-import RoleCardDisplay from "@/components/RoleCardDisplay.vue";
 import myButton from "@/components/Button.vue";
+import coButtonArea from "@/components/CoButtonArea.vue";
+import coArea from "@/components/CoArea.vue";
 
 export default {
   name: "TempTalkPage",
   components: {
-    RoleCardDisplay,
     myButton,
+    coButtonArea,
+    coArea,
   },
   data() {
     return {
@@ -57,6 +66,7 @@ export default {
           role: "---",
         },
       ],
+      coRole: '村人'
     };
   },
   mounted() {
@@ -114,7 +124,7 @@ h2 {
 }
 
 .modal-header {
-  h2{
+  h2 {
     margin-top: 2rem;
   }
 }

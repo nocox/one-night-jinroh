@@ -68,9 +68,11 @@ public class NightController {
     NightUranaiResultBean uranai(@RequestBody NightUranaiForm form) {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);
+        String strGameParticipationId = session.getAttribute("game_participation_id").toString();
+        Long gameParticipantId = Long.valueOf(strGameParticipationId);
 
         NightUranaiStatus status = mapStatus(form.getStatus());
-        NightUranaiResultDto dto = executeNightUranaiUseCase.invoke(gameId, form.getParticipantId(), status);
+        NightUranaiResultDto dto = executeNightUranaiUseCase.invoke(gameId, gameParticipantId, form.getParticipantId(), status);
 
         List<RoleBean> roleBeans = dto.getRoles().stream().map(RoleBean::new).collect(Collectors.toList());
         NightUranaiResultBean.UserBean userBean = Optional.ofNullable(dto.getUser()).

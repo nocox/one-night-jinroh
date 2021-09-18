@@ -1,6 +1,6 @@
 <template>
   <section class="co-button-area">
-    <h2>COボタン</h2>
+    <h2>カミングアウト</h2>
     <div class="co-icons">
       <a :class="{ current: isActive['村人'] }" @click="toggleIcon('村人')">
         <img src="../assets/images/chara-icon/murabito.png" alt="" />

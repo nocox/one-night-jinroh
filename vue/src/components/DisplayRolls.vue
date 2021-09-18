@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>この村にいる役職</h2>
+    <h2>役職一覧</h2>
     <ul>
       <li v-for="(count, name) in $store.state.rolls" v-bind:key="name">
         <img :src="RoleList[name]" alt="" />

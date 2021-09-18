@@ -117,8 +117,7 @@ export default {
 
 <style lang="scss" scoped>
 section {
-  margin: auto;
-  margin-top: 2rem;
+  margin: 2rem auto 0 auto;
 }
 
 h2 {
@@ -147,6 +146,7 @@ h2 {
 
   .display-rolls {
     margin: 32px auto;
+    margin-bottom: 0;
   }
 }
 

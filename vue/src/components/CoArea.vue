@@ -1,7 +1,5 @@
 <template>
   <section class="co-area">
-    <h2>みんなのCO</h2>
-
     <!-- 自分 -->
     <div class="player-wrapper">
       <article class="player">
@@ -66,10 +64,6 @@ export default {
   padding: 1rem;
   background-color: #eee;
 
-  h2 {
-    width: 100%;
-  }
-
   .player-wrapper {
     display: flex;
     justify-content: space-between;
@@ -77,7 +71,7 @@ export default {
 
     .player {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(80px, 100px) 1fr;
       column-gap: 16px;
       align-items: center;
       width: 30%;

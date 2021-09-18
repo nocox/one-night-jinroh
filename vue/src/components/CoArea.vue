@@ -4,34 +4,30 @@
 
     <!-- 自分 -->
     <div class="player-wrapper">
-    <article class="player">
-      <figure class="player-icon">
-        <img :src="RoleList[player.playerRole.roleName]" alt="" />
-      </figure>
-      <figure class="co-icon">
-        <img
-          class="co-icon__img"
-          :src="this.coRoleList[this.coRole]"
-          :alt="this.coRole"
-        />
-      </figure>
-      <span class="player-name me">{{ player.playerName }}</span>
-    </article>
+      <article class="player">
+        <figure class="player-icon">
+          <img :src="RoleList[player.playerRole.roleName]" alt="" />
+        </figure>
+        <figure class="co-icon">
+          <img
+            class="co-icon__img"
+            :src="this.coRoleList[this.coRole]"
+            :alt="this.coRole"
+          />
+        </figure>
+        <span class="player-name me">{{ player.playerName }}</span>
+      </article>
 
-    <!-- 自分以外のプレイヤー -->
-    <article class="player" v-for="(val, key) in otherPlayerList" :key="key">
-      <figure class="player-icon">
-        <img :src="RoleList[val.role.roleName]" :alt="val.role.roleName" />
-      </figure>
-      <figure class="co-icon">
-        <img
-          class="co-icon__img"
-          :src="coRoleList['村人']"
-          alt=""
-        />
-      </figure>
-      <span class="player-name">{{ val.name }}</span>
-    </article>
+      <!-- 自分以外のプレイヤー -->
+      <article class="player" v-for="(val, key) in otherPlayerList" :key="key">
+        <figure class="player-icon">
+          <img :src="RoleList[val.role.roleName]" :alt="val.role.roleName" />
+        </figure>
+        <figure class="co-icon">
+          <img class="co-icon__img" :src="coRoleList['村人']" alt="" />
+        </figure>
+        <span class="player-name">{{ val.name }}</span>
+      </article>
     </div>
   </section>
 </template>
@@ -39,7 +35,7 @@
 <script>
 export default {
   name: "CoArea",
-  props: ["otherPlayerList", "player", "coRole" ],
+  props: ["otherPlayerList", "player", "coRole"],
   data() {
     return {
       RoleList: {
@@ -51,7 +47,7 @@ export default {
         狂人: require("../assets/images/chara-icon/kyojin.png"),
         吊り人: require("../assets/images/chara-icon/tsuribito.png"),
       },
-      coRoleList:{
+      coRoleList: {
         不明: require("../assets/images/fukidashi/fumei.png"),
         人狼: require("../assets/images/fukidashi/jinroh.png"),
         村人: require("../assets/images/fukidashi/murabito.png"),
@@ -59,7 +55,7 @@ export default {
         怪盗: require("../assets/images/fukidashi/kaito.png"),
         狂人: require("../assets/images/fukidashi/kyojin.png"),
         吊り人: require("../assets/images/fukidashi/tsuribito.png"),
-      }
+      },
     };
   },
 };
@@ -67,10 +63,6 @@ export default {
 
 <style lang="scss" scoped>
 .co-area {
-  // display: flex;
-  // flex-wrap: wrap;
-  // align-items: center;
-  // justify-content: space-between;
   padding: 24px;
   background-color: #eee;
 

@@ -9,9 +9,11 @@
       :coRole="this.coRole"
     />
 
-    <coButtonArea @getActive="coRole = $event" />
+    <div class="col2">
+      <coButtonArea @getActive="coRole = $event" />
 
-    
+      <DisplayRolls class="display-rolls" />
+    </div>
 
     <div class="btn-area">
       <myButton
@@ -41,6 +43,7 @@ import { JINROH_API_BASE_URL } from "../Env";
 import myButton from "@/components/Button.vue";
 import coButtonArea from "@/components/CoButtonArea.vue";
 import coArea from "@/components/CoArea.vue";
+import DisplayRolls from "@/components/DisplayRolls.vue";
 
 export default {
   name: "TempTalkPage",
@@ -48,6 +51,7 @@ export default {
     myButton,
     coButtonArea,
     coArea,
+    DisplayRolls,
   },
   data() {
     return {
@@ -127,4 +131,22 @@ h2 {
   }
 }
 
+.col2 {
+  display: flex;
+  column-gap: 32px;
+
+  .display-rolls {
+    margin: 32px auto;
+  }
+}
+
+@media screen and (max-width: 639px) {
+  .col2 {
+    flex-wrap: wrap;
+
+    .display-rolls {
+      margin: 32px auto;
+    }
+  }
+}
 </style>

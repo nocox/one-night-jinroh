@@ -3,6 +3,7 @@
     <h2>みんなのCO</h2>
 
     <!-- 自分 -->
+    <div class="player-wrapper">
     <article class="player">
       <figure class="player-icon">
         <img :src="RoleList[player.playerRole.roleName]" alt="" />
@@ -31,6 +32,7 @@
       </figure>
       <span class="player-name">{{ val.name }}</span>
     </article>
+    </div>
   </section>
 </template>
 
@@ -65,10 +67,10 @@ export default {
 
 <style lang="scss" scoped>
 .co-area {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
+  // display: flex;
+  // flex-wrap: wrap;
+  // align-items: center;
+  // justify-content: space-between;
   padding: 24px;
   background-color: #eee;
 
@@ -76,43 +78,51 @@ export default {
     width: 100%;
   }
 
-  .player {
-    display: grid;
-    column-gap: 16px;
-    align-items: center;
+  .player-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
 
-    .player-icon {
-      grid-row: 1/3;
-      grid-column: 1/2;
-      width: 100px;
-      height: 100px;
+    .player {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 16px;
+      align-items: center;
+      width: 30%;
 
-      img {
-        width: 100%;
-        height: auto;
-        border-radius: 10px;
+      .player-icon {
+        grid-row: 1/3;
+        grid-column: 1/2;
+        width: 100px;
+        height: 100px;
+
+        img {
+          width: 100%;
+          height: auto;
+          border-radius: 10px;
+        }
       }
-    }
 
-    .co-icon {
-      grid-row: 1/2;
-      grid-column: 2/3;
-      width: 50px;
-      height: 50px;
+      .co-icon {
+        grid-row: 1/2;
+        grid-column: 2/3;
+        width: 50px;
+        height: 50px;
 
-      .co-icon__img {
-        width: 100%;
-        height: auto;
+        .co-icon__img {
+          width: 100%;
+          height: auto;
+        }
       }
-    }
 
-    .player-name {
-      grid-row: 2/3;
-      grid-column: 2/3;
-    }
+      .player-name {
+        grid-row: 2/3;
+        grid-column: 2/3;
+      }
 
-    .me {
-      text-decoration: underline;
+      .me {
+        text-decoration: underline;
+      }
     }
   }
 }
@@ -123,15 +133,24 @@ export default {
     column-gap: 16px;
     justify-content: flex-start;
 
-    .player {
-      .player-icon {
-        width: 80px;
-        height: 80px;
-      }
+    .player-wrapper {
+      flex-direction: column;
+      row-gap: 1rem;
+      align-items: center;
 
-      .co-icon {
-        width: 50px;
-        height: 50px;
+      .player {
+        width: 100%;
+        max-width: 320px;
+
+        .player-icon {
+          width: 80px;
+          height: 80px;
+        }
+
+        .co-icon {
+          width: 50px;
+          height: 50px;
+        }
       }
     }
   }

@@ -37,7 +37,7 @@ div {
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  padding: 24px;
+  padding: 1rem;
   background-color: #eee;
 
   h2 {

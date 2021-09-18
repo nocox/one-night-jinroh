@@ -63,7 +63,7 @@ export default {
 
 <style lang="scss" scoped>
 .co-area {
-  padding: 24px;
+  padding: 1rem;
   background-color: #eee;
 
   h2 {

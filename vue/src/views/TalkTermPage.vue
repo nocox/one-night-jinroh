@@ -1,7 +1,7 @@
 <template>
   <main class="talk_page">
     <h2>朝になりました。話し合いを行ってください。</h2>
-    <p>夜の行動結果：UserName2は『人狼』でした。</p>
+    <p class="action-result">夜の行動結果：UserName2は『人狼』でした。</p>
 
     <coArea
       :otherPlayerList="otherPlayerList"
@@ -116,13 +116,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+section {
+  margin: auto;
+  margin-top: 2rem;
+}
+
+h2 {
+  text-align: center;
+}
+
 .btn-area {
   margin: 2.4rem auto;
   text-align: center;
 }
 
-h2 {
-  text-align: center;
+.action-result {
+  padding: 1rem;
+  background-color: #eee;
 }
 
 .modal-header {

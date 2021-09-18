@@ -59,7 +59,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 24px;
+  padding: 1rem;
   background-color: #eee;
 
   h2 {
@@ -93,8 +93,5 @@ export default {
       opacity: 1;
     }
   }
-}
-
-@media screen and (max-width: 639px) {
 }
 </style>

@@ -1,23 +1,22 @@
 <template>
-  
-<div class="display-rolls">
-      <h2>この村にいる役職</h2>
-      <ul>
-        <li v-for="(count, name) in $store.state.rolls" v-bind:key="name">
-          <img :src="RoleList[name]" alt="">
-          <span> {{ name }}</span>
-          <span> × </span>
-          <span>{{ count }} </span>
-        </li>
-      </ul>
-    </div>
+  <div>
+    <h2>この村にいる役職</h2>
+    <ul>
+      <li v-for="(count, name) in $store.state.rolls" v-bind:key="name">
+        <img :src="RoleList[name]" alt="" />
+        <span> {{ name }}</span>
+        <span> × </span>
+        <span>{{ count }} </span>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 export default {
-  name:'DisplayRolls.vue',
-  data(){
-    return{
+  name: "DisplayRolls.vue",
+  data() {
+    return {
       RoleList: {
         不明: require("../assets/images/chara-icon/unknown.png"),
         人狼: require("../assets/images/chara-icon/jinroh.png"),
@@ -27,15 +26,17 @@ export default {
         狂人: require("../assets/images/chara-icon/kyojin.png"),
         吊り人: require("../assets/images/chara-icon/tsuribito.png"),
       },
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.display-rolls {
+div {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
   padding: 24px;
   background-color: #eee;
 
@@ -52,6 +53,7 @@ export default {
     display: flex;
     column-gap: 8px;
     align-items: center;
+    justify-content: space-between;
     margin-top: 16px;
   }
 

@@ -10,12 +10,12 @@ import java.util.Optional;
 
 @ConfigAutowireable
 @Dao
-public interface UranaishiNightActDao {
+public interface GameParticipantWithAllDao {
 
     @Select
-    Optional<UranaishiNightActEntity> selectByFromParticipationId(Long participationId);
+    Optional<GameParticipantWithAllEntity> selectByParticipantId(Long participantId);
 
     @Insert
     @Transactional
-    int insert(UranaishiNightActEntity uranaishiNightActEntity);
+    int insert(GameParticipantWithAllEntity gameParticipantWithAllEntity);
 }

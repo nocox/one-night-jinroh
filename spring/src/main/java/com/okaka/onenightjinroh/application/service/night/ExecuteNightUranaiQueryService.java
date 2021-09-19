@@ -17,7 +17,7 @@ public class ExecuteNightUranaiQueryService {
     List<Role> find(List<Long> participantIds) {
         List<RoleEntity> roleEntities = roleDao.selectByParticipantId(participantIds);
         return roleEntities.stream()
-                .map(roleEntity -> new Role(roleEntity.role_id, roleEntity.role_name))
+                .map(roleEntity -> Role.byRoleId(roleEntity.role_id, roleEntity.role_name))
                 .collect(Collectors.toList());
     }
 }

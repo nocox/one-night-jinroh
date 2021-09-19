@@ -1,5 +1,6 @@
 package com.okaka.onenightjinroh.application.repository;
 
+import com.okaka.jinroh.persistence.GameParticipantWithAllDao;
 import com.okaka.jinroh.persistence.GameParticipationDao;
 import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.RoleEntity;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -23,10 +25,24 @@ public class GameParticipantRepository {
     GameParticipationDao gameParticipationDao;
 
     @Autowired
+    GameParticipantWithAllDao gameParticipantWithAllDao;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
     RoleRepository roleRepository;
+
+    public Optional<GameParticipant> findByParticipantId(Long participantId) {
+        final var entity = gameParticipantWithAllDao.selectByParticipantId(participantId);
+        return entity.map(it -> new GameParticipant(
+                it.getGameParticipationId(),
+                new Game(it.getGameId(), null, null), // 必要になったら拡張
+                new User(it.getUserId(), it.getUserName()),
+                Role.byRoleId(it.getRoleId(), it.getRoleName()),
+                it.isHostFlg()
+        ));
+    }
 
     public List<GameParticipant> findByGameId(Long gameId) {
         return gameParticipationDao.selectGameParticipantsByGameId(gameId).stream()
@@ -68,7 +84,7 @@ public class GameParticipantRepository {
         GameParticipant gameParticipant = new GameParticipant(entity.game_participation_id);
         gameParticipant.setHostFlg(entity.host_flg);
         gameParticipant.setGame(new Game(entity.game_id));
-        gameParticipant.setRole(new Role(entity.role_id));
+        gameParticipant.setRole(Role.byRoleId(entity.role_id, null));
         gameParticipant.setUser(new User(entity.user_id));
         return gameParticipant;
     }

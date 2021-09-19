@@ -1,6 +1,5 @@
 package com.okaka.onenightjinroh.application.domain;
 
-
 public class UranaishiNightAct {
     private final Long uranaishiNightActId;
     private final Long fromGameParticipationId;

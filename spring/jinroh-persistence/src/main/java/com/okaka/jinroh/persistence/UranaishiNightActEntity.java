@@ -25,4 +25,20 @@ public class UranaishiNightActEntity {
         this.TO_GAME_PARTICIPATION_ID = TO_GAME_PARTICIPATION_ID;
         this.SELECTED_HOLIDAY_ROLES = SELECTED_HOLIDAY_ROLES;
     }
+
+    public Long getUranaishiNightActId() {
+        return URNAISHI_NIGHT_ACT_ID;
+    }
+
+    public Long getFromGameParticipationId() {
+        return FROM_GAME_PARTICIPATION_ID;
+    }
+
+    public Long getToGameParticipationId() {
+        return TO_GAME_PARTICIPATION_ID;
+    }
+
+    public boolean isSelectedHolidayRoles() {
+        return SELECTED_HOLIDAY_ROLES;
+    }
 }

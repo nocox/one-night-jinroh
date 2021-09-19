@@ -3,12 +3,14 @@ package com.okaka.onenightjinroh.application.service.talk;
 import com.okaka.onenightjinroh.application.bean.GameIndexBean;
 
 public class TalkTermIndexBean {
-    private Long gameId;
-    private GameIndexBean gameIndex;
+    private final Long gameId;
+    private final GameIndexBean gameIndex;
+    private final String nightActText;
 
-    public TalkTermIndexBean(GameIndexBean gameIndex, Long gameId) {
+    public TalkTermIndexBean(GameIndexBean gameIndex, Long gameId, String nightActText) {
         this.gameIndex = gameIndex;
         this.gameId = gameId;
+        this.nightActText = nightActText;
     }
 
     public GameIndexBean getGameIndex() {
@@ -17,5 +19,9 @@ public class TalkTermIndexBean {
 
     public Long getGameId() {
         return gameId;
+    }
+
+    public String getNightActText() {
+        return nightActText;
     }
 }

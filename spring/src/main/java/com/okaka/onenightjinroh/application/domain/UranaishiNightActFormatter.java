@@ -1,8 +1,4 @@
-package com.okaka.onenightjinroh.application.service.talk;
-
-import com.okaka.onenightjinroh.application.domain.GameParticipant;
-import com.okaka.onenightjinroh.application.domain.Role;
-import com.okaka.onenightjinroh.application.domain.User;
+package com.okaka.onenightjinroh.application.domain;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,8 +15,28 @@ public class UranaishiNightActFormatter implements RoleNightActFormatter {
         this.selectedHolidayRoles = selectedHolidayRoles;
     }
 
+    public static UranaishiNightActFormatter from(Optional<GameParticipant> toParticipant, UranaishiNightAct uranaishiNightAct, List<Role> holidayRoles) {
+        final var roles = toParticipant
+                .map(GameParticipant::getRole).map(List::of)
+                .or(() -> {
+                    if (uranaishiNightAct.isSelectedHolidayRoles()) {
+                        return Optional.of(holidayRoles);
+                    }
+                    return Optional.empty();
+                }).orElse(List.of());
+        return toParticipant
+                .map(it -> new UranaishiNightActFormatter(toParticipant, roles, false))
+                .or(() -> {
+                    if (uranaishiNightAct.isSelectedHolidayRoles()) {
+                        return Optional.of(new UranaishiNightActFormatter(Optional.empty(), roles, true));
+                    }
+                    return Optional.empty();
+                })
+                .orElse(UranaishiNightActFormatter.empty());
+    }
+
     @Override
-    public String toActText() {
+    public String toActLog() {
         String targetStr = toParticipant
                 .map(GameParticipant::getUser)
                 .map(User::getUserName)
@@ -49,7 +65,7 @@ public class UranaishiNightActFormatter implements RoleNightActFormatter {
         }
 
         @Override
-        public String toActText() {
+        public String toActLog() {
             return "占い結果: " + "今回は誰も占いませんでした";
         }
     }

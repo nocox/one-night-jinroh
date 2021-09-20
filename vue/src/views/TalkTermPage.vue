@@ -2,7 +2,7 @@
   <main class="talk_page">
     <h2>朝になりました。話し合いを行ってください。</h2>
 
-    <h3>{{ nightActText }}</h3>
+    <h3>{{ nightActLog }}</h3>
 
     <RoleCardDisplay
       :playerRole="playerRole"
@@ -51,7 +51,7 @@ export default {
         roleId: -1,
         roleName: "不明",
       },
-      nightActText: "",
+      nightActLog: "",
       hostFlag: false,
       otherPlayerList: [
         {
@@ -71,7 +71,7 @@ export default {
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
-        this.nightActText = response.data.nightActText;
+        this.nightActLog = response.data.gameIndex.nightActLog;
         this.$modal.show("talk-start-modal");
         this.configWebSocket(response.data.gameId);
       })

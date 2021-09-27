@@ -1,11 +1,12 @@
 <template>
   <main class="vote_page">
     <h2>話し合いが終了しました。投票を行ってください。</h2>
+    <p class="action-result">夜の行動結果：UserName2は『人狼』でした。</p>
 
-    <RoleCardDisplay
-      :playerRole="playerRole"
-      :playerName="playerName"
+    <coArea
       :otherPlayerList="otherPlayerList"
+      :player="{ playerName: playerName, playerRole: playerRole }"
+      :coRole="this.coRole"
     />
 
     <section class="vote_section">
@@ -52,8 +53,9 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
-import RoleCardDisplay from "@/components/RoleCardDisplay";
+
 import myButton from "@/components/Button";
+import coArea from "@/components/CoArea.vue";
 import { JINROH_API_BASE_URL} from "../Env";
 
 export default {
@@ -85,7 +87,13 @@ export default {
       is_unvotable: false,
     };
   },
-  components: { RoleCardDisplay, myButton },
+  components: {  coArea,myButton },
+  computed:{
+    coRole:{
+      get(){return this.$store.state.coRole},
+      set(coRole){this.$store.commit('setCoRole', coRole)},
+    }
+  },
   mounted() {
     axios
       .get(JINROH_API_BASE_URL + "/vote-index", { withCredentials: true })
@@ -158,46 +166,49 @@ h2 {
 .vote_section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   ul li {
     list-style: none;
   }
+
   .warn {
     display: none;
     color: darken(red, 10%);
   }
+
   .voted {
     display: none;
   }
+
   .show {
     display: block;
   }
 
   .btn_disabled {
+    color: gray;
     pointer-events: none;
     border-color: gray;
-    color: gray;
   }
 }
 
 .modal-header {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-
-  height: 100%;
+  justify-content: center;
   width: 100%;
+  height: 100%;
   text-align: center;
 
   h3 {
     margin-top: 2rem;
   }
+
   .vote-modal-btn {
     width: 10rem;
-    margin: 2rem auto;
     padding: 0.5em 0;
+    margin: 2rem auto;
   }
 }
 </style>

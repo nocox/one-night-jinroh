@@ -68,8 +68,13 @@ export default {
           role: "---",
         },
       ],
-      coRole: "村人",
     };
+  },
+  computed:{
+    coRole:{
+      get(){return this.$store.state.coRole},
+      set(coRole){this.$store.commit('setCoRole', coRole)},
+    }
   },
   mounted() {
     axios

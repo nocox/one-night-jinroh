@@ -9,35 +9,41 @@
       :coRole="this.coRole"
     />
 
-    <section class="vote_section">
-      <p>投票してください。</p>
-      <ul>
-        <li v-for="player in canVotePlayers" v-bind:key="player.id">
-          <label>
-            <input
-              class="vote-radio"
-              type="radio"
-              v-model="checkPlayerId"
-              v-bind:value="player.id"
-              :disabled="is_votable"
-            />
-            {{ player.name }}
-          </label>
-        </li>
-      </ul>
-      <myButton
-        class="vote-btn"
-        :method="vote"
-        :text="'確定'"
-        :class="{ btn_disabled: is_votable }"
-      />
-      <p class="warn" :class="{ show: is_unvotable }">
-        プレイヤーをえらんでね！
-      </p>
-      <p class="voted" :class="{ show: is_votable }">
-        投票完了！他のプレイヤーが投票するまでまっててね！
-      </p>
-    </section>
+    <div class="col2">
+      <section class="vote_section">
+        <h2>投票対象</h2>
+        <ul>
+          <li v-for="player in canVotePlayers" v-bind:key="player.id">
+            <label>
+              <input
+                class="vote-radio"
+                type="radio"
+                v-model="checkPlayerId"
+                v-bind:value="player.id"
+                :disabled="is_votable"
+              />
+              {{ player.name }}
+            </label>
+          </li>
+        </ul>
+        <myButton
+          class="vote-btn"
+          :method="vote"
+          :text="'確定'"
+          :class="{ btn_disabled: is_votable }"
+        />
+        <p class="warn" :class="{ show: is_unvotable }">
+          プレイヤーをえらんでね！
+        </p>
+        <p class="voted" :class="{ show: is_votable }">
+          投票完了！他のプレイヤーが投票するまでまっててね！
+        </p>
+      </section>
+
+      <section class="display-rolls">
+        <DisplayRolls />
+      </section>
+    </div>
 
     <modal :width="'90%'" :height="'auto'" name="vote-start-modal">
       <div class="modal-header">
@@ -53,10 +59,11 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
-
 import myButton from "@/components/Button";
 import coArea from "@/components/CoArea.vue";
-import { JINROH_API_BASE_URL} from "../Env";
+import DisplayRolls from "@/components/DisplayRolls.vue";
+
+import { JINROH_API_BASE_URL } from "../Env";
 
 export default {
   name: "TempVotePage",
@@ -87,12 +94,16 @@ export default {
       is_unvotable: false,
     };
   },
-  components: {  coArea,myButton },
-  computed:{
-    coRole:{
-      get(){return this.$store.state.coRole},
-      set(coRole){this.$store.commit('setCoRole', coRole)},
-    }
+  components: { coArea, myButton, DisplayRolls },
+  computed: {
+    coRole: {
+      get() {
+        return this.$store.state.coRole;
+      },
+      set(coRole) {
+        this.$store.commit("setCoRole", coRole);
+      },
+    },
   },
   mounted() {
     axios
@@ -159,18 +170,46 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+section {
+  margin: 2rem auto 0 auto;
+}
+
 h2 {
   text-align: center;
+}
+
+.action-result {
+  padding: 1rem;
+  background-color: #eee;
+}
+
+.col2 {
+  display: flex;
+  column-gap: 32px;
+
+  section {
+    width: 100%;
+  }
 }
 
 .vote_section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding: 1rem;
+  background-color: #eee;
+
+  h2 {
+    width: 100%;
+    text-align: left;
+  }
 
   ul li {
     list-style: none;
+  }
+
+  .vote-btn {
+    margin: 1rem auto;
   }
 
   .warn {
@@ -209,6 +248,12 @@ h2 {
     width: 10rem;
     padding: 0.5em 0;
     margin: 2rem auto;
+  }
+}
+
+@media screen and (max-width: 639px) {
+  .col2 {
+    flex-wrap: wrap;
   }
 }
 </style>

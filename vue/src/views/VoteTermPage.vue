@@ -10,6 +10,9 @@
     />
 
     <div class="col2">
+      <section class="display-rolls">
+        <DisplayRolls />
+      </section>
       <section class="vote_section">
         <h2>投票対象</h2>
         <ul>
@@ -38,10 +41,6 @@
         <p class="voted" :class="{ show: is_votable }">
           投票完了！他のプレイヤーが投票するまでまっててね！
         </p>
-      </section>
-
-      <section class="display-rolls">
-        <DisplayRolls />
       </section>
     </div>
 
@@ -190,6 +189,10 @@ h2 {
   section {
     width: 100%;
   }
+
+  .display-rolls {
+    max-width: 335px;
+  }
 }
 
 .vote_section {
@@ -201,7 +204,7 @@ h2 {
 
   h2 {
     width: 100%;
-    text-align: left;
+    text-align: center;
   }
 
   ul li {
@@ -253,7 +256,12 @@ h2 {
 
 @media screen and (max-width: 639px) {
   .col2 {
+    flex-direction: column-reverse;
     flex-wrap: wrap;
+
+    .display-rolls {
+      max-width: 100%;
+    }
   }
 }
 </style>

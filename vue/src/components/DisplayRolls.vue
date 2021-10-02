@@ -42,7 +42,7 @@ div {
 
   h2 {
     width: 100%;
-    text-align: left;
+    text-align: center;
   }
 
   ul {

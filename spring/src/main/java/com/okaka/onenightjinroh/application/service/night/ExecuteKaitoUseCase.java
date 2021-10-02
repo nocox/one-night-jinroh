@@ -15,9 +15,9 @@ public class ExecuteKaitoUseCase {
     @Autowired
     KaitoNightActExecuteLogic executeLogic;
 
-    public NightKaitoResultBean invoke() {
+    public NightKaitoResultBean invoke(Long fromId, Long toId) {
 
-        KaitoNightAct kaitoNightAct = new KaitoNightAct();
+        KaitoNightAct kaitoNightAct = KaitoNightAct.of(fromId, toId);
         kaitoNightActRepository.save(kaitoNightAct);
 
         KaitoNightActFormatter formatter = executeLogic.invoke(kaitoNightAct);

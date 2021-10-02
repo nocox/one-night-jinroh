@@ -105,9 +105,7 @@ public class NightController {
         String strGameParticipationId = session.getAttribute("game_participation_id").toString();
         Long gameParticipantId = Long.valueOf(strGameParticipationId);
 
-        System.out.println("form.getParticipantId(): " + form.getParticipantId());
-
-        NightKaitoResultBean bean = executeKaitoUseCase.invoke();
+        NightKaitoResultBean bean = executeKaitoUseCase.invoke(gameParticipantId, form.getParticipantId());
         return ResponseEntity.ok().body(bean);
     }
 }

@@ -1,26 +1,7 @@
 <template>
   <div class="night-action-area">
     <div class="kaito" v-if="roleName == '怪盗'">
-      <p>役職を入れ替える相手を選んでください。</p>
-      <form action="">
-        <ul>
-          <li
-            v-for="otherPlayer in otherPlayerList"
-            v-bind:key="otherPlayer.id"
-          >
-            <label>
-              <input
-                type="radio"
-                v-model="checkedPlayerID"
-                :value="otherPlayer.id"
-                :disabled="is_votable"
-              />
-              {{ otherPlayer.name }}
-            </label>
-          </li>
-        </ul>
-        <myButton :text="'選んだ相手と入れ替える'" :method="''" />
-      </form>
+      <nightKaitoAction :canSelectedPlayers="otherPlayerList" />      
     </div>
     <div class="jinroh" v-else-if="roleName == '人狼'">
       <myButton :text="'仲間を確認する'" :method="''" />
@@ -35,10 +16,11 @@
 <script>
 import myButton from "@/components/Button.vue";
 import nightUranaiAction from "@/components/NightUranaiAction.vue"
+import nightKaitoAction from "@/components/NightKaitoAction.vue"
 
 export default {
   name: "RoleCardDisplay",
-  components: { myButton, nightUranaiAction },
+  components: { myButton, nightUranaiAction, nightKaitoAction },
   data() {
     return {
       checkedPlayerID: 0,

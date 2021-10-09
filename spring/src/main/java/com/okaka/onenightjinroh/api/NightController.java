@@ -100,8 +100,6 @@ public class NightController {
 
     @PostMapping(path = "/night/kaito")
     ResponseEntity<NightKaitoResultBean> kaito(@RequestBody NightKaitoForm form) {
-        String strGameId = session.getAttribute("game_id").toString();
-        Long gameId = Long.valueOf(strGameId);
         String strGameParticipationId = session.getAttribute("game_participation_id").toString();
         Long gameParticipantId = Long.valueOf(strGameParticipationId);
 

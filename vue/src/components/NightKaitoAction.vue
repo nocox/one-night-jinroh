@@ -15,6 +15,11 @@
       </li>
     </ul>
     <myButton :text="'選んだ相手と入れ替える'" :method="kaito" />
+
+    <div v-if="kaitoResult.actLog">
+        <!-- FIXME: ここ手抜きしました．．フロント側で加工し表示するべき -->
+        <p>{{ kaitoResult.actLog }}</p>
+    </div>
   </div>
 </template>
 
@@ -29,6 +34,9 @@ export default {
   data() {
     return {
       checkedPlayerID: 0,
+      kaitoResult: {
+          actLog: null
+      }
     };
   },
   props: {

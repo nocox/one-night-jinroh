@@ -2,7 +2,10 @@
   <section class="co-area">
     <!-- 自分 -->
     <div class="player-wrapper">
-      <article class="player">
+      <article
+        class="player"
+        :class="{ selected: isSelected(player.playerName) }"
+      >
         <figure class="player-icon">
           <img :src="RoleList[player.playerRole.roleName]" alt="" />
         </figure>
@@ -17,7 +20,12 @@
       </article>
 
       <!-- 自分以外のプレイヤー -->
-      <article class="player" v-for="(val, key) in otherPlayerList" :key="key">
+      <article
+        class="player"
+        :class="{ selected: isSelected(val.name) }"
+        v-for="(val, key) in otherPlayerList"
+        :key="key"
+      >
         <figure class="player-icon">
           <img :src="RoleList[val.role.roleName]" :alt="val.role.roleName" />
         </figure>
@@ -33,7 +41,7 @@
 <script>
 export default {
   name: "CoArea",
-  props: ["otherPlayerList", "player", "coRole"],
+  props: ["otherPlayerList", "player", "coRole", "selectedPlayers"],
   data() {
     return {
       RoleList: {
@@ -55,6 +63,25 @@ export default {
         吊り人: require("../assets/images/fukidashi/tsuribito.png"),
       },
     };
+  },
+  methods: {
+    isSelected: function (name) {
+      // 投票ページ以外ではselectedPlayersは存在しないのでfalseを返す
+      if (!this.selectedPlayers) {
+        return false;
+      }
+
+      let selectedPlayersName = [];
+      this.selectedPlayers.forEach((player) => {
+        selectedPlayersName.push(player.name);
+      });
+
+      if (selectedPlayersName.includes(name)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 };
 </script>
@@ -108,6 +135,44 @@ export default {
 
       .me {
         text-decoration: underline;
+      }
+    }
+
+    .player.selected {
+      .player-icon {
+        position: relative;
+
+        img {
+          filter: grayscale(100%);
+        }
+
+        &::after {
+          position: absolute;
+          left: 0;
+          width: calc(100% * 1.414);
+          height: 2px;
+          content: "";
+          background-color: red;
+          transform: rotateZ(45deg);
+          transform-origin: left top;
+        }
+
+        &::before {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          z-index: 1;
+          width: calc(100% * 1.414);
+          height: 2px;
+          content: "";
+          background-color: red;
+          transform: rotateZ(-45deg);
+          transform-origin: left top;
+        }
+      }
+
+      .co-icon__img {
+        filter: grayscale(100%);
       }
     }
   }

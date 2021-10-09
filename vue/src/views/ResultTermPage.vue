@@ -4,22 +4,39 @@
 
     <resultImage :result="judgeText" />
 
+    <div>
+      <div>
+        <h3>かち</h3>
+        <Player
+          :playerName="val.playerName"
+          :roleName="val.roleName"
+          :coRole="'村人'"
+          :isMe="val.isMe"
+          v-for="(val, key) in winPlayers"
+          :key="key"
+        />
+      </div>
+      <div>
+        <h3>まけ</h3>
+        <Player
+          :playerName="val.playerName"
+          :roleName="val.roleName"
+          :isMe="val.isMe"
+          :coRole="'村人'"
+          v-for="(val, key) in losePlayers"
+          :key="key"
+        />
+      </div>
+    </div>
     <myButton class="btn" :method="returnRoom" :text="'ルームに戻る'" />
-
-    <RoleCardDisplay
-      :playerRole="playerRole"
-      :playerName="playerName"
-      :otherPlayerList="otherPlayerList"
-      :boardCards="holidayRoles"
-    />
   </main>
 </template>
 
 <script>
 import axios from "axios";
 
-import RoleCardDisplay from "@/components/RoleCardDisplay";
 import resultImage from "@/components/resultImage.vue";
+import Player from "@/components/Player.vue";
 import myButton from "@/components/Button.vue";
 import { JINROH_API_BASE_URL } from "../Env";
 
@@ -51,11 +68,14 @@ export default {
           roleName: "不明",
         },
       ],
+      winTeam: [],
+      winPlayers: [],
+      losePlayers: [],
     };
   },
-  components: { resultImage, myButton, RoleCardDisplay },
-  mounted() {
-    axios
+  components: { resultImage, myButton, Player },
+  async mounted() {
+    await axios
       .get(JINROH_API_BASE_URL + "/result-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
@@ -69,10 +89,54 @@ export default {
       .catch(() => {
         this.$router.push("/room");
       });
+    this.divideWinLosePlayers();
   },
   methods: {
     returnRoom() {
       this.$router.push("/room");
+    },
+    divideWinLosePlayers() {
+      if (this.judgeText.indexOf("人狼") !== -1) {
+        this.winTeam = ["人狼", "狂人"];
+      } else if (this.judgeText.indexOf("吊り人") !== -1) {
+        this.winTeam = ["吊り人"];
+      } else {
+        this.winTeam = ["村人", "怪盗", "占い師"];
+      }
+
+      this.otherPlayerList.forEach((otherPlayer) => {
+        if (this.winTeam.indexOf(otherPlayer.role.roleName) !== -1) {
+          this.winPlayers.push({
+            playerName: otherPlayer.name,
+            roleName: otherPlayer.role.roleName,
+            coRole: "不明",
+            isMe: false,
+          });
+        } else {
+          this.losePlayers.push({
+            playerName: otherPlayer.name,
+            roleName: otherPlayer.role.roleName,
+            coRole: "不明",
+            isMe: false,
+          });
+        }
+      });
+
+      if (this.winTeam.indexOf(this.playerRole.roleName) !== -1) {
+        this.winPlayers.push({
+          playerName: this.playerName,
+          roleName: this.playerRole.roleName,
+          coRole: "不明",
+          isMe: true,
+        });
+      } else {
+        this.losePlayers.push({
+          playerName: this.playerName,
+          roleName: this.playerRole.roleName,
+          coRole: "不明",
+          isMe: true,
+        });
+      }
     },
   },
 };
@@ -80,8 +144,8 @@ export default {
 
 <style scoped>
 .result_page {
-  text-align: left;
   margin: 20px auto;
+  text-align: left;
 }
 
 h2 {
@@ -89,9 +153,9 @@ h2 {
 }
 
 .btn {
-  text-align: center;
   display: block;
   width: 16rem;
   margin: 0 auto;
+  text-align: center;
 }
 </style>

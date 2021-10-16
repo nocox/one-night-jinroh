@@ -21,6 +21,9 @@ public interface UserDao {
     @Select
     List<UserEntity> selectByGame(Long gameId);
 
+    @Select
+    UserEntity selectByParticipantId(Long participantId);
+
     @Insert
     @Transactional
     int insert(UserEntity userEntity);

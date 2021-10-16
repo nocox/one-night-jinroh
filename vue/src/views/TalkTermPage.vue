@@ -1,7 +1,7 @@
 <template>
   <main class="talk_page">
     <h2>朝になりました。話し合いを行ってください。</h2>
-    <p class="action-result">夜の行動結果：UserName2は『人狼』でした。</p>
+    <p class="action-result">{{ nightActLog }}</p>
 
     <coArea
       :otherPlayerList="otherPlayerList"
@@ -60,6 +60,7 @@ export default {
         roleId: -1,
         roleName: "不明",
       },
+      nightActLog: "",
       hostFlag: false,
       otherPlayerList: [
         {
@@ -85,6 +86,7 @@ export default {
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
+        this.nightActLog = response.data.gameIndex.nightActLog;
         this.$modal.show("talk-start-modal");
         this.configWebSocket(response.data.gameId);
       })

@@ -1,7 +1,5 @@
 package com.okaka.onenightjinroh.application.domain;
 
-import java.util.Optional;
-
 public class NightAct {
     public Long nightActId;
     public GameParticipant gameParticipant;

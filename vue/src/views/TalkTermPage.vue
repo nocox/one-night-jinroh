@@ -10,9 +10,9 @@
     />
 
     <div class="col2">
-      <coButtonArea @getActive="coRole = $event" />
-
       <DisplayRolls class="display-rolls" />
+
+      <coButtonArea @getActive="coRole = $event" />
     </div>
 
     <div class="btn-area">
@@ -68,8 +68,13 @@ export default {
           role: "---",
         },
       ],
-      coRole: "村人",
     };
+  },
+  computed:{
+    coRole:{
+      get(){return this.$store.state.coRole},
+      set(coRole){this.$store.commit('setCoRole', coRole)},
+    }
   },
   mounted() {
     axios
@@ -145,6 +150,8 @@ h2 {
   column-gap: 32px;
 
   .display-rolls {
+    width: 100%;
+    max-width: 335px;
     margin: 32px auto;
     margin-bottom: 0;
   }
@@ -152,9 +159,11 @@ h2 {
 
 @media screen and (max-width: 639px) {
   .col2 {
+    flex-direction: column-reverse;
     flex-wrap: wrap;
 
     .display-rolls {
+      max-width: 100%;
       margin: 32px auto;
     }
   }

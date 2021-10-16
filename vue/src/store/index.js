@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     userId: 0,
     roomId: 'xxxxxx',
-    rolls: {}
+    rolls: {},
+    coRole: '村人'
   },
   mutations: {
     setUserId (state, payload) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     setRolls (state, rolls){
       state.rolls = rolls
+    },
+    setCoRole(state, coRole){
+      state.coRole = coRole
     }
   },
   actions: {

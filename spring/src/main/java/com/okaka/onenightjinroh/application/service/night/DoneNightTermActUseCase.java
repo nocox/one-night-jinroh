@@ -36,7 +36,7 @@ public class DoneNightTermActUseCase {
     public void done(Long gameParticipantId, Long gameId){
         nightActRepository.create(gameParticipantId);
         Role role = roleRepository.findByParticipationId(gameParticipantId);
-        if (role instanceof Role.Uranaishi && uranaishiNightActRepository.findByFromParticipationId(gameParticipantId).isEmpty()) {
+        if (role instanceof Role.Uranaishi && uranaishiNightActRepository.findByParticipationId(gameParticipantId).isEmpty()) {
             uranaishiNightActRepository.save(UranaishiNightAct.byNotSelected(gameParticipantId));
         }
         if (allDoneNightAct(gameId)) {

@@ -23,7 +23,7 @@ public class UranaishiNightActRepository {
         dao.insert(uranaishiNightActEntity);
     }
 
-    public Optional<UranaishiNightAct> findByFromParticipationId(Long participationId) {
+    public Optional<UranaishiNightAct> findByParticipationId(Long participationId) {
         return dao.selectByFromParticipationId(participationId)
                 .map(act -> new UranaishiNightAct(
                 act.getUranaishiNightActId(),

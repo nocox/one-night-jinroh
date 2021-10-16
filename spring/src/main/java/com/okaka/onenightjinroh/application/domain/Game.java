@@ -11,6 +11,12 @@ public class Game {
         this.rule = null;
     }
 
+    public Game(Long gameId, Room room, Rule rule) {
+        this.gameId = gameId;
+        this.room = room;
+        this.rule = rule;
+    }
+
     public Long getGameId() {
         return gameId;
     }

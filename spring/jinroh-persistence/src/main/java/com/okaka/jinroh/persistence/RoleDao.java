@@ -17,6 +17,9 @@ public interface RoleDao {
     @Select
     List<RoleEntity> selectByRoleIds(List<Long> roleIds);
 
+    @Select
+    List<RoleEntity> selectByParticipantId(List<Long> participantIds);
+
     @Insert
     @Transactional
     int insert(RoleEntity roleEntity);

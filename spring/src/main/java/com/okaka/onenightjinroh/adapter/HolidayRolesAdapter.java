@@ -25,7 +25,7 @@ public class HolidayRolesAdapter implements HolidayRolesPort {
                 .map(entity -> entity.role_id)
                 .collect(Collectors.toList());
         List<Role> roles = roleDao.selectByRoleIds(roleIds).stream()
-                .map(entity -> new Role(entity.role_id, entity.role_name))
+                .map(entity -> Role.byRoleId(entity.role_id, entity.role_name))
                 .collect(Collectors.toList());
         return new HolidayRoles(gameId, roles);
     }

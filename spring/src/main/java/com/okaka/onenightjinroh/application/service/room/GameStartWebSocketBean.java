@@ -13,11 +13,7 @@ public class GameStartWebSocketBean {
 
     public GameStartWebSocketBean(List<RoleEntity> roleEntityList, int playerCount, Long gameId) {
         this.roleList = roleEntityList.stream()
-                .map(entity -> {
-                    Role role = new Role(entity.role_id);
-                    role.setRoleName(entity.role_name);
-                    return role;
-                })
+                .map(entity -> Role.byRoleId(entity.role_id, entity.role_name))
                 .map(RoleBean::new)
                 .collect(Collectors.toList());
         this.playerCount = playerCount;

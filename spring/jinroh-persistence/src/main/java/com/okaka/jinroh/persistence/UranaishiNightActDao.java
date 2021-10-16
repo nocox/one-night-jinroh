@@ -6,25 +6,16 @@ import org.seasar.doma.Select;
 import org.seasar.doma.boot.ConfigAutowireable;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Optional;
 
 @ConfigAutowireable
 @Dao
-public interface UserDao {
+public interface UranaishiNightActDao {
 
     @Select
-    int selectCount();
-
-    @Select
-    List<UserEntity> selectByRoom(Long roomId);
-
-    @Select
-    List<UserEntity> selectByGame(Long gameId);
-
-    @Select
-    UserEntity selectByParticipantId(Long participantId);
+    Optional<UranaishiNightActEntity> selectByFromParticipationId(Long participationId);
 
     @Insert
     @Transactional
-    int insert(UserEntity userEntity);
+    int insert(UranaishiNightActEntity uranaishiNightActEntity);
 }

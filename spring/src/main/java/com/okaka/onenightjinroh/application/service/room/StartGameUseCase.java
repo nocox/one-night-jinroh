@@ -1,14 +1,14 @@
 package com.okaka.onenightjinroh.application.service.room;
 
-import com.okaka.jinroh.persistence.GameEntity;
 import com.okaka.jinroh.persistence.GameDao;
-import com.okaka.jinroh.persistence.GameParticipationEntity;
+import com.okaka.jinroh.persistence.GameEntity;
 import com.okaka.jinroh.persistence.GameParticipationDao;
+import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.RoleSelectDao;
 import com.okaka.jinroh.persistence.RoomParticipantDao;
-import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.jinroh.persistence.UserDao;
+import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.onenightjinroh.application.domain.HolidayRoles;
 import com.okaka.onenightjinroh.application.domain.Role;
 import com.okaka.onenightjinroh.application.port.HolidayRolesPort;
@@ -78,7 +78,7 @@ public class StartGameUseCase {
         }
 
         List<Role> notUseRoles = roleEntityList.subList(userEntityList.size(), roleEntityList.size())
-                .stream().map(roleEntity -> new Role(roleEntity.role_id, roleEntity.role_name))
+                .stream().map(roleEntity -> Role.byRoleId(roleEntity.role_id, roleEntity.role_name))
                 .collect(Collectors.toList());
         HolidayRoles holidayRoles = new HolidayRoles(gameEntity.game_id, notUseRoles);
         holidayRolesPort.save(holidayRoles);

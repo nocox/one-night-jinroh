@@ -43,6 +43,7 @@ export default {
         },
       ],
       isCompleted: false,
+      isSelected: false,
     };
   },
   components: {

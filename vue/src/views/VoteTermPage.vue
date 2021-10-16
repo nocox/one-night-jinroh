@@ -1,7 +1,7 @@
 <template>
   <main class="vote_page">
     <h2>話し合いが終了しました。投票を行ってください。</h2>
-    <p class="action-result">夜の行動結果：UserName2は『人狼』でした。</p>
+    <p class="action-result">{{ nightActLog }}</p>
 
     <coArea
       :otherPlayerList="otherPlayerList"
@@ -91,6 +91,7 @@ export default {
       checkPlayerId: 0,
       is_votable: false,
       is_unvotable: false,
+      nightActLog: "",
     };
   },
   components: { coArea, myButton, DisplayRolls },
@@ -113,7 +114,8 @@ export default {
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
-
+        this.nightActLog = response.data.gameIndex.nightActLog;
+        
         this.canVotePlayers = response.data.voteIndex.canVotePlayers;
         this.$modal.show("vote-start-modal");
         this.configWebSocket(response.data.gameId);

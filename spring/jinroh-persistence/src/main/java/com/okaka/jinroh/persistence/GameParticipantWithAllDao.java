@@ -6,6 +6,7 @@ import org.seasar.doma.Select;
 import org.seasar.doma.boot.ConfigAutowireable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @ConfigAutowireable
@@ -14,6 +15,9 @@ public interface GameParticipantWithAllDao {
 
     @Select
     Optional<GameParticipantWithAllEntity> selectByParticipantId(Long participantId);
+
+    @Select
+    List<GameParticipantWithAllEntity> selectByGameId(Long gameId);
 
     @Insert
     @Transactional

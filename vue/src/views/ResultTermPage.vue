@@ -1,8 +1,6 @@
 <template>
   <main class="result_page">
-    <h2>{{ judgeText }}</h2>
-
-    <resultImage :result="judgeText" />
+    <resultImage :judge="judge" />
 
     <div>
       <div>
@@ -44,6 +42,20 @@ export default {
   name: "TempResultTermPage",
   data() {
     return {
+      // 新しいパラメータ
+      judge: "",
+      holidayRoles: ["", ""],
+      playerList: [
+        {
+          playerName: "",
+          role: "",
+          coRole: "",
+          judge: "lose",
+          myself: false,
+          comment: "",
+        },
+      ],
+      // 新しいパラメータここまで
       judgeText: "",
       playerName: "xxxxx",
       playerRole: {
@@ -58,16 +70,16 @@ export default {
           role: "---",
         },
       ],
-      holidayRoles: [
-        {
-          roleId: -1,
-          roleName: "不明",
-        },
-        {
-          roleId: -1,
-          roleName: "不明",
-        },
-      ],
+      // holidayRoles: [
+      //   {
+      //     roleId: -1,
+      //     roleName: "不明",
+      //   },
+      //   {
+      //     roleId: -1,
+      //     roleName: "不明",
+      //   },
+      // ],
       winTeam: [],
       winPlayers: [],
       losePlayers: [],
@@ -79,12 +91,51 @@ export default {
       .get(JINROH_API_BASE_URL + "/result-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
+
         this.judgeText = response.data.judgeText;
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
         this.holidayRoles = response.data.holidayRoles;
+
+        // 新パラメータ(this datas are available from backend)
+        this.judge = "SIMPLE_VILLAGE_WIN";
+        this.holidayRoles = ["jinroh", "murabito"];
+        this.playerList = [
+          {
+            playerName: "プレイヤー1",
+            role: "jinroh",
+            coRole: "murabito",
+            judge: "lose",
+            myself: true,
+            comment: "",
+          },
+          {
+            playerName: "プレイヤー2",
+            role: "murabito",
+            coRole: "murabito",
+            judge: "lose",
+            myself: false,
+            comment: "",
+          },
+          {
+            playerName: "プレイヤー3",
+            role: "",
+            coRole: "",
+            judge: "lose",
+            myself: false,
+            comment: "",
+          },
+          {
+            playerName: "プレイヤー4",
+            role: "",
+            coRole: "",
+            judge: "lose",
+            myself: false,
+            comment: "",
+          },
+        ];
       })
       .catch(() => {
         this.$router.push("/room");

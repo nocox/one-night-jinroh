@@ -1,9 +1,9 @@
 package com.okaka.onenightjinroh.application.service.tally;
 
-import com.okaka.onenightjinroh.application.domain.GameIndexBean;
+import com.okaka.onenightjinroh.application.bean.GameIndexBean;
 import com.okaka.onenightjinroh.application.domain.GameParticipant;
-import com.okaka.onenightjinroh.application.domain.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.port.TallyResultPort;
+import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class GetTallyTermIndexUseCase {
 
     public TallyTermIndexBean get(Long gameId, Long gameParticipantId) {
         List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
-        GameIndexBean gameIndexBean = GameIndexBean.createHideRole(gameParticipants, gameParticipantId);
+        GameIndexBean gameIndexBean = GameIndexBean.ofHideRole(gameParticipants, gameParticipantId);
         TallyResultBean tallyResultBean = TallyResultBeanFactory.create(tallyResultPort.searchTallyResults(gameId));
 
         return new TallyTermIndexBean(gameId, gameIndexBean, tallyResultBean);

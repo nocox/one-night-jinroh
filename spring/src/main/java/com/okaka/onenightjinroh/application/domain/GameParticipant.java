@@ -7,6 +7,14 @@ public class GameParticipant {
     public Role role;
     public boolean hostFlg;
 
+    public GameParticipant(Long gameParticipationId, Game game, User user, Role role, boolean hostFlg) {
+        this.gameParticipationId = gameParticipationId;
+        this.game = game;
+        this.user = user;
+        this.role = role;
+        this.hostFlg = hostFlg;
+    }
+
     public GameParticipant(Long gameParticipationId) {
         this.gameParticipationId = gameParticipationId;
     }

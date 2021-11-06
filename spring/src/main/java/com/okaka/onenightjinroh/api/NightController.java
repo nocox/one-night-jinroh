@@ -1,28 +1,35 @@
 package com.okaka.onenightjinroh.api;
 
-import com.okaka.jinroh.persistence.GameDao;
-import com.okaka.jinroh.persistence.GameEntity;
-import com.okaka.jinroh.persistence.GameParticipationDao;
-import com.okaka.jinroh.persistence.GameParticipationEntity;
-import com.okaka.jinroh.persistence.NightActDao;
-import com.okaka.jinroh.persistence.RoomEntity;
-import com.okaka.onenightjinroh.application.domain.ExistRoomValidate;
+import com.okaka.onenightjinroh.api.bean.NightKaitoResultBean;
+import com.okaka.onenightjinroh.api.form.NightKaitoForm;
+import com.okaka.onenightjinroh.api.form.NightUranaiForm;
+import com.okaka.onenightjinroh.application.bean.NightUranaiResultBean;
 import com.okaka.onenightjinroh.application.service.night.DoneNightTermActUseCase;
+import com.okaka.onenightjinroh.application.service.night.ExecuteKaitoUseCase;
+import com.okaka.onenightjinroh.application.service.night.ExecuteNightUranaiUseCase;
+import com.okaka.onenightjinroh.application.service.night.GamePersonalBean;
+import com.okaka.onenightjinroh.application.service.night.GetGamePersonalUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightTermIndexUseCase;
 import com.okaka.onenightjinroh.application.service.night.NightTermIndexBean;
+import com.okaka.onenightjinroh.application.service.night.NightUranaiStatus;
+import com.okaka.onenightjinroh.application.service.night.dto.NightUranaiResultDto;
+import com.okaka.onenightjinroh.application.service.room.RoleBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class NightController {
     @Autowired
     HttpSession session;
-
-    @Autowired
-    ExistRoomValidate existRoomValidate;
 
     @Autowired
     GetNightTermIndexUseCase getNightTermIndexUseCase;
@@ -31,13 +38,13 @@ public class NightController {
     DoneNightTermActUseCase doneNightTermActUseCase;
 
     @Autowired
-    GameDao gameDao;
+    GetGamePersonalUseCase getGamePersonalUseCase;
 
     @Autowired
-    GameParticipationDao gameParticipationDao;
+    ExecuteNightUranaiUseCase executeNightUranaiUseCase;
 
     @Autowired
-    NightActDao nightActDao;
+    ExecuteKaitoUseCase executeKaitoUseCase;
 
     @RequestMapping(path = "/night-index")
     NightTermIndexBean getNightTermIndex() {
@@ -45,16 +52,11 @@ public class NightController {
         String strUserId = session.getAttribute("user_id").toString();
         Long userId = Long.valueOf(strUserId);
 
-        RoomEntity roomEntity = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
+        GamePersonalBean gamePersonalBean = getGamePersonalUseCase.get(uuid, userId);
+        session.setAttribute("game_id", gamePersonalBean.getGameId());
+        session.setAttribute("game_participation_id", gamePersonalBean.getGameParticipationId());
 
-        // TODO: 最新のgameを取得する必要がある．
-        GameEntity gameEntity = gameDao.selectByRoomId(roomEntity.room_id);
-        GameParticipationEntity gameParticipationEntity = gameParticipationDao.selectGameParticipant(gameEntity.game_id, userId);
-
-        session.setAttribute("game_id", gameEntity.game_id);
-        session.setAttribute("game_participation_id", gameParticipationEntity.game_participation_id);
-
-        return getNightTermIndexUseCase.get(gameEntity.game_id, gameParticipationEntity.game_participation_id);
+        return getNightTermIndexUseCase.get(gamePersonalBean.getGameId(), gamePersonalBean.getGameParticipationId());
     }
 
     @RequestMapping(path = "/done-night-act")
@@ -67,5 +69,41 @@ public class NightController {
         doneNightTermActUseCase.done(gameParticipantId, gameId);
 
         return 0;
+    }
+
+    @PostMapping(path = "/night/uranai")
+    NightUranaiResultBean uranai(@RequestBody NightUranaiForm form) {
+        String strGameId = session.getAttribute("game_id").toString();
+        Long gameId = Long.valueOf(strGameId);
+        String strGameParticipationId = session.getAttribute("game_participation_id").toString();
+        Long gameParticipantId = Long.valueOf(strGameParticipationId);
+
+        NightUranaiStatus status = mapStatus(form.getStatus());
+        NightUranaiResultDto dto = executeNightUranaiUseCase.invoke(gameId, gameParticipantId, form.getParticipantId(), status);
+
+        List<RoleBean> roleBeans = dto.getRoles().stream().map(RoleBean::new).collect(Collectors.toList());
+        NightUranaiResultBean.UserBean userBean = Optional.ofNullable(dto.getUser()).
+                map(user -> new NightUranaiResultBean.UserBean(user.getUserId(), user.getUserName()))
+                .orElse(null);
+        return new NightUranaiResultBean(form.getStatus(), dto.getSelectedPlayer(), roleBeans, userBean);
+    }
+
+    private NightUranaiStatus mapStatus(String uranaiStatus) {
+        NightUranaiStatus status = NightUranaiStatus.PLAYER;
+        if ("HOLIDAY_ROLES".equals(uranaiStatus)) {
+            status = NightUranaiStatus.HOLIDAY_ROLES;
+        } else if ("NOT_CHOOSE".equals(uranaiStatus)) {
+            status = NightUranaiStatus.NOT_CHOOSE;
+        }
+        return status;
+    }
+
+    @PostMapping(path = "/night/kaito")
+    ResponseEntity<NightKaitoResultBean> kaito(@RequestBody NightKaitoForm form) {
+        String strGameParticipationId = session.getAttribute("game_participation_id").toString();
+        Long gameParticipantId = Long.valueOf(strGameParticipationId);
+
+        NightKaitoResultBean bean = executeKaitoUseCase.invoke(gameParticipantId, form.getParticipantId());
+        return ResponseEntity.ok().body(bean);
     }
 }

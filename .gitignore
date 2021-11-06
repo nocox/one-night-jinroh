@@ -54,3 +54,6 @@ node_modules
 
 ### Env ###
 .env
+
+### h2db ###
+h2db

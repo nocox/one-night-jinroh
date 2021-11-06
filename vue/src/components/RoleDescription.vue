@@ -1,5 +1,4 @@
 <template>
-  <!-- <div> -->
   <article>
     <section>
       <h2 class="murabito">村人陣営</h2>
@@ -27,23 +26,6 @@
       </p>
     </section>
   </article>
-  <!-- <h2>役職紹介</h2> -->
-  <!-- <div class="RoleList">
-      <div class="Role" v-for="(role, index) in RoleList" v-bind:key=index>
-        <div class="RoleImage">
-          <img v-bind:src="role.img" />
-        </div>
-        <div>
-          <div class="RoleName">
-            <h3>{{ role.name }}</h3>
-          </div>
-          <div class="RoleDescription">
-            {{ role.description }}
-          </div>
-        </div>
-      </div>
-    </div> -->
-  <!-- </div> -->
 </template>
 
 <script>
@@ -61,15 +43,13 @@ export default {
           name: "人狼",
           img: require("../assets/images/chara/chara1.png"),
           description: `<p>イタズラ好きなかわいい人狼さん。
-                        <p>夜行動で他の人狼プレイヤーを確認することができます。</p>
-                        <p>夜行動：他の人狼プレイヤーの名前が表示されます。余っている役職カード2枚にいる人狼は確認できません。</p>
-`,
+                        夜の間に他の人狼プレイヤーを確認することができます。</p>`,
         },
         {
           name: "村人",
           img: require("../assets/images/chara/chara2.png"),
-          description: `<p>平和な村に住む無垢でかわいい村人さん。特殊な能力はありません。</p>
-                        他プレイヤーの言葉だけをヒントに、誰が人狼か推理しましょう。`,
+          description: `<p>平和な村に住む無垢でかわいい村人さん。特殊な能力はありません。
+                        他プレイヤーの言葉だけをヒントに、誰が人狼か推理しましょう。</p>`,
         },
         {
           name: "占い師",
@@ -88,17 +68,17 @@ export default {
         {
           name: "狂人",
           img: require("../assets/images/chara/chara5.png"),
-          description: `<p>人狼さんにひそかな思いを寄せる狂人さん。</p>
-                        <p>特殊な能力はありませんが、村人とは陣営が異なり、人狼陣営に所属します。</p>
-                        <p>狂人が吊られても人狼陣営の敗北にはなりません。</p>
-                        <p>プレイヤーに人狼がいない平和村の場合、勝利条件は「人間 SIDE」となります(村人と同じ扱いとなります)。</p>
+          description: `<p>人狼さんにひそかな思いを寄せる狂人さん。
+                        特殊な能力はありませんが、村人とは陣営が異なり、人狼陣営に所属します。
+                        狂人が吊られても人狼陣営の敗北にはなりません。
+                        プレイヤーに人狼がいない平和村の場合、勝利条件は「人間 SIDE」となります(村人と同じ扱いとなります)。</p>
 `,
         },
         {
           name: "吊り人",
           img: require("../assets/images/chara/chara6.png"),
-          description: `<p>丈夫な縄を自分の首にかけてぶら下がる不思議な遊びが大好きな吊人さん。</p>
-                        <p>吊られるのが目的です。吊られると一人勝ちとなります。</p>`,
+          description: `<p>丈夫な縄を自分の首にかけてぶら下がる不思議な遊びが大好きな吊人さん。
+                        吊られるのが目的です。吊られると一人勝ちとなります。</p>`,
         },
       ],
     };
@@ -129,7 +109,7 @@ img {
 
 .RoleList {
   min-width: 360px;
-  max-width: 720px;
+  max-width: 640px;
   display: flex;
   justify-content: center;
   margin: 0 auto;
@@ -141,7 +121,7 @@ img {
   display: flex;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 640px) {
   .Role {
     flex-direction: column;
   }
@@ -160,7 +140,6 @@ img {
 
 .RoleDescription {
   text-align: left;
-  white-space: pre-line; /* ちょっと気持ち悪い */
   word-wrap: break-word;
 }
 </style>

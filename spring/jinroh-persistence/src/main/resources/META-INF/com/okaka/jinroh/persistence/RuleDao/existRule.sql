@@ -1,0 +1,1 @@
+SELECT EXISTS(SELECT * FROM rule WHERE rule_name = /*ruleName*/'xxx')

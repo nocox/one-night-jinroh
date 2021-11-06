@@ -2,7 +2,7 @@ package com.okaka.onenightjinroh.application.service.vote;
 
 
 import com.okaka.onenightjinroh.application.domain.Vote;
-import com.okaka.onenightjinroh.application.domain.VoteRepository;
+import com.okaka.onenightjinroh.application.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

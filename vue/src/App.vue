@@ -159,7 +159,10 @@ h2 {
   z-index: 1;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 639px) {
+  main{
+    max-width: 639px;
+  }
   .pc {
     display: none;
   }

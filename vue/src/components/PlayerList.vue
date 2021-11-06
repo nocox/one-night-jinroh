@@ -1,8 +1,5 @@
 <template>
     <div>
-        <!-- <Player v-for="player in PlayerList" :key="player.id"
-        :isHost=player.isHost :id=player.id :name=player.name 
-        /> -->
         <Player v-for="player in PlayerList" :key="player.id"
         :isHost=player.isHost :id=player.id
         />
@@ -27,12 +24,6 @@ export default {
                 {id:2,
                 isHost:true,
                 }
-                // {id:1,
-                // isHost:false,
-                // name:"test"},
-                // {id:2,
-                // isHost:true,
-                // name:"test2"}
             ]
                 
             

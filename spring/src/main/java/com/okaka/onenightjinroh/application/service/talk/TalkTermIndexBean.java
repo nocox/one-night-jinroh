@@ -1,10 +1,10 @@
 package com.okaka.onenightjinroh.application.service.talk;
 
-import com.okaka.onenightjinroh.application.domain.GameIndexBean;
+import com.okaka.onenightjinroh.application.bean.GameIndexBean;
 
 public class TalkTermIndexBean {
-    private Long gameId;
-    private GameIndexBean gameIndex;
+    private final Long gameId;
+    private final GameIndexBean gameIndex;
 
     public TalkTermIndexBean(GameIndexBean gameIndex, Long gameId) {
         this.gameIndex = gameIndex;

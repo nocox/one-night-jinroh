@@ -35,10 +35,9 @@
 
     <myButton class="btn" :method="gotoResult" :text="'結果ページに移動する'" />
 
-    <modal width="90%" name="done-tally-modal">
+    <modal :width="'90%'" :height="'auto'"  name="done-tally-modal">
       <div class="modal-header">
         <h3>全員投票が完了しました．<br />集計結果を表示します．</h3>
-
         <myButton class="tally-modal-btn" :method="closeModal" :text="'OK'" />
       </div>
     </modal>
@@ -59,7 +58,10 @@ export default {
   data() {
     return {
       playerName: "xxxxx",
-      playerRole: "xxxxx",
+      playerRole: {
+        roleId: -1,
+        roleName: "不明",
+      },
       hostFlag: false,
       otherPlayerList: [
         {
@@ -185,16 +187,16 @@ h2 {
   text-align: center;
 
   h3 {
-    margin: 0 auto;
+    margin-top: 2rem;
   }
   .tally-modal-btn {
     width: 10rem;
-    margin: 1em auto;
+    margin: 2rem auto;
     padding: 0.5em 0;
   }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 639px) {
   .vote_detail {
     .table {
       flex-direction: column;

@@ -21,7 +21,6 @@ public class GetTalkTermIndexUseCase {
         List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
         String nightActLog = roleNightActFormatterRepository.fetchNightAct(gameId, gameParticipantId).toActLog();
 
-        // TODO: Roleを隠す
         GameIndexBean gameIndex = GameIndexBean.withRoleActLog(gameParticipants, gameParticipantId, nightActLog);
         return new TalkTermIndexBean(gameIndex, gameId);
     }

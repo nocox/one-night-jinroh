@@ -11,6 +11,15 @@ public class RoleBean {
         this.roleName = role.getRoleName();
     }
 
+    public RoleBean(Long roleId, String roleName) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+    }
+
+    public static RoleBean ofUnknownRole() {
+        return new RoleBean(Role.UNKNOWN_ROLE_ID, "不明");
+    }
+
     public Long getRoleId() {
         return roleId;
     }

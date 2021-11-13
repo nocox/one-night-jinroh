@@ -52,6 +52,19 @@ public class GameIndexBean {
         return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, nightActLog);
     }
 
+    public static GameIndexBean of(List<GameParticipantBean> participantBeans, Long participantId, String nightActLog) {
+        GameParticipantBean myselfBean = participantBeans.stream()
+                .filter(bean -> bean.getId().equals(participantId))
+                .findFirst()
+                .orElseThrow();
+
+        List<GameParticipantBean> gameParticipantBeans = participantBeans.stream()
+                .filter(bean -> !bean.getId().equals(participantId))
+                .collect(Collectors.toList());
+
+        return new GameIndexBean(myselfBean.getName(), myselfBean.getRole(), myselfBean.getHostFlag(), gameParticipantBeans, nightActLog);
+    }
+
     private static GameParticipantBean extractMyPlayer(List<GameParticipant> gameParticipants, Long gameParticipantId) {
         return gameParticipants.stream()
                 .filter(domain -> domain.getGameParticipationId().equals(gameParticipantId))

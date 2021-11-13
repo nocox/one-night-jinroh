@@ -26,4 +26,9 @@ public class KaitoNightActFormatter implements RoleNightActFormatter {
                 toParticipant.getUser().getUserName(),
                 fromParticipant.getRole().getRoleName());
     }
+
+    @Override
+    public boolean showableParticipant(Long participantId) {
+        return false;
+    }
 }

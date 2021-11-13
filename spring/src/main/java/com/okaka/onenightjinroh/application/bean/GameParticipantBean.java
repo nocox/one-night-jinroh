@@ -18,6 +18,33 @@ public class GameParticipantBean {
         this.hostFlag = gameParticipant.isHostFlg();
     }
 
+    public GameParticipantBean(Long id, String name, RoleBean role, Boolean hostFlag) {
+        this.id = id;
+        this.name = name;
+        this.role = role;
+        this.hostFlag = hostFlag;
+    }
+
+    public static GameParticipantBean ofRoleOpen(GameParticipant gameParticipant) {
+        User user = gameParticipant.getUser();
+        return new GameParticipantBean(
+                gameParticipant.getGameParticipationId(),
+                user.getUserName(),
+                new RoleBean(gameParticipant.getRole()),
+                gameParticipant.isHostFlg()
+        );
+    }
+
+    public static GameParticipantBean ofRoleHidden(GameParticipant gameParticipant) {
+        User user = gameParticipant.getUser();
+        return new GameParticipantBean(
+                gameParticipant.getGameParticipationId(),
+                user.getUserName(),
+                RoleBean.ofUnknownRole(),
+                gameParticipant.isHostFlg()
+        );
+    }
+
     public Long getId() {
         return id;
     }

@@ -29,6 +29,10 @@ public class KaitoNightActFormatter implements RoleNightActFormatter {
 
     @Override
     public boolean showableParticipant(Long participantId) {
-        return false;
+        return toParticipant.getGameParticipationId().equals(participantId);
+    }
+
+    public GameParticipant getToParticipant() {
+        return toParticipant;
     }
 }

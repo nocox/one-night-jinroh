@@ -20,6 +20,14 @@ public class RoleBean {
         return new RoleBean(Role.UNKNOWN_ROLE_ID, "不明");
     }
 
+    public static RoleBean ofChange(Role fromRole, Role toRole) {
+        return new RoleBean(fromRole.getRoleId() + 10, toRole.getRoleName());
+    }
+
+    public static RoleBean ofChangedKaito(Role role) {
+        return new RoleBean(role.getRoleId() + 10, "怪盗");
+    }
+
     public Long getRoleId() {
         return roleId;
     }

@@ -21,16 +21,40 @@ public class ParticipantDisplayChecker {
     public GameParticipantBean check(GameParticipant participant) {
 
         if (myParticipant.getRole() instanceof Role.Uranaishi) {
-            if (roleNightActs.stream().anyMatch(act -> act.showableParticipant(participant.getGameParticipationId()))) {
+            if (showableParticipant(participant)) {
                 return GameParticipantBean.ofRoleOpen(participant);
+            }
+        } else if (myParticipant.getRole() instanceof Role.Kaito) {
+            if (showableParticipant(participant)) {
+                return GameParticipantBean.ofChangedKaito(participant);
+            }
+            if (isMyself(participant)) {
+                return GameParticipantBean.ofChangedRole(participant, getKaitoChangedRole());
             }
         }
 
-        if (myParticipant.getGameParticipationId().equals(participant.getGameParticipationId())) {
+        if (isMyself(participant)) {
             return GameParticipantBean.ofRoleOpen(participant);
         }
 
         return GameParticipantBean.ofRoleHidden(participant);
 
+    }
+
+    private Role getKaitoChangedRole() {
+        KaitoNightActFormatter actFormatter = roleNightActs.stream()
+                .filter(act -> act instanceof KaitoNightActFormatter)
+                .findFirst()
+                .map(formatter -> ((KaitoNightActFormatter) formatter))
+                .orElseThrow();
+        return actFormatter.getToParticipant().getRole();
+    }
+
+    private boolean isMyself(GameParticipant participant) {
+        return myParticipant.getGameParticipationId().equals(participant.getGameParticipationId());
+    }
+
+    private boolean showableParticipant(GameParticipant participant) {
+        return roleNightActs.stream().anyMatch(act -> act.showableParticipant(participant.getGameParticipationId()));
     }
 }

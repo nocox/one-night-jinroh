@@ -29,6 +29,10 @@ public abstract class Role {
         }
     }
 
+    public boolean isJinroh() {
+        return roleId == 2;
+    }
+
     public static class OtherRole extends Role {
 
         public OtherRole(Long roleId, String roleName) {

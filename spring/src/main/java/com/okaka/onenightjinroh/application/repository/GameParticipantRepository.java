@@ -1,6 +1,7 @@
 package com.okaka.onenightjinroh.application.repository;
 
 import com.okaka.jinroh.persistence.GameParticipantWithAllDao;
+import com.okaka.jinroh.persistence.GameParticipantWithAllEntity;
 import com.okaka.jinroh.persistence.GameParticipationDao;
 import com.okaka.jinroh.persistence.GameParticipationEntity;
 import com.okaka.jinroh.persistence.RoleEntity;
@@ -45,7 +46,7 @@ public class GameParticipantRepository {
     }
 
     public List<GameParticipant> findByGameId(Long gameId) {
-        return gameParticipationDao.selectGameParticipantsByGameId(gameId).stream()
+        return gameParticipantWithAllDao.selectByGameId(gameId).stream()
                 .map(GameParticipantRepository::toDomainFromEntity)
                 .collect(Collectors.toList());
     }
@@ -80,13 +81,13 @@ public class GameParticipantRepository {
         return gameParticipantMap;
     }
 
-    public static GameParticipant toDomainFromEntity(GameParticipationEntity entity){
-        GameParticipant gameParticipant = new GameParticipant(entity.game_participation_id);
-        gameParticipant.setHostFlg(entity.host_flg);
-        gameParticipant.setGame(new Game(entity.game_id));
-        gameParticipant.setRole(Role.byRoleId(entity.role_id, null));
-        gameParticipant.setUser(new User(entity.user_id));
-        return gameParticipant;
+    public static GameParticipant toDomainFromEntity(GameParticipantWithAllEntity entity){
+        return new GameParticipant(
+                entity.getGameParticipationId(),
+                new Game(entity.getGameId(), null, null), // 必要になったら拡張
+                new User(entity.getUserId(), entity.getUserName()),
+                Role.byRoleId(entity.getRoleId(), entity.getRoleName()),
+                entity.isHostFlg());
     }
 
     public static GameParticipant toDomainFromEntity(GameParticipationEntity entity, UserEntity userEntity, RoleEntity roleEntity){

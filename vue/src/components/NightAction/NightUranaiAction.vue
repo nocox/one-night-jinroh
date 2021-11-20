@@ -52,7 +52,7 @@
 <script>
 import axios from "axios";
 import myButton from "@/components/Button.vue";
-import { JINROH_API_BASE_URL } from "../Env";
+import { JINROH_API_BASE_URL } from "../../Env";
 
 export default {
   name: "RoleCardDisplay",

@@ -1,7 +1,16 @@
 <template>
   <main class="result_page">
-    <resultImage :judge="judge" />
 
+    <modal :width="'90%'" :height="'auto'" name="result-modal">
+      <div class="result-modal">
+      <resultImage :judge="judge" @getJudgeText="judgeText=$event" />
+      <myButton class="btn" :method="closeModal" :text="'OK'" />
+      </div>
+    </modal>
+
+    <h2>
+      {{ judgeText }}
+    </h2>
     <div class="result grid-container">
       <div class="result_winners grid-item">
         <h3>かち</h3>
@@ -57,6 +66,7 @@ export default {
   data() {
     return {
       judge: "",
+      judgeText: "",
       holidayRoles: ["", ""],
       playerList: [
         {
@@ -104,14 +114,14 @@ export default {
           {
             playerName: "プレイヤー1",
             role: "人狼",
-            coRole: "村人",
+            coRole: "占い師",
             judge: "lose",
             myself: true,
             comment: "",
           },
           {
             playerName: "プレイヤー2",
-            role: "村人",
+            role: "人狼",
             coRole: "村人",
             judge: "lose",
             myself: false,
@@ -128,28 +138,29 @@ export default {
           {
             playerName: "プレイヤー4",
             role: "占い師",
-            coRole: "占い師",
-            judge: "lose",
+            coRole: "怪盗",
+            judge: "win",
             myself: false,
             comment: "怪盗🔁占い師",
           },
           {
-            playerName: "プレイヤー4",
-            role: "占い師",
-            coRole: "占い師",
-            judge: "lose",
+            playerName: "プレイヤー5",
+            role: "村人",
+            coRole: "村人",
+            judge: "win",
             myself: false,
-            comment: "怪盗🔁占い師",
+            comment: "",
           },
           {
-            playerName: "プレイヤー4",
-            role: "占い師",
-            coRole: "占い師",
-            judge: "lose",
+            playerName: "プレイヤー6",
+            role: "村人",
+            coRole: "村人",
+            judge: "win",
             myself: false,
-            comment: "怪盗🔁占い師",
+            comment: "",
           },
         ];
+        this.$modal.show("result-modal");
       })
       .catch(() => {
         this.$router.push("/room");
@@ -158,6 +169,12 @@ export default {
   methods: {
     returnRoom() {
       this.$router.push("/room");
+    },
+    closeModal: function () {
+      this.$modal.hide("result-modal");
+    },
+    getJudgeText: function(judgeText){
+      this.judgeText = judgeText;
     },
   },
 };
@@ -182,13 +199,13 @@ h3 {
   text-align: center;
 }
 
-.grid-container{
+.grid-container {
   display: grid;
   justify-content: center;
   row-gap: 2rem;
   column-gap: 2rem;
-  
-  .grid-item{
+
+  .grid-item {
     padding: 3rem;
     padding-top: 2rem;
     background-color: #eee;
@@ -202,7 +219,6 @@ h3 {
 
   .result_winners {
     grid-column: 1/2;
-    
   }
 
   .reslut_losers {
@@ -221,6 +237,10 @@ h3 {
       max-width: 8rem;
     }
   }
+}
+
+.result-modal{
+  padding: 1rem 0;
 }
 
 @media screen and (max-width: 639px) {

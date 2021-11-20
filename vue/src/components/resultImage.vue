@@ -15,6 +15,9 @@
 export default {
   name: "resultImage",
   props: ["judge"],
+  mounted(){
+    this.$emit("getJudgeText", this.judgeResults[this.judge].text)  ;
+  },
   data() {
     return {
       judgeResults: {

@@ -36,6 +36,14 @@ public class UranaishiNightActFormatter implements RoleNightActFormatter {
     }
 
     @Override
+    public boolean showableParticipant(Long gameParticipantId) {
+        if (toParticipant.isEmpty()) {
+            return false;
+        }
+        return toParticipant.get().getGameParticipationId().equals(gameParticipantId);
+    }
+
+    @Override
     public String toActLog() {
         String targetStr = toParticipant
                 .map(GameParticipant::getUser)

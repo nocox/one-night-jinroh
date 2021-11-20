@@ -2,7 +2,7 @@ package com.okaka.onenightjinroh.application.service.talk;
 
 import com.okaka.onenightjinroh.application.bean.GameIndexBean;
 import com.okaka.onenightjinroh.application.bean.GameParticipantBean;
-import com.okaka.onenightjinroh.application.domain.GameParticipant;
+import com.okaka.onenightjinroh.application.domain.GameParticipants;
 import com.okaka.onenightjinroh.application.domain.ParticipantDisplayChecker;
 import com.okaka.onenightjinroh.application.domain.RoleNightActFormatter;
 import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
@@ -23,20 +23,9 @@ public class GetTalkTermIndexUseCase {
 
     public TalkTermIndexBean get(Long gameId, Long gameParticipantId) {
 
-        List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
-
-        List<RoleNightActFormatter> roleNightActs = gameParticipants.stream()
-                .map(GameParticipant::getGameParticipationId)
-                .filter(id -> id.equals(gameParticipantId))
-                .map(id -> roleNightActFormatterRepository.fetchNightAct(gameId, id))
-                .collect(Collectors.toList());
-
-        GameParticipant mySelf = gameParticipants.stream()
-                .filter(domain -> domain.getGameParticipationId().equals(gameParticipantId))
-                .findFirst()
-                .orElseThrow();
-
-        ParticipantDisplayChecker displayChecker = ParticipantDisplayChecker.of(mySelf, roleNightActs);
+        GameParticipants gameParticipants = GameParticipants.of(gameParticipantRepository.findByGameIdWithUserAndRole(gameId));
+        RoleNightActFormatter roleNightActFormatter = roleNightActFormatterRepository.fetchNightAct(gameId, gameParticipantId);
+        ParticipantDisplayChecker displayChecker = ParticipantDisplayChecker.of(gameParticipants.mySelf(gameParticipantId), roleNightActFormatter);
 
         List<GameParticipantBean> participantBeans = gameParticipants.stream()
                 .map(displayChecker::check)

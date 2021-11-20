@@ -2,18 +2,16 @@ package com.okaka.onenightjinroh.application.domain;
 
 import com.okaka.onenightjinroh.application.bean.GameParticipantBean;
 
-import java.util.List;
-
 public class ParticipantDisplayChecker {
     private final GameParticipant myParticipant;
-    private final List<RoleNightActFormatter> roleNightActs;
+    private final RoleNightActFormatter roleNightActs;
 
-    public ParticipantDisplayChecker(GameParticipant myParticipant, List<RoleNightActFormatter> roleNightActs) {
+    public ParticipantDisplayChecker(GameParticipant myParticipant, RoleNightActFormatter roleNightActs) {
         this.myParticipant = myParticipant;
         this.roleNightActs = roleNightActs;
     }
 
-    public static ParticipantDisplayChecker of(GameParticipant myParticipant, List<RoleNightActFormatter> roleNightActs) {
+    public static ParticipantDisplayChecker of(GameParticipant myParticipant, RoleNightActFormatter roleNightActs) {
         // 必要があれば，データ整合性の確認を追加する
         return new ParticipantDisplayChecker(myParticipant, roleNightActs);
     }
@@ -45,12 +43,11 @@ public class ParticipantDisplayChecker {
     }
 
     private Role getKaitoChangedRole() {
-        KaitoNightActFormatter actFormatter = roleNightActs.stream()
-                .filter(act -> act instanceof KaitoNightActFormatter)
-                .findFirst()
-                .map(formatter -> ((KaitoNightActFormatter) formatter))
-                .orElseThrow();
-        return actFormatter.getToParticipant().getRole();
+        if (roleNightActs instanceof KaitoNightActFormatter) {
+            return ((KaitoNightActFormatter) roleNightActs).getToParticipant().getRole();
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     private boolean isMyself(GameParticipant participant) {
@@ -58,6 +55,6 @@ public class ParticipantDisplayChecker {
     }
 
     private boolean showableParticipant(GameParticipant participant) {
-        return roleNightActs.stream().anyMatch(act -> act.showableParticipant(participant.getGameParticipationId()));
+        return roleNightActs.showableParticipant(participant.getGameParticipationId());
     }
 }

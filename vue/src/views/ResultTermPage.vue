@@ -2,30 +2,44 @@
   <main class="result_page">
     <resultImage :judge="judge" />
 
-    <div>
-      <div>
+    <div class="result grid-container">
+      <div class="result_winners grid-item">
         <h3>かち</h3>
         <Player
+          class="result-player"
           :playerName="val.playerName"
-          :roleName="val.roleName"
-          :coRole="'村人'"
-          :isMe="val.isMe"
-          v-for="(val, key) in winPlayers"
+          :role="val.role"
+          :coRole="val.coRole"
+          :myself="val.myself"
+          :comment="val.comment"
+          v-for="(val, key) in winPlayerList"
           :key="key"
         />
       </div>
-      <div>
+      <div class="result_losers grid-item">
         <h3>まけ</h3>
         <Player
+          class="result-player"
           :playerName="val.playerName"
-          :roleName="val.roleName"
-          :isMe="val.isMe"
-          :coRole="'村人'"
-          v-for="(val, key) in losePlayers"
+          :role="val.role"
+          :coRole="val.coRole"
+          :myself="val.myself"
+          :comment="val.comment"
+          v-for="(val, key) in losePlayerList"
+          :key="key"
+        />
+      </div>
+      <div class="holiday-roles grid-item">
+        <h3>場のカード</h3>
+        <img
+          :src="RoleList[val]"
+          :alt="val"
+          v-for="(val, key) in holidayRoles"
           :key="key"
         />
       </div>
     </div>
+
     <myButton class="btn" :method="returnRoom" :text="'ルームに戻る'" />
   </main>
 </template>
@@ -42,7 +56,6 @@ export default {
   name: "TempResultTermPage",
   data() {
     return {
-      // 新しいパラメータ
       judge: "",
       holidayRoles: ["", ""],
       playerList: [
@@ -55,151 +68,109 @@ export default {
           comment: "",
         },
       ],
-      // 新しいパラメータここまで
-      judgeText: "",
-      playerName: "xxxxx",
-      playerRole: {
-        roleId: -1,
-        roleName: "不明",
-      },
       hostFlag: false,
-      otherPlayerList: [
-        {
-          id: 1,
-          name: "xxxxx",
-          role: "---",
-        },
-      ],
-      // holidayRoles: [
-      //   {
-      //     roleId: -1,
-      //     roleName: "不明",
-      //   },
-      //   {
-      //     roleId: -1,
-      //     roleName: "不明",
-      //   },
-      // ],
-      winTeam: [],
       winPlayers: [],
       losePlayers: [],
+      RoleList: {
+        不明: require("../assets/images/card.png"),
+        人狼: require("../assets/images/chara/chara1.png"),
+        村人: require("../assets/images/chara/chara2.png"),
+        占い師: require("../assets/images/chara/chara3.png"),
+        怪盗: require("../assets/images/chara/chara4.png"),
+        狂人: require("../assets/images/chara/chara5.png"),
+        吊り人: require("../assets/images/chara/chara6.png"),
+      },
     };
   },
   components: { resultImage, myButton, Player },
+  computed: {
+    // playerListを勝者と敗者に振り分ける
+    winPlayerList: function () {
+      return this.playerList.filter((player) => player.judge == "win");
+    },
+    losePlayerList: function () {
+      return this.playerList.filter((player) => player.judge == "lose");
+    },
+  },
   async mounted() {
     await axios
       .get(JINROH_API_BASE_URL + "/result-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-
-        this.judgeText = response.data.judgeText;
-        this.playerName = response.data.gameIndex.playerName;
-        this.playerRole = response.data.gameIndex.playerRole;
-        this.hostFlag = response.data.gameIndex.hostFlag;
-        this.otherPlayerList = response.data.gameIndex.otherPlayerList;
-        this.holidayRoles = response.data.holidayRoles;
-
         // 新パラメータ(this datas are available from backend)
         this.judge = "SIMPLE_VILLAGE_WIN";
-        this.holidayRoles = ["jinroh", "murabito"];
+        this.holidayRoles = ["人狼", "村人"];
         this.playerList = [
           {
             playerName: "プレイヤー1",
-            role: "jinroh",
-            coRole: "murabito",
+            role: "人狼",
+            coRole: "村人",
             judge: "lose",
             myself: true,
             comment: "",
           },
           {
             playerName: "プレイヤー2",
-            role: "murabito",
-            coRole: "murabito",
+            role: "村人",
+            coRole: "村人",
             judge: "lose",
             myself: false,
             comment: "",
           },
           {
             playerName: "プレイヤー3",
-            role: "",
-            coRole: "",
-            judge: "lose",
+            role: "怪盗",
+            coRole: "占い師",
+            judge: "win",
             myself: false,
-            comment: "",
+            comment: "占い師🔁怪盗",
           },
           {
             playerName: "プレイヤー4",
-            role: "",
-            coRole: "",
+            role: "占い師",
+            coRole: "占い師",
             judge: "lose",
             myself: false,
-            comment: "",
+            comment: "怪盗🔁占い師",
+          },
+          {
+            playerName: "プレイヤー4",
+            role: "占い師",
+            coRole: "占い師",
+            judge: "lose",
+            myself: false,
+            comment: "怪盗🔁占い師",
+          },
+          {
+            playerName: "プレイヤー4",
+            role: "占い師",
+            coRole: "占い師",
+            judge: "lose",
+            myself: false,
+            comment: "怪盗🔁占い師",
           },
         ];
       })
       .catch(() => {
         this.$router.push("/room");
       });
-    this.divideWinLosePlayers();
   },
   methods: {
     returnRoom() {
       this.$router.push("/room");
     },
-    divideWinLosePlayers() {
-      if (this.judgeText.indexOf("人狼") !== -1) {
-        this.winTeam = ["人狼", "狂人"];
-      } else if (this.judgeText.indexOf("吊り人") !== -1) {
-        this.winTeam = ["吊り人"];
-      } else {
-        this.winTeam = ["村人", "怪盗", "占い師"];
-      }
-
-      this.otherPlayerList.forEach((otherPlayer) => {
-        if (this.winTeam.indexOf(otherPlayer.role.roleName) !== -1) {
-          this.winPlayers.push({
-            playerName: otherPlayer.name,
-            roleName: otherPlayer.role.roleName,
-            coRole: "不明",
-            isMe: false,
-          });
-        } else {
-          this.losePlayers.push({
-            playerName: otherPlayer.name,
-            roleName: otherPlayer.role.roleName,
-            coRole: "不明",
-            isMe: false,
-          });
-        }
-      });
-
-      if (this.winTeam.indexOf(this.playerRole.roleName) !== -1) {
-        this.winPlayers.push({
-          playerName: this.playerName,
-          roleName: this.playerRole.roleName,
-          coRole: "不明",
-          isMe: true,
-        });
-      } else {
-        this.losePlayers.push({
-          playerName: this.playerName,
-          roleName: this.playerRole.roleName,
-          coRole: "不明",
-          isMe: true,
-        });
-      }
-    },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .result_page {
-  margin: 20px auto;
   text-align: left;
+  margin: 20px auto;
 }
 
-h2 {
+h2,
+h3 {
   text-align: center;
 }
 
@@ -207,6 +178,60 @@ h2 {
   display: block;
   width: 16rem;
   margin: 0 auto;
+  margin-top: 3rem;
   text-align: center;
+}
+
+.grid-container{
+  display: grid;
+  justify-content: center;
+  row-gap: 2rem;
+  column-gap: 2rem;
+  
+  .grid-item{
+    padding: 3rem;
+    padding-top: 2rem;
+    background-color: #eee;
+    border-radius: 8px;
+  }
+}
+
+.result {
+  max-width: 800px;
+  margin: auto;
+
+  .result_winners {
+    grid-column: 1/2;
+    
+  }
+
+  .reslut_losers {
+    grid-column: 2/3;
+  }
+
+  .holiday-roles {
+    grid-column: 1/3;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    h3 {
+      width: 100%;
+    }
+    img {
+      max-width: 8rem;
+    }
+  }
+}
+
+@media screen and (max-width: 639px) {
+  .result {
+    .result_losers {
+      grid-column: 1/2;
+    }
+
+    .holiday-roles {
+      grid-column: 1/2;
+    }
+  }
 }
 </style>

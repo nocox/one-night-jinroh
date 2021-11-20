@@ -1,8 +1,9 @@
 <template>
   <article class="player" :class="{ selected: isSelected(this.playerName) }">
     <figure class="player-icon">
-      <img :src="RoleList[roleName]" alt="" />
+      <img :src="RoleList[role]" alt="" />
     </figure>
+
     <figure class="co-icon">
       <img
         class="co-icon__img"
@@ -10,14 +11,25 @@
         :alt="this.coRole"
       />
     </figure>
-    <span class="player-name" :class="{'me':this.isMe}">{{ playerName }}</span>
+    <span class="player-name" :class="{ me: this.myself }">
+      {{ playerName }}</span>
+    <span class="player-comment">
+      {{ comment }}
+    </span>
   </article>
 </template>
 
 <script>
 export default {
   name: "Player",
-  props: ["playerName", "roleName", "coRole", "selectedPlayers", "isMe"],
+  props: [
+    "playerName",
+    "role",
+    "coRole",
+    "selectedPlayers",
+    "myself",
+    "comment",
+  ],
   data() {
     return {
       RoleList: {
@@ -140,6 +152,57 @@ export default {
 
   .co-icon__img {
     filter: grayscale(100%);
+  }
+}
+
+.result-player {
+  display: grid;
+  grid-template-columns: minmax(80px, 100px) 1fr;
+  column-gap: 0;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+  margin-top: 1.5rem;
+
+  .player-icon {
+    grid-row: 1/3;
+    grid-column: 1/2;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-self: center;
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+  }
+
+  .co-icon {
+    grid-row: 1/2;
+    grid-column: 2/3;
+    width: 30px;
+    height: 30px;
+
+    .co-icon__img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .player-name {
+    grid-row: 2/3;
+    grid-column: 2/3;
+  }
+
+  .me {
+    text-decoration: underline;
+  }
+
+  .player-comment {
+    grid-column: 1/3;
+    text-align: center;
   }
 }
 

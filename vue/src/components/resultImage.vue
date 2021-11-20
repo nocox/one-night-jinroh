@@ -46,7 +46,7 @@ export default {
 
 <style lang="scss" scoped>
 .winner {
-  max-width: 40rem;
+  max-width: 20rem;
   text-align: center;
   margin: auto;
 

@@ -41,17 +41,6 @@ public class GameIndexBean {
         return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, null);
     }
 
-    public static GameIndexBean withRoleActLog(List<GameParticipant> gameParticipants, Long gameParticipantId, String nightActLog) {
-        List<GameParticipantBean> gameParticipantsBean = gameParticipants.stream()
-                .filter(domain -> !domain.getGameParticipationId().equals(gameParticipantId))
-                .map(GameParticipant::setUnknownRole)
-                .map(GameParticipantBean::new)
-                .collect(Collectors.toList());
-        GameParticipantBean player = extractMyPlayer(gameParticipants, gameParticipantId);
-
-        return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, nightActLog);
-    }
-
     public static GameIndexBean of(List<GameParticipantBean> participantBeans, Long participantId, String nightActLog) {
         GameParticipantBean myselfBean = participantBeans.stream()
                 .filter(bean -> bean.getId().equals(participantId))

@@ -31,6 +31,10 @@ public class ParticipantDisplayChecker {
             if (isMyself(participant)) {
                 return GameParticipantBean.ofChangedRole(participant, getKaitoChangedRole());
             }
+        } else if (myParticipant.getRole().isJinroh()) {
+            if (participant.getRole().isJinroh()) {
+                return GameParticipantBean.ofRoleOpen(participant);
+            }
         }
 
         if (isMyself(participant)) {
@@ -38,7 +42,6 @@ public class ParticipantDisplayChecker {
         }
 
         return GameParticipantBean.ofRoleHidden(participant);
-
     }
 
     private Role getKaitoChangedRole() {

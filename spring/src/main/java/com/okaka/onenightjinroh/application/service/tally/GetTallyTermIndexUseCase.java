@@ -20,7 +20,7 @@ public class GetTallyTermIndexUseCase {
 
     public TallyTermIndexBean get(Long gameId, Long gameParticipantId) {
         List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
-        GameIndexBean gameIndexBean = GameIndexBean.playerListOnly(gameParticipants, gameParticipantId);
+        GameIndexBean gameIndexBean = GameIndexBean.ofHideRole(gameParticipants, gameParticipantId);
         TallyResultBean tallyResultBean = TallyResultBeanFactory.create(tallyResultPort.searchTallyResults(gameId));
 
         return new TallyTermIndexBean(gameId, gameIndexBean, tallyResultBean);

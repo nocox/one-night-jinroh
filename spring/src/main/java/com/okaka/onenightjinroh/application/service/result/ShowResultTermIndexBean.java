@@ -31,7 +31,7 @@ public class ShowResultTermIndexBean {
     }
 
     public static ShowResultTermIndexBean fromDomain(GameResult gameResult){
-        GameIndexBean gameIndexBean = GameIndexBean.playerListOnly(gameResult.getGameParticipants(), gameResult.getGameParticipantId());
+        GameIndexBean gameIndexBean = GameIndexBean.ofOpenRole(gameResult.getGameParticipants(), gameResult.getGameParticipantId());
         List<RoleBean> holidayRoles = gameResult.getHolidayRoles().getRoles().stream().map(RoleBean::new).collect(Collectors.toList());
         return new ShowResultTermIndexBean(gameResult.getJudge().getResultText(), gameIndexBean, holidayRoles);
     }

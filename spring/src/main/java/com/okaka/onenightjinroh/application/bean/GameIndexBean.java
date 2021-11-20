@@ -21,16 +21,22 @@ public class GameIndexBean {
         this.nightActLog = nightActLog;
     }
 
-    public static GameIndexBean playerListOnly(List<GameParticipant> gameParticipants, Long gameParticipantId) {
+    public static GameIndexBean ofHideRole(List<GameParticipant> gameParticipants, Long gameParticipantId) {
+        List<GameParticipantBean> gameParticipantsBean = gameParticipants.stream()
+                .filter(domain -> !domain.getGameParticipationId().equals(gameParticipantId))
+                .map(GameParticipant::setUnknownRole)
+                .map(GameParticipantBean::new)
+                .collect(Collectors.toList());
+        GameParticipantBean player = extractMyPlayer(gameParticipants, gameParticipantId);
+        return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, null);
+    }
+
+    public static GameIndexBean ofOpenRole(List<GameParticipant> gameParticipants, Long gameParticipantId) {
         List<GameParticipantBean> gameParticipantsBean = gameParticipants.stream()
                 .filter(domain -> !domain.getGameParticipationId().equals(gameParticipantId))
                 .map(GameParticipantBean::new)
                 .collect(Collectors.toList());
-        GameParticipantBean player = gameParticipants.stream()
-                .filter(domain -> domain.getGameParticipationId().equals(gameParticipantId))
-                .map(GameParticipantBean::new)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("例外"));
+        GameParticipantBean player = extractMyPlayer(gameParticipants, gameParticipantId);
 
         return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, null);
     }
@@ -38,15 +44,20 @@ public class GameIndexBean {
     public static GameIndexBean withRoleActLog(List<GameParticipant> gameParticipants, Long gameParticipantId, String nightActLog) {
         List<GameParticipantBean> gameParticipantsBean = gameParticipants.stream()
                 .filter(domain -> !domain.getGameParticipationId().equals(gameParticipantId))
+                .map(GameParticipant::setUnknownRole)
                 .map(GameParticipantBean::new)
                 .collect(Collectors.toList());
-        GameParticipantBean player = gameParticipants.stream()
+        GameParticipantBean player = extractMyPlayer(gameParticipants, gameParticipantId);
+
+        return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, nightActLog);
+    }
+
+    private static GameParticipantBean extractMyPlayer(List<GameParticipant> gameParticipants, Long gameParticipantId) {
+        return gameParticipants.stream()
                 .filter(domain -> domain.getGameParticipationId().equals(gameParticipantId))
                 .map(GameParticipantBean::new)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("例外"));
-
-        return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, nightActLog);
     }
 
     public String getPlayerName() {

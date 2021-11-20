@@ -1,6 +1,8 @@
 package com.okaka.onenightjinroh.application.domain;
 
 public abstract class Role {
+    static Long UNKNOWN_ROLE_ID = -1L;
+
     public Long roleId;
     public String roleName;
 

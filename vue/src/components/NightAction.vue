@@ -1,10 +1,10 @@
 <template>
   <div class="night-action-area">
     <div class="kaito" v-if="roleName == '怪盗'">
-      <nightKaitoAction :canSelectedPlayers="otherPlayerList" />      
+      <nightKaitoAction :canSelectedPlayers="otherPlayerList" />
     </div>
     <div class="jinroh" v-else-if="roleName == '人狼'">
-      <myButton :text="'仲間を確認する'" :method="''" />
+      <nightJinrohAction />
     </div>
     <div class="uranai" v-else-if="roleName == '占い師'">
       <nightUranaiAction :canSelectedPlayers="otherPlayerList" />
@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import myButton from "@/components/Button.vue";
-import nightUranaiAction from "@/components/NightUranaiAction.vue"
-import nightKaitoAction from "@/components/NightKaitoAction.vue"
+import nightUranaiAction from "@/components/NightAction/NightUranaiAction.vue"
+import nightKaitoAction from "@/components/NightAction/NightKaitoAction.vue"
+import nightJinrohAction from "@/components/NightAction/NightJinrohAction.vue"
 
 export default {
   name: "RoleCardDisplay",
-  components: { myButton, nightUranaiAction, nightKaitoAction },
+  components: { nightUranaiAction, nightKaitoAction, nightJinrohAction },
   data() {
     return {
       checkedPlayerID: 0,

@@ -1,6 +1,8 @@
 package com.okaka.onenightjinroh.application.domain;
 
 public abstract class Role {
+    public static Long UNKNOWN_ROLE_ID = -1L;
+
     public Long roleId;
     public String roleName;
 
@@ -25,6 +27,10 @@ public abstract class Role {
             this.roleId = roleId;
             this.roleName = roleName;
         }
+    }
+
+    public boolean isJinroh() {
+        return roleId == 2;
     }
 
     public static class OtherRole extends Role {

@@ -1,5 +1,7 @@
 package com.okaka.onenightjinroh.application.domain;
 
+import static com.okaka.onenightjinroh.application.domain.Role.UNKNOWN_ROLE_ID;
+
 public class GameParticipant {
     public Long gameParticipationId;
     public Game game;
@@ -17,6 +19,11 @@ public class GameParticipant {
 
     public GameParticipant(Long gameParticipationId) {
         this.gameParticipationId = gameParticipationId;
+    }
+
+    public GameParticipant setUnknownRole() {
+        this.role = Role.byRoleId(UNKNOWN_ROLE_ID, "不明");
+        return this;
     }
 
     public void setGameParticipationId(Long gameParticipationId) {

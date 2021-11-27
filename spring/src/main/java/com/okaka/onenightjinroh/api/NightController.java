@@ -1,5 +1,6 @@
 package com.okaka.onenightjinroh.api;
 
+import com.okaka.onenightjinroh.api.bean.NightJinrohIndexBean;
 import com.okaka.onenightjinroh.api.bean.NightKaitoResultBean;
 import com.okaka.onenightjinroh.api.form.NightKaitoForm;
 import com.okaka.onenightjinroh.api.form.NightUranaiForm;
@@ -9,6 +10,7 @@ import com.okaka.onenightjinroh.application.service.night.ExecuteKaitoUseCase;
 import com.okaka.onenightjinroh.application.service.night.ExecuteNightUranaiUseCase;
 import com.okaka.onenightjinroh.application.service.night.GamePersonalBean;
 import com.okaka.onenightjinroh.application.service.night.GetGamePersonalUseCase;
+import com.okaka.onenightjinroh.application.service.night.GetNightJinrohIndexUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightTermIndexUseCase;
 import com.okaka.onenightjinroh.application.service.night.NightTermIndexBean;
 import com.okaka.onenightjinroh.application.service.night.NightUranaiStatus;
@@ -16,6 +18,7 @@ import com.okaka.onenightjinroh.application.service.night.dto.NightUranaiResultD
 import com.okaka.onenightjinroh.application.service.room.RoleBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +48,9 @@ public class NightController {
 
     @Autowired
     ExecuteKaitoUseCase executeKaitoUseCase;
+
+    @Autowired
+    GetNightJinrohIndexUseCase getNightJinrohIndexUseCase;
 
     @RequestMapping(path = "/night-index")
     NightTermIndexBean getNightTermIndex() {
@@ -104,6 +110,17 @@ public class NightController {
         Long gameParticipantId = Long.valueOf(strGameParticipationId);
 
         NightKaitoResultBean bean = executeKaitoUseCase.invoke(gameParticipantId, form.getParticipantId());
+        return ResponseEntity.ok().body(bean);
+    }
+
+    @GetMapping(path = "/night/jinroh/index")
+    ResponseEntity<NightJinrohIndexBean> getJinroh() {
+        String strGameId = session.getAttribute("game_id").toString();
+        Long gameId = Long.valueOf(strGameId);
+        String strGameParticipationId = session.getAttribute("game_participation_id").toString();
+        Long gameParticipantId = Long.valueOf(strGameParticipationId);
+
+        NightJinrohIndexBean bean = getNightJinrohIndexUseCase.invoke(gameParticipantId, gameId);
         return ResponseEntity.ok().body(bean);
     }
 }

@@ -85,8 +85,8 @@ export default {
   .player-icon {
     grid-row: 1/3;
     grid-column: 1/2;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
 
     img {
       width: 100%;
@@ -108,6 +108,7 @@ export default {
   }
 
   .player-name {
+    font-size:14px;
     grid-row: 2/3;
     grid-column: 2/3;
   }

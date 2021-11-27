@@ -1,7 +1,8 @@
 <template>
   <main class="tally_page">
-    <section class="vote_result">
-      <h2>
+  
+    <section class="vote_result" >
+      <h2 v-if="peacefulFlag === false">
         選ばれたのは,<br />
         <span
           v-for="player in tallyResult.selectedPlayers"
@@ -11,6 +12,9 @@
         </span>
         です．
       </h2>
+      <h2 v-else>
+        平和村が選ばれました。
+      </h2>
     </section>
 
     <coArea
@@ -18,6 +22,13 @@
       :player="{ playerName: playerName, playerRole: playerRole }"
       :coRole="this.coRole"
       :selectedPlayers="this.tallyResult.selectedPlayers"
+      v-if="peacefulFlag===false"
+    />
+    <coArea
+      :otherPlayerList="otherPlayerList"
+      :player="{ playerName: playerName, playerRole: playerRole }"
+      :coRole="this.coRole"
+      v-else
     />
 
     <div class="col2">
@@ -96,6 +107,7 @@ export default {
           },
         ],
       },
+      peacefulFlag: true,
     };
   },
   components: { myButton, coArea, DisplayRolls },

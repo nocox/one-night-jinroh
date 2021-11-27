@@ -38,6 +38,7 @@
           class="btn"
           :method="gotoResult"
           :text="'結果ページに移動する'"
+          v-if="hostFlag"
         />
       </section>
     </div>

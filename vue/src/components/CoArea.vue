@@ -7,7 +7,7 @@
         :roleName="player.playerRole.roleName"
         :coRole="this.coRole"
         :selectedPlayers="selectedPlayers"
-        :isMe="true"
+        :myself="true"
       />
       <!-- 他のプレイヤー -->
       <Player
@@ -16,6 +16,7 @@
         :coRole="'村人'"
         :selectedPlayers="selectedPlayers"
         v-for="(val, key) in otherPlayerList"
+        :myself="false"
         :key="key"
       />
     </div>

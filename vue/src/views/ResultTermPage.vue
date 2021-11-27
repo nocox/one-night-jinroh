@@ -14,8 +14,7 @@
     <div class="result grid-container">
       <div class="result_winners grid-item">
         <h3>かち</h3>
-        <Player
-          class="result-player"
+        <PlayerResult
           :playerName="val.playerName"
           :role="val.role"
           :coRole="val.coRole"
@@ -27,8 +26,7 @@
       </div>
       <div class="result_losers grid-item">
         <h3>まけ</h3>
-        <Player
-          class="result-player"
+        <PlayerResult
           :playerName="val.playerName"
           :role="val.role"
           :coRole="val.coRole"
@@ -57,7 +55,7 @@
 import axios from "axios";
 
 import resultImage from "@/components/resultImage.vue";
-import Player from "@/components/Player.vue";
+import PlayerResult from "@/components/PlayerResult.vue";
 import myButton from "@/components/Button.vue";
 import { JINROH_API_BASE_URL } from "../Env";
 
@@ -92,7 +90,7 @@ export default {
       },
     };
   },
-  components: { resultImage, myButton, Player },
+  components: { resultImage, myButton, PlayerResult },
   computed: {
     // playerListを勝者と敗者に振り分ける
     winPlayerList: function () {

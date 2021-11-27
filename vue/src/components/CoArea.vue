@@ -42,6 +42,8 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 0 1rem;
+    flex-wrap:wrap;
+    row-gap: 1rem;
   }
 }
 
@@ -53,7 +55,6 @@ export default {
 
     .player-wrapper {
       flex-direction: column;
-      row-gap: 1rem;
       align-items: center;
     }
   }

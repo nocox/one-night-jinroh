@@ -3,10 +3,11 @@
     <h2>話し合いが終了しました。投票を行ってください。</h2>
     <p class="action-result">{{ nightActLog }}</p>
 
-    <coArea
+    <VoteTarget
       :otherPlayerList="otherPlayerList"
       :player="{ playerName: playerName, playerRole: playerRole }"
       :coRole="this.coRole"
+      :checkPlayerId="checkPlayerId"
     />
 
     <div class="col2">
@@ -17,14 +18,15 @@
         <h2>投票対象</h2>
         <ul>
           <li v-for="player in canVotePlayers" v-bind:key="player.id">
-            <label>
-              <input
-                class="vote-radio"
-                type="radio"
-                v-model="checkPlayerId"
-                v-bind:value="player.id"
-                :disabled="is_votable"
-              />
+            <input
+              :id="player.id"
+              class="vote-radio"
+              type="radio"
+              v-model="checkPlayerId"
+              v-bind:value="player.id"
+              :disabled="is_votable"
+            />
+            <label :for="player.id">
               {{ player.name }}
             </label>
           </li>
@@ -59,7 +61,7 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
 import myButton from "@/components/Button";
-import coArea from "@/components/CoArea.vue";
+import VoteTarget from "@/components/VoteTarget.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
 
 import { JINROH_API_BASE_URL } from "../Env";
@@ -94,7 +96,7 @@ export default {
       nightActLog: "",
     };
   },
-  components: { coArea, myButton, DisplayRolls },
+  components: { VoteTarget, myButton, DisplayRolls },
   computed: {
     coRole: {
       get() {
@@ -115,7 +117,7 @@ export default {
         this.hostFlag = response.data.gameIndex.hostFlag;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
         this.nightActLog = response.data.gameIndex.nightActLog;
-        
+
         this.canVotePlayers = response.data.voteIndex.canVotePlayers;
         this.$modal.show("vote-start-modal");
         this.configWebSocket(response.data.gameId);
@@ -179,6 +181,26 @@ h2 {
   text-align: center;
 }
 
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  display: block;
+  background: #fff;
+  border: 1px solid #50a0f6;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+input[type="radio"]:checked + label {
+  background: #50a0f6;
+  color: #fff;
+}
+
 .action-result {
   padding: 1rem;
   background-color: #eee;
@@ -201,6 +223,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   padding: 1rem;
   background-color: #eee;
 
@@ -209,8 +232,12 @@ h2 {
     text-align: center;
   }
 
-  ul li {
-    list-style: none;
+  ul{
+    display:grid;
+    row-gap: 1rem;
+    li {
+      list-style: none;
+     }
   }
 
   .vote-btn {

@@ -9,32 +9,32 @@ import org.seasar.doma.Table;
 public class CoStateEntity {
 
     @Column(name = "co_event_id")
-    private Long coEventId;
+    private Long co_event_id;
 
     @Column(name = "game_participation_id")
-    private Long gameParticipationId;
+    private Long game_participation_id;
 
     @Column(name = "role_id")
-    private Long roleId;
+    private Long role_id;
 
     public CoStateEntity() {
     }
 
     public CoStateEntity(Long coEventId, Long gameParticipationId, Long roleId) {
-        this.coEventId = coEventId;
-        this.gameParticipationId = gameParticipationId;
-        this.roleId = roleId;
+        this.co_event_id = coEventId;
+        this.game_participation_id = gameParticipationId;
+        this.role_id = roleId;
     }
 
     public Long getCoEventId() {
-        return coEventId;
+        return co_event_id;
     }
 
     public Long getGameParticipationId() {
-        return gameParticipationId;
+        return game_participation_id;
     }
 
     public Long getRoleId() {
-        return roleId;
+        return role_id;
     }
 }

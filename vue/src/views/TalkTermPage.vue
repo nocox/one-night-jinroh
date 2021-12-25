@@ -13,7 +13,10 @@
     <div class="col2">
       <DisplayRolls class="display-rolls" />
 
-      <coButtonArea @getActive="coRole = $event" />
+      <coButtonArea 
+        :playerId="playerId"
+        @getActive="coRole = $event" 
+      />
     </div>
 
     <div class="btn-area">
@@ -108,6 +111,9 @@ export default {
         this.stompClient.subscribe("/topic/end-talk/" + gameId, () => {
           this.$router.push("/vote");
         });
+        this.stompClient.subscribe("/topic/receive-co/" + gameId, (value) => {
+          console.log(value);
+        });
       });
     },
     closeModal() {
@@ -122,7 +128,7 @@ export default {
         .catch(() => {
           this.$router.push("/room");
         });
-    },
+    }
   },
 };
 </script>

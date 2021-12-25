@@ -63,7 +63,35 @@ public abstract class Role {
         }
     };
 
+    public boolean isEngName(String engName) {
+        return getRoleEngName().equals(engName);
+    }
+
     public String getRoleEngName() {
         return roleEngNameMap.get(this.roleId);
+    }
+
+    public static Role ofByEngName(String engName) {
+        switch (engName) {
+            case "murabito":
+                return Role.byRoleId(1L, "村人");
+            case "jinroh":
+                return Role.byRoleId(2L, "人狼");
+            case "uranaishi":
+                return Role.byRoleId(3L, "占い師");
+            case "kaito":
+                return Role.byRoleId(4L, "怪盗");
+            case "kyojin":
+                return Role.byRoleId(5L, "狂人");
+            case "turibito":
+                return Role.byRoleId(6L, "吊り人");
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    public boolean equals(Role role) {
+        return (this.getRoleId() != null && this.getRoleId().equals(role.getRoleId())) &&
+                (this.getRoleName() != null && this.getRoleName().equals(getRoleName()));
     }
 }

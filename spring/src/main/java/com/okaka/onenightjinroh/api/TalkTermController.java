@@ -1,9 +1,13 @@
 package com.okaka.onenightjinroh.api;
 
+import com.okaka.onenightjinroh.api.form.CoForm;
+import com.okaka.onenightjinroh.application.service.talk.CoUseCase;
 import com.okaka.onenightjinroh.application.service.talk.GetTalkTermIndexUseCase;
 import com.okaka.onenightjinroh.application.service.talk.TalkTermIndexBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +17,9 @@ import javax.servlet.http.HttpSession;
 public class TalkTermController {
     @Autowired
     GetTalkTermIndexUseCase getTalkTermIndexUseCase;
+
+    @Autowired
+    CoUseCase coUseCase;
 
     @Autowired
     HttpSession session;
@@ -36,6 +43,15 @@ public class TalkTermController {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);
         messagingTemplate.convertAndSend("/topic/end-talk/" + gameId, "");
+        return 0;
+    }
+
+    @PostMapping(path = "/co")
+    public int postCo(@RequestBody CoForm form) {
+        String strGameId = session.getAttribute("game_id").toString();
+        Long gameId = Long.valueOf(strGameId);
+
+        coUseCase.invoke(gameId, form.getPlayerId(), form.getRole());
         return 0;
     }
 }

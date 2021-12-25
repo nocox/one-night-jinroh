@@ -22,7 +22,7 @@
           <img :src="RoleList[player.role.roleName]" :alt="player.role.roleName" />
         </figure>
         <figure class="co-icon">
-          <img class="co-icon__img" :src="coRoleList[coMap(player.playerId)]" alt="" />
+          <img class="co-icon__img" :src="coRoleList[coMap(player.id)]" alt="" />
         </figure>
         <span class="player-name">{{ player.name }}</span>
       </article>

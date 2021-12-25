@@ -20,6 +20,8 @@ public class GetTalkTermIndexUseCase {
     GameParticipantRepository gameParticipantRepository;
     @Autowired
     RoleNightActFormatterRepository roleNightActFormatterRepository;
+    @Autowired
+    CoStateFactory coStateFactory;
 
     public TalkTermIndexBean get(Long gameId, Long gameParticipantId) {
 
@@ -32,7 +34,11 @@ public class GetTalkTermIndexUseCase {
                 .collect(Collectors.toList());
 
         String myNightActLog = roleNightActFormatterRepository.fetchNightAct(gameId, gameParticipantId).toActLog();
-        GameIndexBean gameIndex = GameIndexBean.of(participantBeans, gameParticipantId, myNightActLog);
-        return new TalkTermIndexBean(gameIndex, gameId);
+        GameIndexBean gameIndexBean = GameIndexBean.of(participantBeans, gameParticipantId, myNightActLog);
+
+        CoState coState = coStateFactory.create(gameId);
+        CoStateBean coBean = CoStateBean.fromDomain(coState);
+
+        return new TalkTermIndexBean(gameId, gameIndexBean, coBean.toList());
     }
 }

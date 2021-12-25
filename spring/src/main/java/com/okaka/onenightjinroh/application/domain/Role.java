@@ -1,5 +1,8 @@
 package com.okaka.onenightjinroh.application.domain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Role {
     public static Long UNKNOWN_ROLE_ID = -1L;
 
@@ -47,5 +50,20 @@ public abstract class Role {
 
     public String getRoleName() {
         return roleName;
+    }
+
+    private static Map<Long, String> roleEngNameMap = new HashMap<Long, String>() {
+        {
+            put(1L, "murabito");
+            put(2L, "jinroh");
+            put(3L, "uranaishi");
+            put(4L, "kaito");
+            put(5L, "kyojin");
+            put(6L, "turibito");
+        }
+    };
+
+    public String getRoleEngName() {
+        return roleEngNameMap.get(this.roleId);
     }
 }

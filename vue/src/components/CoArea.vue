@@ -58,15 +58,10 @@ export default {
   },
   methods: {
     coMap: function (playerId) {
-      let roleName;
-      this.cos.forEach((co) => {
-        if (playerId === co.id) {
-          roleName = co.role;
-        }
-      });
+      const roleName = this.cos.find(co => co.id == playerId)
 
       if(roleName){
-        return roleName;
+        return roleName.role;
       }else{
         return "murabito";
       }

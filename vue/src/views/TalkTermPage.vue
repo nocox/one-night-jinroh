@@ -5,8 +5,9 @@
 
     <coArea
       :otherPlayerList="otherPlayerList"
-      :player="{ playerName: playerName, playerRole: playerRole }"
-      :coRole="this.coRole"
+      :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
+      :coRole="coRole"
+      :cos="cos"
     />
 
     <div class="col2">
@@ -55,6 +56,7 @@ export default {
   },
   data() {
     return {
+      playerId : -1,
       playerName: "xxxxx",
       playerRole: {
         roleId: -1,
@@ -62,6 +64,7 @@ export default {
       },
       nightActLog: "",
       hostFlag: false,
+      cos: [],
       otherPlayerList: [
         {
           id: 1,
@@ -82,9 +85,11 @@ export default {
       .get(JINROH_API_BASE_URL + "/talk-index", { withCredentials: true })
       .then((response) => {
         console.log("response data:", response.data);
+        this.playerId = response.data.gameIndex.playerId;
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
+        this.cos = response.data.cos;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
         this.nightActLog = response.data.gameIndex.nightActLog;
         this.$modal.show("talk-start-modal");

@@ -9,22 +9,22 @@
         <figure class="co-icon">
           <img
             class="co-icon__img"
-            :src="this.coRoleList[this.coRole]"
-            :alt="this.coRole"
+            :src="coRoleList[coMap(player.playerId)]"
+            :alt="coRole"
           />
         </figure>
         <span class="player-name me">{{ player.playerName }}</span>
       </article>
 
       <!-- 自分以外のプレイヤー -->
-      <article class="player" v-for="(val, key) in otherPlayerList" :key="key">
+      <article class="player" v-for="(player, key) in otherPlayerList" :key="key">
         <figure class="player-icon">
-          <img :src="RoleList[val.role.roleName]" :alt="val.role.roleName" />
+          <img :src="RoleList[player.role.roleName]" :alt="player.role.roleName" />
         </figure>
         <figure class="co-icon">
-          <img class="co-icon__img" :src="coRoleList['村人']" alt="" />
+          <img class="co-icon__img" :src="coRoleList[coMap(player.playerId)]" alt="" />
         </figure>
-        <span class="player-name">{{ val.name }}</span>
+        <span class="player-name">{{ player.name }}</span>
       </article>
     </div>
   </section>
@@ -33,7 +33,7 @@
 <script>
 export default {
   name: "CoArea",
-  props: ["otherPlayerList", "player", "coRole"],
+  props: ["otherPlayerList", "player", "coRole", "cos"],
   data() {
     return {
       RoleList: {
@@ -46,15 +46,31 @@ export default {
         吊り人: require("../assets/images/chara-icon/tsuribito.png"),
       },
       coRoleList: {
-        不明: require("../assets/images/fukidashi/fumei.png"),
-        人狼: require("../assets/images/fukidashi/jinroh.png"),
-        村人: require("../assets/images/fukidashi/murabito.png"),
-        占い師: require("../assets/images/fukidashi/uranaishi.png"),
-        怪盗: require("../assets/images/fukidashi/kaito.png"),
-        狂人: require("../assets/images/fukidashi/kyojin.png"),
-        吊り人: require("../assets/images/fukidashi/tsuribito.png"),
+        // 不明: require("../assets/images/fukidashi/fumei.png"),
+        jinroh: require("../assets/images/fukidashi/jinroh.png"),
+        murabito: require("../assets/images/fukidashi/murabito.png"),
+        uranaishi: require("../assets/images/fukidashi/uranaishi.png"),
+        kaito: require("../assets/images/fukidashi/kaito.png"),
+        kyojin: require("../assets/images/fukidashi/kyojin.png"),
+        turibito: require("../assets/images/fukidashi/tsuribito.png"),
       },
     };
+  },
+  methods: {
+    coMap: function (playerId) {
+      let roleName;
+      this.cos.forEach((co) => {
+        if (playerId === co.id) {
+          roleName = co.role;
+        }
+      });
+
+      if(roleName){
+        return roleName;
+      }else{
+        return "murabito";
+      }
+    },
   },
 };
 </script>

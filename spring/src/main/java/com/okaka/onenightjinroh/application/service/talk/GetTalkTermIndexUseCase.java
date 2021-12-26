@@ -39,6 +39,6 @@ public class GetTalkTermIndexUseCase {
         CoState coState = coStateFactory.create(gameId);
         CoStateBean coBean = CoStateBean.fromDomain(coState);
 
-        return new TalkTermIndexBean(gameId, gameIndexBean, coBean.toList());
+        return new TalkTermIndexBean(gameId, gameIndexBean, coBean.getCoBeans());
     }
 }

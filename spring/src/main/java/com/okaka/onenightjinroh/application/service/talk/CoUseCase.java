@@ -1,6 +1,7 @@
 package com.okaka.onenightjinroh.application.service.talk;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,9 @@ public class CoUseCase {
     CoStateFactory coStateFactory;
     @Autowired
     CoRepository coRepository;
+    @Autowired
+    SimpMessagingTemplate messagingTemplate;
+
 
     public void invoke(Long gameId, Long playerId, String roleName) {
         // 現在の状態を取得
@@ -30,5 +34,7 @@ public class CoUseCase {
         coRepository.saveCoState(eventId, updatedCoState);
 
         // ブロードキャスト
+        CoStateBean coBean = CoStateBean.fromDomain(updatedCoState);
+        messagingTemplate.convertAndSend("/topic/receive-co/" + gameId, coBean);
     }
 }

@@ -112,7 +112,9 @@ export default {
           this.$router.push("/vote");
         });
         this.stompClient.subscribe("/topic/receive-co/" + gameId, (value) => {
-          console.log(value);
+          const coState = JSON.parse(value.body).coBeans;
+          console.log('co: ', coState);
+          this.cos = coState
         });
       });
     },

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class CoStateBean {
     private List<CoBean> coBeans;
 
-    public List<CoBean> toList() {
+    public List<CoBean> getCoBeans() {
         return this.coBeans;
     }
 

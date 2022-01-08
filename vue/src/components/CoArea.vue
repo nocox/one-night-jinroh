@@ -10,7 +10,6 @@
           <img
             class="co-icon__img"
             :src="coRoleList[coMap(player.playerId)]"
-            :alt="coRole"
           />
         </figure>
         <span class="player-name me">{{ player.playerName }}</span>
@@ -33,7 +32,7 @@
 <script>
 export default {
   name: "CoArea",
-  props: ["otherPlayerList", "player", "coRole", "cos"],
+  props: ["otherPlayerList", "player", "cos"],
   data() {
     return {
       RoleList: {
@@ -46,7 +45,6 @@ export default {
         吊り人: require("../assets/images/chara-icon/tsuribito.png"),
       },
       coRoleList: {
-        // 不明: require("../assets/images/fukidashi/fumei.png"),
         jinroh: require("../assets/images/fukidashi/jinroh.png"),
         murabito: require("../assets/images/fukidashi/murabito.png"),
         uranaishi: require("../assets/images/fukidashi/uranaishi.png"),

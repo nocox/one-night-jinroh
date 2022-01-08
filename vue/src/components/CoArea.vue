@@ -1,39 +1,35 @@
 <template>
   <section class="co-area">
-    <!-- 自分 -->
     <div class="player-wrapper">
-      <article class="player">
-        <figure class="player-icon">
-          <img :src="RoleList[player.playerRole.roleName]" alt="" />
-        </figure>
-        <figure class="co-icon">
-          <img
-            class="co-icon__img"
-            :src="coRoleList[coMap(player.playerId)]"
-            :alt="coRole"
-          />
-        </figure>
-        <span class="player-name me">{{ player.playerName }}</span>
-      </article>
-
-      <!-- 自分以外のプレイヤー -->
-      <article class="player" v-for="(player, key) in otherPlayerList" :key="key">
-        <figure class="player-icon">
-          <img :src="RoleList[player.role.roleName]" :alt="player.role.roleName" />
-        </figure>
-        <figure class="co-icon">
-          <img class="co-icon__img" :src="coRoleList[coMap(player.id)]" alt="" />
-        </figure>
-        <span class="player-name">{{ player.name }}</span>
-      </article>
+      <!-- 自分 -->
+      <Player
+        :playerName="player.playerName"
+        :roleName="player.playerRole.roleName"
+        :coRole="this.coRole"
+        :selectedPlayers="selectedPlayers"
+        :myself="true"
+      />
+      <!-- 他のプレイヤー -->
+      <Player
+        :playerName="val.name"
+        :roleName="val.role.roleName"
+        :coRole="'村人'"
+        :selectedPlayers="selectedPlayers"
+        v-for="(val, key) in otherPlayerList"
+        :myself="false"
+        :key="key"
+      />
     </div>
   </section>
 </template>
 
 <script>
+import Player from "@/components/Player.vue";
+
 export default {
   name: "CoArea",
-  props: ["otherPlayerList", "player", "coRole", "cos"],
+  props: ["otherPlayerList", "player", "coRole", "cos", "selectedPlayers"],
+  components: { Player },
   data() {
     return {
       RoleList: {
@@ -79,48 +75,8 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 0 1rem;
-
-    .player {
-      display: grid;
-      grid-template-columns: minmax(80px, 100px) 1fr;
-      column-gap: 16px;
-      align-items: center;
-      width: 30%;
-
-      .player-icon {
-        grid-row: 1/3;
-        grid-column: 1/2;
-        width: 100px;
-        height: 100px;
-
-        img {
-          width: 100%;
-          height: auto;
-          border-radius: 10px;
-        }
-      }
-
-      .co-icon {
-        grid-row: 1/2;
-        grid-column: 2/3;
-        width: 50px;
-        height: 50px;
-
-        .co-icon__img {
-          width: 100%;
-          height: auto;
-        }
-      }
-
-      .player-name {
-        grid-row: 2/3;
-        grid-column: 2/3;
-      }
-
-      .me {
-        text-decoration: underline;
-      }
-    }
+    flex-wrap:wrap;
+    row-gap: 1rem;
   }
 }
 
@@ -132,23 +88,7 @@ export default {
 
     .player-wrapper {
       flex-direction: column;
-      row-gap: 1rem;
       align-items: center;
-
-      .player {
-        width: 100%;
-        max-width: 320px;
-
-        .player-icon {
-          width: 80px;
-          height: 80px;
-        }
-
-        .co-icon {
-          width: 50px;
-          height: 50px;
-        }
-      }
     }
   }
 }

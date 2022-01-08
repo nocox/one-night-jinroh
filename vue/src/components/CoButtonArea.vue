@@ -78,27 +78,26 @@ export default {
 
 <style lang="scss" scoped>
 .co-button-area {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 1rem;
+  display: grid;
+  width: 100%;
+  padding: 1rem 2rem;
   background-color: #eee;
 
   h2 {
-    width: 100%;
     text-align: center;
   }
 
   .co-icons {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(2, auto);
+    column-gap: 1rem;
     justify-content: center;
-    width: 66%;
+    row-gap: 1rem;
+    justify-items: center;
+    align-items: center;
 
     a {
-      width: 33%;
-      margin-top: 24px;
-      text-align: center;
       cursor: pointer;
     }
 
@@ -114,6 +113,14 @@ export default {
       border: 5px solid lighten(lightgreen, 0);
       box-shadow: 0 0 10px rgba(128, 128, 128, 0.5);
       opacity: 1;
+    }
+  }
+}
+
+@media screen and (max-width: 639px) {
+  .co-button-area {
+    .co-icons {
+      grid-template-columns: repeat(2, 80px);
     }
   }
 }

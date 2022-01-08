@@ -19,15 +19,17 @@
 
     <coArea
       :otherPlayerList="otherPlayerList"
-      :player="{ playerName: playerName, playerRole: playerRole }"
+      :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
       :coRole="this.coRole"
       :selectedPlayers="this.tallyResult.selectedPlayers"
+      :cos="cos"
       v-if="peacefulFlag===false"
     />
     <coArea
       :otherPlayerList="otherPlayerList"
-      :player="{ playerName: playerName, playerRole: playerRole }"
+      :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
       :coRole="this.coRole"
+      :cos="cos"
       v-else
     />
 
@@ -78,12 +80,14 @@ export default {
   name: "TallyTermPage",
   data() {
     return {
+      playerId : -1,
       playerName: "xxxxx",
       playerRole: {
         roleId: -1,
         roleName: "不明",
       },
       hostFlag: false,
+      cos: [],
       otherPlayerList: [
         {
           id: 1,
@@ -107,7 +111,7 @@ export default {
           },
         ],
       },
-      peacefulFlag: true,
+      peacefulFlag: false,
     };
   },
   components: { myButton, coArea, DisplayRolls },
@@ -126,9 +130,11 @@ export default {
       .get(JINROH_API_BASE_URL + "/tally-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
+        this.playerId = response.data.gameIndex.playerId;
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
+        this.cos = response.data.cos;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
 
         this.tallyResult = response.data.tallyResult;

@@ -5,7 +5,7 @@
       <Player
         :playerName="player.playerName"
         :roleName="player.playerRole.roleName"
-        :coRole="this.coRole"
+        :coRole="coMap(player.playerId)"
         :selectedPlayers="selectedPlayers"
         :myself="true"
       />
@@ -14,7 +14,7 @@
         :class="{'is-checked': val.id===checkPlayerId}"
         :playerName="val.name"
         :roleName="val.role.roleName"
-        :coRole="'村人'"
+        :coRole="coMap(val.id)"
         :selectedPlayers="selectedPlayers"
         v-for="(val, key) in otherPlayerList"
         :myself="false"
@@ -29,8 +29,19 @@ import Player from "@/components/Player.vue";
 
 export default {
   name: "CoArea",
-  props: ["checkPlayerId","otherPlayerList", "player", "coRole", "selectedPlayers"],
+  props: ["checkPlayerId","otherPlayerList", "player", "cos", "coRole", "selectedPlayers"],
   components: { Player },
+  methods: {
+    coMap: function (playerId) {
+      const roleName = this.cos.find(co => co.id == playerId)
+
+      if(roleName){
+        return roleName.role;
+      }else{
+        return "murabito";
+      }
+    },
+  },
 };
 </script>
 

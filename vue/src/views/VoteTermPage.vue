@@ -5,8 +5,9 @@
 
     <VoteTarget
       :otherPlayerList="otherPlayerList"
-      :player="{ playerName: playerName, playerRole: playerRole }"
+      :player="{ playerName: playerName, playerRole: playerRole, playerId: playerId }"
       :coRole="this.coRole"
+      :cos="this.cos"
       :checkPlayerId="checkPlayerId"
     />
 
@@ -70,12 +71,14 @@ export default {
   name: "TempVotePage",
   data() {
     return {
+      playerId : -1,
       playerName: "xxxxx",
       playerRole: {
         roleId: -1,
         roleName: "不明",
       },
       hostFlag: false,
+      cos: [],
       otherPlayerList: [
         {
           id: 1,
@@ -98,6 +101,7 @@ export default {
   },
   components: { VoteTarget, myButton, DisplayRolls },
   computed: {
+    // TODO: 必要ないので後で消す
     coRole: {
       get() {
         return this.$store.state.coRole;
@@ -112,9 +116,11 @@ export default {
       .get(JINROH_API_BASE_URL + "/vote-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
+        this.playerId = response.data.gameIndex.playerId;
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
+        this.cos = response.data.cos;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
         this.nightActLog = response.data.gameIndex.nightActLog;
 

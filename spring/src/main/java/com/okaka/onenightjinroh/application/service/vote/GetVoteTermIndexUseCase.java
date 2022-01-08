@@ -7,6 +7,9 @@ import com.okaka.onenightjinroh.application.domain.ParticipantDisplayChecker;
 import com.okaka.onenightjinroh.application.domain.RoleNightActFormatter;
 import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.repository.RoleNightActFormatterRepository;
+import com.okaka.onenightjinroh.application.service.talk.CoState;
+import com.okaka.onenightjinroh.application.service.talk.CoStateBean;
+import com.okaka.onenightjinroh.application.service.talk.CoStateFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,8 @@ public class GetVoteTermIndexUseCase {
     GameParticipantRepository gameParticipantRepository;
     @Autowired
     RoleNightActFormatterRepository roleNightActFormatterRepository;
+    @Autowired
+    CoStateFactory coStateFactory;
 
     public VoteTermIndexBean get(Long gameId, Long gameParticipantId) {
         GameParticipants gameParticipants = GameParticipants.of(gameParticipantRepository.findByGameIdWithUserAndRole(gameId));
@@ -38,6 +43,9 @@ public class GetVoteTermIndexUseCase {
                 .collect(Collectors.toList());
         VoteIndexBean voteIndexBean = new VoteIndexBean(canVotePlayers);
 
-        return new VoteTermIndexBean(gameId, gameIndex, voteIndexBean);
+        CoState coState = coStateFactory.create(gameId);
+        CoStateBean coBean = CoStateBean.fromDomain(coState);
+
+        return new VoteTermIndexBean(gameId, gameIndex, voteIndexBean, coBean.getCoBeans());
     }
 }

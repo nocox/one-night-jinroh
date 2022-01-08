@@ -14,9 +14,6 @@
     <span class="player-name" :class="{ me: this.myself }">
       {{ playerName }}
     </span>
-    <span class="player-comment">
-      {{ comment }}
-    </span>
   </article>
 </template>
 
@@ -42,13 +39,12 @@ export default {
         吊り人: require("../assets/images/chara-icon/tsuribito.png"),
       },
       coRoleList: {
-        不明: require("../assets/images/fukidashi/fumei.png"),
-        人狼: require("../assets/images/fukidashi/jinroh.png"),
-        村人: require("../assets/images/fukidashi/murabito.png"),
-        占い師: require("../assets/images/fukidashi/uranaishi.png"),
-        怪盗: require("../assets/images/fukidashi/kaito.png"),
-        狂人: require("../assets/images/fukidashi/kyojin.png"),
-        吊り人: require("../assets/images/fukidashi/tsuribito.png"),
+        jinroh: require("../assets/images/fukidashi/jinroh.png"),
+        murabito: require("../assets/images/fukidashi/murabito.png"),
+        uranaishi: require("../assets/images/fukidashi/uranaishi.png"),
+        kaito: require("../assets/images/fukidashi/kaito.png"),
+        kyojin: require("../assets/images/fukidashi/kyojin.png"),
+        turibito: require("../assets/images/fukidashi/tsuribito.png"),
       },
     };
   },

@@ -5,7 +5,7 @@
       <Player
         :playerName="player.playerName"
         :roleName="player.playerRole.roleName"
-        :coRole="this.coRole"
+        :coRole="coMap(player.playerId)"
         :selectedPlayers="selectedPlayers"
         :myself="true"
       />
@@ -13,7 +13,7 @@
       <Player
         :playerName="val.name"
         :roleName="val.role.roleName"
-        :coRole="'村人'"
+        :coRole="coMap(val.id)"
         :selectedPlayers="selectedPlayers"
         v-for="(val, key) in otherPlayerList"
         :myself="false"

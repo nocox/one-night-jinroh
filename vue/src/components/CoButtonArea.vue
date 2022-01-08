@@ -2,22 +2,22 @@
   <section class="co-button-area">
     <h2>カミングアウト</h2>
     <div class="co-icons">
-      <a :class="{ current: isActive['村人'] }" @click="toggleIcon('村人')">
+      <a :class="{ current: myCoRole==='murabito' }" @click="co('murabito')">
         <img src="../assets/images/chara-icon/murabito.png" alt="" />
       </a>
-      <a :class="{ current: isActive['占い師'] }" @click="toggleIcon('占い師')">
+      <a :class="{ current: myCoRole==='uranaishi'}" @click="co('uranaishi')">
         <img src="../assets/images/chara-icon/uranaishi.png" alt="" />
       </a>
-      <a :class="{ current: isActive['怪盗'] }" @click="toggleIcon('怪盗')">
+      <a :class="{ current: myCoRole==='kaito' }" @click="co('kaito')">
         <img src="../assets/images/chara-icon/kaito.png" alt="" />
       </a>
-      <a :class="{ current: isActive['人狼'] }" @click="toggleIcon('人狼')">
+      <a :class="{ current: myCoRole==='jinroh' }" @click="co('jinroh')">
         <img src="../assets/images/chara-icon/jinroh.png" alt="" />
       </a>
-      <a :class="{ current: isActive['狂人'] }" @click="toggleIcon('狂人')">
+      <a :class="{ current: myCoRole==='kyojin' }" @click="co('kyojin')">
         <img src="../assets/images/chara-icon/kyojin.png" alt="" />
       </a>
-      <a :class="{ current: isActive['吊り人'] }" @click="toggleIcon('吊り人')">
+      <a :class="{ current: myCoRole==='turibito' }" @click="co('turibito')">
         <img src="../assets/images/chara-icon/tsuribito.png" alt="" />
       </a>
     </div>
@@ -25,27 +25,29 @@
 </template>
 
 <script>
+import axios from "axios";
+import { JINROH_API_BASE_URL } from "../Env";
+
 export default {
-  data() {
-    return {
-      isActive: {
-        村人: true,
-        占い師: false,
-        怪盗: false,
-        人狼: false,
-        狂人: false,
-        吊り人: false,
-      },
-    };
-  },
+  props: ["playerId", "myCoRole"],
   methods: {
-    toggleIcon: function (roleName) {
-      Object.keys(this.isActive).forEach((key) => {
-        this.isActive[key] = false;
-      });
-      this.isActive[roleName] = true;
-      this.$emit("getActive", roleName);
-    },
+    co: function(roleName) {
+      axios
+      .post(
+        JINROH_API_BASE_URL + "/co", 
+        JSON.stringify({ playerId: this.playerId, role: roleName}),
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      
+    }
   },
   mounted() {
     let nowRole = "村人";
@@ -56,27 +58,26 @@ export default {
 
 <style lang="scss" scoped>
 .co-button-area {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 1rem;
+  display: grid;
+  width: 100%;
+  padding: 1rem 2rem;
   background-color: #eee;
 
   h2 {
-    width: 100%;
     text-align: center;
   }
 
   .co-icons {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(2, auto);
+    column-gap: 1rem;
     justify-content: center;
-    width: 66%;
+    row-gap: 1rem;
+    justify-items: center;
+    align-items: center;
 
     a {
-      width: 33%;
-      margin-top: 24px;
-      text-align: center;
       cursor: pointer;
     }
 
@@ -92,6 +93,14 @@ export default {
       border: 5px solid lighten(lightgreen, 0);
       box-shadow: 0 0 10px rgba(128, 128, 128, 0.5);
       opacity: 1;
+    }
+  }
+}
+
+@media screen and (max-width: 639px) {
+  .co-button-area {
+    .co-icons {
+      grid-template-columns: repeat(2, 80px);
     }
   }
 }

@@ -7,13 +7,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GameIndexBean {
+    private Long playerId;
     private String playerName;
     private RoleBean playerRole;
     private Boolean hostFlag;
     private List<GameParticipantBean> otherPlayerList;
     private final String nightActLog;
 
-    private GameIndexBean(String playerName, RoleBean playerRole, Boolean hostFlag, List<GameParticipantBean> otherPlayerList, String nightActLog) {
+    private GameIndexBean(Long playerId, String playerName, RoleBean playerRole, Boolean hostFlag, List<GameParticipantBean> otherPlayerList, String nightActLog) {
+        this.playerId = playerId;
         this.playerName = playerName;
         this.playerRole = playerRole;
         this.hostFlag = hostFlag;
@@ -28,7 +30,7 @@ public class GameIndexBean {
                 .map(GameParticipantBean::new)
                 .collect(Collectors.toList());
         GameParticipantBean player = extractMyPlayer(gameParticipants, gameParticipantId);
-        return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, null);
+        return new GameIndexBean(player.getId(), player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, null);
     }
 
     public static GameIndexBean ofOpenRole(List<GameParticipant> gameParticipants, Long gameParticipantId) {
@@ -38,7 +40,7 @@ public class GameIndexBean {
                 .collect(Collectors.toList());
         GameParticipantBean player = extractMyPlayer(gameParticipants, gameParticipantId);
 
-        return new GameIndexBean(player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, null);
+        return new GameIndexBean(player.getId(), player.getName(), player.getRole(), player.getHostFlag(), gameParticipantsBean, null);
     }
 
     public static GameIndexBean of(List<GameParticipantBean> participantBeans, Long participantId, String nightActLog) {
@@ -51,7 +53,7 @@ public class GameIndexBean {
                 .filter(bean -> !bean.getId().equals(participantId))
                 .collect(Collectors.toList());
 
-        return new GameIndexBean(myselfBean.getName(), myselfBean.getRole(), myselfBean.getHostFlag(), gameParticipantBeans, nightActLog);
+        return new GameIndexBean(myselfBean.getId(), myselfBean.getName(), myselfBean.getRole(), myselfBean.getHostFlag(), gameParticipantBeans, nightActLog);
     }
 
     private static GameParticipantBean extractMyPlayer(List<GameParticipant> gameParticipants, Long gameParticipantId) {
@@ -60,6 +62,10 @@ public class GameIndexBean {
                 .map(GameParticipantBean::new)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("例外"));
+    }
+
+    public Long getPlayerId() {
+        return playerId;
     }
 
     public String getPlayerName() {

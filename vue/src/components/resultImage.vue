@@ -1,31 +1,46 @@
 <template>
-  <section class="winner">
-    <form action="">
-      <h3>デバッグ用 勝者選択リスト</h3>
-      <label v-for="(val, key) in result_image_path" :key="key">
-        <input type="radio" :value="key" v-model="result" />{{ key }} <br />
-      </label>
-    </form>
-    <div>
-      <img class="winner-image" :src="result_image_path[result]" alt="" />
-    </div>
-  </section>
+  <figure class="winner">
+    <figcaption class="winner-text">
+      {{ judgeResults[judge].text }}
+    </figcaption>
+    <img
+      class="winner-image"
+      :src="judgeResults[judge].imagePath"
+      :alt="judgeResults[judge].text"
+    />
+  </figure>
 </template>
 
 <script>
-
-
 export default {
   name: "resultImage",
-  props: ["result"],
+  props: ["judge"],
+  mounted(){
+    this.$emit("getJudgeText", this.judgeResults[this.judge].text)  ;
+  },
   data() {
     return {
-      result_image_path: {
-        平和村成功: require("../assets/images/result1.png"),
-        村人側の勝利: require("../assets/images/result1.png"),
-        人狼側の勝利: require("../assets/images/result2.png"),
-        "人狼側の勝利(潜伏成功)": require("../assets/images/result2.png"),
-        吊人の勝利: require("../assets/images/result3.png"),
+      judgeResults: {
+        FAIL_PEACE_VILLAGE: {
+          text: "平和村失敗",
+          imagePath: require("../assets/images/result2.png"),
+        },
+        SIMPLE_JINROH_WIN: {
+          text: "人狼陣営の勝利",
+          imagePath: require("../assets/images/result2.png"),
+        },
+        SIMPLE_VILLAGE_WIN: {
+          text: "村人陣営の勝利",
+          imagePath: require("../assets/images/result1.png"),
+        },
+        SUCCESS_HIDE_JINROH_WIN: {
+          text: "人狼陣営の勝利（潜伏成功）",
+          imagePath: require("../assets/images/result2.png"),
+        },
+        SUCCESS_PEACE_VILLAGE: {
+          text: "平和村成功",
+          imagePath: require("../assets/images/result1.png"),
+        },
       },
     };
   },
@@ -33,24 +48,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div {
+.winner {
+  max-width: 20rem;
   text-align: center;
+  margin: auto;
+
+  .winner-text{
+    font-weight: bold;
+    font-size: 24px;
+  }
+
   .winner-image {
     width: 100%;
     height: auto;
-    max-width: 40rem;
   }
 }
 
-form {
-  text-align: center;
-}
-
 @media screen and (max-width: 639px) {
-  div {
-    .winner-image {
-      width: 15rem;
-    }
+  .winner {
+    max-width: 15rem;  
   }
 }
 </style>

@@ -100,17 +100,6 @@ export default {
     };
   },
   components: { VoteTarget, myButton, DisplayRolls },
-  computed: {
-    // TODO: 必要ないので後で消す
-    coRole: {
-      get() {
-        return this.$store.state.coRole;
-      },
-      set(coRole) {
-        this.$store.commit("setCoRole", coRole);
-      },
-    },
-  },
   mounted() {
     axios
       .get(JINROH_API_BASE_URL + "/vote-index", { withCredentials: true })

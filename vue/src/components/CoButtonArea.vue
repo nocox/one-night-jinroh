@@ -2,22 +2,22 @@
   <section class="co-button-area">
     <h2>カミングアウト</h2>
     <div class="co-icons">
-      <a :class="{ current: isActive['村人'] }" @click="toggleIcon('murabito')">
+      <a :class="{ current: myCoRole==='murabito' }" @click="co('murabito')">
         <img src="../assets/images/chara-icon/murabito.png" alt="" />
       </a>
-      <a :class="{ current: isActive['占い師'] }" @click="toggleIcon('uranaishi')">
+      <a :class="{ current: myCoRole==='uranaishi'}" @click="co('uranaishi')">
         <img src="../assets/images/chara-icon/uranaishi.png" alt="" />
       </a>
-      <a :class="{ current: isActive['怪盗'] }" @click="toggleIcon('kaito')">
+      <a :class="{ current: myCoRole==='kaito' }" @click="co('kaito')">
         <img src="../assets/images/chara-icon/kaito.png" alt="" />
       </a>
-      <a :class="{ current: isActive['人狼'] }" @click="toggleIcon('jinroh')">
+      <a :class="{ current: myCoRole==='jinroh' }" @click="co('jinroh')">
         <img src="../assets/images/chara-icon/jinroh.png" alt="" />
       </a>
-      <a :class="{ current: isActive['狂人'] }" @click="toggleIcon('kyojin')">
+      <a :class="{ current: myCoRole==='kyojin' }" @click="co('kyojin')">
         <img src="../assets/images/chara-icon/kyojin.png" alt="" />
       </a>
-      <a :class="{ current: isActive['吊り人'] }" @click="toggleIcon('turibito')">
+      <a :class="{ current: myCoRole==='turibito' }" @click="co('turibito')">
         <img src="../assets/images/chara-icon/tsuribito.png" alt="" />
       </a>
     </div>
@@ -29,28 +29,8 @@ import axios from "axios";
 import { JINROH_API_BASE_URL } from "../Env";
 
 export default {
-  props: ["playerId"],
-  data() {
-    return {
-      isActive: {
-        村人: true,
-        占い師: false,
-        怪盗: false,
-        人狼: false,
-        狂人: false,
-        吊り人: false,
-      },
-    };
-  },
+  props: ["playerId", "myCoRole"],
   methods: {
-    toggleIcon: function (roleName) {
-      Object.keys(this.isActive).forEach((key) => {
-        this.isActive[key] = false;
-      });
-      this.isActive[roleName] = true;
-      this.$emit("getActive", roleName);
-      this.co(roleName);
-    },
     co: function(roleName) {
       axios
       .post(

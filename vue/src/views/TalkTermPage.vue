@@ -6,7 +6,6 @@
     <coArea
       :otherPlayerList="otherPlayerList"
       :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
-      :coRole="coRole"
       :cos="cos"
     />
 
@@ -15,7 +14,7 @@
 
       <coButtonArea 
         :playerId="playerId"
-        @getActive="coRole = $event" 
+        :myCoRole="coMap(playerId)"
       />
     </div>
 
@@ -77,12 +76,6 @@ export default {
       ],
     };
   },
-  computed:{
-    coRole:{
-      get(){return this.$store.state.coRole},
-      set(coRole){this.$store.commit('setCoRole', coRole)},
-    }
-  },
   mounted() {
     axios
       .get(JINROH_API_BASE_URL + "/talk-index", { withCredentials: true })
@@ -130,7 +123,16 @@ export default {
         .catch(() => {
           this.$router.push("/room");
         });
-    }
+    },
+    coMap: function (playerId) {
+      const roleName = this.cos.find(co => co.id == playerId)
+
+      if(roleName){
+        return roleName.role;
+      }else{
+        return "murabito";
+      }
+    },
   },
 };
 </script>

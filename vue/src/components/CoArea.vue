@@ -28,7 +28,7 @@ import Player from "@/components/Player.vue";
 
 export default {
   name: "CoArea",
-  props: ["otherPlayerList", "player", "coRole", "cos", "selectedPlayers"],
+  props: ["otherPlayerList", "player", "cos", "selectedPlayers"],
   components: { Player },
   data() {
     return {
@@ -42,7 +42,6 @@ export default {
         吊り人: require("../assets/images/chara-icon/tsuribito.png"),
       },
       coRoleList: {
-        // 不明: require("../assets/images/fukidashi/fumei.png"),
         jinroh: require("../assets/images/fukidashi/jinroh.png"),
         murabito: require("../assets/images/fukidashi/murabito.png"),
         uranaishi: require("../assets/images/fukidashi/uranaishi.png"),

@@ -20,6 +20,4 @@ public class TallyResultBean {
     public void setPlayers(List<GameParticipantWithVoteBean> players) {
         this.players = players;
     }
-
-
 }

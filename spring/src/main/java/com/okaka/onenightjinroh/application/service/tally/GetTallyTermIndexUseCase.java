@@ -2,7 +2,6 @@ package com.okaka.onenightjinroh.application.service.tally;
 
 import com.okaka.onenightjinroh.application.bean.GameIndexBean;
 import com.okaka.onenightjinroh.application.bean.GameParticipantBean;
-import com.okaka.onenightjinroh.application.domain.GameParticipant;
 import com.okaka.onenightjinroh.application.domain.GameParticipants;
 import com.okaka.onenightjinroh.application.domain.ParticipantDisplayChecker;
 import com.okaka.onenightjinroh.application.domain.RoleNightActFormatter;

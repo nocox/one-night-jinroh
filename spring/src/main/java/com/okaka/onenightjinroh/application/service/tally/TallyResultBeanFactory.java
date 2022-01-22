@@ -15,9 +15,12 @@ public class TallyResultBeanFactory {
                 .filter(TallyResult::getSelected)
                 .map(tallyResult -> new GameParticipantWithVoteBean(tallyResult.getGameParticipant(), tallyResult.getVoteCount()))
                 .collect(Collectors.toList());
-        TallyResultBean tallyResultBean = new TallyResultBean();
-        tallyResultBean.setPlayers(players);
-        tallyResultBean.setSelectedPlayers(selectedPlayers);
+        boolean peacefulFlag = tallyResults.stream()
+                .allMatch(tallyResult -> tallyResult.getVoteCount() == 1 );
+
+        TallyResultBean tallyResultBean = new TallyResultBean(selectedPlayers, players, peacefulFlag);
+        // tallyResultBean.setPlayers(players);
+        // tallyResultBean.setSelectedPlayers(selectedPlayers);
 
         return tallyResultBean;
     }

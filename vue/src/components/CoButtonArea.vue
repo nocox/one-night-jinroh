@@ -69,13 +69,13 @@ export default {
 
   .co-icons {
     display: grid;
-    grid-template-columns: repeat(3, 80px);
     grid-template-rows: repeat(2, auto);
-    column-gap: 1rem;
-    justify-content: center;
+    grid-template-columns: repeat(3, 80px);
     row-gap: 1rem;
-    justify-items: center;
+    column-gap: 1rem;
     align-items: center;
+    justify-content: center;
+    justify-items: center;
 
     a {
       cursor: pointer;
@@ -91,7 +91,7 @@ export default {
 
     .current img {
       border: 5px solid lighten(lightgreen, 0);
-      box-shadow: 0 0 10px rgba(128, 128, 128, 0.5);
+      box-shadow: 0 0 10px rgb(128 128 128 / 50%);
       opacity: 1;
     }
   }

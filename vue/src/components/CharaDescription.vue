@@ -17,13 +17,12 @@ export default {
 
 <style lang="scss" scoped>
 .chara-description {
-  max-width: 640px;
-  margin: 1rem auto 0 auto;
   display: grid;
   grid-template-columns: 10rem 1fr;
-  justify-content: center;
-
   align-items: center;
+  justify-content: center;
+  max-width: 640px;
+  margin: 1rem auto 0;
 
   figure {
     text-align: center;

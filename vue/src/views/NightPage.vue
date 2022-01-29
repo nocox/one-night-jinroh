@@ -99,14 +99,15 @@ h2 {
 }
 
 .btn {
-  text-align: center;
   display: block;
   width: 12rem;
   margin: 5rem auto;
+  text-align: center;
 }
+
 .btn_disabled {
+  color: gray;
   pointer-events: none;
   border-color: gray;
-  color: gray;
 }
 </style>

@@ -108,27 +108,29 @@ img {
 }
 
 .RoleList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   min-width: 360px;
   max-width: 640px;
-  display: flex;
-  justify-content: center;
   margin: 0 auto;
-  flex-wrap: wrap;
 }
 
 .Role {
-  width: 360px;
   display: flex;
+  width: 360px;
 }
 
 @media screen and (max-width: 640px) {
   .Role {
     flex-direction: column;
   }
+
   .RoleImage img {
     width: 120px;
     height: 120px;
   }
+
   .RoleName h3 {
     text-align: center;
   }

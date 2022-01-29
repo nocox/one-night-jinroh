@@ -86,12 +86,12 @@ export default {
   margin-top: 1.5rem;
 
   .player-icon {
+    display: flex;
     grid-row: 1/3;
     grid-column: 1/2;
+    justify-self: center;
     width: 50px;
     height: 50px;
-    display: flex;
-    justify-self: center;
 
     img {
       width: 100%;

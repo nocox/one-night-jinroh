@@ -50,12 +50,12 @@ export default {
 <style lang="scss" scoped>
 .winner {
   max-width: 20rem;
-  text-align: center;
   margin: auto;
+  text-align: center;
 
   .winner-text{
-    font-weight: bold;
     font-size: 24px;
+    font-weight: bold;
   }
 
   .winner-image {

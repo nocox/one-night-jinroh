@@ -14,21 +14,21 @@ $color: #50a0f6;
 
 a {
   display: inline-block;
-  margin-top: 10px;
   padding: 5px 40px;
-  border-radius: 30px;
-  border: 1px solid $color;
-  background-color: white;
-  cursor: pointer;
-
-  text-decoration: none;
+  margin-top: 10px;
   color: $color;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid $color;
+  border-radius: 30px;
 
   &:hover {
+    color: white;
     background-color: $color;
     transition: 0.3s;
-    color: white;
   }
+
   &:active {
     background-color: lighten($color, 20%);
     transition: 0.1s;

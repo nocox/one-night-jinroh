@@ -16,11 +16,12 @@ export default {
 <style lang="scss" scoped>
 ul{
   li{
+    margin-left: .5rem;
     font-size: .8rem;
     list-style: none;
-    margin-left: .5rem;
   }
 }
+
 p{
   margin-left: .5rem;
 }

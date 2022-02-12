@@ -24,6 +24,6 @@ public class SuccessPeaceVillage implements WinLoseConditionBase {
 
     @Override
     public String getResultText() {
-        return "平和村成功";
+        return "SUCCESS_PEACE_VILLAGE";
     }
 }

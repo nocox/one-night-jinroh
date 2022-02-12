@@ -23,6 +23,6 @@ public class SuccessHideJinrohWin implements WinLoseConditionBase {
 
     @Override
     public String getResultText() {
-        return "人狼側の勝利(潜伏成功)";
+        return "SUCCESS_HIDE_JINROH_WIN";
     }
 }

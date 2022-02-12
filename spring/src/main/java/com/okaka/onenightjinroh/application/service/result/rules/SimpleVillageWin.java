@@ -23,6 +23,6 @@ public class SimpleVillageWin implements WinLoseConditionBase {
 
     @Override
     public String getResultText() {
-        return "村人側の勝利";
+        return "SIMPLE_VILLAGE_WIN";
     }
 }

@@ -27,6 +27,6 @@ public class FailPeaceVillage implements WinLoseConditionBase {
 
     @Override
     public String getResultText() {
-        return "平和村失敗";
+        return "FAIL_PEACE_VILLAGE";
     }
 }

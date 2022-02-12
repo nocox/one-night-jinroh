@@ -30,6 +30,6 @@ public class SimpleJinrohWin implements WinLoseConditionBase {
 
     @Override
     public String getResultText() {
-        return "人狼側の勝利";
+        return "SIMPLE_JINROH_WIN";
     }
 }

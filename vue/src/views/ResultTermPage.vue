@@ -1,10 +1,9 @@
 <template>
   <main class="result_page">
-
     <modal :width="'90%'" :height="'auto'" name="result-modal">
       <div class="result-modal">
-      <resultImage :judge="judge" @getJudgeText="judgeText=$event" />
-      <myButton class="btn" :method="closeModal" :text="'OK'" />
+        <resultImage :judge="judge" @getJudgeText="judgeText = $event" />
+        <myButton class="btn" :method="closeModal" :text="'OK'" />
       </div>
     </modal>
 
@@ -38,12 +37,7 @@
       </div>
       <div class="holiday-roles grid-item">
         <h3>場のカード</h3>
-        <img
-          :src="RoleList[val]"
-          :alt="val"
-          v-for="(val, key) in holidayRoles"
-          :key="key"
-        />
+        <img :src="RoleList[val]" :alt="val" v-for="(val, key) in holidayRoles" :key="key" />
       </div>
     </div>
 
@@ -106,7 +100,7 @@ export default {
       .then((response) => {
         console.log(response.data);
         // 新パラメータ(this datas are available from backend)
-        this.judge = "SIMPLE_VILLAGE_WIN";
+        this.judge = response.data.judge;
         this.holidayRoles = ["人狼", "村人"];
         this.playerList = [
           {
@@ -171,7 +165,7 @@ export default {
     closeModal: function () {
       this.$modal.hide("result-modal");
     },
-    getJudgeText: function(judgeText){
+    getJudgeText: function (judgeText) {
       this.judgeText = judgeText;
     },
   },
@@ -237,7 +231,7 @@ h3 {
   }
 }
 
-.result-modal{
+.result-modal {
   padding: 1rem 0;
 }
 

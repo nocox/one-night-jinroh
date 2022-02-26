@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface WinLoseConditionBase {
     boolean condition(List<TallyResultConsideredNightAct> tallyResults);
+
     Integer priority();
+
     String getResultText();
 }

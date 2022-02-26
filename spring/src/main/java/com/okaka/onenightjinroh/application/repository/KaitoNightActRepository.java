@@ -21,6 +21,14 @@ public class KaitoNightActRepository {
                 ));
     }
 
+    public Optional<KaitoNightAct> findByGameId(Long gameId) {
+        return dao.selectByGameId(gameId)
+                .map(act -> KaitoNightAct.of(
+                        act.getFromGameParticipationId(),
+                        act.getToGameParticipationId()
+                ));
+    }
+
     public void save(KaitoNightAct kaitoNightAct){
         final var entity = new KaitoNightActEntity(
                 null,

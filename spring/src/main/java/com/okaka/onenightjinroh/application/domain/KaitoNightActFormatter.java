@@ -35,4 +35,8 @@ public class KaitoNightActFormatter implements RoleNightActFormatter {
     public GameParticipant getToParticipant() {
         return toParticipant;
     }
+
+    public GameParticipant getFromParticipant() {
+        return fromParticipant;
+    }
 }

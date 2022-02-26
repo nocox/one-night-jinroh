@@ -1,15 +1,15 @@
 package com.okaka.onenightjinroh.application.service.result.rules;
 
-import com.okaka.onenightjinroh.application.domain.TallyResult;
+import com.okaka.onenightjinroh.application.domain.TallyResultConsideredNightAct;
 import com.okaka.onenightjinroh.application.service.result.WinLoseConditionBase;
 
 import java.util.List;
 
 public class SimpleVillageWin implements WinLoseConditionBase {
     @Override
-    public boolean condition(List<TallyResult> tallyResults) {
+    public boolean condition(List<TallyResultConsideredNightAct> tallyResults) {
         // 選ばれた人が2人以下で，その中に人狼がいた
-        List<TallyResult> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
+        List<TallyResultConsideredNightAct> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
         if (selectedPlayers.size() > 2) {
             return false;
         }

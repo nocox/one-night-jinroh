@@ -22,9 +22,10 @@ public class GetGameResultUseCase {
     HolidayRolesPort holidayRolesPort;
 
     public GameResult invoke(Long gameId, Long gameParticipantId) {
-        Judge judge = judgeFacade.judge(gameId);
+        WinLoseConditionBase condition = judgeFacade.judge(gameId);
         List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
         HolidayRoles holidayRoles = holidayRolesPort.findByGameId(gameId);
-        return new GameResult(gameId, gameParticipantId, judge, gameParticipants, holidayRoles);
+        return new GameResult(gameId, gameParticipantId, new Judge(condition.getResultText()), gameParticipants,
+                holidayRoles);
     }
 }

@@ -35,7 +35,7 @@ public class JudgeFacade {
                         new FailPeaceVillage(),
                         new SuccessHideJinrohWin());
 
-        public Judge judge(Long gameId) {
+        public WinLoseConditionBase judge(Long gameId) {
                 KaitoNightActFormatter kaitoNightActFormatter = kaitoNightActRepository.findByGameId(gameId)
                                 .map(kaitoNightAct -> kaitoNightActExecuteLogic.invoke(kaitoNightAct))
                                 .orElse(null);
@@ -49,6 +49,6 @@ public class JudgeFacade {
                                 .filter(conditionBase -> conditionBase.condition(tallyResults))
                                 .min(Comparator.comparing(WinLoseConditionBase::priority))
                                 .orElseThrow();
-                return new Judge(winLoseConditionBase.getResultText());
+                return winLoseConditionBase;
         }
 }

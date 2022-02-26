@@ -1,7 +1,9 @@
 package com.okaka.onenightjinroh.application.service.result.rules;
 
+import com.okaka.onenightjinroh.application.domain.Role;
 import com.okaka.onenightjinroh.application.domain.TallyResultConsideredNightAct;
 import com.okaka.onenightjinroh.application.service.result.WinLoseConditionBase;
+import com.okaka.onenightjinroh.application.service.result.WinOrLose;
 
 import java.util.List;
 
@@ -28,5 +30,10 @@ public class FailPeaceVillage implements WinLoseConditionBase {
     @Override
     public String getResultText() {
         return "FAIL_PEACE_VILLAGE";
+    }
+
+    @Override
+    public WinOrLose judge(Role role) {
+        return WinOrLose.lose;
     }
 }

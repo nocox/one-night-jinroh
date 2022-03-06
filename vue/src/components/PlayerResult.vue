@@ -8,7 +8,7 @@
       <img
         class="co-icon__img"
         :src="this.coRoleList[this.coRole]"
-        :alt="this.coRole"
+        :alt="''"
       />
     </figure>
     <span class="player-name" :class="{ me: this.myself }">
@@ -33,13 +33,13 @@ export default {
   data() {
     return {
       RoleList: {
-        不明: require("../assets/images/chara-icon/unknown.png"),
-        人狼: require("../assets/images/chara-icon/jinroh.png"),
-        村人: require("../assets/images/chara-icon/murabito.png"),
-        占い師: require("../assets/images/chara-icon/uranaishi.png"),
-        怪盗: require("../assets/images/chara-icon/kaito.png"),
-        狂人: require("../assets/images/chara-icon/kyojin.png"),
-        吊り人: require("../assets/images/chara-icon/tsuribito.png"),
+        unknown: require("../assets/images/chara-icon/unknown.png"),
+        jinroh: require("../assets/images/chara-icon/jinroh.png"),
+        murabito: require("../assets/images/chara-icon/murabito.png"),
+        uranaishi: require("../assets/images/chara-icon/uranaishi.png"),
+        kaito: require("../assets/images/chara-icon/kaito.png"),
+        kyojin: require("../assets/images/chara-icon/kyojin.png"),
+        turibito: require("../assets/images/chara-icon/tsuribito.png"),
       },
       coRoleList: {
         不明: require("../assets/images/fukidashi/fumei.png"),

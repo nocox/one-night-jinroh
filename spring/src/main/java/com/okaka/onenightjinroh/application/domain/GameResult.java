@@ -1,15 +1,13 @@
 package com.okaka.onenightjinroh.application.domain;
 
-import java.util.List;
-
 public class GameResult {
     private final Long gameId;
     private final Long gameParticipantId;
     private final Judge judge;
-    private final List<GameParticipant> gameParticipants;
+    private final GameParticipantsWithResult gameParticipants;
     private final HolidayRoles holidayRoles;
 
-    public GameResult(Long gameId, Long gameParticipantId, Judge judge, List<GameParticipant> gameParticipants, HolidayRoles holidayRoles) {
+    public GameResult(Long gameId, Long gameParticipantId, Judge judge, GameParticipantsWithResult gameParticipants, HolidayRoles holidayRoles) {
         this.gameId = gameId;
         this.gameParticipantId = gameParticipantId;
         this.judge = judge;
@@ -29,7 +27,7 @@ public class GameResult {
         return judge;
     }
 
-    public List<GameParticipant> getGameParticipants() {
+    public GameParticipantsWithResult getGameParticipants() {
         return gameParticipants;
     }
 

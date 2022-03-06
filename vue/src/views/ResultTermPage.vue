@@ -65,7 +65,7 @@ export default {
           playerName: "",
           role: "",
           coRole: "",
-          judge: "lose",
+          winOrLose: "lose",
           myself: false,
           comment: "",
         },
@@ -74,13 +74,13 @@ export default {
       winPlayers: [],
       losePlayers: [],
       RoleList: {
-        不明: require("../assets/images/card.png"),
-        人狼: require("../assets/images/chara/chara1.png"),
-        村人: require("../assets/images/chara/chara2.png"),
-        占い師: require("../assets/images/chara/chara3.png"),
-        怪盗: require("../assets/images/chara/chara4.png"),
-        狂人: require("../assets/images/chara/chara5.png"),
-        吊り人: require("../assets/images/chara/chara6.png"),
+        unknown: require("../assets/images/card.png"),
+        jinroh: require("../assets/images/chara/chara1.png"),
+        murabito: require("../assets/images/chara/chara2.png"),
+        uranaishi: require("../assets/images/chara/chara3.png"),
+        kaito: require("../assets/images/chara/chara4.png"),
+        kyojin: require("../assets/images/chara/chara5.png"),
+        turibito: require("../assets/images/chara/chara6.png"),
       },
     };
   },
@@ -88,10 +88,10 @@ export default {
   computed: {
     // playerListを勝者と敗者に振り分ける
     winPlayerList: function () {
-      return this.playerList.filter((player) => player.judge == "win");
+      return this.playerList.filter((player) => player.winOrLose == "win");
     },
     losePlayerList: function () {
-      return this.playerList.filter((player) => player.judge == "lose");
+      return this.playerList.filter((player) => player.winOrLose == "lose");
     },
   },
   async mounted() {
@@ -101,57 +101,8 @@ export default {
         console.log(response.data);
         // 新パラメータ(this datas are available from backend)
         this.judge = response.data.judge;
-        this.holidayRoles = ["人狼", "村人"];
-        this.playerList = [
-          {
-            playerName: "プレイヤー1",
-            role: "人狼",
-            coRole: "占い師",
-            judge: "lose",
-            myself: true,
-            comment: "",
-          },
-          {
-            playerName: "プレイヤー2",
-            role: "人狼",
-            coRole: "村人",
-            judge: "lose",
-            myself: false,
-            comment: "",
-          },
-          {
-            playerName: "プレイヤー3",
-            role: "怪盗",
-            coRole: "占い師",
-            judge: "win",
-            myself: false,
-            comment: "占い師🔁怪盗",
-          },
-          {
-            playerName: "プレイヤー4",
-            role: "占い師",
-            coRole: "怪盗",
-            judge: "win",
-            myself: false,
-            comment: "怪盗🔁占い師",
-          },
-          {
-            playerName: "プレイヤー5",
-            role: "村人",
-            coRole: "村人",
-            judge: "win",
-            myself: false,
-            comment: "",
-          },
-          {
-            playerName: "プレイヤー6",
-            role: "村人",
-            coRole: "村人",
-            judge: "win",
-            myself: false,
-            comment: "",
-          },
-        ];
+        this.holidayRoles = response.data.holidayRoles;
+        this.playerList = response.data.participants
         this.$modal.show("result-modal");
       })
       .catch(() => {

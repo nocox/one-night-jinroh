@@ -1,12 +1,13 @@
 package com.okaka.onenightjinroh.application.domain;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class GameParticipantsConsideredNightAct {
     private final GameParticipants participants;
-    private final KaitoNightActFormatter kaitoNightActFormatter;
+    private final Optional<KaitoNightActFormatter> kaitoNightActFormatter;
 
-    public GameParticipantsConsideredNightAct(GameParticipants participants, KaitoNightActFormatter kaitoNightActFormatter) {
+    public GameParticipantsConsideredNightAct(GameParticipants participants, Optional<KaitoNightActFormatter> kaitoNightActFormatter) {
         this.participants = participants;
         this.kaitoNightActFormatter = kaitoNightActFormatter;
     }
@@ -27,21 +28,9 @@ public class GameParticipantsConsideredNightAct {
         }
 
         public Role getRoleConsideredNightAct() {
-            if (kaitoNightActFormatter == null) {
-                return this.gameParticipant.getRole();
-            }
-
-            Long toParticipationId = kaitoNightActFormatter.getToParticipant().getGameParticipationId();
-            Long fromParticipationId = kaitoNightActFormatter.getFromParticipant().getGameParticipationId();
-            Long participationId = gameParticipant.getGameParticipationId();
-
-            if (toParticipationId.equals(participationId)) {
-                return kaitoNightActFormatter.getFromParticipant().getRole();
-            } else if (fromParticipationId.equals(participationId)) {
-                return kaitoNightActFormatter.getToParticipant().getRole();
-            }
-
-            return this.gameParticipant.getRole();
+            return kaitoNightActFormatter
+                    .map(act -> act.considerRole(gameParticipant))
+                    .orElse(gameParticipant.getRole());
         }
     }
 }

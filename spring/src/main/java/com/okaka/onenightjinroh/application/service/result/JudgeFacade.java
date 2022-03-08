@@ -14,30 +14,29 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class JudgeFacade {
-        @Autowired
-        TallyResultPort tallyResultPort;
+    @Autowired
+    TallyResultPort tallyResultPort;
 
-        List<WinLoseConditionBase> winLoseConditions = Arrays.asList(
-                        new SimpleVillageWin(),
-                        new SimpleJinrohWin(),
-                        new SuccessPeaceVillage(),
-                        new FailPeaceVillage(),
-                        new SuccessHideJinrohWin());
+    List<WinLoseConditionBase> winLoseConditions = Arrays.asList(
+            new SimpleVillageWin(),
+            new SimpleJinrohWin(),
+            new SuccessPeaceVillage(),
+            new FailPeaceVillage(),
+            new SuccessHideJinrohWin());
 
-        public WinLoseConditionBase judge(Long gameId, KaitoNightActFormatter kaitoNightActFormatter) {
-               List<TallyResultConsideredNightAct> tallyResults = tallyResultPort.searchTallyResults(gameId).stream()
-                                .map(tallyResult -> new TallyResultConsideredNightAct(tallyResult,
-                                                kaitoNightActFormatter))
-                                .collect(Collectors.toList());
+    public WinLoseConditionBase judge(Long gameId, Optional<KaitoNightActFormatter> kaitoNightActFormatter) {
+        List<TallyResultConsideredNightAct> tallyResults = tallyResultPort.searchTallyResults(gameId).stream()
+                .map(tallyResult -> new TallyResultConsideredNightAct(tallyResult, kaitoNightActFormatter))
+                .collect(Collectors.toList());
 
-                WinLoseConditionBase winLoseConditionBase = winLoseConditions.stream()
-                                .filter(conditionBase -> conditionBase.condition(tallyResults))
-                                .min(Comparator.comparing(WinLoseConditionBase::priority))
-                                .orElseThrow();
-                return winLoseConditionBase;
-        }
+        return winLoseConditions.stream()
+                .filter(conditionBase -> conditionBase.condition(tallyResults))
+                .min(Comparator.comparing(WinLoseConditionBase::priority))
+                .orElseThrow();
+    }
 }

@@ -1,13 +1,9 @@
 package com.okaka.onenightjinroh.application.service.result;
 
-import com.okaka.onenightjinroh.application.domain.GameParticipants;
 import com.okaka.onenightjinroh.application.domain.GameParticipantsConsideredNightAct;
 import com.okaka.onenightjinroh.application.domain.GameParticipantsWithResult;
 import com.okaka.onenightjinroh.application.domain.GameResult;
-import com.okaka.onenightjinroh.application.domain.HolidayRoles;
 import com.okaka.onenightjinroh.application.domain.Judge;
-import com.okaka.onenightjinroh.application.domain.KaitoNightActFormatter;
-import com.okaka.onenightjinroh.application.logic.KaitoNightActExecuteLogic;
 import com.okaka.onenightjinroh.application.port.HolidayRolesPort;
 import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.repository.KaitoNightActRepository;
@@ -25,22 +21,17 @@ public class GetGameResultUseCase {
     HolidayRolesPort holidayRolesPort;
     @Autowired
     KaitoNightActRepository kaitoNightActRepository;
-    @Autowired
-    KaitoNightActExecuteLogic kaitoNightActExecuteLogic;
 
     public GameResult invoke(Long gameId, Long gameParticipantId) {
-        KaitoNightActFormatter kaitoNightActFormatter = kaitoNightActRepository.findByGameId(gameId)
-                .map(kaitoNightAct -> kaitoNightActExecuteLogic.invoke(kaitoNightAct))
-                .orElse(null);
+        final var gameParticipants = gameParticipantRepository.findAllByGameIdWithUserAndRole(gameId);
 
-        WinLoseConditionBase condition = judgeFacade.judge(gameId, kaitoNightActFormatter);
-        GameParticipants gameParticipants = gameParticipantRepository.findAllByGameIdWithUserAndRole(gameId);
+        final var kaitoNightActFormatter = kaitoNightActRepository.findByGameId(gameId);
+        final var gameParticipantsConsideredNightAct = new GameParticipantsConsideredNightAct(gameParticipants, kaitoNightActFormatter);
 
-        GameParticipantsConsideredNightAct gameParticipantsConsideredNightAct = new GameParticipantsConsideredNightAct(gameParticipants, kaitoNightActFormatter);
-        GameParticipantsWithResult gameParticipantsWithResult = new GameParticipantsWithResult(condition, gameParticipantsConsideredNightAct);
+        final var condition = judgeFacade.judge(gameId, kaitoNightActFormatter);
+        final var gameParticipantsWithResult = new GameParticipantsWithResult(gameParticipantsConsideredNightAct, condition);
 
-        HolidayRoles holidayRoles = holidayRolesPort.findByGameId(gameId);
-        return new GameResult(gameId, gameParticipantId, new Judge(condition.getResultText()), gameParticipantsWithResult,
-                holidayRoles);
+        final var holidayRoles = holidayRolesPort.findByGameId(gameId);
+        return new GameResult(gameId, gameParticipantId, new Judge(condition.getResultText()), gameParticipantsWithResult, holidayRoles);
     }
 }

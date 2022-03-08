@@ -1,8 +1,6 @@
 package com.okaka.onenightjinroh.application.domain;
 
 
-import java.util.Optional;
-
 public class KaitoNightActFormatter implements RoleNightActFormatter {
     private final GameParticipant toParticipant;
     private final GameParticipant fromParticipant;
@@ -12,10 +10,19 @@ public class KaitoNightActFormatter implements RoleNightActFormatter {
         this.fromParticipant = fromParticipant;
     }
 
-    public static KaitoNightActFormatter of(Optional<GameParticipant> toParticipant, Optional<GameParticipant> fromParticipant) {
-        toParticipant.orElseThrow();
-        fromParticipant.orElseThrow();
-        return new KaitoNightActFormatter(toParticipant.get(), fromParticipant.get());
+    public static KaitoNightActFormatter of(GameParticipant toParticipant, GameParticipant fromParticipant) {
+        return new KaitoNightActFormatter(toParticipant, fromParticipant);
+    }
+
+    public Role considerRole(GameParticipant participant) {
+        Long myId = participant.getGameParticipationId();
+        if( myId.equals(toParticipant.getGameParticipationId()) ) {
+            return fromParticipant.getRole();
+        } else if(myId.equals(fromParticipant.getGameParticipationId())) {
+            return toParticipant.getRole();
+        } else {
+            return participant.getRole();
+        }
     }
 
     @Override

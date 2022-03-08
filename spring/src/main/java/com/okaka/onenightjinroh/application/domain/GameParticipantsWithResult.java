@@ -5,12 +5,12 @@ import com.okaka.onenightjinroh.application.service.result.WinLoseConditionBase;
 import java.util.stream.Stream;
 
 public class GameParticipantsWithResult {
-    private final WinLoseConditionBase winLoseCondition;
     private final GameParticipantsConsideredNightAct participants;
+    private final WinLoseConditionBase winLoseCondition;
 
-    public GameParticipantsWithResult(WinLoseConditionBase winLoseCondition, GameParticipantsConsideredNightAct participants) {
-        this.winLoseCondition = winLoseCondition;
+    public GameParticipantsWithResult(GameParticipantsConsideredNightAct participants, WinLoseConditionBase winLoseCondition) {
         this.participants = participants;
+        this.winLoseCondition = winLoseCondition;
     }
 
     public Stream<GameParticipantWithResult> stream() {
@@ -28,7 +28,7 @@ public class GameParticipantsWithResult {
             return participant.getParticipant().getUser().getUserName();
         }
 
-        public String getRoleEngStr() {
+        public String getOriginalRoleEngStr() {
             return participant.getParticipant().getRole().getRoleEngName();
         }
 

@@ -33,7 +33,7 @@ public class ShowResultTermIndexBean {
         List<GameParticipantWithResultBean> participants = gameResult.getGameParticipants().stream()
                 .map(participant -> new GameParticipantWithResultBean(
                             participant.getPlayerName(),
-                            participant.getRoleEngStrConsideredNightAct(),
+                            participant.getRoleEngStrConsideredNightAct(), // TODO: 快盗の交換後の役職を表示している．コメントの実装時に，元の役職をここで表示し，コメントに快盗と交換したことを表示する．
                             participant.getCoRoleEngStr(),
                             participant.getWinOrLose(),
                             participant.myself(gameResult.getGameParticipantId()),

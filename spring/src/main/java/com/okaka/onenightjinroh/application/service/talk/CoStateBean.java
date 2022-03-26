@@ -2,6 +2,7 @@ package com.okaka.onenightjinroh.application.service.talk;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import com.okaka.onenightjinroh.application.domain.CoState;
 
 public class CoStateBean {
     private List<CoBean> coBeans;

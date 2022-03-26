@@ -2,6 +2,8 @@ package com.okaka.onenightjinroh.application.service.talk;
 
 import com.okaka.onenightjinroh.application.bean.GameIndexBean;
 import com.okaka.onenightjinroh.application.bean.GameParticipantBean;
+import com.okaka.onenightjinroh.application.domain.CoState;
+import com.okaka.onenightjinroh.application.domain.CoStateFactory;
 import com.okaka.onenightjinroh.application.domain.GameParticipants;
 import com.okaka.onenightjinroh.application.domain.ParticipantDisplayChecker;
 import com.okaka.onenightjinroh.application.domain.RoleNightActFormatter;

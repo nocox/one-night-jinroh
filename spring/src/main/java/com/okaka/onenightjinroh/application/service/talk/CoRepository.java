@@ -4,6 +4,7 @@ import com.okaka.jinroh.persistence.CoEventDao;
 import com.okaka.jinroh.persistence.CoEventEntity;
 import com.okaka.jinroh.persistence.CoStateDao;
 import com.okaka.jinroh.persistence.CoStateEntity;
+import com.okaka.onenightjinroh.application.domain.CoState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

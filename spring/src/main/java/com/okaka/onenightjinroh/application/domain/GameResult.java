@@ -4,10 +4,10 @@ public class GameResult {
     private final Long gameId;
     private final Long gameParticipantId;
     private final Judge judge;
-    private final GameParticipantsWithResult gameParticipants;
+    private final GameParticipantsWithResultAndCoState gameParticipants;
     private final HolidayRoles holidayRoles;
 
-    public GameResult(Long gameId, Long gameParticipantId, Judge judge, GameParticipantsWithResult gameParticipants, HolidayRoles holidayRoles) {
+    public GameResult(Long gameId, Long gameParticipantId, Judge judge, GameParticipantsWithResultAndCoState gameParticipants, HolidayRoles holidayRoles) {
         this.gameId = gameId;
         this.gameParticipantId = gameParticipantId;
         this.judge = judge;
@@ -27,7 +27,7 @@ public class GameResult {
         return judge;
     }
 
-    public GameParticipantsWithResult getGameParticipants() {
+    public GameParticipantsWithResultAndCoState getGameParticipants() {
         return gameParticipants;
     }
 

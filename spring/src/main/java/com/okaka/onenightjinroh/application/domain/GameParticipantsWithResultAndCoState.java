@@ -41,7 +41,7 @@ public class GameParticipantsWithResultAndCoState {
 
         public String getCoRoleEngStr() {
             Optional<CoState.Co> co = coState.getCos().stream()
-            .filter(c-> c.getId() == participant.getParticipant().getGameParticipationId())
+            .filter(c-> c.getId().equals(participant.getParticipant().getGameParticipationId()))
             .findFirst();
             
             return co.map(c-> c.getRole().getRoleEngName()).orElse("");

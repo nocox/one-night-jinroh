@@ -2,14 +2,14 @@ package com.okaka.onenightjinroh.application.service.vote;
 
 import com.okaka.onenightjinroh.application.bean.GameIndexBean;
 import com.okaka.onenightjinroh.application.bean.GameParticipantBean;
+import com.okaka.onenightjinroh.application.domain.CoState;
+import com.okaka.onenightjinroh.application.domain.CoStateFactory;
 import com.okaka.onenightjinroh.application.domain.GameParticipants;
 import com.okaka.onenightjinroh.application.domain.ParticipantDisplayChecker;
 import com.okaka.onenightjinroh.application.domain.RoleNightActFormatter;
 import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.repository.RoleNightActFormatterRepository;
-import com.okaka.onenightjinroh.application.service.talk.CoState;
 import com.okaka.onenightjinroh.application.service.talk.CoStateBean;
-import com.okaka.onenightjinroh.application.service.talk.CoStateFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

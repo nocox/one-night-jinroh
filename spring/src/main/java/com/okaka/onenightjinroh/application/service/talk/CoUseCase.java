@@ -5,6 +5,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import com.okaka.onenightjinroh.application.domain.CoState;
+import com.okaka.onenightjinroh.application.domain.CoStateFactory;
 
 @Service
 public class CoUseCase {

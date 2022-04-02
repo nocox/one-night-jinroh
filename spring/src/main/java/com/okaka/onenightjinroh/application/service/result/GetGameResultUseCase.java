@@ -1,7 +1,8 @@
 package com.okaka.onenightjinroh.application.service.result;
 
+import com.okaka.onenightjinroh.application.domain.CoStateFactory;
 import com.okaka.onenightjinroh.application.domain.GameParticipantsConsideredNightAct;
-import com.okaka.onenightjinroh.application.domain.GameParticipantsWithResult;
+import com.okaka.onenightjinroh.application.domain.GameParticipantsWithResultAndCoState;
 import com.okaka.onenightjinroh.application.domain.GameResult;
 import com.okaka.onenightjinroh.application.domain.Judge;
 import com.okaka.onenightjinroh.application.port.HolidayRolesPort;
@@ -21,6 +22,8 @@ public class GetGameResultUseCase {
     HolidayRolesPort holidayRolesPort;
     @Autowired
     KaitoNightActRepository kaitoNightActRepository;
+    @Autowired
+    CoStateFactory coStateFactory;
 
     public GameResult invoke(Long gameId, Long gameParticipantId) {
         final var gameParticipants = gameParticipantRepository.findAllByGameIdWithUserAndRole(gameId);
@@ -29,9 +32,10 @@ public class GetGameResultUseCase {
         final var gameParticipantsConsideredNightAct = new GameParticipantsConsideredNightAct(gameParticipants, kaitoNightActFormatter);
 
         final var condition = judgeFacade.judge(gameId, kaitoNightActFormatter);
-        final var gameParticipantsWithResult = new GameParticipantsWithResult(gameParticipantsConsideredNightAct, condition);
+        final var coState = coStateFactory.create(gameId);
+        final var gameParticipantsWithResultAndCoState = new GameParticipantsWithResultAndCoState(gameParticipantsConsideredNightAct, condition, coState);
 
         final var holidayRoles = holidayRolesPort.findByGameId(gameId);
-        return new GameResult(gameId, gameParticipantId, new Judge(condition.getResultText()), gameParticipantsWithResult, holidayRoles);
+        return new GameResult(gameId, gameParticipantId, new Judge(condition.getResultText()), gameParticipantsWithResultAndCoState, holidayRoles);
     }
 }

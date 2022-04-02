@@ -1,7 +1,8 @@
-package com.okaka.onenightjinroh.application.service.talk;
+package com.okaka.onenightjinroh.application.domain;
 
-import com.okaka.onenightjinroh.application.domain.Role;
 import com.okaka.onenightjinroh.application.repository.RoleRepository;
+import com.okaka.onenightjinroh.application.service.talk.CoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

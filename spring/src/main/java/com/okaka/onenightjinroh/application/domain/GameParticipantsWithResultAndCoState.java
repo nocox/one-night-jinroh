@@ -57,7 +57,13 @@ public class GameParticipantsWithResultAndCoState {
         }
 
         public String getComment() {
-            return "mada dayo";
+            Role originalRole = participant.getParticipant().getRole();
+            Role consideredNightActRole = participant.getRoleConsideredNightAct();
+
+            if (originalRole.equals(consideredNightActRole)) {
+                return "";
+            }
+            return "元: " + originalRole.getRoleName();
         }
     }
 }

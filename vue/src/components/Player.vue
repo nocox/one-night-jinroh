@@ -104,9 +104,9 @@ export default {
   }
 
   .player-name {
-    font-size:14px;
     grid-row: 2/3;
     grid-column: 2/3;
+    font-size:14px;
   }
 
   .me {

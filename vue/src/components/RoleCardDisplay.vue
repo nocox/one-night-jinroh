@@ -67,51 +67,55 @@ export default {
 
 <style lang="scss" scoped>
 .role-card-display-area {
-  justify-content: center;
-  text-align: center;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
 }
 
 .player {
   display: flex;
-  width: 33%;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
+  width: 33%;
 
   h3 {
     width: 100%;
   }
+
   .card-wrapper {
-    padding-top: 16px;
     width: 100%;
+    padding-top: 16px;
   }
 }
 
 .not-player {
-  width: 66%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  width: 66%;
+
   h3 {
     width: 100%;
   }
+
   .card-wrapper {
-    padding-top: 16px;
     width: 50%;
+    padding-top: 16px;
   }
 }
 
 .other-player {
-  padding-top: 24px;
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  padding-top: 24px;
 
-  h3 {
-  text-align: left;  
+  h3 {  
     width: 100%;
+  text-align: left;
   }
+
   .card-wrapper {
     padding-top: 16px;
   }
@@ -123,15 +127,14 @@ export default {
   }
 
 .other-player {
-  
-  
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 
   h3 {
-    width: 100%;
     grid-column: 1/4;
+    width: 100%;
   }
+
   .card-wrapper {
     padding-top: 16px;
   }

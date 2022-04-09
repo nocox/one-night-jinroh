@@ -86,12 +86,12 @@ export default {
   margin-top: 1.5rem;
 
   .player-icon {
+    display: flex;
     grid-row: 1/3;
     grid-column: 1/2;
+    justify-self: center;
     width: 80px;
     height: 80px;
-    display: flex;
-    justify-self: center;
 
     img {
       width: 100%;
@@ -115,8 +115,8 @@ export default {
   .player-name {
     grid-row: 3/4;
     grid-column: 1/3;
-    font-size: 18px;
     padding-top: 0.5rem;
+    font-size: 18px;
   }
 
   .me {

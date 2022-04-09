@@ -94,29 +94,29 @@ h1 {
 }
 
 .title-logo {
-  max-width: 40rem;
   width: 100%;
+  max-width: 40rem;
   height: auto;
   filter: drop-shadow(0.1rem 0.1rem 0.1rem #956967);
 }
 
 .title_btn-wrapper {
+  display: flex;
   max-width: 40rem;
   margin: auto;
-  display: flex;
+
   .btn {
     display: block;
     width: 25%;
     margin: 2rem auto;
-
-    filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.2));
-    transform: translateZ(0);
+    filter: drop-shadow(0 0 8px rgb(0 0 0 / 20%));
     transition: 0.2s;
+    transform: translateZ(0);
 
     &:hover {
       cursor: pointer;
+      filter: drop-shadow(0 0 10px rgb(0 0 0 / 40%));
       transform: scale(1.1, 1.1);
-      filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.4));
     }
 
     img {
@@ -125,11 +125,13 @@ h1 {
     }
   }
 }
+
 .join-modal {
   h2 {
     margin-top: 2rem;
     text-align: center;
   }
+
   .form {
     .error {
       color: red;
@@ -142,25 +144,29 @@ h1 {
       height: 2rem;
       margin: auto;
     }
+
     .modal_btn-wrapper {
-      margin: 2rem auto;
       display: flex;
       justify-content: center;
+      margin: 2rem auto;
+
       .btn {
         display: inline-block;
         max-width: 120px;
         padding: 5px 40px;
-        background-color: white;
         color: #50a0f6;
-        border-radius: 30px;
         cursor: pointer;
+        background-color: white;
+        border-radius: 30px;
       }
+
       .join {
         color: white;
+        background-color: #50a0f6;
         border: solid 1px;
         border-color: #50a0f6;
-        background-color: #50a0f6;
       }
+
       .cancel {
         margin-left: 2rem;
         border: solid 1px;
@@ -181,19 +187,22 @@ h1 {
 
   .title_btn-wrapper {
     width: 20rem;
+
     .btn {
       width: auto;
       max-width: 8rem;
       margin: 2rem auto;
     }
   }
+
   .join-modal {
     .form {
       .modal_btn-wrapper {
-        margin-top: 0.4rem;
         flex-direction: column;
+        margin-top: 0.4rem;
+
         .btn {
-          margin: 0.8rem auto 0.4rem auto;
+          margin: 0.8rem auto 0.4rem;
         }
       }
     }
@@ -202,6 +211,7 @@ h1 {
   .characters {
     display: flex;
     justify-content: center;
+
     img {
       width: 20rem;
     }

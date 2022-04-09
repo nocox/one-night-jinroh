@@ -59,26 +59,24 @@ export default {
 .scroll-hint-top {
   position: fixed;
   top: 0;
-  height: 24px;
-  width: 100vw;
-  background-color: white;
-  background-size: 100% 50px;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-
-  background-repeat: no-repeat;
   z-index: 1;
+  width: 100vw;
+  height: 24px;
+  background: linear-gradient(rgb(0 0 0 / 50%), rgb(0 0 0 / 0%));
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 100% 50px;
 }
 
 .scroll-hint-bottom {
   position: fixed;
   bottom: 0;
-  height: 24px;
-  width: 100vw;
-  background-color: white;
-
-  background-size: 100% 50px;
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
-  background-repeat: no-repeat;
   z-index: 1;
+  width: 100vw;
+  height: 24px;
+  background: linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0 / 50%));
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 100% 50px;
 }
 </style>

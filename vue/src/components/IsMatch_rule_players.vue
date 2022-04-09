@@ -25,9 +25,9 @@ export default {
 
 <style>
     .alertUnmatch{
-        color:red;
-        margin: 1rem auto;
         width: 40rem;
+        margin: 1rem auto;
+        color:red;
         border: solid 1px red;
     }
 </style>

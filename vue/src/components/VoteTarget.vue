@@ -52,10 +52,10 @@ export default {
 
   .player-wrapper {
     display: flex;
-    justify-content: space-between;
-    padding: 0 1rem;
     flex-wrap:wrap;
     row-gap: 1rem;
+    justify-content: space-between;
+    padding: 0 1rem;
   }
 }
 

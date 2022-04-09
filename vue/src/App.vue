@@ -73,30 +73,31 @@ export default {
 <style lang="scss">
 @font-face {
   font-family: "Mamelon";
-  src: url("./assets/fonts/Mamelon-3-Hi-Regular.woff2") format("woff2");
   font-weight: 400;
+  src: url("./assets/fonts/Mamelon-3-Hi-Regular.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Mamelon";
-  src: url("./assets/fonts/Mamelon-5-Hi-Regular.woff2") format("woff2");
   font-weight: 700;
+  src: url("./assets/fonts/Mamelon-5-Hi-Regular.woff2") format("woff2");
 }
 
 .pc {
   display: block;
 }
+
 .sp {
   display: none;
 }
 
 #app {
   font-family: Mamelon, Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: #212121;
   text-align: left;
   letter-spacing: 0.05em;
-  color: #212121;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -107,16 +108,16 @@ export default {
 
 main {
   max-width: 1200px;
-  margin: auto;
   padding: 0 1.5rem;
+  margin: auto;
 }
 
 section {
-  margin: 2rem auto 2rem auto;
+  margin: 2rem auto;
 }
 
 h2 {
-  margin: 0.5rem auto 0.5rem auto;
+  margin: 0.5rem auto;
   font-size: 1.25rem;
 }
 
@@ -136,36 +137,36 @@ h2 {
 .scroll-hint-top {
   position: fixed;
   top: 0;
-  height: 24px;
-  width: 100vw;
-  background-color: white;
-  background-size: 100% 50px;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-
-  background-repeat: no-repeat;
   z-index: 1;
+  width: 100vw;
+  height: 24px;
+  background: linear-gradient(rgb(0 0 0 / 50%), rgb(0 0 0 / 0%));
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 100% 50px;
 }
 
 .scroll-hint-bottom {
   position: fixed;
   bottom: 0;
-  height: 24px;
-  width: 100vw;
-  background-color: white;
-
-  background-size: 100% 50px;
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
-  background-repeat: no-repeat;
   z-index: 1;
+  width: 100vw;
+  height: 24px;
+  background: linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0 / 50%));
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 100% 50px;
 }
 
 @media screen and (max-width: 639px) {
   main{
     max-width: 639px;
   }
+
   .pc {
     display: none;
   }
+
   .sp {
     display: block;
   }

@@ -139,7 +139,7 @@ export default {
 
 <style lang="scss" scoped>
 section {
-  margin: 2rem auto 0 auto;
+  margin: 2rem auto 0;
 }
 
 h2 {

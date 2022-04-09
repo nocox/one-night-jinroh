@@ -169,7 +169,7 @@ export default {
 
 <style lang="scss" scoped>
 section {
-  margin: 2rem auto 0 auto;
+  margin: 2rem auto 0;
 }
 
 h2 {
@@ -182,18 +182,19 @@ input[type="radio"] {
 
 label {
   display: block;
+  padding: 0.5rem;
   background: #fff;
   border: 1px solid #50a0f6;
-  padding: 0.5rem;
   border-radius: 0.5rem;
+
   &:hover {
     cursor: pointer;
   }
 }
 
 input[type="radio"]:checked + label {
-  background: #50a0f6;
   color: #fff;
+  background: #50a0f6;
 }
 
 .action-result {
@@ -230,6 +231,7 @@ input[type="radio"]:checked + label {
   ul{
     display:grid;
     row-gap: 1rem;
+
     li {
       list-style: none;
      }

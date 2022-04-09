@@ -125,8 +125,8 @@ export default {
 
 <style lang="scss" scoped>
 .result_page {
-  text-align: left;
   margin: 20px auto;
+  text-align: left;
 }
 
 h2,
@@ -144,10 +144,9 @@ h3 {
 
 .grid-container {
   display: grid;
-  justify-content: center;
+  grid-template-columns: 50% 50%;
   row-gap: 2rem;
   column-gap: 2rem;
-  grid-template-columns: 50% 50%;
 
   .grid-item {
     padding: 3rem;
@@ -170,13 +169,15 @@ h3 {
   }
 
   .holiday-roles {
-    grid-column: 1/3;
     display: flex;
     flex-wrap: wrap;
+    grid-column: 1/3;
     justify-content: center;
+
     h3 {
       width: 100%;
     }
+
     img {
       max-width: 8rem;
     }

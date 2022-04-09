@@ -1,15 +1,17 @@
 package com.okaka.onenightjinroh.application.service.result.rules;
 
-import com.okaka.onenightjinroh.application.domain.TallyResult;
+import com.okaka.onenightjinroh.application.domain.Role;
+import com.okaka.onenightjinroh.application.domain.TallyResultConsideredNightAct;
 import com.okaka.onenightjinroh.application.service.result.WinLoseConditionBase;
+import com.okaka.onenightjinroh.application.service.result.WinOrLose;
 
 import java.util.List;
 
 public class FailPeaceVillage implements WinLoseConditionBase {
     @Override
-    public boolean condition(List<TallyResult> tallyResults) {
+    public boolean condition(List<TallyResultConsideredNightAct> tallyResults) {
         // 選ばれた人が2人以下で，選ばれた人は全員村人で，村に村人しかいなかった
-        List<TallyResult> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
+        List<TallyResultConsideredNightAct> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
         if (selectedPlayers.size() > 2) {
             return false;
         }
@@ -27,6 +29,11 @@ public class FailPeaceVillage implements WinLoseConditionBase {
 
     @Override
     public String getResultText() {
-        return "平和村失敗";
+        return "FAIL_PEACE_VILLAGE";
+    }
+
+    @Override
+    public WinOrLose judge(Role role) {
+        return WinOrLose.lose;
     }
 }

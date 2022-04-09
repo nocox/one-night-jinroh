@@ -1,38 +1,48 @@
 package com.okaka.onenightjinroh.application.service.result;
 
-import com.okaka.onenightjinroh.application.bean.GameIndexBean;
 import com.okaka.onenightjinroh.application.domain.GameResult;
-import com.okaka.onenightjinroh.application.service.room.RoleBean;
+import com.okaka.onenightjinroh.application.domain.Role;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ShowResultTermIndexBean {
-    private String judgeText;
-    private GameIndexBean gameIndex;
-    private List<RoleBean> holidayRoles;
+    private String judge;
+    private List<GameParticipantWithResultBean> participants;
+    private List<String> holidayRoles;
 
-    public ShowResultTermIndexBean(String judgeText, GameIndexBean gameIndex, List<RoleBean> holidayRoles) {
-        this.judgeText = judgeText;
-        this.gameIndex = gameIndex;
+    public ShowResultTermIndexBean(String judge, List<GameParticipantWithResultBean> participants, List<String> holidayRoles) {
+        this.judge = judge;
+        this.participants = participants;
         this.holidayRoles = holidayRoles;
     }
 
-    public GameIndexBean getGameIndex() {
-        return gameIndex;
+    public List<GameParticipantWithResultBean> getParticipants() {
+        return participants;
     }
 
-    public String getJudgeText() {
-        return judgeText;
+    public String getJudge() {
+        return judge;
     }
 
-    public List<RoleBean> getHolidayRoles() {
+    public List<String> getHolidayRoles() {
         return holidayRoles;
     }
 
-    public static ShowResultTermIndexBean fromDomain(GameResult gameResult){
-        GameIndexBean gameIndexBean = GameIndexBean.ofOpenRole(gameResult.getGameParticipants(), gameResult.getGameParticipantId());
-        List<RoleBean> holidayRoles = gameResult.getHolidayRoles().getRoles().stream().map(RoleBean::new).collect(Collectors.toList());
-        return new ShowResultTermIndexBean(gameResult.getJudge().getResultText(), gameIndexBean, holidayRoles);
+    public static ShowResultTermIndexBean fromDomain(GameResult gameResult) {
+        List<GameParticipantWithResultBean> participants = gameResult.getGameParticipants().stream()
+                .map(participant -> new GameParticipantWithResultBean(
+                            participant.getPlayerName(),
+                            participant.getRoleEngStrConsideredNightAct(), // TODO: 快盗の交換後の役職を表示している．コメントの実装時に，元の役職をここで表示し，コメントに快盗と交換したことを表示する．
+                            participant.getCoRoleEngStr(),
+                            participant.getWinOrLose(),
+                            participant.myself(gameResult.getGameParticipantId()),
+                            participant.getComment()
+                    )
+                ).collect(Collectors.toList());
+        List<String> holidayRoles = gameResult.getHolidayRoles().getRoles().stream()
+                .map(Role::getRoleEngName)
+                .collect(Collectors.toList());
+        return new ShowResultTermIndexBean(gameResult.getJudge().getResultText(), participants, holidayRoles);
     }
 }

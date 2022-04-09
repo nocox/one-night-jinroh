@@ -144,9 +144,9 @@ h3 {
 
 .grid-container {
   display: grid;
+  grid-template-columns: 50% 50%;
   row-gap: 2rem;
   column-gap: 2rem;
-  grid-template-columns: 50% 50%;
 
   .grid-item {
     padding: 3rem;

@@ -3,11 +3,7 @@
     <figcaption class="winner-text">
       {{ judgeResults[judge].text }}
     </figcaption>
-    <img
-      class="winner-image"
-      :src="judgeResults[judge].imagePath"
-      :alt="judgeResults[judge].text"
-    />
+    <img class="winner-image" :src="judgeResults[judge].imagePath" :alt="judgeResults[judge].text" />
   </figure>
 </template>
 
@@ -15,8 +11,8 @@
 export default {
   name: "resultImage",
   props: ["judge"],
-  mounted(){
-    this.$emit("getJudgeText", this.judgeResults[this.judge].text)  ;
+  mounted() {
+    this.$emit("getJudgeText", this.judgeResults[this.judge].text);
   },
   data() {
     return {
@@ -53,9 +49,9 @@ export default {
   margin: auto;
   text-align: center;
 
-  .winner-text{
-    font-size: 24px;
+  .winner-text {
     font-weight: bold;
+    font-size: 24px;
   }
 
   .winner-image {
@@ -66,7 +62,7 @@ export default {
 
 @media screen and (max-width: 639px) {
   .winner {
-    max-width: 15rem;  
+    max-width: 15rem;
   }
 }
 </style>

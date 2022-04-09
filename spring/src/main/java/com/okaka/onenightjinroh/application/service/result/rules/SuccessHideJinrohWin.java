@@ -1,15 +1,17 @@
 package com.okaka.onenightjinroh.application.service.result.rules;
 
-import com.okaka.onenightjinroh.application.domain.TallyResult;
+import com.okaka.onenightjinroh.application.domain.Role;
+import com.okaka.onenightjinroh.application.domain.TallyResultConsideredNightAct;
 import com.okaka.onenightjinroh.application.service.result.WinLoseConditionBase;
+import com.okaka.onenightjinroh.application.service.result.WinOrLose;
 
 import java.util.List;
 
 public class SuccessHideJinrohWin implements WinLoseConditionBase {
     @Override
-    public boolean condition(List<TallyResult> tallyResults) {
+    public boolean condition(List<TallyResultConsideredNightAct> tallyResults) {
         // 選ばれた人が3人以上で，村の中に人狼がいる．
-        List<TallyResult> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
+        List<TallyResultConsideredNightAct> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
         if (selectedPlayers.size() < 3) {
             return false;
         }
@@ -23,6 +25,15 @@ public class SuccessHideJinrohWin implements WinLoseConditionBase {
 
     @Override
     public String getResultText() {
-        return "人狼側の勝利(潜伏成功)";
+        return "SUCCESS_HIDE_JINROH_WIN";
+    }
+
+    @Override
+    public WinOrLose judge(Role role) {
+        if (role.getRoleId() == 2 || role.getRoleId() == 5) {
+            return WinOrLose.win;
+        } else {
+            return WinOrLose.lose;
+        }
     }
 }

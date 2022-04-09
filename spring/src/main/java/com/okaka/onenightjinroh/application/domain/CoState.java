@@ -1,6 +1,4 @@
-package com.okaka.onenightjinroh.application.service.talk;
-
-import com.okaka.onenightjinroh.application.domain.Role;
+package com.okaka.onenightjinroh.application.domain;
 
 import java.util.List;
 import java.util.stream.Collectors;

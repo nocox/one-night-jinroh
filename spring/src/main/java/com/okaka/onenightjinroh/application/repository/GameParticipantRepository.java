@@ -8,6 +8,7 @@ import com.okaka.jinroh.persistence.RoleEntity;
 import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.onenightjinroh.application.domain.Game;
 import com.okaka.onenightjinroh.application.domain.GameParticipant;
+import com.okaka.onenightjinroh.application.domain.GameParticipants;
 import com.okaka.onenightjinroh.application.domain.Role;
 import com.okaka.onenightjinroh.application.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,10 @@ public class GameParticipantRepository {
             gameParticipant.setRole(rolesMap.get(roleId));
         });
         return gps;
+    }
+
+    public GameParticipants findAllByGameIdWithUserAndRole(Long gameId) {
+        return GameParticipants.of(findByGameIdWithUserAndRole(gameId));
     }
 
     public static Map<Long, GameParticipant> toMapGameParticipant(List<GameParticipant> GameParticipants){

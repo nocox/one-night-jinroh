@@ -1,24 +1,22 @@
 package com.okaka.onenightjinroh.application.service.result.rules;
 
-import com.okaka.onenightjinroh.application.domain.GameParticipant;
 import com.okaka.onenightjinroh.application.domain.Role;
-import com.okaka.onenightjinroh.application.domain.TallyResult;
+import com.okaka.onenightjinroh.application.domain.TallyResultConsideredNightAct;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class RuleUtils {
-    public static boolean containsRole(List<TallyResult> tallyResults, Long selectRoleId) {
+    public static boolean containsRole(List<TallyResultConsideredNightAct> tallyResults, Long selectRoleId) {
             return tallyResults.stream()
-                    .map(TallyResult::getGameParticipant)
-                    .map(GameParticipant::getRole)
+                    .map(TallyResultConsideredNightAct::getRole)
                     .map(Role::getRoleId)
                     .anyMatch(roleId -> roleId.equals(selectRoleId));
     }
 
-    public static List<TallyResult> getSelectedPlayers(List<TallyResult> tallyResults) {
+    public static List<TallyResultConsideredNightAct> getSelectedPlayers(List<TallyResultConsideredNightAct> tallyResults) {
         return tallyResults.stream()
-                .filter(TallyResult::getSelected)
+                .filter(TallyResultConsideredNightAct::getSelected)
                 .collect(Collectors.toList());
     }
 }

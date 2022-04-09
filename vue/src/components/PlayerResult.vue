@@ -8,7 +8,7 @@
       <img
         class="co-icon__img"
         :src="this.coRoleList[this.coRole]"
-        :alt="this.coRole"
+        :alt="''"
       />
     </figure>
     <span class="player-name" :class="{ me: this.myself }">
@@ -33,22 +33,22 @@ export default {
   data() {
     return {
       RoleList: {
-        不明: require("../assets/images/chara-icon/unknown.png"),
-        人狼: require("../assets/images/chara-icon/jinroh.png"),
-        村人: require("../assets/images/chara-icon/murabito.png"),
-        占い師: require("../assets/images/chara-icon/uranaishi.png"),
-        怪盗: require("../assets/images/chara-icon/kaito.png"),
-        狂人: require("../assets/images/chara-icon/kyojin.png"),
-        吊り人: require("../assets/images/chara-icon/tsuribito.png"),
+        unknown: require("../assets/images/chara-icon/unknown.png"),
+        jinroh: require("../assets/images/chara-icon/jinroh.png"),
+        murabito: require("../assets/images/chara-icon/murabito.png"),
+        uranaishi: require("../assets/images/chara-icon/uranaishi.png"),
+        kaito: require("../assets/images/chara-icon/kaito.png"),
+        kyojin: require("../assets/images/chara-icon/kyojin.png"),
+        turibito: require("../assets/images/chara-icon/tsuribito.png"),
       },
       coRoleList: {
-        不明: require("../assets/images/fukidashi/fumei.png"),
-        人狼: require("../assets/images/fukidashi/jinroh.png"),
-        村人: require("../assets/images/fukidashi/murabito.png"),
-        占い師: require("../assets/images/fukidashi/uranaishi.png"),
-        怪盗: require("../assets/images/fukidashi/kaito.png"),
-        狂人: require("../assets/images/fukidashi/kyojin.png"),
-        吊り人: require("../assets/images/fukidashi/tsuribito.png"),
+        unknown: require("../assets/images/fukidashi/fumei.png"),
+        jinroh: require("../assets/images/fukidashi/jinroh.png"),
+        murabito: require("../assets/images/fukidashi/murabito.png"),
+        uranaishi: require("../assets/images/fukidashi/uranaishi.png"),
+        kaito: require("../assets/images/fukidashi/kaito.png"),
+        kyojin: require("../assets/images/fukidashi/kyojin.png"),
+        turibito: require("../assets/images/fukidashi/tsuribito.png"),
       },
     };
   },
@@ -78,8 +78,8 @@ export default {
 
 .result-player {
   display: grid;
-  grid-template-columns: minmax(80px, 100px) 1fr;
-  column-gap: 0;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
   align-items: center;
   width: 100%;
   margin: auto;
@@ -89,9 +89,12 @@ export default {
     display: flex;
     grid-row: 1/3;
     grid-column: 1/2;
+
+    width: 80px;
+    height: 80px;
+    display: flex;
     justify-self: center;
-    width: 50px;
-    height: 50px;
+
 
     img {
       width: 100%;
@@ -113,8 +116,10 @@ export default {
   }
 
   .player-name {
-    grid-row: 2/3;
-    grid-column: 2/3;
+    grid-row: 3/4;
+    grid-column: 1/3;
+    font-size: 18px;
+    padding-top: 0.5rem;
   }
 
   .me {
@@ -122,8 +127,8 @@ export default {
   }
 
   .player-comment {
-    grid-column: 1/3;
-    text-align: center;
+    grid-row:2/3;
+    grid-column: 2/3;
   }
 }
 

@@ -6,7 +6,6 @@ import com.okaka.onenightjinroh.application.domain.OtherNightActFormatter;
 import com.okaka.onenightjinroh.application.domain.Role;
 import com.okaka.onenightjinroh.application.domain.RoleNightActFormatter;
 import com.okaka.onenightjinroh.application.domain.UranaishiNightActFormatter;
-import com.okaka.onenightjinroh.application.logic.KaitoNightActExecuteLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +21,7 @@ public class RoleNightActFormatterRepository {
     @Autowired
     GameParticipantRepository gameParticipantRepository;
     @Autowired
-    KaitoNightActExecuteLogic kaitoNightActExecuteLogic;
+    KaitoNightActRepository kaitoNightActRepository;
 
     public RoleNightActFormatter fetchNightAct(Long gameId, Long gameParticipantId) {
         Role role = roleRepository.findByParticipationId(gameParticipantId);
@@ -33,7 +32,7 @@ public class RoleNightActFormatterRepository {
             return UranaishiNightActFormatter.from(toParticipant, uranaishiNightAct, holidayRoles);
         }
         else if (role instanceof Role.Kaito) {
-            return kaitoNightActExecuteLogic.invokeByParticipationId(gameParticipantId);
+            return kaitoNightActRepository.findByParticipationId(gameParticipantId).orElse(null);
         }
         return new OtherNightActFormatter();
     }

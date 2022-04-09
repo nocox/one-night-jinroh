@@ -1,7 +1,7 @@
 package com.okaka.onenightjinroh.application.service.result;
 
-import com.okaka.onenightjinroh.application.domain.Judge;
-import com.okaka.onenightjinroh.application.domain.TallyResult;
+import com.okaka.onenightjinroh.application.domain.KaitoNightActFormatter;
+import com.okaka.onenightjinroh.application.domain.TallyResultConsideredNightAct;
 import com.okaka.onenightjinroh.application.port.TallyResultPort;
 import com.okaka.onenightjinroh.application.service.result.rules.FailPeaceVillage;
 import com.okaka.onenightjinroh.application.service.result.rules.SimpleJinrohWin;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class JudgeFacade {
@@ -25,15 +27,16 @@ public class JudgeFacade {
             new SimpleJinrohWin(),
             new SuccessPeaceVillage(),
             new FailPeaceVillage(),
-            new SuccessHideJinrohWin()
-    );
+            new SuccessHideJinrohWin());
 
-    public Judge judge(Long gameId) {
-        List<TallyResult> tallyResults = tallyResultPort.searchTallyResults(gameId);
-        WinLoseConditionBase winLoseConditionBase = winLoseConditions.stream()
+    public WinLoseConditionBase judge(Long gameId, Optional<KaitoNightActFormatter> kaitoNightActFormatter) {
+        List<TallyResultConsideredNightAct> tallyResults = tallyResultPort.searchTallyResults(gameId).stream()
+                .map(tallyResult -> new TallyResultConsideredNightAct(tallyResult, kaitoNightActFormatter))
+                .collect(Collectors.toList());
+
+        return winLoseConditions.stream()
                 .filter(conditionBase -> conditionBase.condition(tallyResults))
                 .min(Comparator.comparing(WinLoseConditionBase::priority))
                 .orElseThrow();
-        return new Judge(winLoseConditionBase.getResultText());
     }
 }

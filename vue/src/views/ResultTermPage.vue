@@ -197,5 +197,9 @@ h3 {
       grid-column: 1/2;
     }
   }
+
+  .grid-container {
+    grid-template-columns: 100%;
+  }
 }
 </style>

@@ -147,6 +147,7 @@ h3 {
   justify-content: center;
   row-gap: 2rem;
   column-gap: 2rem;
+  grid-template-columns: 50% 50%;
 
   .grid-item {
     padding: 3rem;
@@ -157,7 +158,7 @@ h3 {
 }
 
 .result {
-  max-width: 800px;
+  max-width: 600px;
   margin: auto;
 
   .result_winners {

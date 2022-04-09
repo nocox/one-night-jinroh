@@ -78,8 +78,8 @@ export default {
 
 .result-player {
   display: grid;
-  grid-template-columns: minmax(80px, 100px) 1fr;
-  column-gap: 0;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
   align-items: center;
   width: 100%;
   margin: auto;
@@ -88,8 +88,8 @@ export default {
   .player-icon {
     grid-row: 1/3;
     grid-column: 1/2;
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     display: flex;
     justify-self: center;
 
@@ -113,8 +113,10 @@ export default {
   }
 
   .player-name {
-    grid-row: 2/3;
-    grid-column: 2/3;
+    grid-row: 3/4;
+    grid-column: 1/3;
+    font-size: 18px;
+    padding-top: 0.5rem;
   }
 
   .me {
@@ -122,8 +124,8 @@ export default {
   }
 
   .player-comment {
-    grid-column: 1/3;
-    text-align: center;
+    grid-row:2/3;
+    grid-column: 2/3;
   }
 }
 

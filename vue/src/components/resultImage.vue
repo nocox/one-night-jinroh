@@ -37,6 +37,10 @@ export default {
           text: "平和村成功",
           imagePath: require("../assets/images/result1.png"),
         },
+        TURIBITO_WIN: {
+          text: "吊り人の勝利",
+          imagePath: require("../assets/images/result3.png"),
+        }
       },
     };
   },

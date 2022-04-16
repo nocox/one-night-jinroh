@@ -7,34 +7,33 @@ import com.okaka.onenightjinroh.application.service.result.WinOrLose;
 
 import java.util.List;
 
-public class SuccessPeaceVillage implements WinLoseConditionBase {
+public class TuribitoWin implements WinLoseConditionBase {
+
     @Override
     public boolean condition(List<TallyResultConsideredNightAct> tallyResults) {
-        // 選ばれた人が3人以上で，村の中に人狼がいない．
+        // 選ばれた人が2人以下で，そのうちの1人が吊人だったら
         List<TallyResultConsideredNightAct> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
-        if (selectedPlayers.size() < 3) {
+        if (selectedPlayers.size() > 2) {
             return false;
         }
-        boolean existsJinroh = RuleUtils.containsRole(tallyResults, 2L);
-        return existsJinroh == false;
+        return RuleUtils.containsRole(selectedPlayers, 6L);
     }
 
     @Override
     public Integer priority() {
-        return 25;
+        return 50;
     }
 
     @Override
     public String getResultText() {
-        return "SUCCESS_PEACE_VILLAGE";
+        return "TURIBITO_WIN";
     }
 
     @Override
     public WinOrLose judge(Role role) {
         if (role.getRoleId() == 6) {
-            return WinOrLose.lose;
-        } else {
             return WinOrLose.win;
         }
+        return WinOrLose.lose;
     }
 }

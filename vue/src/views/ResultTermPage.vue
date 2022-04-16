@@ -147,6 +147,7 @@ h3 {
   grid-template-columns: 50% 50%;
   row-gap: 2rem;
   column-gap: 2rem;
+  justify-content: center;
 
   .grid-item {
     padding: 3rem;

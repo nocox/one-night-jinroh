@@ -8,6 +8,7 @@ import com.okaka.onenightjinroh.application.service.result.rules.SimpleJinrohWin
 import com.okaka.onenightjinroh.application.service.result.rules.SimpleVillageWin;
 import com.okaka.onenightjinroh.application.service.result.rules.SuccessHideJinrohWin;
 import com.okaka.onenightjinroh.application.service.result.rules.SuccessPeaceVillage;
+import com.okaka.onenightjinroh.application.service.result.rules.TuribitoWin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,8 @@ public class JudgeFacade {
             new SimpleJinrohWin(),
             new SuccessPeaceVillage(),
             new FailPeaceVillage(),
-            new SuccessHideJinrohWin());
+            new SuccessHideJinrohWin(),
+            new TuribitoWin());
 
     public WinLoseConditionBase judge(Long gameId, Optional<KaitoNightActFormatter> kaitoNightActFormatter) {
         List<TallyResultConsideredNightAct> tallyResults = tallyResultPort.searchTallyResults(gameId).stream()

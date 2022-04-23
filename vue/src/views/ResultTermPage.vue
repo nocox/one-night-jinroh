@@ -41,12 +41,15 @@
       </div>
     </div>
 
-    <myButton class="btn" :method="returnRoom" :text="'ルームに戻る'" />
+    <myButton v-if="hostFlg" class="btn" :method="returnRoom" :text="'全員ルームに戻す'" />
+    <p v-else class="waiting-text">ホストがルームに戻るを選択するまでおまちください</p>
   </main>
 </template>
 
 <script>
 import axios from "axios";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 import resultImage from "@/components/resultImage.vue";
 import PlayerResult from "@/components/PlayerResult.vue";
@@ -70,7 +73,7 @@ export default {
           comment: "",
         },
       ],
-      hostFlag: false,
+      hostFlg: false,
       winPlayers: [],
       losePlayers: [],
       RoleList: {
@@ -103,6 +106,8 @@ export default {
         this.judge = response.data.judge;
         this.holidayRoles = response.data.holidayRoles;
         this.playerList = response.data.participants
+        this.hostFlg = response.data.hostFlg
+        this.configWebSocket(response.data.gameId);
         this.$modal.show("result-modal");
       })
       .catch(() => {
@@ -111,13 +116,26 @@ export default {
   },
   methods: {
     returnRoom() {
-      this.$router.push("/room");
+      axios.get(JINROH_API_BASE_URL + "/return-room", { withCredentials: true })
+      .catch(() => {
+        console.log("サーバとの通信に失敗しました．もう一度お試しください")
+      })
     },
     closeModal: function () {
       this.$modal.hide("result-modal");
     },
     getJudgeText: function (judgeText) {
       this.judgeText = judgeText;
+    },
+    configWebSocket: function (gameId) {
+      this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
+      this.stompClient = Stomp.over(this.socket);
+      this.stompClient.connect({}, (frame) => {
+        console.log("Connected: " + frame);
+        this.stompClient.subscribe("/topic/return-room/" + gameId, () => {
+          this.$router.push("/room");
+        });
+      });
     },
   },
 };
@@ -183,6 +201,11 @@ h3 {
       max-width: 8rem;
     }
   }
+}
+
+.waiting-text {
+  margin-top: 3rem;
+  text-align: center;
 }
 
 .result-modal {

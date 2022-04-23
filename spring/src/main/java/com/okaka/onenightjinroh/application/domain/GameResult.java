@@ -27,6 +27,10 @@ public class GameResult {
         return judge;
     }
 
+    public boolean isHost() {
+        return this.gameParticipants.isHostByParticipantId(this.gameParticipantId);
+    }
+
     public GameParticipantsWithResultAndCoState getGameParticipants() {
         return gameParticipants;
     }

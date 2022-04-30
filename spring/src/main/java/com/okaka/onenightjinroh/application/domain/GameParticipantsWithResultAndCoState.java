@@ -16,6 +16,11 @@ public class GameParticipantsWithResultAndCoState {
         this.coState = coState;
     }
 
+    public boolean isHostByParticipantId(Long participantId) {
+        return stream().filter(GameParticipantWithResultAndCoState::isHost)
+                .anyMatch(participant -> participant.myself(participantId));
+    }
+
     public Stream<GameParticipantWithResultAndCoState> stream() {
         return participants.stream().map(GameParticipantWithResultAndCoState::new);
     }
@@ -64,6 +69,10 @@ public class GameParticipantsWithResultAndCoState {
                 return "";
             }
             return "元: " + originalRole.getRoleName();
+        }
+
+        public boolean isHost() {
+            return participant.getParticipant().isHostFlg();
         }
     }
 }

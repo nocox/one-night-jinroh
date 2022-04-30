@@ -10,11 +10,15 @@ public class ShowResultTermIndexBean {
     private String judge;
     private List<GameParticipantWithResultBean> participants;
     private List<String> holidayRoles;
+    private Long gameId;
+    private boolean hostFlg;
 
-    public ShowResultTermIndexBean(String judge, List<GameParticipantWithResultBean> participants, List<String> holidayRoles) {
+    public ShowResultTermIndexBean(String judge, List<GameParticipantWithResultBean> participants, List<String> holidayRoles, Long gameId, boolean hostFlg) {
         this.judge = judge;
         this.participants = participants;
         this.holidayRoles = holidayRoles;
+        this.gameId = gameId;
+        this.hostFlg = hostFlg;
     }
 
     public List<GameParticipantWithResultBean> getParticipants() {
@@ -27,6 +31,14 @@ public class ShowResultTermIndexBean {
 
     public List<String> getHolidayRoles() {
         return holidayRoles;
+    }
+
+    public Long getGameId() {
+        return gameId;
+    }
+
+    public boolean isHostFlg() {
+        return hostFlg;
     }
 
     public static ShowResultTermIndexBean fromDomain(GameResult gameResult) {
@@ -43,6 +55,6 @@ public class ShowResultTermIndexBean {
         List<String> holidayRoles = gameResult.getHolidayRoles().getRoles().stream()
                 .map(Role::getRoleEngName)
                 .collect(Collectors.toList());
-        return new ShowResultTermIndexBean(gameResult.getJudge().getResultText(), participants, holidayRoles);
+        return new ShowResultTermIndexBean(gameResult.getJudge().getResultText(), participants, holidayRoles, gameResult.getGameId(), gameResult.isHost());
     }
 }

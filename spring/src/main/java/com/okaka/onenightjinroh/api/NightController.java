@@ -18,10 +18,9 @@ import com.okaka.onenightjinroh.application.service.night.dto.NightUranaiResultD
 import com.okaka.onenightjinroh.application.service.room.RoleBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -77,7 +76,7 @@ public class NightController {
         return 0;
     }
 
-    @PostMapping(path = "/night/uranai")
+    @RequestMapping(path = "/night/uranai", method = RequestMethod.POST)
     NightUranaiResultBean uranai(@RequestBody NightUranaiForm form) {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);
@@ -104,7 +103,7 @@ public class NightController {
         return status;
     }
 
-    @PostMapping(path = "/night/kaito")
+    @RequestMapping(path = "/night/kaito", method = RequestMethod.POST)
     ResponseEntity<NightKaitoResultBean> kaito(@RequestBody NightKaitoForm form) {
         String strGameParticipationId = session.getAttribute("game_participation_id").toString();
         Long gameParticipantId = Long.valueOf(strGameParticipationId);
@@ -113,7 +112,7 @@ public class NightController {
         return ResponseEntity.ok().body(bean);
     }
 
-    @GetMapping(path = "/night/jinroh/index")
+    @RequestMapping(path = "/night/jinroh/index")
     ResponseEntity<NightJinrohIndexBean> getJinroh() {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);

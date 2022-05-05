@@ -1,6 +1,5 @@
 package com.okaka.onenightjinroh;
 
-import com.okaka.jinroh.persistence.Reservation;
 import com.okaka.jinroh.persistence.ReservationAdapter;
 import com.okaka.jinroh.persistence.RoleDao;
 import com.okaka.jinroh.persistence.RoleEntity;
@@ -17,8 +16,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
@@ -101,24 +98,24 @@ public class OneNightJinrohApplication {
 		}
 	}
 
-	@RequestMapping(path = "/")
-	List<Reservation> all() {
-		return reservationAdapter.selectAll();
-	}
+//	@RequestMapping(path = "/")
+//	List<Reservation> all() {
+//		return reservationAdapter.selectAll();
+//	}
+//
+//	@RequestMapping(path = "/", params = "name")
+//	List<Reservation> name(@RequestParam String name) {
+//		return reservationAdapter.selectByName(name);
+//	}
 
-	@RequestMapping(path = "/", params = "name")
-	List<Reservation> name(@RequestParam String name) {
-		return reservationAdapter.selectByName(name);
-	}
-
-	@RequestMapping(path = "/insert", params = "name")
-	List<Reservation> insert(@RequestParam String name) {
-		reservationAdapter.insert(name);
-		return reservationAdapter.selectAll();
-	}
-
-	@RequestMapping(path = "/all_user")
-	List<TUser> allUser() {
-		return tUserDao.selectTUserAll();
-	}
+//	@RequestMapping(path = "/insert", params = "name")
+//	List<Reservation> insert(@RequestParam String name) {
+//		reservationAdapter.insert(name);
+//		return reservationAdapter.selectAll();
+//	}
+//
+//	@RequestMapping(path = "/all_user")
+//	List<TUser> allUser() {
+//		return tUserDao.selectTUserAll();
+//	}
 }

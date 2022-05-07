@@ -5,7 +5,11 @@
 
     <VoteTarget
       :otherPlayerList="otherPlayerList"
-      :player="{ playerName: playerName, playerRole: playerRole, playerId: playerId }"
+      :player="{
+        playerName: playerName,
+        playerRole: playerRole,
+        playerId: playerId,
+      }"
       :coRole="this.coRole"
       :cos="this.cos"
       :checkPlayerId="checkPlayerId"
@@ -71,7 +75,7 @@ export default {
   name: "TempVotePage",
   data() {
     return {
-      playerId : -1,
+      playerId: -1,
       playerName: "xxxxx",
       playerRole: {
         roleId: -1,
@@ -228,13 +232,15 @@ input[type="radio"]:checked + label {
     text-align: center;
   }
 
-  ul{
-    display:grid;
+  ul {
+    display: grid;
     row-gap: 1rem;
+    column-gap: 1rem;
+    grid-template-columns: 1fr 1fr;
 
     li {
       list-style: none;
-     }
+    }
   }
 
   .vote-btn {
@@ -287,6 +293,12 @@ input[type="radio"]:checked + label {
 
     .display-rolls {
       max-width: 100%;
+    }
+  }
+
+  .vote_section {
+    ul {
+      grid-template-columns: 1fr;
     }
   }
 }

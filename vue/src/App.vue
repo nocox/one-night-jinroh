@@ -18,7 +18,6 @@
 </template>
 
 <script>
-// import ScrollHint from "@/components/ScrollHint.vue";
 export default {
   name: "App",
   components: {
@@ -140,10 +139,7 @@ h2 {
   z-index: 1;
   width: 100vw;
   height: 24px;
-  background: linear-gradient(rgb(0 0 0 / 50%), rgb(0 0 0 / 0%));
-  background-color: white;
-  background-repeat: no-repeat;
-  background-size: 100% 50px;
+  background: linear-gradient(rgb(0 0 0 / 40%), rgb(0 0 0 / 0%));
 }
 
 .scroll-hint-bottom {
@@ -152,10 +148,7 @@ h2 {
   z-index: 1;
   width: 100vw;
   height: 24px;
-  background: linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0 / 50%));
-  background-color: white;
-  background-repeat: no-repeat;
-  background-size: 100% 50px;
+  background: linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0 / 40%));
 }
 
 @media screen and (max-width: 639px) {

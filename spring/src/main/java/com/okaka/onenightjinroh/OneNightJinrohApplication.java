@@ -98,24 +98,4 @@ public class OneNightJinrohApplication {
 		}
 	}
 
-//	@RequestMapping(path = "/")
-//	List<Reservation> all() {
-//		return reservationAdapter.selectAll();
-//	}
-//
-//	@RequestMapping(path = "/", params = "name")
-//	List<Reservation> name(@RequestParam String name) {
-//		return reservationAdapter.selectByName(name);
-//	}
-
-//	@RequestMapping(path = "/insert", params = "name")
-//	List<Reservation> insert(@RequestParam String name) {
-//		reservationAdapter.insert(name);
-//		return reservationAdapter.selectAll();
-//	}
-//
-//	@RequestMapping(path = "/all_user")
-//	List<TUser> allUser() {
-//		return tUserDao.selectTUserAll();
-//	}
 }

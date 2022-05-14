@@ -15,6 +15,7 @@
       </li>
     </ul>
     <myButton :text="'選んだ相手と入れ替える'" :method="kaito" :class="{'disabled': isDisabled}" />
+    <p style="color:red" v-if="errorMessage">{{ errorMessage }}</p>
 
     <div v-if="kaitoResult.actLog">
         <!-- FIXME: ここ手抜きしました．．フロント側で加工し表示するべき -->
@@ -33,11 +34,12 @@ export default {
   components: { myButton },
   data() {
     return {
-      checkedPlayerID: 0,
+      checkedPlayerID: null,
       kaitoResult: {
           actLog: null
       },
       isDisabled: false,
+      errorMessage: "",
     };
   },
   props: {
@@ -48,6 +50,11 @@ export default {
   },
   methods: {
     kaito: function () {
+      
+      this.errorMessage = this.checkedPlayerID
+      ? "" : "プレイヤーが選ばれていません";
+      if(this.errorMessage) return;
+
       axios
         .post(
             JINROH_API_BASE_URL + "/night/kaito",

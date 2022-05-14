@@ -8,13 +8,13 @@
             type="radio"
             v-model="checkedPlayerID"
             :value="otherPlayer.id"
-            :disabled="is_votable"
+            :disabled="isDisabled"
           />
           {{ otherPlayer.name }}
         </label>
       </li>
     </ul>
-    <myButton :text="'選んだ相手と入れ替える'" :method="kaito" />
+    <myButton :text="'選んだ相手と入れ替える'" :method="kaito" :class="{'disabled': isDisabled}" />
 
     <div v-if="kaitoResult.actLog">
         <!-- FIXME: ここ手抜きしました．．フロント側で加工し表示するべき -->
@@ -36,7 +36,8 @@ export default {
       checkedPlayerID: 0,
       kaitoResult: {
           actLog: null
-      }
+      },
+      isDisabled: false,
     };
   },
   props: {
@@ -60,6 +61,7 @@ export default {
         )
         .then((response) => {
           this.kaitoResult = response.data;
+          this.isDisabled = true;
           console.log(response.data);
         })
         .catch(() => {});

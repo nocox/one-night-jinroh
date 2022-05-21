@@ -1,6 +1,6 @@
 <template>
   <a :class="{ current: myCoRole === coRole.roleName }" @click="co(coRole.roleName)">
-    <img :src="coRole.imgSrc" :alt="coRole.roleName"/>
+    <img :src="coRole.imgSrc" :alt="coRole.roleName"  draggable="false" ondragstart="return false;" />
   </a>
 </template>
 

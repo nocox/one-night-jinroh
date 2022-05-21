@@ -4,7 +4,11 @@ server:
 doma:
   dialect: h2
 
-# h2 for debug tool
+com:
+  okaka:
+    onenightjinroh:
+      domain: http://localhost:8081
+
 spring:
   h2:
     console:

@@ -49,7 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 .winner {
-  max-width: 20rem;
+  max-width: 21rem;
   margin: auto;
   text-align: center;
 
@@ -67,6 +67,10 @@ export default {
 @media screen and (max-width: 639px) {
   .winner {
     max-width: 15rem;
+    .winner-text{
+      font-size: 20px;
+      word-break: keep-all;
+    }
   }
 }
 </style>

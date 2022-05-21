@@ -2,7 +2,7 @@
   <main class="result_page">
     <modal :width="'90%'" :height="'auto'" name="result-modal">
       <div class="result-modal">
-        <resultImage :judge="judge" @getJudgeText="judgeText = $event" />
+        <ResultImage :judge="judge" @getJudgeText="judgeText = $event" />
         <myButton class="btn" :method="closeModal" :text="'OK'" />
       </div>
     </modal>
@@ -51,7 +51,7 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
-import resultImage from "@/components/resultImage.vue";
+import ResultImage from "@/components/ResultImage.vue";
 import PlayerResult from "@/components/PlayerResult.vue";
 import myButton from "@/components/Button.vue";
 import { JINROH_API_BASE_URL } from "../Env";
@@ -87,7 +87,7 @@ export default {
       },
     };
   },
-  components: { resultImage, myButton, PlayerResult },
+  components: { ResultImage, myButton, PlayerResult },
   computed: {
     // playerListを勝者と敗者に振り分ける
     winPlayerList: function () {

@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "resultImage",
+  name: "ResultImage",
   props: ["judge"],
   mounted() {
     this.$emit("getJudgeText", this.judgeResults[this.judge].text);

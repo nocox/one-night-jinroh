@@ -8,7 +8,7 @@
             type="radio"
             v-model="selectedUranai"
             v-bind:value="'PLAYER:' + player.id"
-            :disabled="isSelected"
+            :disabled="isDisabled"
           />
           {{ player.name }}
         </label>
@@ -19,14 +19,14 @@
             type="radio"
             v-model="selectedUranai"
             value="HOLIDAY_ROLES"
-            :disabled="isSelected"
+            :disabled="isDisabled"
           />
           お休み中のロール
         </label>
       </li>
     </ul>
 
-    <myButton class="btn" :method="uranai" :text="'占う'" />
+    <myButton class="btn" :method="uranai" :text="'占う'" :class="{'disabled':isDisabled}" />
 
     <p>占い結果</p>
     <div v-if="uranaiResult.status == 'PLAYER'">
@@ -75,6 +75,7 @@ export default {
           },
         ],
       },
+      isDisabled: false,
     };
   },
   props: {
@@ -109,6 +110,7 @@ export default {
         )
         .then((response) => {
           this.uranaiResult = response.data;
+          this.isDisabled = true;
           console.log(response.data);
         })
         .catch(() => {});

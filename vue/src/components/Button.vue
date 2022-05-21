@@ -34,4 +34,11 @@ a {
     transition: 0.1s;
   }
 }
+
+a.disabled {
+    color: gray;
+    border: 1px solid gray;
+    pointer-events: none;
+  
+}
 </style>

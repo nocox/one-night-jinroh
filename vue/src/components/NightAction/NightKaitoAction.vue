@@ -8,13 +8,14 @@
             type="radio"
             v-model="checkedPlayerID"
             :value="otherPlayer.id"
-            :disabled="is_votable"
+            :disabled="isDisabled"
           />
           {{ otherPlayer.name }}
         </label>
       </li>
     </ul>
-    <myButton :text="'選んだ相手と入れ替える'" :method="kaito" />
+    <myButton :text="'選んだ相手と入れ替える'" :method="kaito" :class="{'disabled': isDisabled}" />
+    <p style="color:red" v-if="errorMessage">{{ errorMessage }}</p>
 
     <div v-if="kaitoResult.actLog">
         <!-- FIXME: ここ手抜きしました．．フロント側で加工し表示するべき -->
@@ -33,10 +34,12 @@ export default {
   components: { myButton },
   data() {
     return {
-      checkedPlayerID: 0,
+      checkedPlayerID: null,
       kaitoResult: {
           actLog: null
-      }
+      },
+      isDisabled: false,
+      errorMessage: "",
     };
   },
   props: {
@@ -47,6 +50,11 @@ export default {
   },
   methods: {
     kaito: function () {
+      
+      this.errorMessage = this.checkedPlayerID
+      ? "" : "プレイヤーが選ばれていません";
+      if(this.errorMessage) return;
+
       axios
         .post(
             JINROH_API_BASE_URL + "/night/kaito",
@@ -60,6 +68,7 @@ export default {
         )
         .then((response) => {
           this.kaitoResult = response.data;
+          this.isDisabled = true;
           console.log(response.data);
         })
         .catch(() => {});

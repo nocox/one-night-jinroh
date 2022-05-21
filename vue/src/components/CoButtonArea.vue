@@ -2,51 +2,49 @@
   <section class="co-button-area">
     <h2>カミングアウト</h2>
     <div class="co-icons">
-      <a :class="{ current: myCoRole==='murabito' }" @click="co('murabito')">
-        <img src="../assets/images/chara-icon/murabito.png" alt="" />
-      </a>
-      <a :class="{ current: myCoRole==='uranaishi'}" @click="co('uranaishi')">
-        <img src="../assets/images/chara-icon/uranaishi.png" alt="" />
-      </a>
-      <a :class="{ current: myCoRole==='kaito' }" @click="co('kaito')">
-        <img src="../assets/images/chara-icon/kaito.png" alt="" />
-      </a>
-      <a :class="{ current: myCoRole==='jinroh' }" @click="co('jinroh')">
-        <img src="../assets/images/chara-icon/jinroh.png" alt="" />
-      </a>
-      <a :class="{ current: myCoRole==='kyojin' }" @click="co('kyojin')">
-        <img src="../assets/images/chara-icon/kyojin.png" alt="" />
-      </a>
-      <a :class="{ current: myCoRole==='turibito' }" @click="co('turibito')">
-        <img src="../assets/images/chara-icon/tsuribito.png" alt="" />
-      </a>
+      <CoButton v-for="coRole in coRoleList"
+      :key="coRole.roleName"
+      :myCoRole="myCoRole" 
+      :coRole="coRole" 
+      :playerId="playerId" />
     </div>
   </section>
 </template>
 
 <script>
-import axios from "axios";
-import { JINROH_API_BASE_URL } from "../Env";
+import CoButton from "./CoButton.vue";
 
 export default {
   props: ["playerId", "myCoRole"],
-  methods: {
-    co: function(roleName) {
-      axios
-      .post(
-        JINROH_API_BASE_URL + "/co", 
-        JSON.stringify({ playerId: this.playerId, role: roleName}),
+  components: { CoButton },
+  data(){
+    return {
+      coRoleList:[
         {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response.data);
-      })
-      
+          roleName: "murabito",
+          imgSrc: require("../assets/images/chara-icon/murabito.png"),
+        },
+        {
+          roleName: "uranaishi",
+          imgSrc: require("../assets/images/chara-icon/uranaishi.png"),
+        },
+        {
+          roleName: "kaito",
+          imgSrc: require("../assets/images/chara-icon/kaito.png"),
+        },
+        {
+          roleName: "jinroh",
+          imgSrc: require("../assets/images/chara-icon/jinroh.png"),
+        },
+        {
+          roleName: "kyojin",
+          imgSrc: require("../assets/images/chara-icon/kyojin.png"),
+        },
+        {
+          roleName: "turibito",
+          imgSrc: require("../assets/images/chara-icon/tsuribito.png"),
+        },
+      ]
     }
   },
   mounted() {
@@ -76,24 +74,6 @@ export default {
     align-items: center;
     justify-content: center;
     justify-items: center;
-
-    a {
-      cursor: pointer;
-    }
-
-    a img {
-      width: 100%;
-      height: auto;
-      border: 5px solid transparent;
-      border-radius: 50%;
-      opacity: 0.5;
-    }
-
-    .current img {
-      border: 5px solid lighten(lightgreen, 0);
-      box-shadow: 0 0 10px rgb(128 128 128 / 50%);
-      opacity: 1;
-    }
   }
 }
 

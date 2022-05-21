@@ -57,3 +57,7 @@ node_modules
 
 ### h2db ###
 h2db
+
+### static ###
+spring/src/main/resources/static/
+vue/dist/

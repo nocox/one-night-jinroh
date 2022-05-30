@@ -2,7 +2,7 @@ name: Build Jinroh and Upload S3
 on:
   push:
       branches:
-        - test-deploy/actins-build-and-s3-upload
+        - test-deploy/pipeline-deploy
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,7 +28,9 @@ jobs:
         working-directory: ./spring
 
       - name: Zip
-        run: zip -r jinroh_deproy.zip ./spring/build/libs/one-night-jinroh-0.0.1-SNAPSHOT.jar
+        run: |
+          cp ./spring/build/libs/one-night-jinroh-0.0.1-SNAPSHOT.jar ./deploy
+          zip -r jinroh_deproy.zip ./deploy
 
       - name: Deploy # S3にデプロイ
         env:

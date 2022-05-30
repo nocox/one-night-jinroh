@@ -30,9 +30,9 @@ jobs:
       - name: Zip
         run: zip -r jinroh_deproy.zip ./spring/build/libs/one-night-jinroh-0.0.1-SNAPSHOT.jar
 
-      - name: Deploy  # S3にデプロイ
+      - name: Deploy # S3にデプロイ
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |　# S3のbucket-for-deploying-react-projectバケットにデプロイ
+        run: | # S3のbucket-for-deploying-react-projectバケットにデプロイ
           aws s3 cp --recursive --region ap-northeast-1 jinroh_deproy.zip s3://okaka-on-jinroh-cd

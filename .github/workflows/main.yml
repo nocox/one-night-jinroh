@@ -20,7 +20,7 @@ jobs:
         working-directory: ./vue
 
       - name: Build Vue
-        run: npm run build
+        run: npm run build-v2
         working-directory: ./vue
 
       - name: Build Spring boot

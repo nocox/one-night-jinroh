@@ -2,7 +2,7 @@ name: Build Jinroh and Upload S3
 on:
   push:
       branches:
-        - test-deploy/pipeline-deploy
+        - develop
 jobs:
   build:
     runs-on: ubuntu-latest

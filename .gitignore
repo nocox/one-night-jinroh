@@ -64,3 +64,4 @@ vue/dist/
 
 ### deploy ###
 *.zip
+*.jar

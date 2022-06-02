@@ -1,0 +1,2 @@
+SPRING_DATASOURCE_URL=jdbc:h2:/var/jinrohapp/h2db/testdb?MODE=MYSQL
+SPRING_PROFILES_ACTIVE=stg

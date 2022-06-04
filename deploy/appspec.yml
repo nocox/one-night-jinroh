@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+files:
+  - source: one-night-jinroh-0.0.1-SNAPSHOT.jar
+    destination: /var/jinrohapp
+    overwrite: yes
+  - source: jinroh-env
+    destination: /var/jinrohapp
+    overwrite: yes
+hooks:
+  ApplicationStop:
+    - location: scripts/appstop.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: scripts/appstart.sh
+      timeout: 300
+      runas: root

@@ -31,7 +31,7 @@ public class CreateRoomUseCase {
         roomDao.insert(roomEntity);
 
         UserEntity userEntity = new UserEntity();
-        userEntity.user_name = "ホスト";
+        userEntity.user_name = "ホスト:ふくろう";
         userDao.insert(userEntity);
 
         RoomParticipant roomParticipant = new RoomParticipant();

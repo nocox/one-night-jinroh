@@ -6,7 +6,9 @@ import com.okaka.onenightjinroh.application.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -39,5 +41,14 @@ public class UserRepository {
         User user = new User(entity.user_id);
         user.setUserName(entity.user_name);
         return user;
+    }
+
+    public List<User> findUsersByRoomId(Long roomId) {
+        List<User> users = new ArrayList<User>();
+        userDao.selectByRoom(roomId).forEach(entity->{
+            User user = toDomain(entity);
+            users.add(user);
+        });
+        return users;
     }
 }

@@ -1,7 +1,7 @@
 <template>
   <main class="talk_page">
     <h2>朝になりました。話し合いを行ってください。</h2>
-    <p class="action-result">{{ nightActLog }}</p>
+    <p class="action-result" v-if="nightActLog">{{ nightActLog }}</p>
 
     <coArea
       :otherPlayerList="otherPlayerList"

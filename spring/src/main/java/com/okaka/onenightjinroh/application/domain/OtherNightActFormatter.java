@@ -1,11 +1,11 @@
 package com.okaka.onenightjinroh.application.domain;
 
-// TODO: 時が来たら消します
+// 空文字で「夜の行動を持たない」を表現している
 public class OtherNightActFormatter implements RoleNightActFormatter {
 
     @Override
     public String toActLog() {
-        return "この役職はまだ実装されてないよ";
+        return "";
     }
 
     @Override

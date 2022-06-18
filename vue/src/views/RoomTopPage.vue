@@ -158,6 +158,9 @@ export default {
     },
   },
   mounted() {
+    window.addEventListener("beforeunload", (event) => {
+      event.returnValue = "ゲームを終了しますか？";
+    });
     axios
       .get(JINROH_API_BASE_URL + "/room-index", { withCredentials: true })
       .then((response) => {

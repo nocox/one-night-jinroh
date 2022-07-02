@@ -12,6 +12,7 @@ import com.okaka.onenightjinroh.application.service.night.GamePersonalBean;
 import com.okaka.onenightjinroh.application.service.night.GetGamePersonalUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightJinrohIndexUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightTermIndexUseCase;
+import com.okaka.onenightjinroh.application.service.night.GetUranaishiNightResultUseCase;
 import com.okaka.onenightjinroh.application.service.night.NightTermIndexBean;
 import com.okaka.onenightjinroh.application.service.night.NightUranaiStatus;
 import com.okaka.onenightjinroh.application.service.night.dto.NightUranaiResultDto;
@@ -42,6 +43,9 @@ public class NightController {
 
     @Autowired
     GetGamePersonalUseCase getGamePersonalUseCase;
+
+    @Autowired
+    GetUranaishiNightResultUseCase getUranaishiNightResultUseCase;
 
     @Autowired
     ExecuteNightUranaiUseCase executeNightUranaiUseCase;
@@ -76,6 +80,25 @@ public class NightController {
 
         return 0;
     }
+
+    @GetMapping(path = "/night/uranai")
+    Optional<NightUranaiResultBean> uranaiGet() {
+        String strGameParticipationId = session.getAttribute("game_participation_id").toString();
+        Long gameParticipantId = Long.valueOf(strGameParticipationId);
+
+        Optional<NightUranaiResultDto> optDto = getUranaishiNightResultUseCase.invoke(gameParticipantId);
+        if (optDto.isEmpty()) {
+            return Optional.empty();
+        }
+
+        NightUranaiResultDto dto = optDto.get();
+        List<RoleBean> roleBeans = dto.getRoles().stream().map(RoleBean::new).collect(Collectors.toList());
+        NightUranaiResultBean.UserBean userBean = Optional.ofNullable(dto.getUser()).
+                map(user -> new NightUranaiResultBean.UserBean(user.getUserId(), user.getUserName()))
+                .orElse(null);
+        return Optional.of(new NightUranaiResultBean(dto.getStatus().toString(), dto.getSelectedPlayer(), roleBeans, userBean));
+    }
+
 
     @PostMapping(path = "/night/uranai")
     NightUranaiResultBean uranai(@RequestBody NightUranaiForm form) {

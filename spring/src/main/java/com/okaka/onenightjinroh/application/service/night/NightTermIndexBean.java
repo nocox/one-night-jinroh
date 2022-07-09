@@ -5,10 +5,12 @@ import com.okaka.onenightjinroh.application.bean.GameIndexBean;
 public class NightTermIndexBean {
     private Long gameId;
     private GameIndexBean gameIndex;
+    private boolean doneNightAct;
 
-    public NightTermIndexBean(Long gameId, GameIndexBean gameIndex) {
+    public NightTermIndexBean(Long gameId, GameIndexBean gameIndex, boolean doneNightAct) {
         this.gameId = gameId;
         this.gameIndex = gameIndex;
+        this.doneNightAct = doneNightAct;
     }
 
     public Long getGameId() {
@@ -17,5 +19,9 @@ public class NightTermIndexBean {
 
     public GameIndexBean getGameIndex() {
         return gameIndex;
+    }
+
+    public boolean isDoneNightAct() {
+        return doneNightAct;
     }
 }

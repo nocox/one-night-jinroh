@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -25,6 +26,11 @@ public class NightActRepository {
         return nightActEntities.stream()
                 .map(NightActRepository::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<NightAct> findByGameParticipantId(Long gameParticipantId) {
+        Optional<NightActEntity> otpNightAct = nightActDao.selectNightActByParticipantId(gameParticipantId);
+        return otpNightAct.map(NightActRepository::toDomain);
     }
 
     public void create(Long gameParticipantId){

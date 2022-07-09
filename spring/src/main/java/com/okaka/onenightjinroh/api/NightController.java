@@ -5,11 +5,13 @@ import com.okaka.onenightjinroh.api.bean.NightKaitoResultBean;
 import com.okaka.onenightjinroh.api.form.NightKaitoForm;
 import com.okaka.onenightjinroh.api.form.NightUranaiForm;
 import com.okaka.onenightjinroh.application.bean.NightUranaiResultBean;
+import com.okaka.onenightjinroh.application.domain.KaitoNightActFormatter;
 import com.okaka.onenightjinroh.application.service.night.DoneNightTermActUseCase;
 import com.okaka.onenightjinroh.application.service.night.ExecuteKaitoUseCase;
 import com.okaka.onenightjinroh.application.service.night.ExecuteNightUranaiUseCase;
 import com.okaka.onenightjinroh.application.service.night.GamePersonalBean;
 import com.okaka.onenightjinroh.application.service.night.GetGamePersonalUseCase;
+import com.okaka.onenightjinroh.application.service.night.GetKaitoNightResultUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightJinrohIndexUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightTermIndexUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetUranaishiNightResultUseCase;
@@ -55,6 +57,9 @@ public class NightController {
 
     @Autowired
     GetNightJinrohIndexUseCase getNightJinrohIndexUseCase;
+
+    @Autowired
+    GetKaitoNightResultUseCase getKaitoNightResultUseCase;
 
     @RequestMapping(path = "/night-index")
     NightTermIndexBean getNightTermIndex() {
@@ -134,6 +139,15 @@ public class NightController {
 
         NightKaitoResultBean bean = executeKaitoUseCase.invoke(gameParticipantId, form.getParticipantId());
         return ResponseEntity.ok().body(bean);
+    }
+
+    @GetMapping(path = "/night/kaito")
+    ResponseEntity<Optional<NightKaitoResultBean>> kaitoGet() {
+        String strGameParticipationId = session.getAttribute("game_participation_id").toString();
+        Long gameParticipantId = Long.valueOf(strGameParticipationId);
+
+        Optional<KaitoNightActFormatter> optFormatter = getKaitoNightResultUseCase.invoke(gameParticipantId);
+        return ResponseEntity.ok().body(optFormatter.map(NightKaitoResultBean::new));
     }
 
     @GetMapping(path = "/night/jinroh/index")

@@ -58,6 +58,7 @@ export default {
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
+        this.isCompleted = response.data.doneNightAct;
         this.configWebSocket(response.data.gameId);
       })
       .catch(() => {

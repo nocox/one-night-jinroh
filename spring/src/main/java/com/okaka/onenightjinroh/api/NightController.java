@@ -88,10 +88,12 @@ public class NightController {
 
     @GetMapping(path = "/night/uranai")
     Optional<NightUranaiResultBean> uranaiGet() {
+        String strGameId = session.getAttribute("game_id").toString();
+        Long gameId = Long.valueOf(strGameId);
         String strGameParticipationId = session.getAttribute("game_participation_id").toString();
         Long gameParticipantId = Long.valueOf(strGameParticipationId);
 
-        Optional<NightUranaiResultDto> optDto = getUranaishiNightResultUseCase.invoke(gameParticipantId);
+        Optional<NightUranaiResultDto> optDto = getUranaishiNightResultUseCase.invoke(gameId, gameParticipantId);
         if (optDto.isEmpty()) {
             return Optional.empty();
         }

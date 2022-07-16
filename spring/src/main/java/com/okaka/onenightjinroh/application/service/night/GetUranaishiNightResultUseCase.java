@@ -1,5 +1,7 @@
 package com.okaka.onenightjinroh.application.service.night;
 
+import com.okaka.onenightjinroh.adapter.HolidayRolesAdapter;
+import com.okaka.onenightjinroh.application.domain.HolidayRoles;
 import com.okaka.onenightjinroh.application.domain.Role;
 import com.okaka.onenightjinroh.application.domain.UranaishiNightAct;
 import com.okaka.onenightjinroh.application.domain.User;
@@ -20,18 +22,32 @@ public class GetUranaishiNightResultUseCase {
     @Autowired
     ExecuteNightUranaiQueryService queryService;
     @Autowired
+    HolidayRolesAdapter holidayRolesAdapter;
+    @Autowired
     UranaishiNightActRepository uranaishiNightActRepository;
 
-    public Optional<NightUranaiResultDto> invoke(Long participationId) {
+    public Optional<NightUranaiResultDto> invoke(Long gameId, Long participationId) {
         Optional<UranaishiNightAct> optUranaishiNightAct = uranaishiNightActRepository.findByParticipationId(participationId);
         if (optUranaishiNightAct.isEmpty()){
             return Optional.empty();
         }
 
         UranaishiNightAct uranaishiNightAct = optUranaishiNightAct.get();
-        User user = userRepository.findByParticipantId(uranaishiNightAct.getToGameParticipationId());
-        List<Role> roles = queryService.find(Collections.singletonList(uranaishiNightAct.getToGameParticipationId()));
+        return getUranaiResult(uranaishiNightAct, gameId);
+    }
 
+    private Optional<NightUranaiResultDto> getUranaiResult(UranaishiNightAct uranaishiNightAct, Long gameId) {
+        if (uranaishiNightAct.isSelectedHolidayRoles()) {
+            HolidayRoles holidayRoles = holidayRolesAdapter.findByGameId(gameId);
+            return Optional.of(new NightUranaiResultDto(
+                    holidayRoles.getRoles(),
+                    NightUranaiStatus.HOLIDAY_ROLES,
+                    uranaishiNightAct.getToGameParticipationId(),
+                    null
+            ));
+        }
+        List<Role> roles = queryService.find(Collections.singletonList(uranaishiNightAct.getToGameParticipationId()));
+        User user = userRepository.findByParticipantId(uranaishiNightAct.getToGameParticipationId());
         return Optional.of(new NightUranaiResultDto(
                 roles,
                 NightUranaiStatus.PLAYER,

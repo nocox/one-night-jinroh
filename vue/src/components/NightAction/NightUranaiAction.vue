@@ -93,8 +93,21 @@ export default {
             console.log({data});
             if (data !== null) {
               this.uranaiResult = response.data;
-              this.selectedUranai = 'PLAYER:' + response.data.participantId;
-              this.isDisabled = true;
+              switch (this.uranaiResult.status){
+                case 'PLAYER':
+                  this.selectedUranai = 'PLAYER:' + response.data.participantId; 
+                  this.isDisabled = true;
+                  break;
+                case 'HOLIDAY_ROLES':
+                  this.selectedUranai = 'HOLIDAY_ROLES';
+                  this.isDisabled = true;
+                  break;
+                case 'NOT_CHOOSE':
+                  // 現時点では，夜の行動中にNOT_CHOOSEになることはない(22/07/16)
+                  break;
+                default:
+                  break;
+              }
             }
         });
   },

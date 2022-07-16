@@ -5,13 +5,16 @@ import com.okaka.onenightjinroh.api.bean.NightKaitoResultBean;
 import com.okaka.onenightjinroh.api.form.NightKaitoForm;
 import com.okaka.onenightjinroh.api.form.NightUranaiForm;
 import com.okaka.onenightjinroh.application.bean.NightUranaiResultBean;
+import com.okaka.onenightjinroh.application.domain.KaitoNightActFormatter;
 import com.okaka.onenightjinroh.application.service.night.DoneNightTermActUseCase;
 import com.okaka.onenightjinroh.application.service.night.ExecuteKaitoUseCase;
 import com.okaka.onenightjinroh.application.service.night.ExecuteNightUranaiUseCase;
 import com.okaka.onenightjinroh.application.service.night.GamePersonalBean;
 import com.okaka.onenightjinroh.application.service.night.GetGamePersonalUseCase;
+import com.okaka.onenightjinroh.application.service.night.GetKaitoNightResultUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightJinrohIndexUseCase;
 import com.okaka.onenightjinroh.application.service.night.GetNightTermIndexUseCase;
+import com.okaka.onenightjinroh.application.service.night.GetUranaishiNightResultUseCase;
 import com.okaka.onenightjinroh.application.service.night.NightTermIndexBean;
 import com.okaka.onenightjinroh.application.service.night.NightUranaiStatus;
 import com.okaka.onenightjinroh.application.service.night.dto.NightUranaiResultDto;
@@ -44,6 +47,9 @@ public class NightController {
     GetGamePersonalUseCase getGamePersonalUseCase;
 
     @Autowired
+    GetUranaishiNightResultUseCase getUranaishiNightResultUseCase;
+
+    @Autowired
     ExecuteNightUranaiUseCase executeNightUranaiUseCase;
 
     @Autowired
@@ -51,6 +57,9 @@ public class NightController {
 
     @Autowired
     GetNightJinrohIndexUseCase getNightJinrohIndexUseCase;
+
+    @Autowired
+    GetKaitoNightResultUseCase getKaitoNightResultUseCase;
 
     @RequestMapping(path = "/night-index")
     NightTermIndexBean getNightTermIndex() {
@@ -76,6 +85,25 @@ public class NightController {
 
         return 0;
     }
+
+    @GetMapping(path = "/night/uranai")
+    Optional<NightUranaiResultBean> uranaiGet() {
+        String strGameParticipationId = session.getAttribute("game_participation_id").toString();
+        Long gameParticipantId = Long.valueOf(strGameParticipationId);
+
+        Optional<NightUranaiResultDto> optDto = getUranaishiNightResultUseCase.invoke(gameParticipantId);
+        if (optDto.isEmpty()) {
+            return Optional.empty();
+        }
+
+        NightUranaiResultDto dto = optDto.get();
+        List<RoleBean> roleBeans = dto.getRoles().stream().map(RoleBean::new).collect(Collectors.toList());
+        NightUranaiResultBean.UserBean userBean = Optional.ofNullable(dto.getUser()).
+                map(user -> new NightUranaiResultBean.UserBean(user.getUserId(), user.getUserName()))
+                .orElse(null);
+        return Optional.of(new NightUranaiResultBean(dto.getStatus().toString(), dto.getSelectedPlayer(), roleBeans, userBean));
+    }
+
 
     @PostMapping(path = "/night/uranai")
     NightUranaiResultBean uranai(@RequestBody NightUranaiForm form) {
@@ -111,6 +139,15 @@ public class NightController {
 
         NightKaitoResultBean bean = executeKaitoUseCase.invoke(gameParticipantId, form.getParticipantId());
         return ResponseEntity.ok().body(bean);
+    }
+
+    @GetMapping(path = "/night/kaito")
+    ResponseEntity<Optional<NightKaitoResultBean>> kaitoGet() {
+        String strGameParticipationId = session.getAttribute("game_participation_id").toString();
+        Long gameParticipantId = Long.valueOf(strGameParticipationId);
+
+        Optional<KaitoNightActFormatter> optFormatter = getKaitoNightResultUseCase.invoke(gameParticipantId);
+        return ResponseEntity.ok().body(optFormatter.map(NightKaitoResultBean::new));
     }
 
     @GetMapping(path = "/night/jinroh/index")

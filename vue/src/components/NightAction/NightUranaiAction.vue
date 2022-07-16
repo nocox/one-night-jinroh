@@ -84,6 +84,20 @@ export default {
       required: true,
     },
   },
+  mounted() {
+    axios
+        .get(
+          JINROH_API_BASE_URL + "/night/uranai", { withCredentials: true })
+        .then((response) => {
+            const data = response.data;
+            console.log({data});
+            if (data !== null) {
+              this.uranaiResult = response.data;
+              this.selectedUranai = 'PLAYER:' + response.data.participantId;
+              this.isDisabled = true;
+            }
+        });
+  },
   methods: {
     uranai: function () {
       var uranaiStatus =

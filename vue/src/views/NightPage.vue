@@ -3,14 +3,8 @@
     <h2>{{ playerName }}さん、<br class="show-sp">夜の行動を行ってください</h2>
 
     <section class="role-card-display-area">
-      <div class="player">
-        <RoleCard :roleName="playerRole.roleName" :playerName="playerName" />
-      </div>
-
       <div class="role-description">
-        <div class="role-description__inner">
-          <NightRoleDescription :roleName="playerRole.roleName" />
-        </div>
+        <NightRoleDescription :roleName="playerRole.roleName" />
       </div>
       
       <div class="action">
@@ -33,7 +27,6 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 import { JINROH_API_BASE_URL } from "../Env";
 
-import RoleCard from "@/components/RoleCard.vue";
 import NightAction from "@/components/NightAction.vue";
 import NightRoleDescription from "@/components/NightRoleDescription";
 import myButton from "@/components/Button.vue";
@@ -60,7 +53,6 @@ export default {
   },
   components: {
     myButton,
-    RoleCard,
     NightAction,
     NightRoleDescription
   },
@@ -132,7 +124,7 @@ h2 {
 
 .role-card-display-area {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr;
   justify-content: center;
   text-align: center;
 }
@@ -149,15 +141,6 @@ h2 {
 .role-description{  
 padding: 24px;
 background-color: #eee;
-
-  .role-description__inner{
-    padding: 1em;
-    text-align: left;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 5px 5px 5px rgb(0 0 0 / 10%);
-    
-  }
 }
 
 

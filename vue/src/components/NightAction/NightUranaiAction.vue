@@ -55,7 +55,7 @@ import myButton from "@/components/Button.vue";
 import { JINROH_API_BASE_URL } from "../../Env";
 
 export default {
-  name: "RoleCardDisplay",
+  name: "NightUranaiAction",
   components: { myButton },
   data() {
     return {

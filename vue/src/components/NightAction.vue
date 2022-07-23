@@ -19,7 +19,7 @@ import nightKaitoAction from "@/components/NightAction/NightKaitoAction.vue"
 import nightJinrohAction from "@/components/NightAction/NightJinrohAction.vue"
 
 export default {
-  name: "RoleCardDisplay",
+  name: "NightAction",
   components: { nightUranaiAction, nightKaitoAction, nightJinrohAction },
   data() {
     return {

@@ -1,12 +1,16 @@
 <template>
   <main class="night-page">
-    <h2>夜の行動を行ってください</h2>
+    <h2>{{ playerName }}さん、<br class="show-sp">夜の行動を行ってください</h2>
 
-    <NightDisplay
-      :playerRole="playerRole"
-      :playerName="playerName"
-      :otherPlayerList="otherPlayerList"
-    />
+    <section class="role-card-display-area">
+      <div class="role-description">
+        <NightRoleDescription :roleName="playerRole.roleName" />
+      </div>
+      
+      <div class="action">
+        <NightAction :roleName="playerRole.roleName" :otherPlayerList="otherPlayerList" />
+      </div>
+    </section>
 
     <myButton
       :class="{ btn_disabled: isCompleted }"
@@ -23,7 +27,8 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 import { JINROH_API_BASE_URL } from "../Env";
 
-import NightDisplay from "@/components/NightDisplay.vue";
+import NightAction from "@/components/NightAction.vue";
+import NightRoleDescription from "@/components/NightRoleDescription";
 import myButton from "@/components/Button.vue";
 
 export default {
@@ -47,8 +52,9 @@ export default {
     };
   },
   components: {
-    NightDisplay,
     myButton,
+    NightAction,
+    NightRoleDescription
   },
   mounted() {
     axios
@@ -93,10 +99,13 @@ export default {
 };
 </script>
 
-
 <style lang="scss" scoped>
 h2 {
   text-align: center;
+}
+
+.show-sp{
+  display: none;
 }
 
 .btn {
@@ -110,5 +119,40 @@ h2 {
   color: gray;
   pointer-events: none;
   border-color: gray;
+}
+
+.role-card-display-area {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  text-align: center;
+}
+
+.role-description{  
+padding: 24px;
+background-color: #eee;
+}
+
+.action{
+grid-column: 1/3;  
+height  :20rem;
+  padding: 1em;
+  margin-top: 16px;
+  border: 3px solid #eee;
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 639px) {
+  .show-sp{
+    display: block;
+  }
+
+  .role-card-display-area {
+    grid-template-columns: 1fr;
+  }
+
+  .action{
+    grid-column: 1/2;
+  }
 }
 </style>

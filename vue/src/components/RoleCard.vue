@@ -1,10 +1,8 @@
 <template>
-  <div class="card-wrapper">
+  <figure class="card-wrapper">
     <img :src="RoleList[roleName]" :alt="RoleList[roleName]" />
-
-    <p v-if="playerName">{{ playerName }}</p>
-    <p v-if="roleName != '不明'">{{ roleName }}</p>
-  </div>
+    <figcaption v-if="roleName != '不明'">{{ roleName }}</figcaption>
+  </figure>
 </template>
 
 <script>
@@ -12,7 +10,6 @@ export default {
   name: "rolecard",
   props: {
     roleName: String,
-    playerName: String,
   },
   data() {
     return {

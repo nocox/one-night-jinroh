@@ -1,6 +1,6 @@
 <template>
   <main class="night-page">
-    <h2>夜の行動を行ってください</h2>
+    <h2>{{ playerName }}さん、<br class="show-sp">夜の行動を行ってください</h2>
 
     <section class="role-card-display-area">
       <div class="player">
@@ -113,6 +113,10 @@ h2 {
   text-align: center;
 }
 
+.show-sp{
+  display: none;
+}
+
 .btn {
   display: block;
   width: 12rem;
@@ -168,6 +172,10 @@ height  :20rem;
 
 
 @media screen and (max-width: 639px) {
+  .show-sp{
+    display: block;
+  }
+
   .role-card-display-area {
     grid-template-columns: 1fr;
   }

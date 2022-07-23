@@ -99,7 +99,6 @@ export default {
 };
 </script>
 
-
 <style lang="scss" scoped>
 h2 {
   text-align: center;
@@ -129,20 +128,10 @@ h2 {
   text-align: center;
 }
 
-.player {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;  
-  padding: 1em;
-  background-color: #eee;
-}
-
 .role-description{  
 padding: 24px;
 background-color: #eee;
 }
-
 
 .action{
 grid-column: 1/3;  
@@ -152,7 +141,6 @@ height  :20rem;
   border: 3px solid #eee;
   border-radius: 8px;
 }
-
 
 @media screen and (max-width: 639px) {
   .show-sp{
@@ -166,10 +154,5 @@ height  :20rem;
   .action{
     grid-column: 1/2;
   }
-
-  h3 {
-    font-size: 16px;
-  }
-
 }
 </style>

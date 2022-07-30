@@ -1,14 +1,14 @@
 <template>
   <article class="player" :class="{ selected: isSelected(this.playerName) }">
     <figure class="player-icon">
-      <img :src="RoleList[roleName]" alt="" />
+      <img :src="getRoleIcon" alt="" />
     </figure>
 
     <figure class="co-icon">
       <img
         class="co-icon__img"
-        :src="this.coRoleList[this.coRole]"
-        :alt="this.coRole"
+        :src="getRoleCo"
+        :alt="coRole"
       />
     </figure>
     <span class="player-name" :class="{ me: this.myself }">
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { getRoleInfo } from "@/roleInfo.js";
+
 export default {
   name: "Player",
   props: [
@@ -27,27 +29,6 @@ export default {
     "selectedPlayers",
     "myself",
   ],
-  data() {
-    return {
-      RoleList: {
-        不明: require("../assets/images/chara-icon/unknown.png"),
-        人狼: require("../assets/images/chara-icon/jinroh.png"),
-        村人: require("../assets/images/chara-icon/murabito.png"),
-        占い師: require("../assets/images/chara-icon/uranaishi.png"),
-        怪盗: require("../assets/images/chara-icon/kaito.png"),
-        狂人: require("../assets/images/chara-icon/kyojin.png"),
-        吊り人: require("../assets/images/chara-icon/tsuribito.png"),
-      },
-      coRoleList: {
-        jinroh: require("../assets/images/fukidashi/jinroh.png"),
-        murabito: require("../assets/images/fukidashi/murabito.png"),
-        uranaishi: require("../assets/images/fukidashi/uranaishi.png"),
-        kaito: require("../assets/images/fukidashi/kaito.png"),
-        kyojin: require("../assets/images/fukidashi/kyojin.png"),
-        turibito: require("../assets/images/fukidashi/tsuribito.png"),
-      },
-    };
-  },
   methods: {
     isSelected: function (name) {
       // 投票ページ以外ではselectedPlayersは存在しないのでfalseを返す
@@ -66,6 +47,14 @@ export default {
         return false;
       }
     },
+  },
+  computed: {
+    getRoleCo() {
+      return getRoleInfo(this.coRole).co
+    },
+    getRoleIcon() {
+      return getRoleInfo(this.roleName).icon
+    }
   },
 };
 </script>

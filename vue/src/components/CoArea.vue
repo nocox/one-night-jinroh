@@ -30,27 +30,6 @@ export default {
   name: "CoArea",
   props: ["otherPlayerList", "player", "cos", "selectedPlayers"],
   components: { Player },
-  data() {
-    return {
-      RoleList: {
-        不明: require("../assets/images/chara-icon/unknown.png"),
-        人狼: require("../assets/images/chara-icon/jinroh.png"),
-        村人: require("../assets/images/chara-icon/murabito.png"),
-        占い師: require("../assets/images/chara-icon/uranaishi.png"),
-        怪盗: require("../assets/images/chara-icon/kaito.png"),
-        狂人: require("../assets/images/chara-icon/kyojin.png"),
-        吊り人: require("../assets/images/chara-icon/tsuribito.png"),
-      },
-      coRoleList: {
-        jinroh: require("../assets/images/fukidashi/jinroh.png"),
-        murabito: require("../assets/images/fukidashi/murabito.png"),
-        uranaishi: require("../assets/images/fukidashi/uranaishi.png"),
-        kaito: require("../assets/images/fukidashi/kaito.png"),
-        kyojin: require("../assets/images/fukidashi/kyojin.png"),
-        turibito: require("../assets/images/fukidashi/tsuribito.png"),
-      },
-    };
-  },
   methods: {
     coMap: function (playerId) {
       const roleName = this.cos.find(co => co.id == playerId)

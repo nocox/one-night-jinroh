@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { getRoleInfo } from "@/roleInfo.js";
 export default {
   name: "NightRoleDescription",
   props: {
@@ -25,41 +26,8 @@ export default {
   },
   computed: {
     getRole() {
-      return ROLE_INFO[this.roleName]
+      return getRoleInfo(this.roleName)
     }
-  },
-};
-
-// FIX ME：KEYを日本語から英語に直す
-// FIX ME：ROLE_INFOの定義をJSファイルに切り出して、ライブラリとして参照できるようにする
-const ROLE_INFO = {
-  不明: { img: require("../assets/images/card.png"), desc: "不明" },
-  人狼: {
-    img: require("../assets/images/chara/chara1.png"),
-    desc: `他のプレイヤーに人狼がいるかどうか確認できます。`,
-  },
-  村人: {
-    img: require("../assets/images/chara/chara2.png"),
-    desc: `夜の行動はありません。`,
-  },
-  占い師: {
-    img: require("../assets/images/chara/chara3.png"),
-    desc: `『他のプレイヤー』ひとりまたは『おやすみ中のカード』の役職を確認できます。`,
-  },
-  怪盗: {
-    img: require("../assets/images/chara/chara4.png"),
-    desc: `『他のプレイヤー』ひとりと役職を交換できます。
-            勝利条件は交換後の役職に準じます。`,
-  },
-  狂人: {
-    img: require("../assets/images/chara/chara5.png"),
-    desc: `夜の行動はありません。
-            OKボタンを押して夜が明けるのを待ちましょう。`,
-  },
-  吊り人: {
-    img: require("../assets/images/chara/chara6.png"),
-    desc: `夜の行動はありません。
-            OKボタンを押して夜が明けるのを待ちましょう。`,
   },
 };
 </script>

@@ -1,3 +1,0 @@
-SELECT
-    Count(*)
-FROM USER

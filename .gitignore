@@ -65,3 +65,6 @@ vue/dist/
 ### deploy ###
 *.zip
 *.jar
+
+### pyenv ###
+.python-version

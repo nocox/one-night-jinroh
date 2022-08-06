@@ -27,7 +27,7 @@
 import Player from "@/components/Player.vue";
 
 export default {
-  name: "CoArea",
+  name: "PlayerArea",
   props: ["otherPlayerList", "player", "cos", "selectedPlayers"],
   components: { Player },
   methods: {

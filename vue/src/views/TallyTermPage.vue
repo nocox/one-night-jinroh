@@ -17,7 +17,7 @@
       </h2>
     </section>
 
-    <coArea
+    <PlayerArea
       :otherPlayerList="otherPlayerList"
       :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
       :coRole="this.coRole"
@@ -25,7 +25,7 @@
       :cos="cos"
       v-if="tallyResult.peacefulFlag===false"
     />
-    <coArea
+    <PlayerArea
       :otherPlayerList="otherPlayerList"
       :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
       :coRole="this.coRole"
@@ -71,7 +71,7 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
 import myButton from "@/components/Button";
-import coArea from "@/components/CoArea.vue";
+import PlayerArea from "@/components/PlayerArea.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
 
 import { JINROH_API_BASE_URL } from "../Env";
@@ -114,7 +114,7 @@ export default {
       },
     };
   },
-  components: { myButton, coArea, DisplayRolls },
+  components: { myButton, PlayerArea, DisplayRolls },
   computed: {
     coRole: {
       get() {

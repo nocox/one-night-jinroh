@@ -3,7 +3,7 @@
     <h2>役職一覧</h2>
     <ul>
       <li v-for="(count, name) in $store.state.rolls" v-bind:key="name">
-        <img :src="getRole(name).icon" alt="" />
+        <img :src="$getRole(name).icon" alt="" />
         <span> {{ name }}</span>
         <span> × </span>
         <span>{{ count }} </span>
@@ -13,15 +13,8 @@
 </template>
 
 <script>
-import { getRoleInfo } from "@/roleInfo.js";
-
 export default {
-  name: "DisplayRolls.vue",
-  methods: {
-    getRole(name) {
-      return getRoleInfo(name)
-    }
-  },
+  name: "DisplayRolls.vue"
 };
 </script>
 

@@ -1,13 +1,13 @@
 <template>
   <article class="player" :class="{ selected: isSelected(this.playerName) }">
     <figure class="player-icon">
-      <img :src="getRoleIcon" alt="" />
+      <img :src="$getRole(roleName).icon" alt="" />
     </figure>
 
     <figure class="co-icon">
       <img
         class="co-icon__img"
-        :src="getRoleCo"
+        :src="$getRole(coRole).co"
         :alt="coRole"
       />
     </figure>
@@ -18,8 +18,6 @@
 </template>
 
 <script>
-import { getRoleInfo } from "@/roleInfo.js";
-
 export default {
   name: "Player",
   props: [
@@ -47,15 +45,7 @@ export default {
         return false;
       }
     },
-  },
-  computed: {
-    getRoleCo() {
-      return getRoleInfo(this.coRole).co
-    },
-    getRoleIcon() {
-      return getRoleInfo(this.roleName).icon
-    }
-  },
+  }
 };
 </script>
 

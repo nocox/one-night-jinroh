@@ -1,21 +1,20 @@
 <template>
   <div class="role-description__inner">
     <figure class="card-wrapper">
-      <img :src="getRole.img" :alt="roleName" />
+      <img :src="$getRole(roleName).img" :alt="roleName" />
       <figcaption v-if="roleName != '不明'">{{ roleName }}</figcaption>
     </figure>
     <div class="description">
       <p>あなたの役職は『{{ roleName }}』です。</p>
       <section>
         <p>夜の行動</p>
-        <p>{{ getRole.desc }}</p>
+        <p>{{ $getRole(roleName).desc }}</p>
       </section>
     </div>
   </div>
 </template>
 
 <script>
-import { getRoleInfo } from "@/roleInfo.js";
 export default {
   name: "NightRoleDescription",
   props: {
@@ -23,11 +22,6 @@ export default {
       type: String,
       required: true,
     },
-  },
-  computed: {
-    getRole() {
-      return getRoleInfo(this.roleName)
-    }
   },
 };
 </script>

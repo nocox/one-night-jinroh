@@ -3,7 +3,7 @@
     <h2>役職一覧</h2>
     <ul>
       <li v-for="(count, name) in $store.state.rolls" v-bind:key="name">
-        <img :src="RoleList[name]" alt="" />
+        <img :src="getRole(name).icon" alt="" />
         <span> {{ name }}</span>
         <span> × </span>
         <span>{{ count }} </span>
@@ -13,20 +13,14 @@
 </template>
 
 <script>
+import { getRoleInfo } from "@/roleInfo.js";
+
 export default {
   name: "DisplayRolls.vue",
-  data() {
-    return {
-      RoleList: {
-        不明: require("../assets/images/chara-icon/unknown.png"),
-        人狼: require("../assets/images/chara-icon/jinroh.png"),
-        村人: require("../assets/images/chara-icon/murabito.png"),
-        占い師: require("../assets/images/chara-icon/uranaishi.png"),
-        怪盗: require("../assets/images/chara-icon/kaito.png"),
-        狂人: require("../assets/images/chara-icon/kyojin.png"),
-        吊り人: require("../assets/images/chara-icon/tsuribito.png"),
-      },
-    };
+  methods: {
+    getRole(name) {
+      return getRoleInfo(name)
+    }
   },
 };
 </script>

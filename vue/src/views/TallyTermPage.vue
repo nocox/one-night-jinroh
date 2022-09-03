@@ -20,17 +20,10 @@
     <TallyPlayerArea
       :otherPlayerList="otherPlayerList"
       :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
-      :coRole="this.coRole"
-      :selectedPlayers="this.tallyResult.selectedPlayers"
+      :coRole="coRole"
+      :selectedPlayers="tallyResult.selectedPlayers"
       :cos="cos"
-      v-if="tallyResult.peacefulFlag===false"
-    />
-    <TallyPlayerArea
-      :otherPlayerList="otherPlayerList"
-      :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
-      :coRole="this.coRole"
-      :cos="cos"
-      v-else
+      :isPeaceful="tallyResult.peacefulFlag"
     />
 
     <div class="col2">
@@ -74,7 +67,7 @@ import myButton from "@/components/Button";
 import TallyPlayerArea from "@/components/TallyPlayerArea.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
 
-import { JINROH_API_BASE_URL } from "../Env";
+import { JINROH_API_BASE_URL } from "@/Env";
 
 export default {
   name: "TallyTermPage",

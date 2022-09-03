@@ -1,14 +1,14 @@
 <template>
-  <div class="player">
+  <div class="player" :class="{ selected: isSelected }">
     <figure class="player-icon">
-      <img :src="$getRole(roleName).icon" alt="" />
+      <img :src="$getRole(roleName).icon" alt=""/>
     </figure>
 
     <figure class="co-icon">
       <img
-        class="co-icon__img"
-        :src="$getRole(coRole).co"
-        :alt="coRole"
+          class="co-icon__img"
+          :src="$getRole(coRole).co"
+          :alt="coRole"
       />
     </figure>
     <span class="player-name" :class="{ me: this.myself }">
@@ -25,6 +25,7 @@ export default {
     "roleName",
     "coRole",
     "myself",
+    "isSelected" // TODO: デフォルト値つけたい
   ],
 };
 </script>
@@ -65,7 +66,7 @@ export default {
   .player-name {
     grid-row: 2/3;
     grid-column: 2/3;
-    font-size:14px;
+    font-size: 14px;
   }
 
   .me {
@@ -87,6 +88,44 @@ export default {
       width: 50px;
       height: 50px;
     }
+  }
+}
+
+.selected {
+  .player-icon {
+    position: relative;
+
+    img {
+      filter: grayscale(100%);
+    }
+
+    &::after {
+      position: absolute;
+      left: 0;
+      width: calc(100% * 1.414);
+      height: 2px;
+      content: "";
+      background-color: red;
+      transform: rotateZ(45deg);
+      transform-origin: left top;
+    }
+
+    &::before {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      width: calc(100% * 1.414);
+      height: 2px;
+      content: "";
+      background-color: red;
+      transform: rotateZ(-45deg);
+      transform-origin: left top;
+    }
+  }
+
+  .co-icon__img {
+    filter: grayscale(100%);
   }
 }
 </style>

@@ -30,13 +30,13 @@ import Player from "@/components/Player";
 
 export default {
   name: "TallyPlayerArea",
-  props: [
-    "otherPlayerList",
-    "player",
-    "cos",
-    "selectedPlayers",
-    "isPeaceful"
-  ], // TODO: selectedPlayersに必須をつけたい
+  props: {
+    otherPlayerList: {required: true},
+    player: {required: true},
+    cos: {required: true},
+    selectedPlayers: {required: true},
+    isPeaceful: {type: Boolean, required: true}
+  },
   components: {Player},
   methods: {
     coMap: function (playerId) {
@@ -49,7 +49,6 @@ export default {
       }
     },
     isSelected: function (name) {
-      console.log("xxxxxxxxxxxxx this.isPeaceful:", this.isPeaceful)
       if (this.isPeaceful) {
         return false;
       }

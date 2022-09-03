@@ -20,13 +20,13 @@
 <script>
 export default {
   name: "Player",
-  props: [
-    "playerName",
-    "roleName",
-    "coRole",
-    "myself",
-    "isSelected" // TODO: デフォルト値つけたい
-  ],
+  props: {
+    playerName: String,
+    roleName: String,
+    coRole: String,
+    myself: Boolean,
+    isSelected: {type: Boolean, default: false}
+  },
 };
 </script>
 

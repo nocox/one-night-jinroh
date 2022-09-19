@@ -28,7 +28,7 @@
 import Player from "@/components/Player.vue";
 
 export default {
-  name: "VoteTarget",
+  name: "TargetPlayerArea",
   props: ["checkPlayerId","otherPlayerList", "player", "cos", "coRole", "selectedPlayers"],
   components: { Player },
   methods: {

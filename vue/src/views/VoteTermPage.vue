@@ -3,7 +3,7 @@
     <h2>話し合いが終了しました。投票を行ってください。</h2>
     <p class="action-result">{{ nightActLog }}</p>
 
-    <VoteTarget
+    <TargetPlayerArea
       :otherPlayerList="otherPlayerList"
       :player="{
         playerName: playerName,
@@ -66,7 +66,7 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
 import myButton from "@/components/Button";
-import VoteTarget from "@/components/VoteTarget.vue";
+import TargetPlayerArea from "@/components/TargetPlayerArea.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
 
 import { JINROH_API_BASE_URL } from "../Env";
@@ -103,7 +103,7 @@ export default {
       nightActLog: "",
     };
   },
-  components: { VoteTarget, myButton, DisplayRolls },
+  components: { TargetPlayerArea, myButton, DisplayRolls },
   mounted() {
     axios
       .get(JINROH_API_BASE_URL + "/vote-index", { withCredentials: true })

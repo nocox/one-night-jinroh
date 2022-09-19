@@ -3,7 +3,7 @@
     <h2>朝になりました。話し合いを行ってください。</h2>
     <p class="action-result" v-if="nightActLog">{{ nightActLog }}</p>
 
-    <coArea
+    <PlayerArea
       :otherPlayerList="otherPlayerList"
       :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
       :cos="cos"
@@ -45,7 +45,7 @@ import Stomp from "webstomp-client";
 import { JINROH_API_BASE_URL } from "../Env";
 import myButton from "@/components/Button.vue";
 import coButtonArea from "@/components/CoButtonArea.vue";
-import coArea from "@/components/CoArea.vue";
+import PlayerArea from "@/components/PlayerArea.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
 
 export default {
@@ -53,7 +53,7 @@ export default {
   components: {
     myButton,
     coButtonArea,
-    coArea,
+    PlayerArea,
     DisplayRolls,
   },
   data() {

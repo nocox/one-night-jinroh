@@ -17,20 +17,13 @@
       </h2>
     </section>
 
-    <PlayerArea
+    <TallyPlayerArea
       :otherPlayerList="otherPlayerList"
       :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
-      :coRole="this.coRole"
-      :selectedPlayers="this.tallyResult.selectedPlayers"
+      :coRole="coRole"
+      :selectedPlayers="tallyResult.selectedPlayers"
       :cos="cos"
-      v-if="tallyResult.peacefulFlag===false"
-    />
-    <PlayerArea
-      :otherPlayerList="otherPlayerList"
-      :player="{ playerId:playerId ,playerName: playerName, playerRole: playerRole }"
-      :coRole="this.coRole"
-      :cos="cos"
-      v-else
+      :isPeaceful="tallyResult.peacefulFlag"
     />
 
     <div class="col2">
@@ -71,10 +64,10 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
 import myButton from "@/components/Button";
-import PlayerArea from "@/components/PlayerArea.vue";
+import TallyPlayerArea from "@/components/TallyPlayerArea.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
 
-import { JINROH_API_BASE_URL } from "../Env";
+import { JINROH_API_BASE_URL } from "@/Env";
 
 export default {
   name: "TallyTermPage",
@@ -114,7 +107,7 @@ export default {
       },
     };
   },
-  components: { myButton, PlayerArea, DisplayRolls },
+  components: { myButton, TallyPlayerArea, DisplayRolls },
   computed: {
     coRole: {
       get() {

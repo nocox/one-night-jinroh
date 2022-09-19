@@ -20,34 +20,10 @@
         <DisplayRolls />
       </section>
       <section class="vote_section">
-        <h2>投票対象</h2>
-        <ul>
-          <li v-for="player in canVotePlayers" v-bind:key="player.id">
-            <input
-              :id="player.id"
-              class="vote-radio"
-              type="radio"
-              v-model="checkPlayerId"
-              v-bind:value="player.id"
-              :disabled="is_votable"
-            />
-            <label :for="player.id">
-              {{ player.name }}
-            </label>
-          </li>
-        </ul>
-        <myButton
-          class="vote-btn"
-          :method="vote"
-          :text="'確定'"
-          :class="{ btn_disabled: is_votable }"
+        <VoteArea
+          :canVotePlayers="canVotePlayers"
+          @emitCheckPlayerId="checkPlayerId = $event"
         />
-        <p class="warn" :class="{ show: is_unvotable }">
-          プレイヤーをえらんでね！
-        </p>
-        <p class="voted" :class="{ show: is_votable }">
-          投票完了！他のプレイヤーが投票するまでまっててね！
-        </p>
       </section>
     </div>
 
@@ -68,6 +44,7 @@ import Stomp from "webstomp-client";
 import myButton from "@/components/Button";
 import TargetPlayerArea from "@/components/TargetPlayerArea.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
+import VoteArea from "@/components/VoteArea.vue";
 
 import { JINROH_API_BASE_URL } from "../Env";
 
@@ -98,12 +75,10 @@ export default {
         },
       ],
       checkPlayerId: 0,
-      is_votable: false,
-      is_unvotable: false,
       nightActLog: "",
     };
   },
-  components: { TargetPlayerArea, myButton, DisplayRolls },
+  components: { TargetPlayerArea, VoteArea, myButton, DisplayRolls },
   mounted() {
     axios
       .get(JINROH_API_BASE_URL + "/vote-index", { withCredentials: true })
@@ -130,33 +105,6 @@ export default {
       this.$modal.hide("vote-start-modal");
     },
 
-    vote() {
-      if (this.checkPlayerId == 0) {
-        this.is_unvotable = true;
-        this.is_votable = false;
-        return;
-      } else {
-        this.is_unvotable = false;
-        this.is_votable = true;
-      }
-      axios
-        .post(
-          JINROH_API_BASE_URL + "/vote",
-          JSON.stringify({ gameParticipantId: this.checkPlayerId }),
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch(() => {
-          this.$router.push("/room");
-        });
-    },
     configWebSocket: function (gameId) {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
@@ -180,27 +128,6 @@ h2 {
   text-align: center;
 }
 
-input[type="radio"] {
-  display: none;
-}
-
-label {
-  display: block;
-  padding: 0.5rem;
-  background: #fff;
-  border: 1px solid #50a0f6;
-  border-radius: 0.5rem;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-input[type="radio"]:checked + label {
-  color: #fff;
-  background: #50a0f6;
-}
-
 .action-result {
   padding: 1rem;
   background-color: #eee;
@@ -220,51 +147,8 @@ input[type="radio"]:checked + label {
 }
 
 .vote_section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
   padding: 1rem;
   background-color: #eee;
-
-  h2 {
-    width: 100%;
-    text-align: center;
-  }
-
-  ul {
-    display: grid;
-    row-gap: 1rem;
-    column-gap: 1rem;
-    grid-template-columns: 1fr 1fr;
-
-    li {
-      list-style: none;
-    }
-  }
-
-  .vote-btn {
-    margin: 1rem auto;
-  }
-
-  .warn {
-    display: none;
-    color: darken(red, 10%);
-  }
-
-  .voted {
-    display: none;
-  }
-
-  .show {
-    display: block;
-  }
-
-  .btn_disabled {
-    color: gray;
-    pointer-events: none;
-    border-color: gray;
-  }
 }
 
 .modal-header {

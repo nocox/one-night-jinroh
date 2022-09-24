@@ -21,7 +21,7 @@
       </div>
       <div class="holiday-roles grid-item">
         <h3>場のカード</h3>
-        <img :src="RoleList[val]" :alt="val" v-for="(val, key) in holidayRoles" :key="key"/>
+        <img :src="$getRole(role).img" :alt="role" v-for="(role, key) in holidayRoles" :key="key"/>
       </div>
     </div>
 
@@ -60,15 +60,6 @@ export default {
       hostFlg: false,
       winPlayers: [],
       losePlayers: [],
-      RoleList: {
-        unknown: require("../assets/images/card.png"),
-        jinroh: require("../assets/images/chara/chara1.png"),
-        murabito: require("../assets/images/chara/chara2.png"),
-        uranaishi: require("../assets/images/chara/chara3.png"),
-        kaito: require("../assets/images/chara/chara4.png"),
-        kyojin: require("../assets/images/chara/chara5.png"),
-        turibito: require("../assets/images/chara/chara6.png"),
-      },
     };
   },
   components: {ResultPlayerArea, ResultImage, myButton},

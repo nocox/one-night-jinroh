@@ -3,9 +3,9 @@
     <h2>カミングアウト</h2>
     <div class="co-icons">
       <CoButton v-for="coRole in coRoleList"
-      :key="coRole.roleName"
+      :key="coRole"
       :myCoRole="myCoRole" 
-      :coRole="coRole" 
+      :coRole="coRole"
       :playerId="playerId" />
     </div>
   </section>
@@ -13,44 +13,20 @@
 
 <script>
 import CoButton from "./CoButton.vue";
+import { CO_ROLE_LIST } from "@/roleInfo.js";
 
 export default {
   props: ["playerId", "myCoRole"],
   components: { CoButton },
-  data(){
-    return {
-      coRoleList:[
-        {
-          roleName: "murabito",
-          imgSrc: require("../assets/images/chara-icon/murabito.png"),
-        },
-        {
-          roleName: "uranaishi",
-          imgSrc: require("../assets/images/chara-icon/uranaishi.png"),
-        },
-        {
-          roleName: "kaito",
-          imgSrc: require("../assets/images/chara-icon/kaito.png"),
-        },
-        {
-          roleName: "jinroh",
-          imgSrc: require("../assets/images/chara-icon/jinroh.png"),
-        },
-        {
-          roleName: "kyojin",
-          imgSrc: require("../assets/images/chara-icon/kyojin.png"),
-        },
-        {
-          roleName: "turibito",
-          imgSrc: require("../assets/images/chara-icon/tsuribito.png"),
-        },
-      ]
-    }
-  },
   mounted() {
     let nowRole = "村人";
     this.$emit("getActive", nowRole);
   },
+  computed: {
+    coRoleList() {
+      return CO_ROLE_LIST;
+    }
+  }
 };
 </script>
 

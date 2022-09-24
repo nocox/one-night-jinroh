@@ -16,6 +16,15 @@ export const ROLE_NAME_MAPPING = {
   吊り人: "tsuribito",
 };
 
+export const CO_ROLE_LIST = [
+  "jinroh",
+  "murabito",
+  "uranaishi",
+  "kaito",
+  "kyojin",
+  "tsuribito",
+]
+
 export const ROLE_INFO = {
   unknown: {
     img: require("@/assets/images/card.png"),

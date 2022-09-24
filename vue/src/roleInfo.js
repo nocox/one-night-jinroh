@@ -13,7 +13,7 @@ export const ROLE_NAME_MAPPING = {
   占い師: "uranaishi",
   怪盗: "kaito",
   狂人: "kyojin",
-  吊り人: "tsuribito",
+  吊り人: "turibito",
 };
 
 export const CO_ROLE_LIST = [
@@ -22,7 +22,7 @@ export const CO_ROLE_LIST = [
   "uranaishi",
   "kaito",
   "kyojin",
-  "tsuribito",
+  "turibito",
 ]
 
 export const ROLE_INFO = {
@@ -67,7 +67,7 @@ export const ROLE_INFO = {
     img: require("@/assets/images/chara/chara6.png"),
     desc: `夜の行動はありません。
             OKボタンを押して夜が明けるのを待ちましょう。`,
-    icon: require("@/assets/images/chara-icon/tsuribito.png"),
-    co: require("@/assets/images/fukidashi/tsuribito.png"),
+    icon: require("@/assets/images/chara-icon/turibito.png"),
+    co: require("@/assets/images/fukidashi/turibito.png"),
   },
 };

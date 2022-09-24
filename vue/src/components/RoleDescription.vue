@@ -19,7 +19,7 @@
       <CharaDescription :role="RoleList[4]" />
     </section>
     <section>
-      <h2 class="tsuribito">吊人陣営</h2>
+      <h2 class="turibito">吊人陣営</h2>
       <p>
         吊人プレイヤーが吊られた場合、吊られたプレイヤーの勝利となり、他の陣営はすべて敗北となります。
         <CharaDescription :role="RoleList[5]" />
@@ -41,33 +41,33 @@ export default {
       RoleList: [
         {
           name: "人狼",
-          img: require("../assets/images/chara/chara1.png"),
+          img: this.$getRole("jinroh").img,
           description: `<p>イタズラ好きなかわいい人狼さん。
                         夜の間に他の人狼プレイヤーを確認することができます。</p>`,
         },
         {
           name: "村人",
-          img: require("../assets/images/chara/chara2.png"),
+          img: this.$getRole("murabito").img,
           description: `<p>平和な村に住む無垢でかわいい村人さん。特殊な能力はありません。
                         他プレイヤーの言葉だけをヒントに、誰が人狼か推理しましょう。</p>`,
         },
         {
           name: "占い師",
-          img: require("../assets/images/chara/chara3.png"),
+          img: this.$getRole("uranaishi").img,
           description: `<p>ミステリアスでクールな雰囲気の占い師さん。
                         夜の間に、他プレイヤーまたは場のカードを選択します。他プレイヤーのカードを選択した場合、そのプレイヤーの役職を確認できます。
                         場のカードを選択した場合、場にあるカード2枚の役職を確認できます。この行動は怪盗が役職を取り替える前に行われます。</p>`,
         },
         {
           name: "怪盗",
-          img: require("../assets/images/chara/chara4.png"),
+          img: this.$getRole("kaito").img,
           description: `<p>狙った獲物のハートを盗む怪盗さん。夜の間に、他プレイヤーのカードを選択すると「自分の役職」と「選択したプレイヤーの役職」を
                         入れ替えることができます。（入れ替えなくても良い）カードの交換は各自の役職確認後に行われるため、交換されたプレイヤーは
                         交換されたことを知らないままゲームがスタートします。勝利条件は交換後の役職に準じます。</p>`,
         },
         {
           name: "狂人",
-          img: require("../assets/images/chara/chara5.png"),
+          img: this.$getRole("kyojin").img,
           description: `<p>人狼さんにひそかな思いを寄せる狂人さん。
                         特殊な能力はありませんが、村人とは陣営が異なり、人狼陣営に所属します。
                         狂人が吊られても人狼陣営の敗北にはなりません。
@@ -76,13 +76,17 @@ export default {
         },
         {
           name: "吊り人",
-          img: require("../assets/images/chara/chara6.png"),
+          img: this.$getRole("turibito").img,
           description: `<p>丈夫な縄を自分の首にかけてぶら下がる不思議な遊びが大好きな吊人さん。
                         吊られるのが目的です。吊られると一人勝ちとなります。</p>`,
         },
       ],
     };
   },
+  mounted() {
+    console.log("XXXXXXXX")
+    console.log(this.$getRole("turibito").icon)
+  }
 };
 </script>
 
@@ -97,7 +101,7 @@ export default {
   background: #ecd7b7;
 }
 
-.tsuribito {
+.turibito {
   padding: 0.5rem;
   background: #b7e2ec;
 }

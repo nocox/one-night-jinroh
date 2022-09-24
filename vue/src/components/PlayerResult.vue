@@ -1,13 +1,13 @@
 <template>
   <article  class="result-player" >
     <figure class="player-icon">
-      <img :src="RoleList[role]" alt="" />
+      <img :src="$getRole(role).icon" alt="" />
     </figure>
 
     <figure class="co-icon">
       <img
         class="co-icon__img"
-        :src="this.coRoleList[this.coRole]"
+        :src="coRole.trim() ? $getRole(coRole).co : ''"
         :alt="''"
       />
     </figure>
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "Player",
+  name: "PlayerResult",
   props: [
     "playerName",
     "role",
@@ -29,48 +29,7 @@ export default {
     "selectedPlayers",
     "myself",
     "comment",
-  ],
-  data() {
-    return {
-      RoleList: {
-        unknown: require("../assets/images/chara-icon/unknown.png"),
-        jinroh: require("../assets/images/chara-icon/jinroh.png"),
-        murabito: require("../assets/images/chara-icon/murabito.png"),
-        uranaishi: require("../assets/images/chara-icon/uranaishi.png"),
-        kaito: require("../assets/images/chara-icon/kaito.png"),
-        kyojin: require("../assets/images/chara-icon/kyojin.png"),
-        turibito: require("../assets/images/chara-icon/tsuribito.png"),
-      },
-      coRoleList: {
-        unknown: require("../assets/images/fukidashi/fumei.png"),
-        jinroh: require("../assets/images/fukidashi/jinroh.png"),
-        murabito: require("../assets/images/fukidashi/murabito.png"),
-        uranaishi: require("../assets/images/fukidashi/uranaishi.png"),
-        kaito: require("../assets/images/fukidashi/kaito.png"),
-        kyojin: require("../assets/images/fukidashi/kyojin.png"),
-        turibito: require("../assets/images/fukidashi/tsuribito.png"),
-      },
-    };
-  },
-  methods: {
-    isSelected: function (name) {
-      // 投票ページ以外ではselectedPlayersは存在しないのでfalseを返す
-      if (!this.selectedPlayers) {
-        return false;
-      }
-
-      let selectedPlayersName = [];
-      this.selectedPlayers.forEach((player) => {
-        selectedPlayersName.push(player.name);
-      });
-
-      if (selectedPlayersName.includes(name)) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-  },
+  ]
 };
 </script>
 

@@ -2,8 +2,8 @@
   <main class="result_page">
     <modal :width="'90%'" :height="'auto'" name="result-modal">
       <div class="result-modal">
-        <ResultImage :judge="judge" @getJudgeText="judgeText = $event" />
-        <myButton class="btn" :method="closeModal" :text="'OK'" />
+        <ResultImage :judge="judge" @getJudgeText="judgeText = $event"/>
+        <myButton class="btn" :method="closeModal" :text="'OK'"/>
       </div>
     </modal>
 
@@ -13,35 +13,19 @@
     <div class="result grid-container">
       <div class="result_winners grid-item">
         <h3>かち</h3>
-        <PlayerResult
-          :playerName="val.playerName"
-          :role="val.role"
-          :coRole="val.coRole"
-          :myself="val.myself"
-          :comment="val.comment"
-          v-for="(val, key) in winPlayerList"
-          :key="key"
-        />
+        <ResultPlayerArea :player-list="winPlayerList"/>
       </div>
       <div class="result_losers grid-item">
         <h3>まけ</h3>
-        <PlayerResult
-          :playerName="val.playerName"
-          :role="val.role"
-          :coRole="val.coRole"
-          :myself="val.myself"
-          :comment="val.comment"
-          v-for="(val, key) in losePlayerList"
-          :key="key"
-        />
+        <ResultPlayerArea :player-list="losePlayerList"/>
       </div>
       <div class="holiday-roles grid-item">
         <h3>場のカード</h3>
-        <img :src="RoleList[val]" :alt="val" v-for="(val, key) in holidayRoles" :key="key" />
+        <img :src="$getRole(role).img" :alt="role" v-for="(role, key) in holidayRoles" :key="key"/>
       </div>
     </div>
 
-    <myButton v-if="hostFlg" class="btn" :method="returnRoom" :text="'全員ルームに戻す'" />
+    <myButton v-if="hostFlg" class="btn" :method="returnRoom" :text="'全員ルームに戻す'"/>
     <p v-else class="waiting-text">ホストがルームに戻るを選択するまでおまちください</p>
   </main>
 </template>
@@ -52,9 +36,9 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
 import ResultImage from "@/components/ResultImage.vue";
-import PlayerResult from "@/components/PlayerResult.vue";
 import myButton from "@/components/Button.vue";
-import { JINROH_API_BASE_URL } from "../Env";
+import {JINROH_API_BASE_URL} from "../Env";
+import ResultPlayerArea from "@/views/ResultPlayerArea";
 
 export default {
   name: "TempResultTermPage",
@@ -76,18 +60,9 @@ export default {
       hostFlg: false,
       winPlayers: [],
       losePlayers: [],
-      RoleList: {
-        unknown: require("../assets/images/card.png"),
-        jinroh: require("../assets/images/chara/chara1.png"),
-        murabito: require("../assets/images/chara/chara2.png"),
-        uranaishi: require("../assets/images/chara/chara3.png"),
-        kaito: require("../assets/images/chara/chara4.png"),
-        kyojin: require("../assets/images/chara/chara5.png"),
-        turibito: require("../assets/images/chara/chara6.png"),
-      },
     };
   },
-  components: { ResultImage, myButton, PlayerResult },
+  components: {ResultPlayerArea, ResultImage, myButton},
   computed: {
     // playerListを勝者と敗者に振り分ける
     winPlayerList: function () {
@@ -168,8 +143,7 @@ h3 {
   justify-content: center;
 
   .grid-item {
-    padding: 3rem;
-    padding-top: 2rem;
+    padding: 2rem 3rem 3rem;
     background-color: #eee;
     border-radius: 8px;
   }

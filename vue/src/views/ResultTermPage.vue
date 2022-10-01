@@ -2,8 +2,8 @@
   <main class="result_page">
     <modal :width="'90%'" :height="'auto'" name="result-modal">
       <div class="result-modal">
-        <ResultImage :judge="judge" @getJudgeText="judgeText = $event"/>
-        <myButton class="btn" :method="closeModal" :text="'OK'"/>
+        <ResultImage :judge="judge" />
+        <myButton class="btn" :method="closeModal" :text="'OK'" />
       </div>
     </modal>
 
@@ -13,20 +13,32 @@
     <div class="result grid-container">
       <div class="result_winners grid-item">
         <h3>かち</h3>
-        <ResultPlayerArea :player-list="winPlayerList"/>
+        <ResultPlayerArea :player-list="winPlayerList" />
       </div>
       <div class="result_losers grid-item">
         <h3>まけ</h3>
-        <ResultPlayerArea :player-list="losePlayerList"/>
+        <ResultPlayerArea :player-list="losePlayerList" />
       </div>
       <div class="holiday-roles grid-item">
         <h3>場のカード</h3>
-        <img :src="$getRole(role).img" :alt="role" v-for="(role, key) in holidayRoles" :key="key"/>
+        <img
+          :src="$getRole(role).img"
+          :alt="role"
+          v-for="(role, key) in holidayRoles"
+          :key="key"
+        />
       </div>
     </div>
 
-    <myButton v-if="hostFlg" class="btn" :method="returnRoom" :text="'全員ルームに戻す'"/>
-    <p v-else class="waiting-text">ホストがルームに戻るを選択するまでおまちください</p>
+    <myButton
+      v-if="hostFlg"
+      class="btn"
+      :method="returnRoom"
+      :text="'全員ルームに戻す'"
+    />
+    <p v-else class="waiting-text">
+      ホストがルームに戻るを選択するまでおまちください
+    </p>
   </main>
 </template>
 
@@ -37,8 +49,9 @@ import Stomp from "webstomp-client";
 
 import ResultImage from "@/components/ResultImage.vue";
 import myButton from "@/components/Button.vue";
-import {JINROH_API_BASE_URL} from "../Env";
+import { JINROH_API_BASE_URL } from "../Env";
 import ResultPlayerArea from "@/views/ResultPlayerArea";
+import { JUDGE_RESULT } from "@/resultInfo.js";
 
 export default {
   name: "TempResultTermPage",
@@ -62,7 +75,7 @@ export default {
       losePlayers: [],
     };
   },
-  components: {ResultPlayerArea, ResultImage, myButton},
+  components: { ResultPlayerArea, ResultImage, myButton },
   computed: {
     // playerListを勝者と敗者に振り分ける
     winPlayerList: function () {
@@ -79,28 +92,27 @@ export default {
         console.log(response.data);
         // 新パラメータ(this datas are available from backend)
         this.judge = response.data.judge;
+        this.judgeText = JUDGE_RESULT[this.judge].text;
         this.holidayRoles = response.data.holidayRoles;
-        this.playerList = response.data.participants
-        this.hostFlg = response.data.hostFlg
+        this.playerList = response.data.participants;
+        this.hostFlg = response.data.hostFlg;
         this.configWebSocket(response.data.gameId);
-        this.$modal.show("result-modal");
       })
       .catch(() => {
         this.$router.push("/room");
       });
+    this.$modal.show("result-modal");
   },
   methods: {
     returnRoom() {
-      axios.get(JINROH_API_BASE_URL + "/return-room", { withCredentials: true })
-      .catch(() => {
-        console.log("サーバとの通信に失敗しました．もう一度お試しください")
-      })
+      axios
+        .get(JINROH_API_BASE_URL + "/return-room", { withCredentials: true })
+        .catch(() => {
+          console.log("サーバとの通信に失敗しました．もう一度お試しください");
+        });
     },
     closeModal: function () {
       this.$modal.hide("result-modal");
-    },
-    getJudgeText: function (judgeText) {
-      this.judgeText = judgeText;
     },
     configWebSocket: function (gameId) {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");

@@ -1,49 +1,23 @@
 <template>
   <figure class="winner">
     <figcaption class="winner-text">
-      {{ judgeResults[judge].text }}
+      {{ judgeResult[judge].text }}
     </figcaption>
-    <img class="winner-image" :src="judgeResults[judge].imagePath" :alt="judgeResults[judge].text" />
+    <img class="winner-image" :src="judgeResult[judge].imagePath" :alt="judgeResult[judge].text" />
   </figure>
 </template>
 
 <script>
+import { JUDGE_RESULT } from "@/resultInfo.js";
+
 export default {
   name: "ResultImage",
   props: ["judge"],
-  mounted() {
-    this.$emit("getJudgeText", this.judgeResults[this.judge].text);
-  },
-  data() {
-    return {
-      judgeResults: {
-        FAIL_PEACE_VILLAGE: {
-          text: "平和村失敗",
-          imagePath: require("../assets/images/result2.png"),
-        },
-        SIMPLE_JINROH_WIN: {
-          text: "人狼陣営の勝利",
-          imagePath: require("../assets/images/result2.png"),
-        },
-        SIMPLE_VILLAGE_WIN: {
-          text: "村人陣営の勝利",
-          imagePath: require("../assets/images/result1.png"),
-        },
-        SUCCESS_HIDE_JINROH_WIN: {
-          text: "人狼陣営の勝利（潜伏成功）",
-          imagePath: require("../assets/images/result2.png"),
-        },
-        SUCCESS_PEACE_VILLAGE: {
-          text: "平和村成功",
-          imagePath: require("../assets/images/result1.png"),
-        },
-        TURIBITO_WIN: {
-          text: "吊り人の勝利",
-          imagePath: require("../assets/images/result3.png"),
-        }
-      },
-    };
-  },
+  computed: {
+    judgeResult() {
+      return JUDGE_RESULT;
+    }
+  }
 };
 </script>
 

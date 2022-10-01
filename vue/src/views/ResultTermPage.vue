@@ -97,11 +97,11 @@ export default {
         this.playerList = response.data.participants;
         this.hostFlg = response.data.hostFlg;
         this.configWebSocket(response.data.gameId);
-        this.$modal.show("result-modal");
       })
       .catch(() => {
         this.$router.push("/room");
       });
+    this.$modal.show("result-modal");
   },
   methods: {
     returnRoom() {

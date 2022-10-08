@@ -5,7 +5,7 @@
       <Player
           :playerName="player.playerName"
           :roleName="player.playerRole.roleName"
-          :coRole="coMap(player.playerId)"
+          :coRole="cos.find(player.playerId)"
           :selectedPlayers="selectedPlayers"
           :myself="true"
           :isSelected=isSelected(player.playerName)
@@ -16,7 +16,7 @@
           :key="key"
           :playerName="val.name"
           :roleName="val.role.roleName"
-          :coRole="coMap(val.id)"
+          :coRole="cos.find(val.id)"
           :selectedPlayers="selectedPlayers"
           :myself="false"
           :isSelected=isSelected(val.name)
@@ -39,15 +39,6 @@ export default {
   },
   components: {Player},
   methods: {
-    coMap: function (playerId) {
-      const roleName = this.cos.find(co => co.id === playerId)
-
-      if (roleName) {
-        return roleName.role;
-      } else {
-        return "murabito";
-      }
-    },
     isSelected: function (name) {
       if (this.isPeaceful) {
         return false;

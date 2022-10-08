@@ -12,9 +12,9 @@
     <div class="col2">
       <DisplayRolls class="display-rolls" />
 
-      <coButtonArea 
+      <CoButtonArea 
         :playerId="playerId"
-        :myCoRole="coMap(playerId)"
+        :myCoRole="cos.find(playerId)"
       />
     </div>
 
@@ -44,15 +44,16 @@ import Stomp from "webstomp-client";
 
 import { JINROH_API_BASE_URL } from "../Env";
 import myButton from "@/components/Button.vue";
-import coButtonArea from "@/components/CoButtonArea.vue";
+import CoButtonArea from "@/components/CoButtonArea.vue";
 import PlayerArea from "@/components/PlayerArea.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
+import CoPlayers from "@/CoPlayers";
 
 export default {
   name: "TempTalkPage",
   components: {
     myButton,
-    coButtonArea,
+    CoButtonArea,
     PlayerArea,
     DisplayRolls,
   },
@@ -85,7 +86,7 @@ export default {
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
-        this.cos = response.data.cos;
+        this.cos = new CoPlayers(response.data.cos);
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
         this.nightActLog = response.data.gameIndex.nightActLog;
         this.$modal.show("talk-start-modal");
@@ -107,7 +108,7 @@ export default {
         this.stompClient.subscribe("/topic/receive-co/" + gameId, (value) => {
           const coState = JSON.parse(value.body).coBeans;
           console.log('co: ', coState);
-          this.cos = coState
+          this.cos = new CoPlayers(coState);
         });
       });
     },
@@ -123,15 +124,6 @@ export default {
         .catch(() => {
           this.$router.push("/room");
         });
-    },
-    coMap: function (playerId) {
-      const roleName = this.cos.find(co => co.id == playerId)
-
-      if(roleName){
-        return roleName.role;
-      }else{
-        return "murabito";
-      }
     },
   },
 };

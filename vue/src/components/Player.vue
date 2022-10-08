@@ -4,7 +4,7 @@
       <img :src="$getRole(roleName).icon" alt=""/>
     </figure>
 
-    <figure class="co-icon">
+    <figure class="co-icon" v-if="coRole">
       <img
           class="co-icon__img"
           :src="$getRole(coRole).co"

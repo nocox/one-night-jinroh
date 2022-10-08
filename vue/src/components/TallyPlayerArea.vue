@@ -45,7 +45,7 @@ export default {
       if (roleName) {
         return roleName.role;
       } else {
-        return "murabito";
+        return "";
       }
     },
     isSelected: function (name) {

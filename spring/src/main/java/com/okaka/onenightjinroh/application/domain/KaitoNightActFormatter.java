@@ -27,7 +27,7 @@ public class KaitoNightActFormatter implements RoleNightActFormatter {
 
     @Override
     public String toActLog() {
-        return String.format("怪盗の結果: %sと役職を交換しました．現在の役職はあたなが%sで，%sが%sです．",
+        return String.format("怪盗の結果: %sと役職を交換しました．現在の役職はあなたが%sで，%sが%sです．",
                 toParticipant.getUser().getUserName(),
                 toParticipant.getRole().getRoleName(),
                 toParticipant.getUser().getUserName(),

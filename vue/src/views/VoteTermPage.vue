@@ -45,6 +45,7 @@ import myButton from "@/components/Button";
 import TargetPlayerArea from "@/components/TargetPlayerArea.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
 import VoteArea from "@/components/VoteArea.vue";
+import CoPlayers from "@/CoPlayers";
 
 import { JINROH_API_BASE_URL } from "../Env";
 
@@ -88,7 +89,7 @@ export default {
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
-        this.cos = response.data.cos;
+        this.cos = new CoPlayers(response.data.cos);
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
         this.nightActLog = response.data.gameIndex.nightActLog;
 

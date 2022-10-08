@@ -66,6 +66,7 @@ import Stomp from "webstomp-client";
 import myButton from "@/components/Button";
 import TallyPlayerArea from "@/components/TallyPlayerArea.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
+import CoPlayers from "@/CoPlayers";
 
 import { JINROH_API_BASE_URL } from "@/Env";
 
@@ -127,7 +128,8 @@ export default {
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
         this.hostFlag = response.data.gameIndex.hostFlag;
-        this.cos = response.data.cos;
+        this.cos = new CoPlayers(response.data.cos);
+        
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
 
         this.tallyResult = response.data.tallyResult;

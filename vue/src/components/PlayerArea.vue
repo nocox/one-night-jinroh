@@ -5,7 +5,7 @@
       <Player
         :playerName="player.playerName"
         :roleName="player.playerRole.roleName"
-        :coRole="coMap(player.playerId)"
+        :coRole="cos.find(player.playerId)"
         :selectedPlayers="selectedPlayers"
         :myself="true"
       />
@@ -13,7 +13,7 @@
       <Player
         :playerName="val.name"
         :roleName="val.role.roleName"
-        :coRole="coMap(val.id)"
+        :coRole="cos.find(val.id)"
         :selectedPlayers="selectedPlayers"
         v-for="(val, key) in otherPlayerList"
         :myself="false"
@@ -30,17 +30,6 @@ export default {
   name: "PlayerArea",
   props: ["otherPlayerList", "player", "cos", "selectedPlayers"],
   components: { Player },
-  methods: {
-    coMap: function (playerId) {
-      const roleName = this.cos.find(co => co.id == playerId)
-
-      if(roleName){
-        return roleName.role;
-      }else{
-        return "";
-      }
-    },
-  },
 };
 </script>
 

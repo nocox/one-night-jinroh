@@ -1,7 +1,7 @@
 <template>
   <main class="vote_page">
     <h2>話し合いが終了しました。投票を行ってください。</h2>
-    <p class="action-result">{{ nightActLog }}</p>
+    <p v-if="nightActLog" class="action-result">{{ nightActLog }}</p>
 
     <TargetPlayerArea
       :otherPlayerList="otherPlayerList"

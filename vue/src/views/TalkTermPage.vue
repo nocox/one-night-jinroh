@@ -12,7 +12,7 @@
     <div class="col2">
       <DisplayRolls class="display-rolls" />
 
-      <coButtonArea 
+      <CoButtonArea 
         :playerId="playerId"
         :myCoRole="coMap(playerId)"
       />
@@ -44,7 +44,7 @@ import Stomp from "webstomp-client";
 
 import { JINROH_API_BASE_URL } from "../Env";
 import myButton from "@/components/Button.vue";
-import coButtonArea from "@/components/CoButtonArea.vue";
+import CoButtonArea from "@/components/CoButtonArea.vue";
 import PlayerArea from "@/components/PlayerArea.vue";
 import DisplayRolls from "@/components/DisplayRolls.vue";
 
@@ -52,7 +52,7 @@ export default {
   name: "TempTalkPage",
   components: {
     myButton,
-    coButtonArea,
+    CoButtonArea,
     PlayerArea,
     DisplayRolls,
   },
@@ -130,7 +130,7 @@ export default {
       if(roleName){
         return roleName.role;
       }else{
-        return "murabito";
+        return "";
       }
     },
   },

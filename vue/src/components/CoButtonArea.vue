@@ -18,10 +18,6 @@ import { CO_ROLE_LIST } from "@/roleInfo.js";
 export default {
   props: ["playerId", "myCoRole"],
   components: { CoButton },
-  mounted() {
-    let nowRole = "村人";
-    this.$emit("getActive", nowRole);
-  },
   computed: {
     coRoleList() {
       return CO_ROLE_LIST;

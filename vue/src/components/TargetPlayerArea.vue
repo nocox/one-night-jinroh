@@ -11,7 +11,7 @@
       />
       <!-- 他のプレイヤー -->
       <Player
-        :class="{'is-checked': val.id===checkPlayerId}"
+        :class="{'is-checked': val.id === checkPlayerId}"
         :playerName="val.name"
         :roleName="val.role.roleName"
         :coRole="cos.find(val.id)"

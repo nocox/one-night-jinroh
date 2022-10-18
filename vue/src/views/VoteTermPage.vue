@@ -22,6 +22,7 @@
       <section class="vote_section">
         <VoteArea
           :canVotePlayers="canVotePlayers"
+          :voting-destination="votingDestination"
           @emitCheckPlayerId="checkPlayerId = $event"
         />
       </section>
@@ -77,6 +78,7 @@ export default {
       ],
       checkPlayerId: 0,
       nightActLog: "",
+      votingDestination: null
     };
   },
   components: { TargetPlayerArea, VoteArea, myButton, DisplayRolls },
@@ -94,6 +96,8 @@ export default {
         this.nightActLog = response.data.gameIndex.nightActLog;
 
         this.canVotePlayers = response.data.voteIndex.canVotePlayers;
+        this.votingDestination = response.data.voteIndex.votingDestination;
+        this.checkPlayerId = this.votingDestination;
         this.$modal.show("vote-start-modal");
         this.configWebSocket(response.data.gameId);
       })

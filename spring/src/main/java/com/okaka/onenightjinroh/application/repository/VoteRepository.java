@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -18,6 +19,10 @@ public class VoteRepository {
         return voteDao.selectByGame(gameId).stream()
                 .map(this::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<Vote> findByVoterId(Long voterId) {
+        return voteDao.selectByVoter(voterId).map(this::toDomain);
     }
 
     public void createVote(Vote vote) {

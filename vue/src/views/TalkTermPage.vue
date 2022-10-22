@@ -67,7 +67,7 @@ export default {
       },
       nightActLog: "",
       hostFlag: false,
-      cos: [],
+      cos: new CoPlayers([]),
       otherPlayerList: [
         {
           id: 1,

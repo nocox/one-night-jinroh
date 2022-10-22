@@ -10,7 +10,6 @@
         playerRole: playerRole,
         playerId: playerId,
       }"
-      :coRole="this.coRole"
       :cos="this.cos"
       :checkPlayerId="checkPlayerId"
     />
@@ -61,7 +60,7 @@ export default {
         roleName: "不明",
       },
       hostFlag: false,
-      cos: [],
+      cos: new CoPlayers([]),
       otherPlayerList: [
         {
           id: 1,

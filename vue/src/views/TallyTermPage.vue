@@ -90,7 +90,7 @@ export default {
         },
       ],
       tallyResult: {
-        selectedPlayer: [
+        selectedPlayers: [
           {
             id: 1,
             name: "xxxxx",

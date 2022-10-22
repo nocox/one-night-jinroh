@@ -34,7 +34,7 @@ export default {
     otherPlayerList: {required: true},
     player: {required: true},
     cos: {required: true},
-    selectedPlayers: {required: true},
+    selectedPlayers: {type: Array, required: true},
     isPeaceful: {type: Boolean, required: true}
   },
   components: {Player},

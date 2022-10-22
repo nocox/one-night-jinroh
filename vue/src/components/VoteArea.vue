@@ -45,7 +45,7 @@ export default {
   name: "VoteArea",
   data() {
     return {
-      checkPlayerId: 0,
+      checkPlayerId: null,
       is_unvotable: false,
       is_votable: false,
     };
@@ -53,13 +53,14 @@ export default {
   components: { myButton },
   props: {
     canVotePlayers: { required: true },
+    votingDestination: {}
   },
   methods: {
     emitCheckPlayerId() {
       this.$emit("emitCheckPlayerId", this.checkPlayerId);
     },
     vote() {
-      if (this.checkPlayerId == 0) {
+      if (!this.checkPlayerId) {
         this.is_unvotable = true;
         this.is_votable = false;
         return;
@@ -86,6 +87,15 @@ export default {
         });
     },
   },
+  watch: {
+    votingDestination: {
+      immediate: true,
+      handler: function () {
+        this.checkPlayerId = this.votingDestination
+        this.is_votable = this.votingDestination
+      }
+    }
+  }
 };
 </script>
 

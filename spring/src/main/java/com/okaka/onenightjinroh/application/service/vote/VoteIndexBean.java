@@ -6,12 +6,18 @@ import java.util.List;
 
 public class VoteIndexBean {
     private List<GameParticipantBean> canVotePlayers;
+    private Long votingDestination;
 
-    public VoteIndexBean(List<GameParticipantBean> canVotePlayers) {
+    public VoteIndexBean(List<GameParticipantBean> canVotePlayers, Long votingDestination) {
         this.canVotePlayers = canVotePlayers;
+        this.votingDestination = votingDestination;
     }
 
     public List<GameParticipantBean> getCanVotePlayers() {
         return canVotePlayers;
+    }
+
+    public Long getVotingDestination() {
+        return votingDestination;
     }
 }

@@ -2,7 +2,11 @@ export const getRoleInfo = (key) => {
   if (key in ROLE_NAME_MAPPING) {
     return ROLE_INFO[ROLE_NAME_MAPPING[key]];
   } else {
-    return ROLE_INFO[key];
+    if (key in ROLE_INFO) {
+      return ROLE_INFO[key];
+    } {
+      return ROLE_INFO.unknown;
+    }
   }
 };
 

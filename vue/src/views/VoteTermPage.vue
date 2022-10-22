@@ -10,7 +10,6 @@
         playerRole: playerRole,
         playerId: playerId,
       }"
-      :coRole="this.coRole"
       :cos="this.cos"
       :checkPlayerId="checkPlayerId"
     />

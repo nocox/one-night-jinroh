@@ -29,7 +29,7 @@ import Player from "@/components/Player.vue";
 
 export default {
   name: "TargetPlayerArea",
-  props: ["checkPlayerId","otherPlayerList", "player", "cos", "coRole", "selectedPlayers"],
+  props: ["checkPlayerId","otherPlayerList", "player", "cos", "selectedPlayers"],
   components: { Player },
 };
 </script>

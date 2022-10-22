@@ -81,7 +81,7 @@ export default {
         roleName: "不明",
       },
       hostFlag: false,
-      cos: [],
+      cos: new CoPlayers([]),
       otherPlayerList: [
         {
           id: 1,

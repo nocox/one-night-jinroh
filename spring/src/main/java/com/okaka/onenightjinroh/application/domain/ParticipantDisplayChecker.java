@@ -27,6 +27,9 @@ public class ParticipantDisplayChecker {
                 return GameParticipantBean.ofChangedKaito(participant);
             }
             if (isMyself(participant)) {
+                if( roleNightActs == null ){
+                    return GameParticipantBean.ofRoleOpen(participant);
+                }
                 return GameParticipantBean.ofChangedRole(participant, getKaitoChangedRole());
             }
         } else if (myParticipant.getRole().isJinroh()) {
@@ -55,6 +58,9 @@ public class ParticipantDisplayChecker {
     }
 
     private boolean showableParticipant(GameParticipant participant) {
+        if (roleNightActs == null){
+            return false;
+        }
         return roleNightActs.showableParticipant(participant.getGameParticipationId());
     }
 }

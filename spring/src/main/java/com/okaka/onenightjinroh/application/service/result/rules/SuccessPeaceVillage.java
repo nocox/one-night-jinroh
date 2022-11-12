@@ -10,13 +10,10 @@ import java.util.List;
 public class SuccessPeaceVillage implements WinLoseConditionBase {
     @Override
     public boolean condition(List<TallyResultConsideredNightAct> tallyResults) {
-        // 選ばれた人が3人以上で，村の中に人狼がいない．
-        List<TallyResultConsideredNightAct> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
-        if (selectedPlayers.size() < 3) {
-            return false;
-        }
+        // 全員の投票数が1で、村に人狼がいない
+        boolean selectPeaceVillage = tallyResults.stream().allMatch(it -> it.getTallyResult().getVoteCount() == 1);
         boolean existsJinroh = RuleUtils.containsRole(tallyResults, 2L);
-        return existsJinroh == false;
+        return selectPeaceVillage && !existsJinroh;
     }
 
     @Override

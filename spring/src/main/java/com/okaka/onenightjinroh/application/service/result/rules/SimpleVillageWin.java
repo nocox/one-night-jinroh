@@ -10,11 +10,8 @@ import java.util.List;
 public class SimpleVillageWin implements WinLoseConditionBase {
     @Override
     public boolean condition(List<TallyResultConsideredNightAct> tallyResults) {
-        // 選ばれた人が2人以下で，その中に人狼がいた
+        // 選ばれた人の中に人狼がいた
         List<TallyResultConsideredNightAct> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
-        if (selectedPlayers.size() > 2) {
-            return false;
-        }
         return RuleUtils.containsRole(selectedPlayers, 2L);
     }
 

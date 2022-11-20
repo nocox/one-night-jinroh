@@ -59,7 +59,7 @@ public class JoinedRoomUseCase {
         return PLAYER_NAME_OPTIONS.stream()
         .filter(option -> {
             return getUsedPlayerNames(roomId).stream()
-            .noneMatch(name -> name == option);
+            .noneMatch(name -> name.equals(option));
         })
         .collect(Collectors.toList());
     }

@@ -28,11 +28,8 @@
       <h2>ルームに参加</h2>
       <div class="form">
         <input v-model="roomNum" placeholder="ルーム番号" />
-        <p v-if="joinRoomResult === 'ROOM_NOT_EXIST'" class="error">
-          ルームが見つかりません
-        </p>
-        <p v-if="joinRoomResult === 'PARTICPANT_LIMIT'" class="error">
-          ルームの参加者上限に達しています
+        <p v-if="this.errorMessage" class="error">
+          {{ this.errorMessage }}
         </p>
         <div class="modal_btn-wrapper">
           <a class="join btn" v-on:click="joinRoom">参加</a>
@@ -58,6 +55,7 @@ export default {
     return {
       roomNum: "",
       joinRoomResult: "",
+      errorMessage: "",
     };
   },
   methods: {
@@ -84,7 +82,12 @@ export default {
           console.log(response.data);
           this.joinRoomResult = response.data;
           if (this.joinRoomResult === "JOIN_SUCCESS") {
+            this.errorMessage = "";
             this.$router.push("/room");
+          } else if (this.joinRoomResult === "PARTICPANT_LIMIT") {
+            this.errorMessage = "ルームの参加者上限に達しています";
+          } else if (this.joinRoomResult === "ROOM_NOT_EXIST") {
+            this.errorMessage = "ルームが見つかりません";
           }
         })
         .catch(() => {

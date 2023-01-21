@@ -6,6 +6,15 @@ public class Room {
     public Rule rule; // FIXME: 昔はここにルーム情報をそのまま置いていたが、Room保存時に、ruleは決まらないので、考え直したい。
     public RoomStatus status;
 
+    public Room finishRoom() {
+        return new Room(
+                this.getRoomId(),
+                this.getUuid(),
+                this.getRule(),
+                RoomStatus.Finished
+        );
+    }
+
     public Room(Long roomId, String uuid, Rule rule, RoomStatus status) {
         this.roomId = roomId;
         this.uuid = uuid;

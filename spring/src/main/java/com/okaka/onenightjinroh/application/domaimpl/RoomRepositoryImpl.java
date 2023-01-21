@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public class RoomRepositoryImpl implements RoomRepository {
@@ -25,9 +24,22 @@ public class RoomRepositoryImpl implements RoomRepository {
     public void save(Room room) {
         RoomEntity roomEntity = new RoomEntity();
         roomEntity.uuid = room.uuid;
-        roomEntity.rule_id = null;
+        // TODO: これやめたい。。そもそもRuleはこいつが持ってなくて良いので、修正したい。
+        Rule rule = room.getRule();
+        if (rule !=null) {
+            roomEntity.rule_id = rule.getRuleId();
+        } else {
+            roomEntity.rule_id = null;
+        }
         roomEntity.room_status = room.status.getCode();
-        roomDao.insert(roomEntity);
+
+        Optional<RoomEntity> optRoom = roomDao.selectRoomByUUID(room.uuid);
+        if (optRoom.isPresent()) {
+            roomEntity.room_id = room.getRoomId();
+            roomDao.update(roomEntity);
+        } else {
+            roomDao.insert(roomEntity);
+        }
     }
 
     @Override

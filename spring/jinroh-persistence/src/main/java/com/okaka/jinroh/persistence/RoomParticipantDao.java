@@ -6,6 +6,8 @@ import org.seasar.doma.Select;
 import org.seasar.doma.boot.ConfigAutowireable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @ConfigAutowireable
 @Dao
 public interface RoomParticipantDao {
@@ -16,7 +18,11 @@ public interface RoomParticipantDao {
     @Select
     int selectParticipantCount(Long roomId);
 
+    @Select
+    Optional<RoomParticipantEntity> selectByUserId(Long userId);
+
     @Insert
     @Transactional
     int insert(RoomParticipantEntity roomParticipantEntity);
+
 }

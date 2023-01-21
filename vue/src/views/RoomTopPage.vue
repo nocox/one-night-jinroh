@@ -198,6 +198,15 @@ export default {
     },
     finishRoom: function () {
       console.log("ゲームを解散します。")
+
+      axios
+          .get(JINROH_API_BASE_URL + "/room-finish", { withCredentials: true })
+          .then(() => {
+            this.$router.push("/top");
+          })
+          .catch(() => {
+            console.log("通信に失敗しました。")
+          });
     }
   },
   mounted() {

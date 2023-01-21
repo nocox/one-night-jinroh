@@ -1,11 +1,7 @@
 package com.okaka.onenightjinroh.api;
 
-import com.okaka.jinroh.persistence.RoomEntity;
 import com.okaka.onenightjinroh.application.domain.Room;
-import com.okaka.onenightjinroh.application.service.room.GameStartWebSocketBean;
-import com.okaka.onenightjinroh.application.service.room.GetRoomIndexUseCase;
-import com.okaka.onenightjinroh.application.service.room.RoomIndexBean;
-import com.okaka.onenightjinroh.application.service.room.StartGameUseCase;
+import com.okaka.onenightjinroh.application.service.room.*;
 import com.okaka.onenightjinroh.application.validater.ExistRoomValidate;
 import com.okaka.onenightjinroh.application.validater.StartGameValidate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +32,9 @@ public class RoomController {
     @Autowired
     private StartGameValidate startGameValidate;
 
+    @Autowired
+    private FinishRoomUseCase finishRoomUseCase;
+
     @RequestMapping(path = "/room-index")
     RoomIndexBean getRoom() {
         String uuid = session.getAttribute("room_uuid").toString();
@@ -59,6 +58,15 @@ public class RoomController {
 
         // ここでブロードキャストする
         messagingTemplate.convertAndSend("/topic/" + room.uuid, gameStartWebSocketBean);
+        return 0;
+    }
+
+    @RequestMapping(path = "/room-finish")
+    int finishRoom() {
+        String uuid = session.getAttribute("room_uuid").toString();
+        Long userId = Long.valueOf(session.getAttribute("user_id").toString());
+
+        finishRoomUseCase.invoke(userId, uuid);
         return 0;
     }
 }

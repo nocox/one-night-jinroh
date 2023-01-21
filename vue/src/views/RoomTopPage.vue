@@ -74,7 +74,6 @@
               :method="openRoomFinishModal"
               v-if="hostFlg"
           />
-          <p v-if="!hostFlg">ホストがゲームを始めるまでお待ちください！</p>
         </div>
 
         <!-- ゲーム終了の最終確認モーダル -->

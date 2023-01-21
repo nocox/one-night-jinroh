@@ -18,5 +18,5 @@ public interface RoomParticipantDao {
 
     @Insert
     @Transactional
-    int insert(RoomParticipant roomParticipant);
+    int insert(RoomParticipantEntity roomParticipantEntity);
 }

@@ -31,11 +31,11 @@ public class CreateRoomUseCase {
         userEntity.user_name = "ホストのふくろう";
         userDao.insert(userEntity);
 
-        RoomParticipant roomParticipant = new RoomParticipant();
-        roomParticipant.room_id = room.getRoomId();
-        roomParticipant.user_id = userEntity.user_id;
-        roomParticipant.host_flg = true;
-        roomParticipantDao.insert(roomParticipant);
+        RoomParticipantEntity roomParticipantEntity = new RoomParticipantEntity();
+        roomParticipantEntity.room_id = room.getRoomId();
+        roomParticipantEntity.user_id = userEntity.user_id;
+        roomParticipantEntity.host_flg = true;
+        roomParticipantDao.insert(roomParticipantEntity);
 
         return new CreateRoomUseCaseDto(userEntity, room);
     }

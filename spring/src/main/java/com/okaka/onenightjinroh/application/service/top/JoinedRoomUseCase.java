@@ -8,6 +8,7 @@ import com.okaka.jinroh.persistence.RoomEntity;
 import com.okaka.jinroh.persistence.RoomParticipant;
 import com.okaka.jinroh.persistence.RoomParticipantDao;
 import com.okaka.jinroh.persistence.UserEntity;
+import com.okaka.onenightjinroh.application.domain.Room;
 import com.okaka.onenightjinroh.application.repository.UserRepository;
 import com.okaka.onenightjinroh.application.validater.ExistRoomValidate;
 import com.okaka.jinroh.persistence.UserDao;
@@ -29,19 +30,19 @@ public class JoinedRoomUseCase {
     ExistRoomValidate existRoomValidate;
 
     public JoinedRoomUseCaseDto joinedRoom(String uuid) throws ParticipantLimitException, RoomNotExistException {
-        RoomEntity roomEntity = existRoomValidate.existRoom(uuid).orElseThrow(() -> new RoomNotExistException("ルームが存在しません。"));
+        Room room = existRoomValidate.existRoom(uuid).orElseThrow(() -> new RoomNotExistException("ルームが存在しません。"));
         
         int PARTICPANT_LIMIT = 6;
-        if(PARTICPANT_LIMIT < roomParticipantDao.selectParticipantCount(roomEntity.room_id)){
+        if(PARTICPANT_LIMIT < roomParticipantDao.selectParticipantCount(room.getRoomId())){
             throw new ParticipantLimitException( String.format("参加人数は%s人までです。", PARTICPANT_LIMIT) );
         }
 
         UserEntity userEntity = new UserEntity();
-        userEntity.user_name = getUseablePlayerNameOptions(roomEntity.room_id).get(0);
+        userEntity.user_name = getUseablePlayerNameOptions(room.getRoomId()).get(0);
         userDao.insert(userEntity);
 
         RoomParticipant roomParticipant = new RoomParticipant();
-        roomParticipant.room_id = roomEntity.room_id;
+        roomParticipant.room_id = room.getRoomId();
         roomParticipant.user_id = userEntity.user_id;
         roomParticipant.host_flg = false;
         roomParticipantDao.insert(roomParticipant);

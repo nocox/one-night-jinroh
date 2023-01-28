@@ -181,6 +181,12 @@ export default {
           this.playerCount = JSON.parse(value.body).playerCount;
           this.$modal.show("game-rule-modal");
         });
+        this.stompClient.subscribe("/topic/receive-finish-room/" + this.uuid, () => {
+          if (this.hostFlg === false ) {
+            alert("ホストがルームを解散しました。");
+          }
+          this.$router.push("/top");
+        });
       });
     },
     copyToClipboard: function () {

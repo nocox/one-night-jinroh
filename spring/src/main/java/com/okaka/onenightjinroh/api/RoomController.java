@@ -67,6 +67,8 @@ public class RoomController {
         Long userId = Long.valueOf(session.getAttribute("user_id").toString());
 
         finishRoomUseCase.invoke(userId, uuid);
+
+        messagingTemplate.convertAndSend("/topic/receive-finish-room/" + uuid, "");
         return 0;
     }
 }

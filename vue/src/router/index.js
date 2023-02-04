@@ -115,7 +115,11 @@ router.beforeEach((to, from, next) => {
   }
 
   const answer = window.confirm("ゲームを終了しますか？")
-  if (!answer) return false
+
+  if (!answer) {
+    next(false)
+    return false
+  }
   next()
 })
 

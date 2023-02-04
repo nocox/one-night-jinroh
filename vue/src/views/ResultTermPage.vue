@@ -85,8 +85,8 @@ export default {
       return this.playerList.filter((player) => player.winOrLose == "lose");
     },
   },
-  async mounted() {
-    await axios
+  mounted() {
+    axios
       .get(JINROH_API_BASE_URL + "/result-index", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
@@ -97,11 +97,11 @@ export default {
         this.playerList = response.data.participants;
         this.hostFlg = response.data.hostFlg;
         this.configWebSocket(response.data.gameId);
+        this.$modal.show("result-modal");
       })
       .catch(() => {
         this.$router.push("/room");
       });
-    this.$modal.show("result-modal");
   },
   methods: {
     returnRoom() {

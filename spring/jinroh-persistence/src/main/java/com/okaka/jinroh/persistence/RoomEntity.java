@@ -13,5 +13,6 @@ public class RoomEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long room_id;
     public String uuid;
-    public String rule_id;
+    public Long rule_id;
+    public String room_status;
 }

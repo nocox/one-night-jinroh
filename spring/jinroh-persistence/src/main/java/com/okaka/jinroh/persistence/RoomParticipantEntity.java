@@ -8,7 +8,7 @@ import org.seasar.doma.Table;
 
 @Entity
 @Table(name = "ROOM_PARTICIPANT")
-public class RoomParticipant {
+public class RoomParticipantEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long room_participant_id;

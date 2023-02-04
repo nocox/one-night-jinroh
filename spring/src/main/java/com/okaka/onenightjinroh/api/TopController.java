@@ -26,7 +26,7 @@ public class TopController {
         CreateRoomUseCaseDto dto = createRoomUseCase.createRoom();
 
         session.setAttribute("user_id", dto.getUserEntity().user_id);
-        session.setAttribute("room_uuid", dto.getRoomEntity().uuid);
+        session.setAttribute("room_uuid", dto.getRoom().uuid);
         return 0;
     }
 

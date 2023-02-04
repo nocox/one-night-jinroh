@@ -1,14 +1,6 @@
 package com.okaka.onenightjinroh;
 
-import com.okaka.jinroh.persistence.ReservationAdapter;
-import com.okaka.jinroh.persistence.RoleDao;
-import com.okaka.jinroh.persistence.RoleEntity;
-import com.okaka.jinroh.persistence.RoleSelectDao;
-import com.okaka.jinroh.persistence.RoleSelectEntity;
-import com.okaka.jinroh.persistence.RuleDao;
-import com.okaka.jinroh.persistence.RuleEntity;
-import com.okaka.jinroh.persistence.TEventDao;
-import com.okaka.jinroh.persistence.TUserDao;
+import com.okaka.jinroh.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -45,6 +37,9 @@ public class OneNightJinrohApplication {
 	@Autowired
 	RoleSelectDao roleSelectDao;
 
+	@Autowired
+	ClsRoomStatusDao clsRoomStatusDao;
+
 	// Insert data at initailizing phase using ReservationDao#insert
 	@Bean
 	CommandLineRunner runner() {
@@ -61,6 +56,11 @@ public class OneNightJinrohApplication {
 		insertRole("デフォルト5人", Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 1L));
 		insertRole("デフォルト6人", Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 1L, 2L));
 		insertRole("デフォルト7人", Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 1L, 2L, 3L));
+
+		insertRoomStatus("Ready");
+		insertRoomStatus("InGame");
+		insertRoomStatus("Finished");
+
 		return null;
 	}
 
@@ -76,6 +76,12 @@ public class OneNightJinrohApplication {
 				roleSelectEntity.role_id = id;
 				roleSelectDao.insert(roleSelectEntity);
 			});
+		}
+	}
+
+	private void insertRoomStatus(String roomStatus) {
+		if (!clsRoomStatusDao.exist(roomStatus)){
+			clsRoomStatusDao.insert(new ClsRoomStatusEntity(roomStatus));
 		}
 	}
 }

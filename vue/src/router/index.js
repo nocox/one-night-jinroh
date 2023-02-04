@@ -94,6 +94,11 @@ const route = [
 ]
 
 router.beforeEach((to, from, next) => {
+  if (to.query["flg"] === "kaisan") {
+    next()
+    return true
+  }
+
   if (from.name === "TopPage") {
     next()
     return true
@@ -110,7 +115,11 @@ router.beforeEach((to, from, next) => {
   }
 
   const answer = window.confirm("ゲームを終了しますか？")
-  if (!answer) return false
+
+  if (!answer) {
+    next(false)
+    return false
+  }
   next()
 })
 

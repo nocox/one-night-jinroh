@@ -1,11 +1,9 @@
 package com.okaka.onenightjinroh.application.service.top;
 
-import com.okaka.jinroh.persistence.RoomEntity;
-import com.okaka.jinroh.persistence.RoomDao;
-import com.okaka.jinroh.persistence.RoomParticipant;
-import com.okaka.jinroh.persistence.RoomParticipantDao;
-import com.okaka.jinroh.persistence.UserEntity;
-import com.okaka.jinroh.persistence.UserDao;
+import com.okaka.jinroh.persistence.*;
+import com.okaka.onenightjinroh.application.domain.Room;
+import com.okaka.onenightjinroh.application.domain.RoomStatus;
+import com.okaka.onenightjinroh.application.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,33 +11,32 @@ import java.util.UUID;
 
 @Service
 public class CreateRoomUseCase {
-    private final RoomDao roomDao;
+    private final RoomRepository roomRepository;
     private final UserDao userDao;
     private final RoomParticipantDao roomParticipantDao;
 
-    public CreateRoomUseCase(RoomDao roomDao, UserDao userDao, RoomParticipantDao roomParticipantDao) {
-        this.roomDao = roomDao;
+    public CreateRoomUseCase(RoomRepository roomRepository, RoomDao roomDao, UserDao userDao, RoomParticipantDao roomParticipantDao) {
+        this.roomRepository = roomRepository;
         this.userDao = userDao;
         this.roomParticipantDao = roomParticipantDao;
     }
 
     @Transactional
     public CreateRoomUseCaseDto createRoom(){
-        RoomEntity roomEntity = new RoomEntity();
-        roomEntity.uuid = UUID.randomUUID().toString();
-        roomEntity.rule_id = null;
-        roomDao.insert(roomEntity);
+        String uuid = UUID.randomUUID().toString();
+        roomRepository.save(new Room(null, uuid, null, RoomStatus.Ready));
+        Room room = roomRepository.findByUUID(uuid).orElseThrow();
 
         UserEntity userEntity = new UserEntity();
         userEntity.user_name = "ホストのふくろう";
         userDao.insert(userEntity);
 
-        RoomParticipant roomParticipant = new RoomParticipant();
-        roomParticipant.room_id = roomEntity.room_id;
-        roomParticipant.user_id = userEntity.user_id;
-        roomParticipant.host_flg = true;
-        roomParticipantDao.insert(roomParticipant);
+        RoomParticipantEntity roomParticipantEntity = new RoomParticipantEntity();
+        roomParticipantEntity.room_id = room.getRoomId();
+        roomParticipantEntity.user_id = userEntity.user_id;
+        roomParticipantEntity.host_flg = true;
+        roomParticipantDao.insert(roomParticipantEntity);
 
-        return new CreateRoomUseCaseDto(userEntity, roomEntity);
+        return new CreateRoomUseCaseDto(userEntity, room);
     }
 }

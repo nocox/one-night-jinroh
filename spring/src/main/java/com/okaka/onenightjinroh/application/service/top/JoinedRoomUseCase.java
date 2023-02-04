@@ -4,13 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.okaka.jinroh.persistence.RoomEntity;
-import com.okaka.jinroh.persistence.RoomParticipant;
-import com.okaka.jinroh.persistence.RoomParticipantDao;
-import com.okaka.jinroh.persistence.UserEntity;
+import com.okaka.jinroh.persistence.*;
+import com.okaka.jinroh.persistence.RoomParticipantEntity;
+import com.okaka.onenightjinroh.application.domain.Room;
 import com.okaka.onenightjinroh.application.repository.UserRepository;
 import com.okaka.onenightjinroh.application.validater.ExistRoomValidate;
-import com.okaka.jinroh.persistence.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,22 +27,22 @@ public class JoinedRoomUseCase {
     ExistRoomValidate existRoomValidate;
 
     public JoinedRoomUseCaseDto joinedRoom(String uuid) throws ParticipantLimitException, RoomNotExistException {
-        RoomEntity roomEntity = existRoomValidate.existRoom(uuid).orElseThrow(() -> new RoomNotExistException("ルームが存在しません。"));
+        Room room = existRoomValidate.existRoom(uuid).orElseThrow(() -> new RoomNotExistException("ルームが存在しません。"));
         
         int PARTICPANT_LIMIT = 6;
-        if(PARTICPANT_LIMIT < roomParticipantDao.selectParticipantCount(roomEntity.room_id)){
+        if(PARTICPANT_LIMIT < roomParticipantDao.selectParticipantCount(room.getRoomId())){
             throw new ParticipantLimitException( String.format("参加人数は%s人までです。", PARTICPANT_LIMIT) );
         }
 
         UserEntity userEntity = new UserEntity();
-        userEntity.user_name = getUseablePlayerNameOptions(roomEntity.room_id).get(0);
+        userEntity.user_name = getUseablePlayerNameOptions(room.getRoomId()).get(0);
         userDao.insert(userEntity);
 
-        RoomParticipant roomParticipant = new RoomParticipant();
-        roomParticipant.room_id = roomEntity.room_id;
-        roomParticipant.user_id = userEntity.user_id;
-        roomParticipant.host_flg = false;
-        roomParticipantDao.insert(roomParticipant);
+        RoomParticipantEntity roomParticipantEntity = new RoomParticipantEntity();
+        roomParticipantEntity.room_id = room.getRoomId();
+        roomParticipantEntity.user_id = userEntity.user_id;
+        roomParticipantEntity.host_flg = false;
+        roomParticipantDao.insert(roomParticipantEntity);
 
         return new JoinedRoomUseCaseDto(userEntity);
     }

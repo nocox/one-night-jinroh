@@ -1,7 +1,7 @@
 package com.okaka.onenightjinroh.application.service.room;
 
-import com.okaka.jinroh.persistence.RoomEntity;
 import com.okaka.jinroh.persistence.UserEntity;
+import com.okaka.onenightjinroh.application.domain.Room;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,8 +12,8 @@ public class RoomIndexBean {
     private boolean hostFlg;
     private Long myselfUserId;
 
-    public RoomIndexBean(RoomEntity roomEntity, List<UserEntity> userEntityList, Long userId, Long hostUserId) {
-        this.uuid = roomEntity.uuid;
+    public RoomIndexBean(Room room, List<UserEntity> userEntityList, Long userId, Long hostUserId) {
+        this.uuid = room.getUuid();
         this.userList = userEntityList.stream().map(user -> new UserBean(user, hostUserId)).collect(Collectors.toList());
         this.hostFlg = userId.equals(hostUserId);
         this.myselfUserId = userId;

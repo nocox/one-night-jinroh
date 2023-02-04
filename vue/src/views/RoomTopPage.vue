@@ -24,45 +24,78 @@
       <p>ページをリロードすると<br />最新の参加者を取得できます。</p>
     </section>
 
-    <!-- スタートボタンを表示（ホストのみ）-->
-    <section class="start">
-      <div class="button-area">
-        <myButton
-          class="start-btn"
-          :text="'はじめる！'"
-          :method="gameStart"
-          v-if="hostFlg"
-        />
-        <p v-if="!hostFlg">ホストがゲームを始めるまでお待ちください！</p>
+    <section class="btn-content">
+      <!-- スタートボタンを表示（ホストのみ）-->
+      <div class="start">
+        <div class="button-area">
+          <myButton
+              class="default-btn start-btn"
+              :text="'はじめる！'"
+              :method="gameStart"
+              v-if="hostFlg"
+          />
+          <p v-if="!hostFlg">ホストがゲームを始めるまでお待ちください！</p>
+        </div>
+
+        <!-- ゲーム開始を通知するモーダル -->
+        <modal
+            name="game-rule-modal"
+            :clickToClose="false"
+            :height="'auto'"
+            :width="'90%'"
+            :scrollable="true"
+        >
+          <div class="modal-header">
+            <h2>ゲームを開始します</h2>
+          </div>
+          <div class="modal-content">
+            <p>参加人数 : {{ playerCount }}</p>
+
+            <div class="role-list">
+              <h3>役職一覧</h3>
+              <ul>
+                <li v-for="(count, name) in $store.state.rolls" v-bind:key="name">
+                  <span> {{ name }}</span>
+                  <span> : </span>
+                  <span>{{ count }} </span>
+                </li>
+              </ul>
+            </div>
+            <myButton class="btn" :text="'OK'" :method="gotoGamePage" />
+          </div>
+        </modal>
       </div>
 
-      <!-- ゲーム開始を通知するモーダル -->
-      <modal
-        name="game-rule-modal"
-        :clickToClose="false"
-        :height="'auto'"
-        :width="'90%'"
-        :scrollable="true"
-      >
-        <div class="modal-header">
-          <h2>ゲームを開始します</h2>
+      <div class="finish">
+        <div class="button-area">
+          <myButton
+              class="default-btn finish-btn"
+              :text="'かいさん...'"
+              :method="openRoomFinishModal"
+              v-if="hostFlg"
+          />
         </div>
-        <div class="modal-content">
-          <p>参加人数 : {{ playerCount }}</p>
 
-          <div class="role-list">
-            <h3>役職一覧</h3>
-            <ul>
-              <li v-for="(count, name) in $store.state.rolls" v-bind:key="name">
-                <span> {{ name }}</span>
-                <span> : </span>
-                <span>{{ count }} </span>
-              </li>
-            </ul>
+        <!-- ゲーム終了の最終確認モーダル -->
+        <modal
+            name="room-finish-modal"
+            :clickToClose="true"
+            :height="'auto'"
+            :width="'90%'"
+            :scrollable="true"
+        >
+          <div class="modal-header">
+            <h2>ルームを解散します</h2>
           </div>
-          <myButton class="btn" :text="'OK'" :method="gotoGamePage" />
-        </div>
-      </modal>
+          <div class="modal-content">
+            <p>本当によろしいですか？</p>
+            <div class="btn-content">
+              <myButton class="action-btn" :text="'解散'" :method="finishRoom" />
+              <myButton class="cancel-btn" :text="'戻る'" :method="closeRoomFinishModal" />
+            </div>
+          </div>
+        </modal>
+      </div>
     </section>
   </main>
 </template>
@@ -148,6 +181,12 @@ export default {
           this.playerCount = JSON.parse(value.body).playerCount;
           this.$modal.show("game-rule-modal");
         });
+        this.stompClient.subscribe("/topic/receive-finish-room/" + this.uuid, () => {
+          if (this.hostFlg === false ) {
+            window.alert("ホストがルームを解散しました。");
+          }
+          this.$router.push("/top?flg=kaisan");
+        });
       });
     },
     copyToClipboard: function () {
@@ -156,6 +195,22 @@ export default {
       document.execCommand("Copy");
       this.is_copied = true;
     },
+    openRoomFinishModal: function () {
+      this.$modal.show("room-finish-modal");
+    },
+    closeRoomFinishModal: function () {
+      this.$modal.hide("room-finish-modal");
+    },
+    finishRoom: function () {
+      console.log("ゲームを解散します。")
+
+      axios
+          .get(JINROH_API_BASE_URL + "/room-finish", { withCredentials: true })
+          .then(() => {})
+          .catch(() => {
+            console.log("通信に失敗しました。")
+          });
+    }
   },
   mounted() {
     window.addEventListener("beforeunload", (event) => {
@@ -227,15 +282,31 @@ export default {
   }
 }
 
-.start {
+.btn-content {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+
+  a {
+    margin: 0;
+  }
   .button-area {
-    .start-btn {
+    .default-btn {
+      display: block;
       width: 10rem;
       padding: 1rem 2rem;
-      color: #fff;
-      background-color: #bd625a;
-      border: none;
+      border: solid 2px #bd625a;
       border-radius: 10px;
+    }
+
+    .start-btn {
+      background-color: #bd625a;
+      color: #fff;
+    }
+
+    .finish-btn {
+      background-color: #fff;
+      color: #bd625a;
     }
 
     p {
@@ -262,11 +333,40 @@ export default {
   .btn {
     margin: 1rem auto;
   }
+
+  .btn-content {
+    margin: 1rem auto;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .action-btn {
+    border: solid 2px #bd625a;
+    background-color: #bd625a;
+    color: #fff;
+  }
+
+  .cancel-btn {
+    border: solid 2px #bd625a;
+    background-color: #ffffff;
+    color: #bd625a;
+  }
 }
 
 @media screen and (max-width: 639px) {
   .player-list {
     background: url("../assets/images/room-top-bg-sp.png") repeat center center;
+  }
+
+  .btn-content {
+    flex-direction: column;
+    .button-area {
+      .default-btn {
+        width: auto;
+      }
+    }
   }
 }
 </style>

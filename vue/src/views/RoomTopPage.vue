@@ -183,9 +183,9 @@ export default {
         });
         this.stompClient.subscribe("/topic/receive-finish-room/" + this.uuid, () => {
           if (this.hostFlg === false ) {
-            alert("ホストがルームを解散しました。");
+            window.alert("ホストがルームを解散しました。");
           }
-          this.$router.push("/top");
+          this.$router.push("/top?flg=kaisan");
         });
       });
     },
@@ -206,9 +206,7 @@ export default {
 
       axios
           .get(JINROH_API_BASE_URL + "/room-finish", { withCredentials: true })
-          .then(() => {
-            this.$router.push("/top");
-          })
+          .then(() => {})
           .catch(() => {
             console.log("通信に失敗しました。")
           });

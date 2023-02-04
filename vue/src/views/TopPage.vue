@@ -49,6 +49,15 @@ export default {
       roomNum: "",
     };
   },
+  beforeRouteEnter(to, from, next) {
+    if (to.query["flg"] === "kaisan") {
+      next(vm => {
+        vm.$router.replace('/top')
+      });
+    } else {
+      next()
+    }
+  },
   components: {
     RoleDescription,
     Title,

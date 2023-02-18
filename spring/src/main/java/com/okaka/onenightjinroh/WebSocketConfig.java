@@ -25,6 +25,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         if (myEnv.isStg()) {
             registry.addEndpoint("/jinroh-websocket")
+                    .setAllowedOrigins("*")
                     .withSockJS();
         } else {
             registry.addEndpoint("/jinroh-websocket")

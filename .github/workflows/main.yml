@@ -19,6 +19,11 @@ jobs:
         run: npm install
         working-directory: ./vue
 
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.16.0'
+
       - name: Build Vue
         run: npm run build-v2
         working-directory: ./vue

@@ -4,6 +4,11 @@ server:
 doma:
   dialect: h2
 
+com:
+  okaka:
+    onenightjinroh:
+      domain: https://dev.yuru-jinrou.com
+
 # h2 for debug tool
 spring:
   h2:

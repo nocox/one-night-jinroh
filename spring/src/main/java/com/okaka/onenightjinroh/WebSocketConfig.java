@@ -12,8 +12,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Autowired
     MyServiceBean myServiceBean;
-    @Autowired
-    MyEnv myEnv;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -23,14 +21,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        if (myEnv.isStg()) {
-            registry.addEndpoint("/jinroh-websocket")
-                    .setAllowedOrigins("*")
-                    .withSockJS();
-        } else {
-            registry.addEndpoint("/jinroh-websocket")
-                    .setAllowedOrigins(myServiceBean.getDomain())
-                    .withSockJS();
-        }
+        registry.addEndpoint("/jinroh-websocket")
+                .setAllowedOrigins(myServiceBean.getDomain())
+                .withSockJS();
     }
 }

@@ -156,7 +156,7 @@ export default {
           this.isNotEnoughParticipants = results === "NOT_ENOUGH_PARTICIPANTS";
         })
         .catch(() => {
-          this.$router.push("/top");
+          this.$router.push("/room");
         });
     },
     // モーダル関係の処理
@@ -235,7 +235,7 @@ export default {
         this.configWebSocket();
       })
       .catch(() => {
-          this.$router.push("/room");
+        this.$router.push("/top");
       });
   },
 };

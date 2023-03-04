@@ -45,20 +45,20 @@ public class RoomController {
     }
 
     @RequestMapping(path = "/game-start")
-    int startGame() {
+    String startGame() {
         String uuid = session.getAttribute("room_uuid").toString();
         Long userId = Long.valueOf(session.getAttribute("user_id").toString());
 
         Room room = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
-        if (startGameValidate.run(userId, room.getRoomId())) {
-            throw new IllegalArgumentException();
+
+        try {
+            GameStartWebSocketBean gameStartWebSocketBean = startGameUseCase.startGame(room.getRoomId(), userId);
+            // ここでブロードキャストする
+            messagingTemplate.convertAndSend("/topic/" + room.uuid, gameStartWebSocketBean);
+            return "SUCCESS";
+        } catch (NotEnoughParticipantsException e) {
+            return "NOT_ENOUGH_PARTICIPANTS";
         }
-
-        GameStartWebSocketBean gameStartWebSocketBean = startGameUseCase.startGame(room.getRoomId(), userId);
-
-        // ここでブロードキャストする
-        messagingTemplate.convertAndSend("/topic/" + room.uuid, gameStartWebSocketBean);
-        return 0;
     }
 
     @RequestMapping(path = "/room-finish")

@@ -21,7 +21,10 @@
           {{ player.name }} <span v-if="myselfUserId === player.userId">（あなた）</span>
         </li>
       </ul>
-      <p>ページをリロードすると<br />最新の参加者を取得できます。</p>
+      <div class="player-list__info">
+        <p>ページをリロードすると<br />最新の参加者を取得できます。</p>
+        <p>参加者が3人以上揃うとゲームを開始できます。</p>
+      </div>
     </section>
 
     <section class="btn-content">
@@ -96,6 +99,8 @@
           </div>
         </modal>
       </div>
+
+      <p class="start_error" v-if="isNotEnoughParticipants">参加人数が足りていません！</p>
     </section>
   </main>
 </template>
@@ -125,6 +130,7 @@ export default {
       roleList: [],
       playerCount: 0,
       is_copied: false,
+      isNotEnoughParticipants: false,
     };
   },
   components: {
@@ -146,6 +152,8 @@ export default {
         .get(JINROH_API_BASE_URL + "/game-start", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
+          const results = response.data;
+          this.isNotEnoughParticipants = results === "NOT_ENOUGH_PARTICIPANTS";
         })
         .catch(() => {
           this.$router.push("/room");
@@ -276,20 +284,31 @@ export default {
     list-style: none;
   }
 
-  p {
-    margin-top: 0.8rem;
-    font-size: 0.8em;
+  .player-list__info {
+    margin-top: 2rem;
+    
+    p {
+      margin-top: 0.8rem;
+      font-size: 0.8em;
+    }
   }
 }
 
 .btn-content {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 32px;
 
   a {
     margin: 0;
   }
+
+  .start_error{
+    width: 100%;
+    color: red;
+  }
+
   .button-area {
     .default-btn {
       display: block;

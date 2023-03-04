@@ -96,6 +96,8 @@
           </div>
         </modal>
       </div>
+
+      <p class="start_error" v-if="isNotEnoughParticipants">参加人数が足りていません！</p>
     </section>
   </main>
 </template>
@@ -125,6 +127,7 @@ export default {
       roleList: [],
       playerCount: 0,
       is_copied: false,
+      isNotEnoughParticipants: false,
     };
   },
   components: {
@@ -146,9 +149,11 @@ export default {
         .get(JINROH_API_BASE_URL + "/game-start", { withCredentials: true })
         .then((response) => {
           console.log(response.data);
+          const results = response.data;
+          this.isNotEnoughParticipants = results === "NOT_ENOUGH_PARTICIPANTS";
         })
-        .catch(() => {
-          this.$router.push("/room");
+        .catch((e) => {
+          console.log(e);
         });
     },
     // モーダル関係の処理
@@ -285,11 +290,18 @@ export default {
 .btn-content {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 32px;
 
   a {
     margin: 0;
   }
+
+  .start_error{
+    width: 100%;
+    color: red;
+  }
+
   .button-area {
     .default-btn {
       display: block;

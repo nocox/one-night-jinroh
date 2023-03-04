@@ -56,8 +56,12 @@ public class StartGameUseCase {
     @Autowired
     private HolidayRolesPort holidayRolesPort;
 
-    public GameStartWebSocketBean startGame(Long roomId, Long hostUserId) {
+    public GameStartWebSocketBean startGame(Long roomId, Long hostUserId) throws NotEnoughParticipantsException {
         int participantCount = roomParticipantDao.selectParticipantCount(roomId);
+
+        if (participantCount < 3) {
+            throw new NotEnoughParticipantsException("参加人数が足りていません。");
+        }
 
         GameEntity gameEntity = new GameEntity();
         gameEntity.room_id = roomId;

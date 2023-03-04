@@ -155,8 +155,8 @@ export default {
           const results = response.data;
           this.isNotEnoughParticipants = results === "NOT_ENOUGH_PARTICIPANTS";
         })
-        .catch((e) => {
-          console.log(e);
+        .catch(() => {
+          this.$router.push("/top");
         });
     },
     // モーダル関係の処理

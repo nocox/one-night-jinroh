@@ -21,7 +21,10 @@
           {{ player.name }} <span v-if="myselfUserId === player.userId">（あなた）</span>
         </li>
       </ul>
-      <p>ページをリロードすると<br />最新の参加者を取得できます。</p>
+      <div class="player-list__info">
+        <p>ページをリロードすると<br />最新の参加者を取得できます。</p>
+        <p>参加者が3人以上揃うとゲームを開始できます。</p>
+      </div>
     </section>
 
     <section class="btn-content">
@@ -281,9 +284,13 @@ export default {
     list-style: none;
   }
 
-  p {
-    margin-top: 0.8rem;
-    font-size: 0.8em;
+  .player-list__info {
+    margin-top: 2rem;
+    
+    p {
+      margin-top: 0.8rem;
+      font-size: 0.8em;
+    }
   }
 }
 

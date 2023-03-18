@@ -2,7 +2,7 @@
   <div class="chara-description">
     <figure>
       <img :src="role.img" :alt="role.name" />
-      <figcaption> <h3>{{ role.name }}</h3></figcaption>
+      <figcaption>{{ role.name }}</figcaption>
     </figure>
     <div class="description" v-html="role.description"></div>
   </div>
@@ -24,19 +24,17 @@ export default {
   max-width: 640px;
   margin: 1rem auto 0;
 
-  figure {
-    text-align: center;
-
-    img {
-      width: 8rem;
-      height: auto;
-    }
+  @media screen and (max-width: 639px) {
+    grid-template-columns: 20rem;
   }
 }
 
-@media screen and (max-width: 639px) {
-  .chara-description {
-    grid-template-columns: 20rem;
+figure {
+  text-align: center;
+
+  img {
+    width: 8rem;
+    height: auto;
   }
 }
 </style>

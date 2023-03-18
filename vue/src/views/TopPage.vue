@@ -1,6 +1,6 @@
 <template>
   <main class="TopPage">
-    <Title />
+    <GameTitle />
 
     <NewsField />
 
@@ -39,7 +39,7 @@
 <script>
 // @ is an alias to /src
 import RoleDescription from "@/components/RoleDescription.vue";
-import Title from "@/components/Title";
+import GameTitle from "@/components/GameTitle";
 import NewsField from "@/components/NewsField";
 
 export default {
@@ -60,7 +60,7 @@ export default {
   },
   components: {
     RoleDescription,
-    Title,
+    GameTitle,
     NewsField,
   },
   methods: {},

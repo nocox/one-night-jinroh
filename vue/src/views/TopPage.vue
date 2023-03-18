@@ -51,11 +51,11 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     if (to.query["flg"] === "kaisan") {
-      next(vm => {
-        vm.$router.replace('/top')
+      next((vm) => {
+        vm.$router.replace("/top");
       });
     } else {
-      next()
+      next();
     }
   },
   components: {
@@ -66,6 +66,3 @@ export default {
   methods: {},
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

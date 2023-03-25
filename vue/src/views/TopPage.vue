@@ -1,6 +1,6 @@
 <template>
   <main class="TopPage">
-    <Title />
+    <GameTitle />
 
     <NewsField />
 
@@ -39,7 +39,7 @@
 <script>
 // @ is an alias to /src
 import RoleDescription from "@/components/RoleDescription.vue";
-import Title from "@/components/Title";
+import GameTitle from "@/components/GameTitle";
 import NewsField from "@/components/NewsField";
 
 export default {
@@ -51,21 +51,18 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     if (to.query["flg"] === "kaisan") {
-      next(vm => {
-        vm.$router.replace('/top')
+      next((vm) => {
+        vm.$router.replace("/top");
       });
     } else {
-      next()
+      next();
     }
   },
   components: {
     RoleDescription,
-    Title,
+    GameTitle,
     NewsField,
   },
   methods: {},
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

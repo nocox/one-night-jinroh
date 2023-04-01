@@ -1,6 +1,8 @@
 package com.okaka.onenightjinroh;
 
 import com.okaka.jinroh.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +16,8 @@ import java.util.List;
 @SpringBootApplication(scanBasePackages = "com.okaka")
 @RestController
 public class OneNightJinrohApplication {
+	private static final Logger logger = LoggerFactory.getLogger(OneNightJinrohApplication.class);
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(OneNightJinrohApplication.class, args);
@@ -43,6 +47,11 @@ public class OneNightJinrohApplication {
 	// Insert data at initailizing phase using ReservationDao#insert
 	@Bean
 	CommandLineRunner runner() {
+		logger.debug("This is a debug message");
+		logger.info("This is an info message");
+		logger.warn("This is a warn message");
+		logger.error("This is an error message");
+
 		if (roleDao.selectAll().size() != 6) {
 			Arrays.asList("村人","人狼","占い師","怪盗","狂人","吊り人").forEach(name -> {
 				RoleEntity roleEntity = new RoleEntity();

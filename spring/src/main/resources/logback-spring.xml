@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CLOUDWATCH" class="com.j256.cloudwatchlogbackappender.CloudWatchAppender">
+        <region>ap-northeast-1</region>
+        <logGroup>/ec2/dev/yuru-jinrou-log-group</logGroup>
+        <logStream>E7B12DDB-905F-47C4-A20C-D97CB069D052</logStream>
+        <layout>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <springProfile name="stg"> <!--application-stg.ymlではCloudWatchに出力する -->
+        <root level="INFO">
+            <appender-ref ref="CLOUDWATCH"/>
+        </root>
+    </springProfile>
+
+</configuration>

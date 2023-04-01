@@ -14,15 +14,8 @@ allprojects {
 
     apply plugin: "java"
     apply plugin: "io.spring.dependency-management"
-//    apply plugin: "idea"
     apply plugin: "org.seasar.doma.compile"
 
-//    idea {
-//        module {
-//            inheritOutputDirs = false
-//            outputDir = file("$buildDir/classes/main/")
-//        }
-//    }
 
     bootJar {
         launchScript()
@@ -35,7 +28,6 @@ allprojects {
 
     compileJava {
         options.encoding = 'UTF-8'
-//        options.compilerArgs = ['-Adoma.dao.subpackage=impl', '-Adoma.dao.suffix=Impl']
     }
 
     compileTestJava {
@@ -59,12 +51,18 @@ allprojects {
     }
 
     dependencies {
-//        annotationProcessor "org.seasar.doma:doma-processor:${domaVersion}"
-//        implementation "org.seasar.doma:doma-core:${domaVersion}"
-//        implementation 'org.seasar.doma.boot:doma-spring-boot-starter:1.4.0'
         implementation 'org.springframework.boot:spring-boot-starter-jdbc'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+        implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
+
+        // https://mvnrepository.com/artifact/com.j256.cloudwatchlogbackappender/cloudwatchlogbackappender
+        implementation 'com.j256.cloudwatchlogbackappender:cloudwatchlogbackappender:2.1'
+
+        implementation 'org.slf4j:slf4j-api:1.7.30'
+        implementation 'ch.qos.logback:logback-classic:1.2.3'
+
         runtimeOnly 'com.h2database:h2'
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

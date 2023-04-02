@@ -33,6 +33,7 @@
     </section>
 
     <RoleDescription />
+    <p>ver 1.0.1</p>
   </main>
 </template>
 

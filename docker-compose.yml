@@ -1,0 +1,12 @@
+version: "3"
+services:
+  db:
+    build: yuru-jinrou-db/postgress
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - ./yuru-jinrou-db/postgress/databases.sql:/docker-entrypoint-initdb.d/1-dev-databases.sql
+      - ./yuru-jinrou-db/postgress/roles.sql:/docker-entrypoint-initdb.d/2-dev-roles.sql

@@ -7,7 +7,7 @@ import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USER_PROFILE")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

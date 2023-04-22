@@ -55,6 +55,9 @@ allprojects {
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+        // https://mvnrepository.com/artifact/org.postgresql/postgresql
+        implementation("org.postgresql:postgresql:42.3.2")
+
         implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
 
         // https://mvnrepository.com/artifact/com.j256.cloudwatchlogbackappender/cloudwatchlogbackappender

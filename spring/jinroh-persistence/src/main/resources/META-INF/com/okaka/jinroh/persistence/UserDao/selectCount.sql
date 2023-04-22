@@ -1,3 +1,3 @@
 SELECT
     Count(*)
-FROM USER
+FROM USER_PROFILE

@@ -1,2 +1,5 @@
-SPRING_DATASOURCE_URL=jdbc:h2:/var/jinrohapp/h2db/testdb?MODE=MYSQL
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/yuru_jinrou_db
+SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+SPRING_DATASOURCE_USERNAME=yuru_jinrou_dev_rw
+SPRING_DATASOURCE_PASSWORD=yuru_jinrou_database_passwd
 SPRING_PROFILES_ACTIVE=stg

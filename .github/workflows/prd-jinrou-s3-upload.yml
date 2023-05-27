@@ -1,0 +1,25 @@
+name: Build Jinroh and Upload S3
+on:
+  push:
+    branches:
+      - master
+env:
+  AWS_REGION: ap-northeast-1
+  AWS_ROLE_ARN: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/yuru-jinrou-github-actions-s3-access-role
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - name: Configure AWS credentials from IAM Role
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy # S3にデプロイ
+        run: | # S3のbucket-for-deploying-react-projectバケットにデプロイ
+          aws s3 cp --region ap-northeast-1 ./README.md s3://github-actions-s3-upload-test-bucket

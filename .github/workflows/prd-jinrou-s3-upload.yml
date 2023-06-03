@@ -22,6 +22,34 @@ jobs:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'      
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.16.0'
+
+      - name: Install Vue Dependencies
+        run: npm install
+        working-directory: ./vue
+
+      - name: Build Vue
+        run: npm run build-v2
+        working-directory: ./vue
+
+      - name: Build Spring boot
+        run: ./gradlew bootJar
+        working-directory: ./spring
+
+      - name: Zip
+        run: |
+          cp ./spring/build/libs/one-night-jinroh-0.0.1-SNAPSHOT.jar ./deploy-prd
+          zip -r jinroh_deploy.zip ./deploy-prd
+
       - name: Deploy # S3にデプロイ
         run: | # S3のbucket-for-deploying-react-projectバケットにデプロイ
-          aws s3 cp --region ap-northeast-1 ./README.md s3://github-actions-s3-upload-test-bucket
+          aws s3 cp --region ap-northeast-1 ./jinroh_deploy.zip s3://github-actions-s3-upload-test-bucket

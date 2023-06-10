@@ -1,4 +1,4 @@
-name: Build Jinroh and Upload S3
+name: Build Jinroh and Upload S3 stg
 on:
   push:
       branches:

@@ -1,0 +1,1 @@
+CREATE DATABASE yuru_jinrou_db;

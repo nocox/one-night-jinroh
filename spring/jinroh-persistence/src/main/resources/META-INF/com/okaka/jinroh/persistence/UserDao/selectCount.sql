@@ -1,0 +1,3 @@
+SELECT
+    Count(*)
+FROM USER_PROFILE

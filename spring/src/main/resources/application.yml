@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+doma:
+  dialect: postgres
+
+com:
+  okaka:
+    onenightjinroh:
+      domain: http://localhost:8081
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/yuru_jinrou_db
+    driver-class-name: org.postgresql.Driver
+    username: yuru_jinrou_dev_rw
+    password: yuru_jinrou_database_passwd
+
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    prefix: file:src/main/resources/templates/
+
+  resources:
+    cache:
+      period: 0

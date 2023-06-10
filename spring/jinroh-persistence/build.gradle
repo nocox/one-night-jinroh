@@ -1,0 +1,25 @@
+
+//plugins {
+////	id 'org.seasar.doma.compile' version '1.1.0'
+//}
+
+// for Doma 2
+//// JavaクラスとSQLファイルの出力先ディレクトリを同じにする
+//processResources.destinationDir = compileJava.destinationDir
+//// コンパイルより前にSQLファイルを出力先ディレクトリにコピーするために依存関係を逆転する
+//compileJava.dependsOn processResources
+
+
+dependencies {
+//	implementation "org.springframework.boot:spring-boot-starter"
+
+	annotationProcessor "org.seasar.doma:doma-processor:${domaVersion}"
+	implementation "org.seasar.doma:doma-core:${domaVersion}"
+	implementation 'org.seasar.doma.boot:doma-spring-boot-starter:1.4.0'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.h2database:h2'
+}
+
+//jar {
+//	enabled = true
+//}

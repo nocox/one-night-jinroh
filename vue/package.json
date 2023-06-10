@@ -1,0 +1,72 @@
+{
+  "name": "sample",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "NODE_ENV=development vue-cli-service serve",
+    "build": "NODE_ENV=production vue-cli-service build",
+    "watch-v2": "NODE_ENV=development vue-cli-service build --mode development --dest ../spring/src/main/resources/static --watch",
+    "build-v2": "NODE_ENV=production vue-cli-service build --mode production --dest ../spring/src/main/resources/static",
+    "lint": "vue-cli-service lint",
+    "build-lib": "NODE_ENV=development vue-cli-service build --mode development --dest ../spring/src/main/resources/static --target lib --inline-vue --name myLib src/main.js",
+    "build-lib-watch": "NODE_ENV=development vue-cli-service build --mode development --dest ../spring/src/main/resources/static --target lib --inline-vue --name myLib src/main.js --watch"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "core-js": "^3.6.5",
+    "sockjs-client": "^1.5.0",
+    "vue": "^2.6.12",
+    "vue-js-modal": "^2.0.0-rc.6",
+    "vue-router": "^3.4.5",
+    "vuex": "^3.5.1",
+    "vuex-persistedstate": "^4.0.0",
+    "webstomp-client": "^1.2.6"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.5.6",
+    "@vue/cli-plugin-eslint": "^4.5.6",
+    "@vue/cli-plugin-router": "^4.5.6",
+    "@vue/cli-plugin-vuex": "^4.5.6",
+    "@vue/cli-service": "^4.5.6",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^6.0.1",
+    "postcss": "^8.3.11",
+    "postcss-html": "^1.2.0",
+    "postcss-scss": "^4.0.2",
+    "sass": "^1.43.4",
+    "sass-loader": "^10.2.0",
+    "stylelint": "^14.1.0",
+    "stylelint-config-html": "^1.0.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recess-order": "^3.0.0",
+    "stylelint-config-recommended-scss": "^5.0.2",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-config-standard-scss": "^3.0.0",
+    "stylelint-scss": "^4.0.0",
+    "vue-template-compiler": "^2.6.12"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "volta": {
+    "node": "16.20.0"
+  }
+}

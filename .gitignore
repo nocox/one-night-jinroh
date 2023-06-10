@@ -1,0 +1,70 @@
+*.sw?
+.#*
+*#
+*~
+bin
+build
+target
+dependency-reduced-pom.xml
+*.sublime-*
+/scratch
+README.html
+*.DS_Store
+.DS_Store
+/.env
+HELP.md
+.gradle
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+caches
+
+### STS ###
+.apt_generated
+.apt_generated_*
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Vue ###
+node_modules
+
+### Env ###
+.env
+
+### h2db ###
+h2db
+
+### static ###
+spring/src/main/resources/static/
+vue/dist/
+
+### deploy ###
+*.zip
+*.jar
+
+### pyenv ###
+.python-version

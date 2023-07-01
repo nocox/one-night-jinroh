@@ -54,7 +54,7 @@ node_modules
 
 ### Env ###
 .env
-jinroh-env
+deploy-prd/jinroh-env
 
 ### h2db ###
 h2db

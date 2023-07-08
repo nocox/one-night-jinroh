@@ -123,7 +123,6 @@ export default {
     axios
       .get(JINROH_API_BASE_URL + "/tally-index", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         this.playerId = response.data.gameIndex.playerId;
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
@@ -147,8 +146,7 @@ export default {
     configWebSocket: function (gameId) {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
-      this.stompClient.connect({}, (frame) => {
-        console.log("Connected: " + frame);
+      this.stompClient.connect({}, () => {
         this.stompClient.subscribe("/topic/result/" + gameId, () => {
           this.$router.push("/result");
         });
@@ -158,9 +156,7 @@ export default {
     gotoResult: function () {
       axios
         .get(JINROH_API_BASE_URL + "/show-result", { withCredentials: true })
-        .then((response) => {
-          console.log(response.data);
-        })
+        .then(() => {})
         .catch(() => {
           this.$router.push("/room");
         });

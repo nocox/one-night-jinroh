@@ -90,7 +90,6 @@ export default {
           JINROH_API_BASE_URL + "/night/uranai", { withCredentials: true })
         .then((response) => {
             const data = response.data;
-            console.log({data});
             if (data !== null) {
               this.uranaiResult = response.data;
               switch (this.uranaiResult.status){
@@ -138,7 +137,6 @@ export default {
         .then((response) => {
           this.uranaiResult = response.data;
           this.isDisabled = true;
-          console.log(response.data);
         })
         .catch(() => {});
     },

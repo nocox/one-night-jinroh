@@ -84,10 +84,7 @@ export default {
       },
     };
   },
-  mounted() {
-    console.log("XXXXXXXX");
-    console.log(this.$getRole("turibito").icon);
-  },
+  mounted() {},
 };
 </script>
 

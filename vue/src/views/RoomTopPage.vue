@@ -151,7 +151,6 @@ export default {
       axios
         .get(JINROH_API_BASE_URL + "/game-start", { withCredentials: true })
         .then((response) => {
-          console.log(response.data);
           const results = response.data;
           this.isNotEnoughParticipants = results === "NOT_ENOUGH_PARTICIPANTS";
         })
@@ -174,11 +173,8 @@ export default {
     configWebSocket: function () {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
-      this.stompClient.connect({}, (frame) => {
-        console.log("Connected: " + frame);
-        console.log("Room name: " + this.uuid);
+      this.stompClient.connect({}, () => {
         this.stompClient.subscribe("/topic/" + this.uuid, (value) => {
-          console.log("##### subscribe!!: " + value.body);
           this.roleList = JSON.parse(value.body).roleList;
           this.roleList.sort((a, b) => {
             if (a.roleId < b.roleId) return -1;
@@ -210,14 +206,11 @@ export default {
       this.$modal.hide("room-finish-modal");
     },
     finishRoom: function () {
-      console.log("ゲームを解散します。")
 
       axios
           .get(JINROH_API_BASE_URL + "/room-finish", { withCredentials: true })
           .then(() => {})
-          .catch(() => {
-            console.log("通信に失敗しました。")
-          });
+          .catch(() => {});
     }
   },
   mounted() {
@@ -227,7 +220,6 @@ export default {
     axios
       .get(JINROH_API_BASE_URL + "/room-index", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         this.uuid = response.data.uuid;
         this.playerList = response.data.userList;
         this.hostFlg = response.data.hostFlg;

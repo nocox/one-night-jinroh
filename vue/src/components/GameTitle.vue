@@ -67,7 +67,7 @@ export default {
     createRoom: function () {
       axios
         .get(JINROH_API_BASE_URL + "/create-room", { withCredentials: true })
-        .then((response) => {
+        .then(() => {
           this.$router.push("/room");
         });
     },

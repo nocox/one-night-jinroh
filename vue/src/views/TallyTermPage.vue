@@ -146,7 +146,7 @@ export default {
     configWebSocket: function (gameId) {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
-      this.stompClient.connect({}, (frame) => {
+      this.stompClient.connect({}, () => {
         this.stompClient.subscribe("/topic/result/" + gameId, () => {
           this.$router.push("/result");
         });
@@ -156,7 +156,7 @@ export default {
     gotoResult: function () {
       axios
         .get(JINROH_API_BASE_URL + "/show-result", { withCredentials: true })
-        .then((response) => {})
+        .then(() => {})
         .catch(() => {
           this.$router.push("/room");
         });

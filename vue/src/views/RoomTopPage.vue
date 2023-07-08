@@ -173,7 +173,7 @@ export default {
     configWebSocket: function () {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
-      this.stompClient.connect({}, (frame) => {
+      this.stompClient.connect({}, () => {
         this.stompClient.subscribe("/topic/" + this.uuid, (value) => {
           this.roleList = JSON.parse(value.body).roleList;
           this.roleList.sort((a, b) => {

@@ -74,7 +74,7 @@ export default {
     configWebSocket: function (gameId) {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
-      this.stompClient.connect({}, (frame) => {
+      this.stompClient.connect({}, () => {
         this.stompClient.subscribe("/topic/" + gameId, () => {
           this.$router.push("/talk");
         });
@@ -83,7 +83,7 @@ export default {
     doneNightAct: function() {
       axios
         .get(JINROH_API_BASE_URL + "/done-night-act", { withCredentials: true })
-        .then((response) => {
+        .then(() => {
           this.isCompleted = true;
         })
         .catch(() => {});

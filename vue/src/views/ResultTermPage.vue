@@ -114,7 +114,7 @@ export default {
     configWebSocket: function (gameId) {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
-      this.stompClient.connect({}, (frame) => {
+      this.stompClient.connect({}, () => {
         this.stompClient.subscribe("/topic/return-room/" + gameId, () => {
           this.$router.push("/room");
         });

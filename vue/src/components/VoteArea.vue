@@ -79,7 +79,7 @@ export default {
             },
           }
         )
-        .then((response) => {})
+        .then(() => {})
         .catch(() => {
           this.$router.push("/room");
         });

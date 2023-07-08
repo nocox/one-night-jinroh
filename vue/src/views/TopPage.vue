@@ -53,7 +53,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     if (to.query["flg"] === "kaisan") {
       next((vm) => {
-        vm.$router.replace("/top");
+        vm.$router.replace("/");
       });
     } else {
       next();

@@ -60,7 +60,6 @@ export default {
     axios
       .get(JINROH_API_BASE_URL + "/night-index", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
         this.otherPlayerList = response.data.gameIndex.otherPlayerList;
@@ -76,8 +75,6 @@ export default {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect({}, (frame) => {
-        console.log("Connected: " + frame);
-        console.log("Room name: " + gameId);
         this.stompClient.subscribe("/topic/" + gameId, () => {
           this.$router.push("/talk");
         });
@@ -87,13 +84,9 @@ export default {
       axios
         .get(JINROH_API_BASE_URL + "/done-night-act", { withCredentials: true })
         .then((response) => {
-          console.log(response.data);
           this.isCompleted = true;
-          console.log("夜の行動完了");
         })
-        .catch(() => {
-          console.log("夜の行動完了に失敗しました");
-        });
+        .catch(() => {});
     },
   },
 };

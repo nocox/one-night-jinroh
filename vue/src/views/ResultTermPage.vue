@@ -89,7 +89,6 @@ export default {
     axios
       .get(JINROH_API_BASE_URL + "/result-index", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         // 新パラメータ(this datas are available from backend)
         this.judge = response.data.judge;
         this.judgeText = JUDGE_RESULT[this.judge].text;
@@ -107,9 +106,7 @@ export default {
     returnRoom() {
       axios
         .get(JINROH_API_BASE_URL + "/return-room", { withCredentials: true })
-        .catch(() => {
-          console.log("サーバとの通信に失敗しました．もう一度お試しください");
-        });
+        .catch(() => {});
     },
     closeModal: function () {
       this.$modal.hide("result-modal");
@@ -118,7 +115,6 @@ export default {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect({}, (frame) => {
-        console.log("Connected: " + frame);
         this.stompClient.subscribe("/topic/return-room/" + gameId, () => {
           this.$router.push("/room");
         });

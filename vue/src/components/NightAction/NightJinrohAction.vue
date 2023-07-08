@@ -34,7 +34,6 @@ export default {
         .get(JINROH_API_BASE_URL + "/night/jinroh/index", { withCredentials: true })
         .then((response) => {
           this.participants = response.data.playerNames;
-          console.log(response.data);
         })
         .catch(() => {
             // TODO: ユーザにエラー通知しても良いかも

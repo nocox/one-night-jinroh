@@ -81,7 +81,6 @@ export default {
     axios
       .get(JINROH_API_BASE_URL + "/talk-index", { withCredentials: true })
       .then((response) => {
-        console.log("response data:", response.data);
         this.playerId = response.data.gameIndex.playerId;
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
@@ -101,13 +100,11 @@ export default {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect({}, (frame) => {
-        console.log("Connected: " + frame);
         this.stompClient.subscribe("/topic/end-talk/" + gameId, () => {
           this.$router.push("/vote");
         });
         this.stompClient.subscribe("/topic/receive-co/" + gameId, (value) => {
           const coState = JSON.parse(value.body).coBeans;
-          console.log('co: ', coState);
           this.cos = new CoPlayers(coState);
         });
       });
@@ -118,9 +115,7 @@ export default {
     endTalk() {
       axios
         .get(JINROH_API_BASE_URL + "/end-talk", { withCredentials: true })
-        .then((response) => {
-          console.log(response.data);
-        })
+        .then((response) => {})
         .catch(() => {
           this.$router.push("/room");
         });

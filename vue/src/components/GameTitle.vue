@@ -68,7 +68,6 @@ export default {
       axios
         .get(JINROH_API_BASE_URL + "/create-room", { withCredentials: true })
         .then((response) => {
-          console.log(response.data);
           this.$router.push("/room");
         });
     },
@@ -78,7 +77,6 @@ export default {
           withCredentials: true,
         })
         .then((response) => {
-          console.log(response.data);
           this.joinRoomResult = response.data;
           if (this.joinRoomResult === "JOIN_SUCCESS") {
             this.errorMessage = "";

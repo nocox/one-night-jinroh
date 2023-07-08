@@ -2,17 +2,6 @@
   <div id="app">
     <div class="scroll-hint-top" v-show="is_scrollableUp"></div>
     <router-view />
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/sample">Sample</router-link> |
-      <router-link to="/top">Top Page</router-link> |
-      <router-link to="/room">Room Top Page</router-link> |
-      <router-link to="/night">Night Page</router-link> |
-      <router-link to="/talk">Talk Page</router-link> |
-      <router-link to="/vote">Vote Page</router-link> |
-      <router-link to="/tally">Tally Page</router-link> |
-      <router-link to="/result">Result Page</router-link> |
-    </div>
     <div class="scroll-hint-bottom" v-show="is_scrollableDown"></div>
   </div>
 </template>

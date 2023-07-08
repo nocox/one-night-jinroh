@@ -54,7 +54,6 @@ export default {
           JINROH_API_BASE_URL + "/night/kaito", { withCredentials: true })
         .then((response) => {
             const data = response.data;
-            console.log({data});
             if (data !== null) {
               this.checkedPlayerID = response.data.selectedParticipantId;
               this.kaitoResult.actLog = response.data.actLog;
@@ -83,7 +82,7 @@ export default {
         .then((response) => {
           this.kaitoResult = response.data;
           this.isDisabled = true;
-          console.log(response.data);
+          
         })
         .catch(() => {});
     },

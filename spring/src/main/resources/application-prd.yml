@@ -1,10 +1,10 @@
 server:
-  port: 80 # TODO: 443に変える
+  port: 443
 
 com:
   okaka:
     onenightjinroh:
-      domain: https://yuru-jinrou.com # TODO: 本番用に変える
+      domain: https://yuru-jinrou.com
 
 spring:
   datasource:

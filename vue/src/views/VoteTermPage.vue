@@ -85,7 +85,6 @@ export default {
     axios
       .get(JINROH_API_BASE_URL + "/vote-index", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         this.playerId = response.data.gameIndex.playerId;
         this.playerName = response.data.gameIndex.playerName;
         this.playerRole = response.data.gameIndex.playerRole;
@@ -112,8 +111,7 @@ export default {
     configWebSocket: function (gameId) {
       this.socket = new SockJS(JINROH_API_BASE_URL + "/jinroh-websocket");
       this.stompClient = Stomp.over(this.socket);
-      this.stompClient.connect({}, (frame) => {
-        console.log("Connected: " + frame);
+      this.stompClient.connect({}, () => {
         this.stompClient.subscribe("/topic/done-tally/" + gameId, () => {
           this.$router.push("/tally");
         });

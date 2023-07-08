@@ -189,7 +189,7 @@ export default {
           if (this.hostFlg === false ) {
             window.alert("ホストがルームを解散しました。");
           }
-          this.$router.push("/top?flg=kaisan");
+          this.$router.push("/?flg=kaisan");
         });
       });
     },
@@ -227,7 +227,7 @@ export default {
         this.configWebSocket();
       })
       .catch(() => {
-        this.$router.push("/top");
+        this.$router.push("/");
       });
   },
 };

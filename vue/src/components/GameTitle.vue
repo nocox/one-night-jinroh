@@ -88,7 +88,7 @@ export default {
           }
         })
         .catch(() => {
-          this.$router.push("/top");
+          this.$router.push("/");
         });
     },
   },

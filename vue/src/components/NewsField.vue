@@ -2,7 +2,7 @@
   <section class="news-field">
     <h2>お知らせ</h2>
     <ul>
-      <li>20XX.XX.XX:ゆるふわじんろうリリース！</li>
+      <li>2023.07:ゆるふわじんろうリリース！</li>
     </ul>
   </section>
 </template>

@@ -39,6 +39,10 @@ const routes = [
     name: 'ResultTermPage',
     component: () => import('../views/ResultTermPage.vue')
   },
+  {
+    path: '/:catchAll(.*)',
+    component: () => import('../views/NotFoundPage.vue')
+  }
 ]
 
 const router = new VueRouter({

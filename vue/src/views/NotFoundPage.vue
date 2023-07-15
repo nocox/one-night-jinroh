@@ -31,5 +31,11 @@ export default {
   justify-content: center;
   justify-items: center;
   padding: 1rem;
+
+  @media screen and (max-width: 639px) {
+    h1 {
+      font-size: 1.25rem;
+    }
+  }
 }
 </style>

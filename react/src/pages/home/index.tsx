@@ -1,9 +1,10 @@
-import { type FC, useState } from 'react';
-import reactLogo from './assets/react.svg';
+import { useState } from 'react';
+import reactLogo from '../../assets/react.svg';
+import { Link } from 'react-router-dom';
 import viteLogo from '/vite.svg';
 import './App.css';
 
-const App: FC = () => {
+export const Home: React.FC = () => {
   const [count, setCount] = useState(0);
 
   return (
@@ -32,8 +33,7 @@ const App: FC = () => {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <Link to={'about'}>about</Link>
     </>
   );
 };
-
-export default App;

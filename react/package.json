@@ -15,7 +15,8 @@
     "lint": "run-s lint:*",
     "format": "run-s fix:*",
     "preview": "vite preview",
-    "preinstall": "npx typesync || :"
+    "preinstall": "npx typesync || :",
+    "prepare": "panda codegen"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -23,7 +24,9 @@
     "react-router-dom": "^6.14.1"
   },
   "devDependencies": {
+    "@pandacss/dev": "^0.6.0",
     "@types/eslint": "^8.44.0",
+    "@types/eslint-config-prettier": "^6.11.0",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@types/react-router-dom": "^5.3.3",

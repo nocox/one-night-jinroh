@@ -68,5 +68,13 @@
   ],
   "volta": {
     "node": "16.20.0"
+  },
+  "vue": {
+    "pages": {
+      "index": {
+        "entry": "src/main.js",
+        "title": "ゆるふわじんろう" 
+      }
+    }
   }
 }

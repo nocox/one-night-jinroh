@@ -1,5 +1,4 @@
 import { css } from 'styled-system/css';
-import { DefaultLayout } from '../../components';
 
 import { JoinRoomButton } from './components/JoinRoomButton';
 import { MakeRoomButton } from './components/MakeRoomButton';
@@ -8,6 +7,7 @@ import { RoleExplanation } from './components/RoleExplanation';
 import { TitleCharacters } from './components/TitleCharacters';
 import { TitleLogo } from './components/TitleLogo';
 import { characters } from '@/character';
+import { DefaultLayout } from '@/components';
 
 const styles = {
   roomButtonWrapper: css({

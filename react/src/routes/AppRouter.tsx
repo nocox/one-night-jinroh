@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { TopPage } from '../features/top/TopPage';
+import { TopPage } from '@/features/top/TopPage';
 
 const AppRouter: React.FC = () => (
   <Router>

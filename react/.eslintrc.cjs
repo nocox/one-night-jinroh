@@ -81,6 +81,7 @@ module.exports = {
           ts: 'never',
           tsx: 'never',
           svg: 'always',
+          png: 'always',
         },
       },
     ],

@@ -1,13 +1,13 @@
 import { css } from '../../../styled-system/css';
 import { DefaultLayout } from '../../components';
 
-import { characters } from '../../domains';
 import { JoinRoomButton } from './components/JoinRoomButton';
 import { MakeRoomButton } from './components/MakeRoomButton';
 import { NewsField } from './components/NewsField';
 import { RoleExplanation } from './components/RoleExplanation';
 import { TitleCharacters } from './components/TitleCharacters';
 import { TitleLogo } from './components/TitleLogo';
+import { characters } from '@/character';
 
 const styles = {
   roomButtonWrapper: css({

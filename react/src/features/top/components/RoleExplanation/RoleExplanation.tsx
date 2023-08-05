@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import { css, cx } from '../../../../../styled-system/css';
+import { css, cx } from 'styled-system/css';
 
 const styles = {
   title: css({

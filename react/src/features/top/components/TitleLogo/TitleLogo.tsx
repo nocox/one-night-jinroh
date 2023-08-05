@@ -1,4 +1,4 @@
-import { css } from '../../../../../styled-system/css';
+import { css } from 'styled-system/css';
 import logoSp from './logo-sp.webp';
 import logo from './logo.webp';
 

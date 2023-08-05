@@ -4,7 +4,8 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
-      "~/*": ["public/*"]
+      "~/*": ["public/*"],
+      "styled-system": ["styled-system/*"]
     },
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],

@@ -1,4 +1,4 @@
-import { css } from '../../../../../styled-system/css';
+import { css } from 'styled-system/css';
 import pcChara from './chara_sort_pc.webp';
 import spChara from './chara_sort_sp.webp';
 

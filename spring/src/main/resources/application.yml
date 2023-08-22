@@ -21,6 +21,7 @@ spring:
     mode: HTML
     encoding: UTF-8
 
-  resources:
-    cache:
-      period: 0
+  web:
+    resources:
+      cache:
+        period: 0

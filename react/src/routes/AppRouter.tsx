@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Home, About } from '../pages';
+import { TopPage } from '@/features/top/TopPage';
 
 const AppRouter: React.FC = () => (
   <Router>
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="about" element={<About />} />
+      <Route path="/" element={<TopPage />} />
     </Routes>
   </Router>
 );

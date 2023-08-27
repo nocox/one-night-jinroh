@@ -19,3 +19,4 @@ export const isJoinedRoomStatus = (
 };
 
 export type JoinRoom = (dto: JoinRoomDto) => Promise<JoinedRoomStatus>;
+export type CreateRoom = () => Promise<void>;

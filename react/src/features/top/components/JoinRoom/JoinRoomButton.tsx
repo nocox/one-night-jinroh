@@ -81,7 +81,7 @@ export const JoinRoomButton: React.FC<Props> = ({
             <p className={styles.modal.errorMessage}>{joinRoomResult}</p>
           )}
           <div className={styles.modal.buttonWrapper}>
-            <Button styleType={'filled'} type="submit">
+            <Button color={'blueFill'} type="submit">
               参加
             </Button>
             <Button onClick={onCloseModal} type="button">

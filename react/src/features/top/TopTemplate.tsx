@@ -1,6 +1,6 @@
 import { css } from 'styled-system/css';
 
-import { JoinRoomButton } from './components/JoinRoomButton';
+import { JoinRoom } from './components/JoinRoom';
 import { MakeRoomButton } from './components/MakeRoomButton';
 import { NewsField } from './components/NewsField';
 import { RoleExplanation } from './components/RoleExplanation';
@@ -43,7 +43,7 @@ export const TopTemplate: React.FC = () => {
 
       <div className={styles.roomButtonWrapper}>
         <MakeRoomButton className={styles.roomButton} />
-        <JoinRoomButton className={styles.roomButton} />
+        <JoinRoom className={styles.roomButton} />
       </div>
 
       <TitleCharacters />

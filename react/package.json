@@ -16,7 +16,8 @@
     "format": "run-s fix:*",
     "preview": "vite preview",
     "preinstall": "npx typesync || :",
-    "prepare": "panda codegen"
+    "prepare": "panda codegen",
+    "panda-test": "panda --minify"
   },
   "dependencies": {
     "html-react-parser": "^4.0.0",

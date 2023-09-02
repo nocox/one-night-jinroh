@@ -8,11 +8,13 @@ type Props = {
 
 export const Button: React.FC<Props> = ({
   children,
-  styleType,
+  color,
+  shape,
+  size,
   ...props
 }: Props) => {
   return (
-    <button className={button({ styleType })} {...props}>
+    <button className={button({ color, shape, size })} {...props}>
       {children}
     </button>
   );

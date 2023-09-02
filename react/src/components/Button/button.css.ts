@@ -1,20 +1,34 @@
 import { cva } from 'styled-system/css';
 
+const blue = '#50a0f6';
+const red = '#bd625a';
+
 export const button = cva({
   base: {
-    display: 'inline-block',
-    padding: '5px 40px',
-    marginTop: '10px',
-    color: '#50a0f6',
     textDecoration: 'none',
     cursor: 'pointer',
-    backgroundColor: 'white',
-    border: '1px solid #50a0f6',
-    borderRadius: '30px',
   },
   variants: {
-    styleType: {
-      filled: { backgroundColor: '#50a0f6', color: 'white' },
+    size: {
+      medium: { padding: '0.5rem 2rem' },
+      large: { padding: '1rem 2rem' },
     },
+
+    color: {
+      blueFill: { color: '#fff', backgroundColor: `${blue}` },
+      blueBorder: { color: `${blue}`, border: `1px solid ${blue}` },
+      redFill: { color: '#fff', backgroundColor: `${red}` },
+      redBorder: { color: `${red}`, border: `1px solid ${red}` },
+    },
+
+    shape: {
+      round: { borderRadius: '10px' },
+      rounder: { borderRadius: '30px' },
+    },
+  },
+  defaultVariants: {
+    size: 'medium',
+    color: 'blueBorder',
+    shape: 'rounder',
   },
 });

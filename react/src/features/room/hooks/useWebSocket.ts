@@ -6,11 +6,9 @@ import { isGameInfo } from '../type';
 import { InvalidResponseBodyError } from '@/error';
 import { JINROH_API_BASE_URL } from '@/url';
 
-
 export const useWebSocket: UseWebSocket = (uuid, hostFlg) => {
   const [gameInfo, setGameInfo] = useState<GameInfo | undefined>(undefined);
   console.log(gameInfo);
-
 
   useEffect(() => {
     const socket = new SockJS(JINROH_API_BASE_URL + '/jinroh-websocket');
@@ -18,7 +16,9 @@ export const useWebSocket: UseWebSocket = (uuid, hostFlg) => {
 
     stompClient.connect({}, () => {
       stompClient.subscribe(`/topic/${uuid}`, (message) => {
-        const gameInfo = message.body ? JSON.parse(message.body) as unknown : undefined;
+        const gameInfo = message.body
+          ? (JSON.parse(message.body) as unknown)
+          : undefined;
 
         if (!isGameInfo(gameInfo)) {
           throw new InvalidResponseBodyError(
@@ -30,7 +30,6 @@ export const useWebSocket: UseWebSocket = (uuid, hostFlg) => {
         setGameInfo(gameInfo);
 
         // TODO: 夜の行動ページを実装し、そこにリダイレクトさせる処理を実装する
-
       });
 
       stompClient.subscribe('/topic/receive-finish-room/' + uuid, () => {
@@ -49,5 +48,4 @@ export const useWebSocket: UseWebSocket = (uuid, hostFlg) => {
       socket.close();
     };
   }, [uuid, hostFlg]);
-
-}
+};

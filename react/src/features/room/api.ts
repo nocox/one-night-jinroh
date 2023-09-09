@@ -50,10 +50,9 @@ export const finishRoom: FinishRoom = async () => {
   const res = await fetch(JINROH_API_BASE_URL + '/room-finish', {
     method: 'GET',
     credentials: 'include',
-  })
+  });
 
   if (res.status !== 200) {
-    throw new Error('Failed to finish room')
+    throw new Error('Failed to finish room');
   }
-
-}
+};

@@ -1,5 +1,4 @@
 import { useState, type FormEventHandler } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { joinRoom } from '../../api';
 import { JoinRoomButton } from './JoinRoomButton';
 import { ExhaustiveError } from '@/error';
@@ -9,7 +8,6 @@ type Props = {
 };
 
 export const JoinRoom: React.FC<Props> = ({ className }) => {
-  const navigate = useNavigate();
 
   const [roomId, setRoomId] = useState('');
   const [joinRoomResult, setJoinRoomResult] = useState('');
@@ -31,7 +29,7 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
 
       switch (status) {
         case 'JOIN_SUCCESS':
-          navigate('/room');
+          location.href = "/room"
           setJoinRoomResult('');
           break;
         case 'ROOM_NOT_EXIST':

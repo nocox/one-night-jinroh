@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { createRoom } from '../../api';
 import makeBtn from './make_room.png';
 
@@ -7,13 +6,11 @@ type Props = {
 };
 
 export const MakeRoomButton: React.FC<Props> = ({ className }) => {
-  const navigate = useNavigate();
 
   const handleClick = async () => {
     try {
       await createRoom();
-
-      navigate('/room');
+      location.href = "/room"
     } catch (error) {
       console.log(error); // TODO: ErrorFallbackを実装する
     }

@@ -1,9 +1,12 @@
 import { RoomTemplate } from './RoomTemplate';
 
-import { useRoomData } from './hooks';
+import { useRoomData, useWebSocket } from './hooks';
 
 export const RoomPage: React.FC = () => {
   const roomIndexResponseBody = useRoomData();
+
+  const { uuid, hostFlg } = roomIndexResponseBody;
+  useWebSocket(uuid, hostFlg);
 
   return (
     <>

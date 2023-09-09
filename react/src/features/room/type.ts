@@ -15,6 +15,15 @@ export type User = {
 
 export type GameStartStatus = 'SUCCESS' | 'NOT_ENOUGH_PARTICIPANTS';
 
+export type GameInfo = {
+  gameId: number;
+  playerCount: number;
+  roleList: Array<{
+    roleId: number;
+    roleName: string;
+  }>;
+};
+
 const userSchema = z.object({
   userId: z.number(),
   name: z.string(),
@@ -43,6 +52,22 @@ export const isGameStartStatus = (value: unknown): value is GameStartStatus => {
   return gameStartStatusSchema.safeParse(value).success;
 };
 
+export const isGameInfo = (value: unknown): value is GameInfo => {
+  return gameInfoSchema.safeParse(value).success;
+};
+
+export const gameInfoSchema = z.object({
+  gameId: z.number(),
+  playerCount: z.number(),
+  roleList: z.array(
+    z.object({
+      roleId: z.number(),
+      roleName: z.string(),
+    }),
+  ),
+});
+
 export type FetchRoomIndex = () => Promise<RoomIndexResponseBody>;
 export type FetchGameStart = () => Promise<GameStartStatus>;
 export type FinishRoom = () => Promise<void>;
+export type UseWebSocket = (uuid: string, hostFlg: boolean) => void;

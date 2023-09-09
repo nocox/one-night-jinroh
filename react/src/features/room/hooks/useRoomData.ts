@@ -16,7 +16,6 @@ export const useRoomData = (): RoomIndexResponseBody => {
       try {
         const response = await fetchRoomIndex();
         setRoomIndexResponseBody(response);
-        console.log('koko');
       } catch (error) {
         console.log(error); // TODO: ErrorFallbackを実装する
       }

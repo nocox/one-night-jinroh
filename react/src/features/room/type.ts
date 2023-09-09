@@ -70,4 +70,3 @@ export const gameInfoSchema = z.object({
 export type FetchRoomIndex = () => Promise<RoomIndexResponseBody>;
 export type FetchGameStart = () => Promise<GameStartStatus>;
 export type FinishRoom = () => Promise<void>;
-export type UseWebSocket = (uuid: string, hostFlg: boolean) => void;

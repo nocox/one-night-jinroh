@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client/dist/sockjs';
 import Stomp from 'webstomp-client';
-import type { GameInfo, UseWebSocket } from '../type';
+import type { GameInfo } from '../type';
 import { isGameInfo } from '../type';
 import { InvalidResponseBodyError } from '@/error';
 import { JINROH_API_BASE_URL } from '@/url';
 
-export const useWebSocket: UseWebSocket = (uuid, hostFlg) => {
+export const useWebSocket = (uuid: string, hostFlg: boolean): void => {
   const [gameInfo, setGameInfo] = useState<GameInfo | undefined>(undefined);
   console.log(gameInfo);
 

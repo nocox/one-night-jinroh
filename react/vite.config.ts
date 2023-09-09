@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         top_page: "src/features/top/TopPage.index.tsx",
+        room_page: "src/features/room/RoomPage.index.tsx",
       },
       output: {
         dir: "../spring/src/main/resources/static/",

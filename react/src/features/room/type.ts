@@ -1,3 +1,4 @@
+import type { Message } from 'webstomp-client';
 import { z } from 'zod';
 
 export type RoomIndexResponseBody = {
@@ -22,6 +23,11 @@ export type GameInfo = {
     roleId: number;
     roleName: string;
   }>;
+};
+
+export type Subscribe = {
+  path: string;
+  callback: (message?: Message) => void;
 };
 
 const userSchema = z.object({

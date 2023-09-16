@@ -6,11 +6,11 @@ import type {
   RoomIndexResponseBody,
 } from './type';
 import { isGameStartStatus, isRoomIndexResponseBody } from './type';
+import { getBackendApiPath } from './url';
 import { InvalidResponseBodyError } from '@/error';
-import { JINROH_API_BASE_URL } from '@/url';
 
 export const fetchRoomIndex: FetchRoomIndex = async () => {
-  const res = await fetch(JINROH_API_BASE_URL + '/room-index', {
+  const res = await fetch(getBackendApiPath('getRoomIndex'), {
     method: 'GET',
     credentials: 'include',
   });
@@ -28,7 +28,7 @@ export const fetchRoomIndex: FetchRoomIndex = async () => {
 };
 
 export const fetchGameStart: FetchGameStart = async () => {
-  const res = await fetch(JINROH_API_BASE_URL + '/game-start', {
+  const res = await fetch(getBackendApiPath('getGameStart'), {
     method: 'GET',
     credentials: 'include',
   });
@@ -47,7 +47,7 @@ export const fetchGameStart: FetchGameStart = async () => {
 };
 
 export const finishRoom: FinishRoom = async () => {
-  const res = await fetch(JINROH_API_BASE_URL + '/room-finish', {
+  const res = await fetch(getBackendApiPath('getRoomFinish'), {
     method: 'GET',
     credentials: 'include',
   });

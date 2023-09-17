@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
 import { fetchGameStart, finishRoom } from '../../api';
 import { RoomControllButton } from './RoomControllButton';
 import { ExhaustiveError } from '@/error';
@@ -9,6 +10,7 @@ type Props = {
 
 export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const { showBoundary } = useErrorBoundary();
 
   const handleGameStart = async () => {
     try {
@@ -24,7 +26,7 @@ export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
           throw new ExhaustiveError(gameStartStatus);
       }
     } catch (error) {
-      console.log(error); // TODO: ErrorFallback を実装する
+      showBoundary(error);
     }
   };
 
@@ -40,9 +42,8 @@ export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
   const handleGameExit = async () => {
     try {
       await finishRoom();
-      // TODO: 解散処理を実装する（ Web Socket で解散のメッセージを受信する）
     } catch (error) {
-      console.log(error); // TODO: ErrorFallback を実装する
+      showBoundary(error);
     }
   };
 

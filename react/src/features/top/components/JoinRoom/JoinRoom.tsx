@@ -1,4 +1,5 @@
 import { useState, type FormEventHandler } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 import { joinRoom } from '../../api';
 import { JoinRoomButton } from './JoinRoomButton';
@@ -10,6 +11,7 @@ type Props = {
 
 export const JoinRoom: React.FC<Props> = ({ className }) => {
   const navigate = useNavigate();
+  const { showBoundary } = useErrorBoundary();
 
   const [roomId, setRoomId] = useState('');
   const [joinRoomResult, setJoinRoomResult] = useState('');
@@ -44,7 +46,7 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
           throw new ExhaustiveError(status);
       }
     } catch (error) {
-      console.log(error); // TODO: ErrorFallbackを実装する
+      showBoundary(error);
     }
   };
 

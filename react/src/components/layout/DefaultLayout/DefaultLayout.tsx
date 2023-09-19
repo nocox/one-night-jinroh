@@ -1,7 +1,15 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import { css } from 'styled-system/css';
+import { ErrorFallback } from '@/components';
 
 type Props = {
   children: React.ReactNode;
+};
+
+const onError = (error: Error, info: { componentStack: string }) => {
+  // ここでログ出力などを行う
+  console.log('error.message', error.message);
+  console.log('info.componentStack:', info.componentStack);
 };
 
 export const DefaultLayout: React.FC<Props> = ({ children }) => {
@@ -13,7 +21,9 @@ export const DefaultLayout: React.FC<Props> = ({ children }) => {
         padding: '0 1rem',
       })}
     >
-      {children}
+      <ErrorBoundary FallbackComponent={ErrorFallback} onError={onError}>
+        {children}
+      </ErrorBoundary>
     </main>
   );
 };

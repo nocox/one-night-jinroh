@@ -17,6 +17,7 @@ export const useRoomData = (): RoomIndexResponseBody => {
         const response = await fetchRoomIndex();
         setRoomIndexResponseBody(response);
       } catch (error) {
+        // ↓ FIXME: ErrorBoundaryの外にあるので、showBoundary が使えない問題がある。
         console.log(error); // TODO: ErrorFallbackを実装する
       }
     };

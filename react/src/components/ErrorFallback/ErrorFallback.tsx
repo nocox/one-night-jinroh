@@ -21,14 +21,14 @@ type Props = {
 };
 
 export const ErrorFallback: React.FC<Props> = ({
-  error, // MEMO: もしエラーの種類によって表示するメッセージを変えたい場合はコメントアウトを外す
+  error,
   resetErrorBoundary,
 }) => {
   return (
     <>
       <div role="alert" className={styles.allert}>
         <ErrorMessage
-          error={error} // MEMO: もしエラーの種類によって表示するメッセージを変えたい場合はコメントアウトを外す
+          error={error}
         />
       </div>
       <Button

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build-watch": "tsc && vite build --watch",
     "lint:eslint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "fix:eslint": "npm run lint:eslint --fix",
     "lint:prettier": "npx prettier --check .",
@@ -16,7 +17,8 @@
     "format": "run-s fix:*",
     "preview": "vite preview",
     "preinstall": "npx typesync || :",
-    "prepare": "panda codegen"
+    "prepare": "panda codegen",
+    "panda-test": "panda --minify"
   },
   "dependencies": {
     "html-react-parser": "^4.0.0",

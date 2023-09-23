@@ -20,8 +20,9 @@ spring:
     cache: false
     mode: HTML
     encoding: UTF-8
-    prefix: file:src/main/resources/templates/
 
-  resources:
-    cache:
-      period: 0
+  web:
+    resources:
+      static-locations: file:spring/src/main/resources/static/
+      cache:
+        period: 0

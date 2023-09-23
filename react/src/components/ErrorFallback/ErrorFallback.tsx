@@ -27,9 +27,7 @@ export const ErrorFallback: React.FC<Props> = ({
   return (
     <>
       <div role="alert" className={styles.allert}>
-        <ErrorMessage
-          error={error}
-        />
+        <ErrorMessage error={error} />
       </div>
       <Button
         customStyle={styles.button}

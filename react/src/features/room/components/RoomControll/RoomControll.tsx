@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { useErrorBoundary } from 'react-error-boundary';
-import { fetchGameStart, finishRoom } from '../../api';
 import { RoomControllButton } from './RoomControllButton';
+import { Spinner } from '@/components';
 import { ExhaustiveError } from '@/error';
+import { fetchGameStart, finishRoom } from '@/features/room/api';
+import { useRoomData } from '@/features/room/hooks';
 
-type Props = {
-  hostFlg: boolean;
-};
-
-export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
+export const RoomControll: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const { showBoundary } = useErrorBoundary();
 
@@ -47,9 +45,13 @@ export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
     }
   };
 
-  return (
+  const { roomIndexResponseBody } = useRoomData();
+
+  return roomIndexResponseBody === undefined ? (
+    <Spinner />
+  ) : (
     <RoomControllButton
-      hostFlg={hostFlg}
+      hostFlg={roomIndexResponseBody.hostFlg}
       errorMessage={errorMessage}
       handleGameStart={handleGameStart}
       handleGameExit={handleGameExit}

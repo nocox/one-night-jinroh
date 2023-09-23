@@ -8,9 +8,11 @@ import { InvalidResponseBodyError } from '@/error';
 export const RoomPage: React.FC = () => {
   const [gameInfo, setGameInfo] = useState<GameInfo | undefined>(undefined);
 
-  const roomIndexResponseBody = useRoomData();
-
-  const { uuid, hostFlg } = roomIndexResponseBody;
+  const { roomIndexResponseBody } = useRoomData();
+  const { uuid, hostFlg } =
+    roomIndexResponseBody === undefined
+      ? { uuid: '', hostFlg: false }
+      : roomIndexResponseBody;
 
   const subscribeGameStart: Subscribe = {
     path: `/topic/${uuid}`,
@@ -57,7 +59,7 @@ export const RoomPage: React.FC = () => {
 
   return (
     <>
-      <RoomTemplate roomIndexResponseBody={roomIndexResponseBody} />
+      <RoomTemplate />
     </>
   );
 };

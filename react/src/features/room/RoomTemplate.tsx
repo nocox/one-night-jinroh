@@ -1,23 +1,16 @@
 import { RoomControll } from './components/RoomControll';
 import { RoomNumber } from './components/RoomNumber';
 import { UserBoard } from './components/UserBoard';
-import type { RoomIndexResponseBody } from './type';
 import { DefaultLayout } from '@/components';
 
-type Props = {
-  roomIndexResponseBody: RoomIndexResponseBody;
-};
-
-export const RoomTemplate: React.FC<Props> = ({ roomIndexResponseBody }) => {
-  const { uuid, userList, hostFlg, myselfUserId } = roomIndexResponseBody;
-
+export const RoomTemplate: React.FC = () => {
   return (
     <DefaultLayout>
-      <RoomNumber uuid={uuid} />
+      <RoomNumber />
 
-      <UserBoard userList={userList} myselfUserId={myselfUserId} />
+      <UserBoard />
 
-      <RoomControll hostFlg={hostFlg} />
+      <RoomControll />
     </DefaultLayout>
   );
 };

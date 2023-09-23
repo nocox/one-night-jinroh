@@ -1,23 +1,32 @@
 import { useState } from 'react';
 import { RoomNumberBox } from './RoomNumberBox';
+import { useRoomData } from '@/features/room/hooks';
 
-type Props = {
-  uuid: string;
-};
-
-export const RoomNumber: React.FC<Props> = ({ uuid }) => {
+export const RoomNumber: React.FC = () => {
   const [isCopyDone, setIsCopyDone] = useState(false);
 
-  const handleCopy = () => {
+  const handleCopy = (uuid: string) => {
     void navigator.clipboard.writeText(uuid);
     setIsCopyDone(true);
   };
 
-  return (
+  const { roomIndexResponseBody } = useRoomData();
+
+  return roomIndexResponseBody === undefined ? (
     <RoomNumberBox
-      roomNumber={uuid}
+      roomNumber=""
+      isCopyDone={false}
+      handleCopy={() => {
+        handleCopy('');
+      }}
+    />
+  ) : (
+    <RoomNumberBox
+      roomNumber={roomIndexResponseBody.uuid}
       isCopyDone={isCopyDone}
-      handleCopy={handleCopy}
+      handleCopy={() => {
+        handleCopy(roomIndexResponseBody.uuid);
+      }}
     />
   );
 };

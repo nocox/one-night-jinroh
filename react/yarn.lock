@@ -2494,6 +2494,11 @@
   "resolved" "https://registry.npmjs.org/cli-spinners/-/cli-spinners-2.9.0.tgz"
   "version" "2.9.0"
 
+"client-only@^0.0.1":
+  "integrity" "sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA=="
+  "resolved" "https://registry.npmjs.org/client-only/-/client-only-0.0.1.tgz"
+  "version" "0.0.1"
+
 "clone@^1.0.2":
   "integrity" "sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg=="
   "resolved" "https://registry.npmjs.org/clone/-/clone-1.0.4.tgz"
@@ -5920,7 +5925,7 @@
   dependencies:
     "@remix-run/router" "1.7.1"
 
-"react@^16.8 || ^17 || ^18", "react@^16.8.0 || ^17 || ^18", "react@^17.0.2 || ^18.0.0", "react@^18.2.0", "react@>=16.13.1", "react@>=16.8", "react@>=18.0.0", "react@0.14 || 15 || 16 || 17 || 18", "react@18.2.0":
+"react@^16.11.0 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17 || ^18", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0", "react@^18.2.0", "react@>=16.13.1", "react@>=16.8", "react@>=18.0.0", "react@0.14 || 15 || 16 || 17 || 18", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
@@ -6745,6 +6750,14 @@
   "resolved" "https://registry.npmjs.org/svg-tags/-/svg-tags-1.0.0.tgz"
   "version" "1.0.0"
 
+"swr@^2.2.2":
+  "integrity" "sha512-CbR41AoMD4TQBQw9ic3GTXspgfM9Y8Mdhb5Ob4uIKXhWqnRLItwA5fpGvB7SmSw3+zEjb0PdhiEumtUvYoQ+bQ=="
+  "resolved" "https://registry.npmjs.org/swr/-/swr-2.2.2.tgz"
+  "version" "2.2.2"
+  dependencies:
+    "client-only" "^0.0.1"
+    "use-sync-external-store" "^1.2.0"
+
 "synckit@^0.8.4":
   "integrity" "sha512-L1dapNV6vu2s/4Sputv8xGsCdAVlb5nRDMFU/E27D44l5U6cw1g0dGd45uLc+OXjNMmF4ntiMdCimzcjFKQI8Q=="
   "resolved" "https://registry.npmjs.org/synckit/-/synckit-0.8.5.tgz"
@@ -7125,6 +7138,11 @@
   dependencies:
     "querystringify" "^2.1.1"
     "requires-port" "^1.0.0"
+
+"use-sync-external-store@^1.2.0":
+  "integrity" "sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA=="
+  "resolved" "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz"
+  "version" "1.2.0"
 
 "util-deprecate@^1.0.1", "util-deprecate@^1.0.2":
   "integrity" "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="

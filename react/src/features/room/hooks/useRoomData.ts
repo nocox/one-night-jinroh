@@ -1,29 +1,21 @@
-import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+
 import { fetchRoomIndex } from '../api';
 import type { RoomIndexResponseBody } from '../type';
 
-export const useRoomData = (): RoomIndexResponseBody => {
-  const [roomIndexResponseBody, setRoomIndexResponseBody] =
-    useState<RoomIndexResponseBody>({
-      uuid: '',
-      userList: [],
-      hostFlg: false,
-      myselfUserId: -1,
-    });
+export const useRoomData = (): {
+  roomIndexResponseBody: RoomIndexResponseBody | undefined;
+} => {
+  const { data, error } = useSWR<RoomIndexResponseBody, Error>(
+    'room-index',
+    fetchRoomIndex,
+  );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetchRoomIndex();
-        setRoomIndexResponseBody(response);
-      } catch (error) {
-        // ↓ FIXME: ErrorBoundaryの外にあるので、showBoundary が使えない問題がある。
-        console.log(error); // TODO: ErrorFallbackを実装する
-      }
-    };
+  if (error) {
+    throw error;
+  }
 
-    void fetchData();
-  }, []);
-
-  return roomIndexResponseBody;
+  return {
+    roomIndexResponseBody: data,
+  };
 };

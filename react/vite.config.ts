@@ -11,6 +11,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         top_page: "src/features/top/TopPage.index.tsx",
         room_page: "src/features/room/RoomPage.index.tsx",
+        night_page: "src/features/game/night/NightPage.index.tsx",
       },
       output: {
         dir: "../spring/src/main/resources/static/",

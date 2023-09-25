@@ -21,3 +21,26 @@ export const isNightIndexResponseBody = (
 };
 
 export type FetchNightIndex = () => Promise<NightIndexResponseBody>;
+
+export type NightKaitoResult = {
+  actLog: string;
+  selectedParticipantId: number;
+}
+
+const nightKaitoResultSchema = z.object({
+  actLog: z.string(),
+  selectedParticipantId: z.number(),
+});
+
+export const isNightKaitoResult = (
+  value: unknown,
+): value is NightKaitoResult => {
+  return nightKaitoResultSchema.safeParse(value).success;
+};
+
+type NightKaitoActionDto = {
+  participantId: number;
+}
+
+export type PostNightKaitoAction = (dto: NightKaitoActionDto) => Promise<NightKaitoResult>;
+export type FetchNightKaitoActionResult = () => Promise<NightKaitoResult | undefined>;

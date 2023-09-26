@@ -25,7 +25,7 @@ export type FetchNightIndex = () => Promise<NightIndexResponseBody>;
 export type NightKaitoResult = {
   actLog: string;
   selectedParticipantId: number;
-}
+};
 
 const nightKaitoResultSchema = z.object({
   actLog: z.string(),
@@ -40,7 +40,11 @@ export const isNightKaitoResult = (
 
 type NightKaitoActionDto = {
   participantId: number;
-}
+};
 
-export type PostNightKaitoAction = (dto: NightKaitoActionDto) => Promise<NightKaitoResult>;
-export type FetchNightKaitoActionResult = () => Promise<NightKaitoResult | undefined>;
+export type PostNightKaitoAction = (
+  dto: NightKaitoActionDto,
+) => Promise<NightKaitoResult>;
+export type FetchNightKaitoActionResult = () => Promise<
+  NightKaitoResult | undefined
+>;

@@ -24,19 +24,19 @@ export type Character = {
 export const characters: Character[] = [
   {
     roleId: 1,
-    EnglishName: 'jinroh',
-    JapaneseName: '人狼',
-    imgUrl: jinrohImage,
-    iconUrl: jinrohIcon,
-    nightAction: '他のプレイヤーに人狼がいるかどうか確認できます。',
-  },
-  {
-    roleId: 2,
     EnglishName: 'murabito',
     JapaneseName: '村人',
     imgUrl: murabitoImage,
     iconUrl: murabitoIcon,
     nightAction: '夜の行動はありません。',
+  },
+  {
+    roleId: 2,
+    EnglishName: 'jinroh',
+    JapaneseName: '人狼',
+    imgUrl: jinrohImage,
+    iconUrl: jinrohIcon,
+    nightAction: '他のプレイヤーに人狼がいるかどうか確認できます。',
   },
   {
     roleId: 3,

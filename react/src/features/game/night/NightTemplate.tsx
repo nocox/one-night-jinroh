@@ -21,7 +21,6 @@ type Props = {
 export const NightTemplate: React.FC<Props> = ({ nightIndexResponseBody }) => {
   const { gameIndex, doneNightAct, gameId } = nightIndexResponseBody;
   console.log(gameId);
-  
 
   return (
     <DefaultLayout>

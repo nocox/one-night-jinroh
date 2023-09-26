@@ -8,7 +8,6 @@ type Props = {
 };
 
 export const JoinRoom: React.FC<Props> = ({ className }) => {
-
   const [roomId, setRoomId] = useState('');
   const [joinRoomResult, setJoinRoomResult] = useState('');
   const [open, setOpen] = useState(false);
@@ -29,7 +28,7 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
 
       switch (status) {
         case 'JOIN_SUCCESS':
-          location.href = "/room"
+          location.href = '/room';
           setJoinRoomResult('');
           break;
         case 'ROOM_NOT_EXIST':

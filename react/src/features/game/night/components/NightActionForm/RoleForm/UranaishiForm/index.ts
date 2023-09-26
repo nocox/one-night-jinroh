@@ -1,1 +1,1 @@
-export { UranaishiForm } from './UranaishiForm'
+export { UranaishiForm } from './UranaishiForm';

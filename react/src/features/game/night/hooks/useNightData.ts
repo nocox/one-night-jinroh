@@ -3,8 +3,9 @@ import { fetchNightIndex } from '../api';
 import type { NightIndexResponseBody } from '../type';
 
 export const useNightData = (): NightIndexResponseBody | undefined => {
-
-  const [nightIndexResponseBody, setNightIndexResponseBody] = useState<NightIndexResponseBody | undefined>(undefined);
+  const [nightIndexResponseBody, setNightIndexResponseBody] = useState<
+    NightIndexResponseBody | undefined
+  >(undefined);
 
   useEffect(() => {
     const fetchNightIndexAsync = async () => {

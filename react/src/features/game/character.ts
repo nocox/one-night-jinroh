@@ -28,7 +28,7 @@ export const characters: Character[] = [
     JapaneseName: '人狼',
     imgUrl: jinrohImage,
     iconUrl: jinrohIcon,
-    nightAction: "他のプレイヤーに人狼がいるかどうか確認できます。"
+    nightAction: '他のプレイヤーに人狼がいるかどうか確認できます。',
   },
   {
     roleId: 2,
@@ -36,7 +36,7 @@ export const characters: Character[] = [
     JapaneseName: '村人',
     imgUrl: murabitoImage,
     iconUrl: murabitoIcon,
-    nightAction: "夜の行動はありません。"
+    nightAction: '夜の行動はありません。',
   },
   {
     roleId: 3,
@@ -44,7 +44,8 @@ export const characters: Character[] = [
     JapaneseName: '占い師',
     imgUrl: uranaishiImage,
     iconUrl: uranaishiIcon,
-    nightAction: "『他のプレイヤー』ひとりまたは『おやすみ中のカード』の役職を確認できます。"
+    nightAction:
+      '『他のプレイヤー』ひとりまたは『おやすみ中のカード』の役職を確認できます。',
   },
   {
     roleId: 4,
@@ -52,7 +53,8 @@ export const characters: Character[] = [
     JapaneseName: '怪盗',
     imgUrl: kaitoImage,
     iconUrl: kaitoIcon,
-    nightAction: "『他のプレイヤー』ひとりと役職を交換できます。勝利条件は交換後の役職に準じます。"
+    nightAction:
+      '『他のプレイヤー』ひとりと役職を交換できます。勝利条件は交換後の役職に準じます。',
   },
   {
     roleId: 5,
@@ -60,7 +62,7 @@ export const characters: Character[] = [
     JapaneseName: '狂人',
     imgUrl: kyojinImage,
     iconUrl: kyojinIcon,
-    nightAction: "夜の行動はありません。"
+    nightAction: '夜の行動はありません。',
   },
   {
     roleId: 6,
@@ -68,6 +70,6 @@ export const characters: Character[] = [
     JapaneseName: '吊人',
     imgUrl: tsuribitoImage,
     iconUrl: tsuribitoIcon,
-    nightAction: "夜の行動はありません。"
+    nightAction: '夜の行動はありません。',
   },
 ];

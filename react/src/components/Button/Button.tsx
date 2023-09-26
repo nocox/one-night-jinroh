@@ -19,7 +19,10 @@ export const Button: React.FC<Props> = ({
 }: Props) => {
   return (
     <button
-      className={cx(button({ color, shape, size, isDisabled }), customStyles ?? '')}
+      className={cx(
+        button({ color, shape, size, isDisabled }),
+        customStyles ?? '',
+      )}
       {...props}
     >
       {children}

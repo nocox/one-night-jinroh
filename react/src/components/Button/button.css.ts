@@ -27,8 +27,13 @@ export const button = cva({
     },
 
     isDisabled: {
-      true: { color: '#fff', backgroundColor: "#ccc", border: 'none', cursor: 'default' },
-    }
+      true: {
+        color: '#fff',
+        backgroundColor: '#ccc',
+        border: 'none',
+        cursor: 'default',
+      },
+    },
   },
   defaultVariants: {
     size: 'medium',

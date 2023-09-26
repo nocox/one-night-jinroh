@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { NightActionFormBox } from './NightActionFormBox';
 import { KaitoForm, UranaishiForm, JinrohForm } from './RoleForm';
+import { fetchDoneNightAct } from '@/features/game/night/api';
 import type { OtherPlayer, Role } from '@/features/game/type';
 
 type Props = {
@@ -13,6 +15,8 @@ export const NightActionForm: React.FC<Props> = ({
   playerRole,
   otherPlayerList,
 }) => {
+  const [isDoneNightAct, setIsDoneNightAct] = useState<boolean>(doneNightAct);
+
   function getRoleComponent() {
     switch (playerRole.roleName) {
       case '怪盗':
@@ -31,8 +35,15 @@ export const NightActionForm: React.FC<Props> = ({
     }
   }
 
+  const handleDoneNightAct = async () => {
+    setIsDoneNightAct(await fetchDoneNightAct());
+  };
+
   return (
-    <NightActionFormBox doneNightAct={doneNightAct}>
+    <NightActionFormBox
+      doneNightAct={isDoneNightAct}
+      handleDoneNightAct={handleDoneNightAct}
+    >
       {getRoleComponent()}
     </NightActionFormBox>
   );

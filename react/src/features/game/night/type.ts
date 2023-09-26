@@ -48,3 +48,4 @@ export type PostNightKaitoAction = (
 export type FetchNightKaitoActionResult = () => Promise<
   NightKaitoResult | undefined
 >;
+export type FetchDoneNightAct = () => Promise<boolean>;

@@ -1,4 +1,5 @@
 import type {
+  FetchDoneNightAct,
   FetchNightIndex,
   FetchNightKaitoActionResult,
   NightIndexResponseBody,
@@ -6,7 +7,7 @@ import type {
   PostNightKaitoAction,
 } from './type';
 import { isNightIndexResponseBody, isNightKaitoResult } from './type';
-import { InvalidResponseBodyError } from '@/error';
+import { InvalidResponseBodyError, UnexpectedError } from '@/error';
 import { JINROH_API_BASE_URL } from '@/url';
 
 export const fetchNightIndex: FetchNightIndex = async () => {
@@ -72,4 +73,21 @@ export const fetchNightKaitoActionResult:
   }
 
   return nightKaitoResult;
+};
+
+export const fetchDoneNightAct: FetchDoneNightAct = async () => {
+  const response = await fetch(JINROH_API_BASE_URL + '/done-night-act', {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    throw new UnexpectedError(
+      `failed to fetchDoneNightAct. status: ${
+        response.status
+      }, body: ${await response.text()}`,
+    );
+  }
+
+  return true;
 };

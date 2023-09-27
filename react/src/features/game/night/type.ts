@@ -1,7 +1,10 @@
 import { z } from 'zod';
-import type { GameIndex } from '@/features/game/type';
+import type { GameIndex, Role } from '@/features/game/type';
 import { gameIndexSchema } from '@/features/game/type';
 
+/**
+ * 夜の行動ページ読み込み時
+ */
 export type NightIndexResponseBody = {
   doneNightAct: boolean;
   gameId: number;
@@ -22,6 +25,9 @@ export const isNightIndexResponseBody = (
 
 export type FetchNightIndex = () => Promise<NightIndexResponseBody>;
 
+/**
+ * 夜の行動ページでの怪盗の行動
+ */
 export type NightKaitoResult = {
   actLog: string;
   selectedParticipantId: number;
@@ -49,3 +55,60 @@ export type FetchNightKaitoActionResult = () => Promise<
   NightKaitoResult | undefined
 >;
 export type FetchDoneNightAct = () => Promise<boolean>;
+
+/**
+ * 夜の行動ページでの占い師の行動
+ */
+export const uranaiStatus = {
+  PLAYER: 'PLAYER',
+  HOLIDAY_ROLES: 'HOLIDAY_ROLES',
+  NOT_CHOOSE: 'NOT_CHOOSE',
+} as const;
+
+export type UranaiStatus = (typeof uranaiStatus)[keyof typeof uranaiStatus];
+
+type User = {
+  userId: number;
+  userName: string;
+};
+export type NightUranaiResult = {
+  status: UranaiStatus;
+  participantId: number | null;
+  roles: Role[];
+  user: User | null;
+};
+
+const nightUranaiResultSchema = z.object({
+  status: z.string(),
+  participantId: z.number().nullable(),
+  roles: z.array(
+    z.object({
+      roleId: z.number(),
+      roleName: z.string(),
+    }),
+  ),
+  user: z
+    .object({
+      userId: z.number(),
+      userName: z.string(),
+    })
+    .nullable(),
+});
+
+export const isNightUranaiResult = (
+  value: unknown,
+): value is NightUranaiResult => {
+  return nightUranaiResultSchema.safeParse(value).success;
+};
+
+type PostNightUranaishiActionDto = {
+  status: UranaiStatus;
+  participantId: number | undefined;
+};
+
+export type PostNightUranaishiAction = (
+  dto: PostNightUranaishiActionDto,
+) => Promise<NightUranaiResult>;
+export type FetchNightUranaishiAction = () => Promise<
+  NightUranaiResult | undefined
+>;

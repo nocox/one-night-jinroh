@@ -2,11 +2,18 @@ import type {
   FetchDoneNightAct,
   FetchNightIndex,
   FetchNightKaitoActionResult,
+  FetchNightUranaishiAction,
   NightIndexResponseBody,
   NightKaitoResult,
+  NightUranaiResult,
   PostNightKaitoAction,
+  PostNightUranaishiAction,
 } from './type';
-import { isNightIndexResponseBody, isNightKaitoResult } from './type';
+import {
+  isNightIndexResponseBody,
+  isNightKaitoResult,
+  isNightUranaiResult,
+} from './type';
 import { InvalidResponseBodyError, UnexpectedError } from '@/error';
 import { JINROH_API_BASE_URL } from '@/url';
 
@@ -74,6 +81,64 @@ export const fetchNightKaitoActionResult:
 
   return nightKaitoResult;
 };
+
+export const postNightUranaishiAction: PostNightUranaishiAction = async (
+  dto,
+) => {
+  const response = await fetch(JINROH_API_BASE_URL + '/night/uranai', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dto),
+  });
+
+  if (!response.ok) {
+    throw new UnexpectedError(
+      `failed to postNightUranaishiAction. status: ${
+        response.status
+      }, body: ${await response.text()}`,
+    );
+  }
+
+  const nightUranaiResult = (await response.json()) as NightUranaiResult;
+
+  if (!isNightUranaiResult(nightUranaiResult)) {
+    throw new InvalidResponseBodyError(
+      `responseBody is not in the expected format. body: ${JSON.stringify(
+        nightUranaiResult,
+      )}`,
+    );
+  }
+
+  return nightUranaiResult;
+};
+
+export const fetchNightUranaishiAction: FetchNightUranaishiAction =
+  async () => {
+    const response = await fetch(JINROH_API_BASE_URL + '/night/uranai', {
+      method: 'GET',
+      credentials: 'include',
+    });
+
+    const nightUranaiResult =
+      (await response.json()) as NightUranaiResult | null;
+
+    if (nightUranaiResult === null) {
+      return undefined;
+    }
+
+    if (!isNightUranaiResult(nightUranaiResult)) {
+      throw new InvalidResponseBodyError(
+        `responseBody is not in the expected format. body: ${JSON.stringify(
+          nightUranaiResult,
+        )}`,
+      );
+    }
+
+    return nightUranaiResult;
+  };
 
 export const fetchDoneNightAct: FetchDoneNightAct = async () => {
   const response = await fetch(JINROH_API_BASE_URL + '/done-night-act', {

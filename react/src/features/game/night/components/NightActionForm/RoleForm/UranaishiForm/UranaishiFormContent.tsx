@@ -38,8 +38,6 @@ export const UranaishiFormContent: React.FC<Props> = ({
   selectedPlayerId,
   uranaiStatus,
 }) => {
-  console.log('selectedPlayerIdだよ：', selectedPlayerId);
-  console.log('uranaiStatusだよ：', uranaiStatus);
 
   return (
     <>

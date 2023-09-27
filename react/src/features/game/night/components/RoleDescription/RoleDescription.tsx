@@ -6,8 +6,6 @@ type Props = {
 };
 
 export const RoleDescription: React.FC<Props> = ({ roleId }) => {
-  // console.log('roleId', roleId);
-
   const character = characters.find((c) => c.roleId === roleId);
   if (!character) {
     // TODO エラー画面を表示する. 必要に応じてカスタムエラークラスを作成する.

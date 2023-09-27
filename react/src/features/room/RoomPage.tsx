@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { RoomTemplate } from './RoomTemplate';
-import { useRoomData, useWebSocket } from './hooks';
+import { useRoomData } from './hooks';
 import { isGameInfo } from './type';
-import type { Subscribe, GameInfo } from './type';
+import type { GameInfo } from './type';
 import { InvalidResponseBodyError } from '@/error';
+import { useWebSocket } from '@/hooks';
+import type { Subscribe } from '@/type';
 
 export const RoomPage: React.FC = () => {
   const [gameInfo, setGameInfo] = useState<GameInfo | undefined>(undefined);

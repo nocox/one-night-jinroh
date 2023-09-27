@@ -20,9 +20,6 @@ const styles = {
   actionButton: css({
     margin: '3rem auto 0',
   }),
-  actLog: css({
-    margin: '1rem auto 0',
-  }),
 };
 
 type Props = {
@@ -31,7 +28,6 @@ type Props = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   selectedPlayerId: number | undefined;
-  actLog: string | undefined;
 };
 
 export const KaitoFormContent: React.FC<Props> = ({
@@ -40,7 +36,6 @@ export const KaitoFormContent: React.FC<Props> = ({
   handleChange,
   handleSubmit,
   selectedPlayerId,
-  actLog,
 }) => {
   return (
     <>
@@ -56,7 +51,6 @@ export const KaitoFormContent: React.FC<Props> = ({
                 value={player.id}
                 onChange={handleChange}
                 checked={selectedPlayerId === player.id}
-                disabled={actLog !== undefined}
               />
               {player.name}
             </label>
@@ -67,15 +61,11 @@ export const KaitoFormContent: React.FC<Props> = ({
       <Button
         type="submit"
         onClick={handleSubmit}
-        disabled={actLog !== undefined}
-        isDisabled={actLog !== undefined}
         customStyles={styles.actionButton}
       >
         選んだ相手と入れ替える
       </Button>
       {errorMessage && <p>{errorMessage}</p>}
-
-      {actLog !== undefined && <p className={styles.actLog}>{actLog}</p>}
     </>
   );
 };

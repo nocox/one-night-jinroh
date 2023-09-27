@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { KaitoFormContent } from './KaitoFormContent';
+import { KaitoFormResult } from './KaitoFormResult';
 import {
   fetchNightKaitoActionResult,
   postNightKaitoAction,
@@ -61,13 +62,18 @@ export const KaitoForm: React.FC<Props> = ({ otherPlayerList }) => {
   }, [otherPlayerList]);
 
   return (
-    <KaitoFormContent
-      errorMessage={errorMessage}
-      otherPlayerList={otherPlayerList}
-      handleChange={handleChange}
-      handleSubmit={handleSubmit}
-      selectedPlayerId={selectedPlayerId}
-      actLog={actLog}
-    />
+    <>
+      {actLog === undefined && (
+        <KaitoFormContent
+          errorMessage={errorMessage}
+          otherPlayerList={otherPlayerList}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          selectedPlayerId={selectedPlayerId}
+        />
+      )}
+
+      {actLog !== undefined && <KaitoFormResult actLog={actLog} roles={[]} />}
+    </>
   );
 };

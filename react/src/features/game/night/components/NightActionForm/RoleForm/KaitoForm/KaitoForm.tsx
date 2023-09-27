@@ -7,7 +7,6 @@ import {
 import type { OtherPlayer } from '@/features/game/type';
 
 type Props = {
-  doneNightAct: boolean;
   otherPlayerList: OtherPlayer[];
 };
 

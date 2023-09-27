@@ -20,14 +20,9 @@ export const NightActionForm: React.FC<Props> = ({
   function getRoleComponent() {
     switch (playerRole.roleName) {
       case '怪盗':
-        return (
-          <KaitoForm
-            otherPlayerList={otherPlayerList}
-            doneNightAct={doneNightAct}
-          />
-        );
+        return <KaitoForm otherPlayerList={otherPlayerList} />;
       case '占い師':
-        return <UranaishiForm />;
+        return <UranaishiForm otherPlayerList={otherPlayerList} />;
       case '人狼':
         return <JinrohForm />;
       default:

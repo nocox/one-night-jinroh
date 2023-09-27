@@ -3,7 +3,7 @@ import { Button } from '@/components';
 
 const styles = {
   form: css({
-    height: '20rem',
+    minHeight: '20rem',
     margin: '1rem auto 0',
     padding: '1rem',
     border: '3px solid #eee',

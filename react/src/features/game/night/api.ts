@@ -1,9 +1,11 @@
 import type {
   FetchDoneNightAct,
   FetchNightIndex,
+  FetchNightJinrohPlayers,
   FetchNightKaitoActionResult,
   FetchNightUranaishiAction,
   NightIndexResponseBody,
+  NightJinrohPlayers,
   NightKaitoResult,
   NightUranaiResult,
   PostNightKaitoAction,
@@ -11,6 +13,7 @@ import type {
 } from './type';
 import {
   isNightIndexResponseBody,
+  isNightJinrohPlayers,
   isNightKaitoResult,
   isNightUranaiResult,
 } from './type';
@@ -139,6 +142,33 @@ export const fetchNightUranaishiAction: FetchNightUranaishiAction =
 
     return nightUranaiResult;
   };
+
+export const fetchNightJinrohPlayers: FetchNightJinrohPlayers = async () => {
+  const response = await fetch(JINROH_API_BASE_URL + '/night/jinroh/index', {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    throw new UnexpectedError(
+      `failed to fetchNightJinrohPlayers. status: ${
+        response.status
+      }, body: ${await response.text()}`,
+    );
+  }
+
+  const nightJinrohPlayers = (await response.json()) as NightJinrohPlayers;
+
+  if (!isNightJinrohPlayers(nightJinrohPlayers)) {
+    throw new InvalidResponseBodyError(
+      `responseBody is not in the expected format. body: ${JSON.stringify(
+        nightJinrohPlayers,
+      )}`,
+    );
+  }
+
+  return nightJinrohPlayers;
+};
 
 export const fetchDoneNightAct: FetchDoneNightAct = async () => {
   const response = await fetch(JINROH_API_BASE_URL + '/done-night-act', {

@@ -112,3 +112,22 @@ export type PostNightUranaishiAction = (
 export type FetchNightUranaishiAction = () => Promise<
   NightUranaiResult | undefined
 >;
+
+/**
+ * 夜の行動ページでの人狼
+ */
+export type NightJinrohPlayers = {
+  playerNames: string[];
+};
+
+const nightJinrohPlayersSchema = z.object({
+  playerNames: z.array(z.string()),
+});
+
+export const isNightJinrohPlayers = (
+  value: unknown,
+): value is NightJinrohPlayers => {
+  return nightJinrohPlayersSchema.safeParse(value).success;
+};
+
+export type FetchNightJinrohPlayers = () => Promise<NightJinrohPlayers>;

@@ -32,41 +32,35 @@ const styles = {
 };
 
 type Props = {
-  actLog: string | undefined;
-  roles: Role[] | undefined;
+  actLog: string;
+  roles: Role[];
 };
 
 export const UranaishiFormResult: React.FC<Props> = ({ actLog, roles }) => {
   return (
     <>
-      {actLog !== undefined && (
-        <p className={styles.actLog}>
-          <b>占い結果</b>
-          <br />
-          {actLog}
-        </p>
-      )}
-      {roles !== undefined && (
-        <>
-          <ul className={styles.roles}>
-            {roles.map((role) => (
-              <li key={role.roleId}>
-                <figure>
-                  <img
-                    src={
-                      characters.filter(
-                        (character) => character.roleId === role.roleId,
-                      )[0].imgUrl
-                    }
-                    alt={role.roleName}
-                  />
-                  <figcaption>{role.roleName}</figcaption>
-                </figure>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+      <p className={styles.actLog}>
+        <b>占い結果</b>
+        <br />
+        {actLog}
+      </p>
+      <ul className={styles.roles}>
+        {roles.map((role) => (
+          <li key={role.roleId}>
+            <figure>
+              <img
+                src={
+                  characters.filter(
+                    (character) => character.roleId === role.roleId,
+                  )[0].imgUrl
+                }
+                alt={role.roleName}
+              />
+              <figcaption>{role.roleName}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
     </>
   );
 };

@@ -38,7 +38,6 @@ export const UranaishiFormContent: React.FC<Props> = ({
   selectedPlayerId,
   uranaiStatus,
 }) => {
-
   return (
     <>
       <p>占うプレーヤーを選んでください</p>

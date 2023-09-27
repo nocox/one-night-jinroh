@@ -55,6 +55,7 @@ export const UranaishiForm: React.FC<Props> = ({ otherPlayerList }) => {
 
   useEffect(() => {
     const fetchNightUranaishiActionResultAsync = async () => {
+      // TODO: 誰も占わなずに行動を完了したとき、ページリロードするとバックエンドで500エラーが起きているため修正が必要
       const nightUranaiActionResult = await fetchNightUranaishiAction();
 
       if (nightUranaiActionResult === undefined) {

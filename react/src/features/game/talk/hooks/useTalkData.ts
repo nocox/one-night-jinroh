@@ -7,7 +7,6 @@ export const useTalkData = (): TalkIndexResponseBody | undefined => {
     TalkIndexResponseBody | undefined
   >(undefined);
 
-
   useEffect(() => {
     const fetchTalkIndexAsync = async () => {
       const talkIndexResponseBody = await fetchTalkIndex();

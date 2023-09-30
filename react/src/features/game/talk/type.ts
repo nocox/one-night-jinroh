@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { gameIndexSchema } from "@/features/game/type";
-import type { GameIndex } from "@/features/game/type";
+import { z } from 'zod';
+import { gameIndexSchema } from '@/features/game/type';
+import type { GameIndex } from '@/features/game/type';
 
 /**
  * 話し合いページ読み込み時のレスポンス

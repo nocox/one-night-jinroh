@@ -6,11 +6,10 @@ type Props = {
 };
 
 export const MakeRoomButton: React.FC<Props> = ({ className }) => {
-
   const handleClick = async () => {
     try {
       await createRoom();
-      location.href = "/room"
+      location.href = '/room';
     } catch (error) {
       console.log(error); // TODO: ErrorFallbackを実装する
     }

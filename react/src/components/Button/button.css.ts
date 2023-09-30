@@ -25,6 +25,15 @@ export const button = cva({
       round: { borderRadius: '10px' },
       rounder: { borderRadius: '30px' },
     },
+
+    isDisabled: {
+      true: {
+        color: '#fff',
+        backgroundColor: '#ccc',
+        border: 'none',
+        cursor: 'default',
+      },
+    },
   },
   defaultVariants: {
     size: 'medium',

@@ -1,11 +1,20 @@
 import { useState } from 'react';
 import { RoomTemplate } from './RoomTemplate';
-import { useRoomData, useWebSocket } from './hooks';
+import { GameStartModal } from './components/GameStartModal';
+import { useRoomData } from './hooks';
 import { isGameInfo } from './type';
-import type { Subscribe, GameInfo } from './type';
+import type { GameInfo } from './type';
 import { InvalidResponseBodyError } from '@/error';
+import { useWebSocket } from '@/hooks';
+import { useModal } from '@/hooks/useModal';
+import type { Subscribe } from '@/type';
 
 export const RoomPage: React.FC = () => {
+  const { open, onOpenModal } = useModal();
+  const onCloseModal = () => {
+    window.location.href = '/night';
+  };
+
   const [gameInfo, setGameInfo] = useState<GameInfo | undefined>(undefined);
 
   const roomIndexResponseBody = useRoomData();
@@ -31,12 +40,8 @@ export const RoomPage: React.FC = () => {
         );
       }
 
-      gameInfo.roleList.sort((a, b) => a.roleId - b.roleId);
       setGameInfo(gameInfo);
-      console.log(gameInfo);
-      alert('ゲームを開始します');
-
-      // TODO: 夜の行動ページを実装し、そこにリダイレクトさせる処理を実装する
+      onOpenModal();
     },
   };
 
@@ -51,13 +56,18 @@ export const RoomPage: React.FC = () => {
     },
   };
 
-  console.log(gameInfo);
-
   useWebSocket([subscribeGameStart, subscribeFinishRoom]);
 
   return (
     <>
       <RoomTemplate roomIndexResponseBody={roomIndexResponseBody} />
+      {gameInfo !== undefined && (
+        <GameStartModal
+          open={open}
+          onCloseModal={onCloseModal}
+          gameInfo={gameInfo}
+        />
+      )}
     </>
   );
 };

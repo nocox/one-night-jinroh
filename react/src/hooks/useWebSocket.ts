@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import SockJS from 'sockjs-client/dist/sockjs';
 import Stomp from 'webstomp-client';
-import type { Subscribe } from '../type';
+import type { Subscribe } from '@/type';
 import { JINROH_API_BASE_URL } from '@/url';
 
 export const useWebSocket = (callbacks: Subscribe[]): void => {

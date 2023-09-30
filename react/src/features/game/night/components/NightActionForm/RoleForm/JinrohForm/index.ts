@@ -1,0 +1,1 @@
+export { JinrohForm } from './JinrohForm';

@@ -1,24 +1,18 @@
 import { useState, type FormEventHandler } from 'react';
 import { joinRoom } from '../../api';
 import { JoinRoomButton } from './JoinRoomButton';
+import { JoinRoomModal } from './JoinRoomModal';
 import { ExhaustiveError } from '@/error';
+import { useModal } from '@/hooks/useModal';
 
 type Props = {
   className: string;
 };
 
 export const JoinRoom: React.FC<Props> = ({ className }) => {
-
   const [roomId, setRoomId] = useState('');
   const [joinRoomResult, setJoinRoomResult] = useState('');
-  const [open, setOpen] = useState(false);
-
-  const onOpenModal = () => {
-    setOpen(true);
-  };
-  const onCloseModal = () => {
-    setOpen(false);
-  };
+  const { open, onOpenModal, onCloseModal } = useModal();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -29,7 +23,7 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
 
       switch (status) {
         case 'JOIN_SUCCESS':
-          location.href = "/room"
+          location.href = '/room';
           setJoinRoomResult('');
           break;
         case 'ROOM_NOT_EXIST':
@@ -47,15 +41,16 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
   };
 
   return (
-    <JoinRoomButton
-      className={className}
-      open={open}
-      onOpenModal={onOpenModal}
-      onCloseModal={onCloseModal}
-      roomId={roomId}
-      setRoomId={setRoomId}
-      joinRoomResult={joinRoomResult}
-      handleSubmit={handleSubmit}
-    />
+    <>
+      <JoinRoomButton className={className} onOpenModal={onOpenModal} />
+      <JoinRoomModal
+        open={open}
+        onCloseModal={onCloseModal}
+        roomId={roomId}
+        setRoomId={setRoomId}
+        joinRoomResult={joinRoomResult}
+        handleSubmit={handleSubmit}
+      />
+    </>
   );
 };

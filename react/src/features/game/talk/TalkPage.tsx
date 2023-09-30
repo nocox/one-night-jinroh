@@ -3,11 +3,11 @@ import { useTalkData } from './hooks/useTalkData';
 import { Loading } from '@/components';
 
 export const TalkPage: React.FC = () => {
-  const talkIndex = useTalkData();
+  const { gameId, players } = useTalkData();
 
-  return talkIndex === undefined ? (
+  return gameId === undefined || players === undefined ? (
     <Loading />
   ) : (
-    <TalkTemplate talkIndex={talkIndex} />
+    <TalkTemplate gameId={gameId} players={players} />
   );
 };

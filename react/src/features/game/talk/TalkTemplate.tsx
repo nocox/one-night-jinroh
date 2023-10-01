@@ -1,4 +1,5 @@
 import { css } from 'styled-system/css';
+import { ComingOut } from './components/ComingOut';
 import { Players } from './components/Players';
 import type { Player } from './type';
 import { DefaultLayout } from '@/components';
@@ -43,6 +44,9 @@ export const TalkTemplate: React.FC<Props> = ({ gameId, players }) => {
         </div>
         <div>
           <RoleList />
+        </div>
+        <div>
+          <ComingOut />
         </div>
       </div>
     </DefaultLayout>

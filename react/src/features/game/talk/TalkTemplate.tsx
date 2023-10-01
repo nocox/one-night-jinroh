@@ -28,8 +28,13 @@ const styles = {
 type Props = {
   gameId: number;
   players: Player[];
+  getMyPlayer: () => Player;
 };
-export const TalkTemplate: React.FC<Props> = ({ gameId, players }) => {
+export const TalkTemplate: React.FC<Props> = ({
+  gameId,
+  players,
+  getMyPlayer,
+}) => {
   console.log(gameId, players);
 
   return (
@@ -46,7 +51,7 @@ export const TalkTemplate: React.FC<Props> = ({ gameId, players }) => {
           <RoleList />
         </div>
         <div>
-          <ComingOut />
+          <ComingOut getMyPlayer={getMyPlayer} />
         </div>
       </div>
     </DefaultLayout>

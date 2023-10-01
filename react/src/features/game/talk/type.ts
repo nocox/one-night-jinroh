@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import type { Character } from '@/features/game/character';
 import { gameIndexSchema } from '@/features/game/type';
 import type { GameIndex, Role } from '@/features/game/type';
 
@@ -44,3 +45,14 @@ export type Player = {
   role: Role;
   co: Co;
 };
+
+/**
+ * COリクエスト用
+ */
+
+type PostCoDto = {
+  playerId: number;
+  role: Character['EnglishName'];
+}
+
+export type PostCo = (dto: PostCoDto) => Promise<void>;

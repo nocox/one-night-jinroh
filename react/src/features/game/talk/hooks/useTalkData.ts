@@ -6,6 +6,7 @@ import { UnexpectedError } from '@/error';
 export const useTalkData = (): {
   gameId: number | undefined;
   players: Player[] | undefined;
+  setPlayers: React.Dispatch<React.SetStateAction<Player[] | undefined>>;
   getMyPlayer: () => Player;
 } => {
   const [players, setPlayers] = useState<Player[] | undefined>(undefined);
@@ -45,5 +46,5 @@ export const useTalkData = (): {
     return players[0];
   }
 
-  return { gameId, players, getMyPlayer };
+  return { gameId, players, setPlayers, getMyPlayer };
 };

@@ -1,6 +1,6 @@
 import { TalkTemplate } from './TalkTemplate';
 import { useTalkData } from './hooks/useTalkData';
-import type { CoBeans } from './type';
+import type { Co, CoBeans } from './type';
 import { isCoBeans } from './type';
 import { Loading } from '@/components';
 import { InvalidResponseBodyError, UnexpectedError } from '@/error';
@@ -8,7 +8,7 @@ import { useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const TalkPage: React.FC = () => {
-  const { gameId, players, getMyPlayer } = useTalkData();
+  const { gameId, players, setPlayers, getMyPlayer } = useTalkData();
 
   const subscribeEndTalk: Subscribe = {
     path: `/topic/end-talk/${gameId ?? ''}`,
@@ -32,14 +32,22 @@ export const TalkPage: React.FC = () => {
         throw new InvalidResponseBodyError(`
           Invalid response body: ${JSON.stringify(coBeans)}`);
       }
-      coBeans.coBeans.forEach((coBean) => {
-        const player = players?.find((player) => {
-          return player.id === coBean.id;
-        });
-        if (player !== undefined) {
-          player.co.role = coBean.role;
-        }
+
+      if (players === undefined) return;
+
+      function findCo(coBeans: CoBeans, id: number): Co | undefined {
+        const co = coBeans.coBeans.find((co) => co.id === id);
+
+        return co;
+      }
+
+      const newPlayers = players.map((player) => {
+        const co = findCo(coBeans, player.id);
+
+        return co === undefined ? player : { ...player, co };
       });
+
+      setPlayers(newPlayers);
     },
   };
 

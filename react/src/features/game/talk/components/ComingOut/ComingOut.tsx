@@ -71,7 +71,8 @@ export const ComingOut: React.FC<Props> = ({ getMyPlayer }) => {
               key={character.roleId}
               className={cx(
                 styles.iconsItem,
-                coRole.EnglishName === character.EnglishName &&
+                coRole !== undefined &&
+                  coRole.EnglishName === character.EnglishName &&
                   styles.iconsItemActive,
               )}
             >

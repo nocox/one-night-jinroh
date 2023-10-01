@@ -22,7 +22,7 @@ import uranaishiCoIcon from '@/assets/images/co-icon/uranaishi.png';
 
 export type Character = {
   roleId: number;
-  EnglishName: string;
+  EnglishName: 'murabito' | 'jinroh' | 'uranaishi' | 'kaito' | 'kyojin' | 'turibito' | 'unknown';
   JapaneseName: string;
   imgUrl: string;
   iconUrl: string;
@@ -80,7 +80,7 @@ export const characters: Character[] = [
   },
   {
     roleId: 6,
-    EnglishName: 'tsuribito',
+    EnglishName: 'turibito',
     JapaneseName: '吊人',
     imgUrl: tsuribitoImage,
     iconUrl: tsuribitoIcon,

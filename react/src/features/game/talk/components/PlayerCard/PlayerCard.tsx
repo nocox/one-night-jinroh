@@ -31,9 +31,9 @@ type Props = {
 
 export const PlayerCard: React.FC<Props> = ({ player }) => {
   console.log({ player });
-  const character = characters.filter(
-    (character) => character.roleId === player.role.roleId,
-  );
+  const character = characters.filter((character) => {
+    return character.JapaneseName === player.role.roleName;
+  });
 
   const iconUrl =
     character.length === 0 ? unknownCharacter.iconUrl : character[0].iconUrl;

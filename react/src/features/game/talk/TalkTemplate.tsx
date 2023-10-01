@@ -1,4 +1,5 @@
 import { css } from 'styled-system/css';
+import { ComingOut } from './components/ComingOut';
 import { Players } from './components/Players';
 import type { Player } from './type';
 import { DefaultLayout } from '@/components';
@@ -25,11 +26,13 @@ const styles = {
 };
 
 type Props = {
-  gameId: number;
   players: Player[];
+  getMyPlayer: () => Player;
 };
-export const TalkTemplate: React.FC<Props> = ({ gameId, players }) => {
-  console.log(gameId, players);
+export const TalkTemplate: React.FC<Props> = ({
+  players,
+  getMyPlayer,
+}) => {
 
   return (
     <DefaultLayout>
@@ -43,6 +46,9 @@ export const TalkTemplate: React.FC<Props> = ({ gameId, players }) => {
         </div>
         <div>
           <RoleList />
+        </div>
+        <div>
+          <ComingOut getMyPlayer={getMyPlayer} />
         </div>
       </div>
     </DefaultLayout>

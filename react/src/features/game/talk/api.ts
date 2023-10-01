@@ -1,4 +1,4 @@
-import type { FetchTalkIndex, TalkIndexResponseBody } from './type';
+import type { FetchTalkIndex, PostCo, TalkIndexResponseBody } from './type';
 import { isTalkIndexResponseBody } from './type';
 import { InvalidResponseBodyError, UnexpectedError } from '@/error';
 import { JINROH_API_BASE_URL } from '@/url';
@@ -11,8 +11,7 @@ export const fetchTalkIndex: FetchTalkIndex = async () => {
 
   if (!res.ok) {
     throw new UnexpectedError(
-      `failed to postNightUranaishiAction. status: ${
-        res.status
+      `failed to postNightUranaishiAction. status: ${res.status
       }, body: ${await res.text()}`,
     );
   }
@@ -29,3 +28,22 @@ export const fetchTalkIndex: FetchTalkIndex = async () => {
 
   return talkIndexResponseBody;
 };
+
+export const postCo: PostCo = async (dto) => {
+  const { playerId, role } = dto;
+  const res = await fetch(JINROH_API_BASE_URL + '/co', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ playerId, role }),
+  });
+
+  if (!res.ok) {
+    throw new UnexpectedError(
+      `failed to postCo. status: ${res.status
+      }, body: ${await res.text()}`,
+    );
+  }
+}

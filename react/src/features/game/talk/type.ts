@@ -1,14 +1,19 @@
 import { z } from 'zod';
+import type { Character } from '@/features/game/character';
 import { gameIndexSchema } from '@/features/game/type';
 import type { GameIndex, Role } from '@/features/game/type';
 
 /**
  * 話し合いページ読み込み時のレスポンス
  */
-type Co = {
+export type Co = {
   id: number;
   role: string;
 };
+
+export type CoBeans = {
+  coBeans: Co[];
+}
 
 export type TalkIndexResponseBody = {
   gameId: number;
@@ -21,11 +26,19 @@ const coSchema = z.object({
   role: z.string(),
 });
 
+const coBeansSchema = z.object({
+  coBeans: z.array(coSchema)
+});
+
 const talkIndexResponseBodySchema = z.object({
   gameId: z.number(),
   gameIndex: gameIndexSchema,
   cos: z.array(coSchema),
 });
+
+export const isCoBeans = (value: unknown): value is CoBeans => {
+  return coBeansSchema.safeParse(value).success;
+}
 
 export const isTalkIndexResponseBody = (
   value: unknown,
@@ -44,3 +57,14 @@ export type Player = {
   role: Role;
   co: Co;
 };
+
+/**
+ * COリクエスト用
+ */
+
+type PostCoDto = {
+  playerId: number;
+  role: Character['EnglishName'];
+}
+
+export type PostCo = (dto: PostCoDto) => Promise<void>;

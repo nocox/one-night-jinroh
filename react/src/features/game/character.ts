@@ -80,7 +80,7 @@ export const characters: Character[] = [
   },
   {
     roleId: 6,
-    EnglishName: 'tsuribito',
+    EnglishName: 'turibito',
     JapaneseName: '吊人',
     imgUrl: tsuribitoImage,
     iconUrl: tsuribitoIcon,

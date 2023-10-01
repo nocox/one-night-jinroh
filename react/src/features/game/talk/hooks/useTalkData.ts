@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { fetchTalkIndex } from '../api';
 import type { Player } from '../type';
+import { UnexpectedError } from '@/error';
 
 export const useTalkData = (): {
   gameId: number | undefined;
   players: Player[] | undefined;
+  getMyPlayer: () => Player;
 } => {
   const [players, setPlayers] = useState<Player[] | undefined>(undefined);
   const [gameId, setGameId] = useState<number | undefined>(undefined);
@@ -34,5 +36,14 @@ export const useTalkData = (): {
     void fetchTalkIndexAsync();
   }, []);
 
-  return { gameId, players };
+
+  const getMyPlayer = (): Player => {
+    if (!players) {
+      throw new UnexpectedError('players is undefined');
+    }
+
+    return players[0];
+  }
+
+  return { gameId, players, getMyPlayer };
 };

@@ -2,6 +2,7 @@ import { css } from 'styled-system/css';
 import { Players } from './components/Players';
 import type { Player } from './type';
 import { DefaultLayout } from '@/components';
+import { RoleList } from '@/features/game/components';
 
 const styles = {
   title: css({
@@ -9,6 +10,17 @@ const styles = {
     fontSize: '1.5rem',
     fontWeight: 'bold',
     textAlign: 'center',
+  }),
+  gameLayout: css({
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    gap: '1rem',
+    md: {
+      gridTemplateColumns: '1fr 2fr',
+    },
+  }),
+  player: css({
+    gridColumn: '1 / 3',
   }),
 };
 
@@ -25,7 +37,14 @@ export const TalkTemplate: React.FC<Props> = ({ gameId, players }) => {
         朝になりました。話し合いを行ってください。
       </h2>
 
-      <Players players={players} />
+      <div className={styles.gameLayout}>
+        <div className={styles.player}>
+          <Players players={players} />
+        </div>
+        <div>
+          <RoleList />
+        </div>
+      </div>
     </DefaultLayout>
   );
 };

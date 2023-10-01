@@ -30,7 +30,6 @@ type Props = {
 };
 
 export const PlayerCard: React.FC<Props> = ({ player }) => {
-  console.log({ player });
   const character = characters.filter((character) => {
     return character.JapaneseName === player.role.roleName;
   });

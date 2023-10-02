@@ -8,7 +8,7 @@ import { useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const TalkPage: React.FC = () => {
-  const { gameId, players, nightActLog, setPlayers, getMyPlayer } =
+  const { gameId, players, nightActLog, hostFlg, setPlayers, getMyPlayer } =
     useTalkData();
 
   const subscribeEndTalk: Subscribe = {
@@ -56,12 +56,13 @@ export const TalkPage: React.FC = () => {
     gameId !== undefined ? [subscribeEndTalk, subscribeReceiveCo] : [],
   );
 
-  return players === undefined ? (
+  return players === undefined || hostFlg === undefined ? (
     <Loading />
   ) : (
     <TalkTemplate
       players={players}
       nightActLog={nightActLog}
+      hostFlg={hostFlg}
       getMyPlayer={getMyPlayer}
     />
   );

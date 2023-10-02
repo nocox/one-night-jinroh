@@ -47,3 +47,17 @@ export const postCo: PostCo = async (dto) => {
     );
   }
 }
+
+export const postEndTalk: () => Promise<void> = async () => {
+  const res = await fetch(JINROH_API_BASE_URL + '/end-talk', {
+    method: 'POST',
+    credentials: 'include',
+  });
+
+  if (!res.ok) {
+    throw new UnexpectedError(
+      `failed to postEndTalk. status: ${res.status
+      }, body: ${await res.text()}`,
+    );
+  }
+}

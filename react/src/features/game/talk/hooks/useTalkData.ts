@@ -7,12 +7,14 @@ export const useTalkData = (): {
   gameId: number | undefined;
   players: Player[] | undefined;
   nightActLog: string | undefined;
+  hostFlg: boolean | undefined;
   setPlayers: React.Dispatch<React.SetStateAction<Player[] | undefined>>;
   getMyPlayer: () => Player;
 } => {
   const [players, setPlayers] = useState<Player[] | undefined>(undefined);
   const [gameId, setGameId] = useState<number | undefined>(undefined);
   const [nightActLog, setNightActLog] = useState<string | undefined>(undefined);
+  const [hostFlg, setHostFlg] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     const fetchTalkIndexAsync = async () => {
@@ -35,6 +37,7 @@ export const useTalkData = (): {
       setPlayers(players);
       setGameId(talkIndexResponseBody.gameId);
       setNightActLog(talkIndexResponseBody.gameIndex.nightActLog ?? undefined);
+      setHostFlg(talkIndexResponseBody.gameIndex.hostFlag);
     };
 
     void fetchTalkIndexAsync();
@@ -49,5 +52,5 @@ export const useTalkData = (): {
     return players[0];
   }
 
-  return { gameId, players, nightActLog, setPlayers, getMyPlayer };
+  return { gameId, players, nightActLog, hostFlg, setPlayers, getMyPlayer };
 };

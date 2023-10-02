@@ -1,8 +1,9 @@
 import { css } from 'styled-system/css';
+import { postEndTalk } from './api';
 import { ComingOut } from './components/ComingOut';
 import { Players } from './components/Players';
 import type { Player } from './type';
-import { ContentBox, DefaultLayout } from '@/components';
+import { Button, ContentBox, DefaultLayout } from '@/components';
 import { RoleList } from '@/features/game/components';
 
 const styles = {
@@ -35,16 +36,27 @@ const styles = {
       gridColumn: '1 / 3',
     },
   }),
+  endTalkButton: css({
+    margin: '2rem auto',
+    display: 'flex',
+    justifyContent: 'center',
+  }),
+};
+
+const handleEndTalk = async () => {
+  await postEndTalk();
 };
 
 type Props = {
   players: Player[];
   nightActLog: string | undefined;
+  hostFlg: boolean;
   getMyPlayer: () => Player;
 };
 export const TalkTemplate: React.FC<Props> = ({
   players,
   nightActLog,
+  hostFlg,
   getMyPlayer,
 }) => {
   console.log('nightActLog;', nightActLog, typeof nightActLog);
@@ -73,6 +85,16 @@ export const TalkTemplate: React.FC<Props> = ({
           <ComingOut getMyPlayer={getMyPlayer} />
         </div>
       </div>
+
+      {hostFlg ? (
+        <div className={styles.endTalkButton}>
+          <Button onClick={handleEndTalk}>話し合いを終了して投票へ</Button>
+        </div>
+      ) : (
+        <div className={styles.endTalkButton}>
+          ホストが話し合いを終了すると投票へ進みます。
+        </div>
+      )}
     </DefaultLayout>
   );
 };

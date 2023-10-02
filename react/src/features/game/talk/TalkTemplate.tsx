@@ -2,7 +2,7 @@ import { css } from 'styled-system/css';
 import { ComingOut } from './components/ComingOut';
 import { Players } from './components/Players';
 import type { Player } from './type';
-import { DefaultLayout } from '@/components';
+import { ContentBox, DefaultLayout } from '@/components';
 import { RoleList } from '@/features/game/components';
 
 const styles = {
@@ -23,6 +23,12 @@ const styles = {
       height: '100%',
     },
   }),
+  nightActLog: css({
+    gridColumn: '1 / 2',
+    md: {
+      gridColumn: '1 / 3',
+    },
+  }),
   player: css({
     gridColumn: '1 / 2',
     md: {
@@ -33,9 +39,16 @@ const styles = {
 
 type Props = {
   players: Player[];
+  nightActLog: string | undefined;
   getMyPlayer: () => Player;
 };
-export const TalkTemplate: React.FC<Props> = ({ players, getMyPlayer }) => {
+export const TalkTemplate: React.FC<Props> = ({
+  players,
+  nightActLog,
+  getMyPlayer,
+}) => {
+  console.log('nightActLog;', nightActLog, typeof nightActLog);
+
   return (
     <DefaultLayout>
       <h2 className={styles.title}>
@@ -43,6 +56,13 @@ export const TalkTemplate: React.FC<Props> = ({ players, getMyPlayer }) => {
       </h2>
 
       <div className={styles.gameLayout}>
+        <div className={styles.nightActLog}>
+          <ContentBox>
+            {nightActLog !== undefined && nightActLog !== ''
+              ? nightActLog
+              : 'あなたの役職に夜の行動はありません'}
+          </ContentBox>
+        </div>
         <div className={styles.player}>
           <Players players={players} />
         </div>

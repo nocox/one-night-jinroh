@@ -13,7 +13,7 @@ export type Co = {
 
 export type CoBeans = {
   coBeans: Co[];
-}
+};
 
 export type TalkIndexResponseBody = {
   gameId: number;
@@ -27,7 +27,7 @@ const coSchema = z.object({
 });
 
 const coBeansSchema = z.object({
-  coBeans: z.array(coSchema)
+  coBeans: z.array(coSchema),
 });
 
 const talkIndexResponseBodySchema = z.object({
@@ -38,7 +38,7 @@ const talkIndexResponseBodySchema = z.object({
 
 export const isCoBeans = (value: unknown): value is CoBeans => {
   return coBeansSchema.safeParse(value).success;
-}
+};
 
 export const isTalkIndexResponseBody = (
   value: unknown,
@@ -65,6 +65,6 @@ export type Player = {
 type PostCoDto = {
   playerId: number;
   role: Character['EnglishName'];
-}
+};
 
 export type PostCo = (dto: PostCoDto) => Promise<void>;

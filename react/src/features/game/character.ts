@@ -22,7 +22,14 @@ import uranaishiCoIcon from '@/assets/images/co-icon/uranaishi.png';
 
 export type Character = {
   roleId: number;
-  EnglishName: 'murabito' | 'jinroh' | 'uranaishi' | 'kaito' | 'kyojin' | 'turibito' | 'unknown';
+  EnglishName:
+    | 'murabito'
+    | 'jinroh'
+    | 'uranaishi'
+    | 'kaito'
+    | 'kyojin'
+    | 'turibito'
+    | 'unknown';
   JapaneseName: string;
   imgUrl: string;
   iconUrl: string;

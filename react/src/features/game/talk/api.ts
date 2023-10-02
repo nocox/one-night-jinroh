@@ -11,7 +11,8 @@ export const fetchTalkIndex: FetchTalkIndex = async () => {
 
   if (!res.ok) {
     throw new UnexpectedError(
-      `failed to postNightUranaishiAction. status: ${res.status
+      `failed to postNightUranaishiAction. status: ${
+        res.status
       }, body: ${await res.text()}`,
     );
   }
@@ -42,11 +43,10 @@ export const postCo: PostCo = async (dto) => {
 
   if (!res.ok) {
     throw new UnexpectedError(
-      `failed to postCo. status: ${res.status
-      }, body: ${await res.text()}`,
+      `failed to postCo. status: ${res.status}, body: ${await res.text()}`,
     );
   }
-}
+};
 
 export const postEndTalk: () => Promise<void> = async () => {
   const res = await fetch(JINROH_API_BASE_URL + '/end-talk', {
@@ -56,8 +56,7 @@ export const postEndTalk: () => Promise<void> = async () => {
 
   if (!res.ok) {
     throw new UnexpectedError(
-      `failed to postEndTalk. status: ${res.status
-      }, body: ${await res.text()}`,
+      `failed to postEndTalk. status: ${res.status}, body: ${await res.text()}`,
     );
   }
-}
+};

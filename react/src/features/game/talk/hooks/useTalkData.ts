@@ -43,14 +43,13 @@ export const useTalkData = (): {
     void fetchTalkIndexAsync();
   }, []);
 
-
   const getMyPlayer = (): Player => {
     if (!players) {
       throw new UnexpectedError('players is undefined');
     }
 
     return players[0];
-  }
+  };
 
   return { gameId, players, nightActLog, hostFlg, setPlayers, getMyPlayer };
 };

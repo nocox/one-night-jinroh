@@ -19,9 +19,15 @@ const styles = {
     md: {
       gridTemplateColumns: '1fr 2fr',
     },
+    '& div': {
+      height: '100%',
+    },
   }),
   player: css({
-    gridColumn: '1 / 3',
+    gridColumn: '1 / 2',
+    md: {
+      gridColumn: '1 / 3',
+    },
   }),
 };
 
@@ -29,11 +35,7 @@ type Props = {
   players: Player[];
   getMyPlayer: () => Player;
 };
-export const TalkTemplate: React.FC<Props> = ({
-  players,
-  getMyPlayer,
-}) => {
-
+export const TalkTemplate: React.FC<Props> = ({ players, getMyPlayer }) => {
   return (
     <DefaultLayout>
       <h2 className={styles.title}>

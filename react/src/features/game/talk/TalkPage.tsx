@@ -4,12 +4,14 @@ import type { Co, CoBeans } from './type';
 import { isCoBeans } from './type';
 import { Loading } from '@/components';
 import { InvalidResponseBodyError, UnexpectedError } from '@/error';
-import { useWebSocket } from '@/hooks';
+import { useGameRule, useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const TalkPage: React.FC = () => {
   const { gameId, players, nightActLog, hostFlg, setPlayers, getMyPlayer } =
     useTalkData();
+
+  const { gameRuleList } = useGameRule();
 
   const subscribeEndTalk: Subscribe = {
     path: `/topic/end-talk/${gameId ?? ''}`,
@@ -56,7 +58,9 @@ export const TalkPage: React.FC = () => {
     gameId !== undefined ? [subscribeEndTalk, subscribeReceiveCo] : [],
   );
 
-  return players === undefined || hostFlg === undefined ? (
+  return players === undefined ||
+    hostFlg === undefined ||
+    gameRuleList === undefined ? (
     <Loading />
   ) : (
     <TalkTemplate
@@ -64,6 +68,7 @@ export const TalkPage: React.FC = () => {
       nightActLog={nightActLog}
       hostFlg={hostFlg}
       getMyPlayer={getMyPlayer}
+      gameRuleList={gameRuleList}
     />
   );
 };

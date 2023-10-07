@@ -1,6 +1,7 @@
 import { css } from 'styled-system/css';
 import { ContentBox } from '@/components';
 import { characters } from '@/features/game/character';
+import type { GameRule } from '@/type';
 
 const styles = {
   title: css({
@@ -16,37 +17,28 @@ const styles = {
   }),
 
   roleListItem: css({
-    display: 'flex',
-    alignItems: 'center',
+    display: 'grid',
+    gridTemplateColumns: '3.5em 1fr 1em 1em',
     gap: '0.5rem',
+
     '& img': {
       width: '1.75rem',
       height: '1.75rem',
     },
   }),
+  roleListItemCount: css({
+    textAlign: 'center',
+  }),
 };
 
-type RoleMap = {
-  murabito: number;
-  jinroh: number;
-  uranaishi: number;
-  kaito: number;
-  kyojin: number;
+type Props = {
+  gameRuleList: GameRule[];
 };
 
-export const RoleList: React.FC = () => {
-  // FIXME 本来はサーバーから取得する
-  const roleList: RoleMap = {
-    murabito: 1,
-    jinroh: 1,
-    uranaishi: 1,
-    kaito: 1,
-    kyojin: 1,
-  };
-
-  const getIconUrl = (roleName: string) => {
+export const RoleList: React.FC<Props> = ({ gameRuleList }) => {
+  const getIconUrl = (roleId: number) => {
     const character = characters.filter((character) => {
-      return character.EnglishName === roleName;
+      return character.roleId === roleId;
     });
 
     return character[0].iconUrl;
@@ -56,13 +48,16 @@ export const RoleList: React.FC = () => {
     <ContentBox>
       <p className={styles.title}>役職一覧</p>
       <ul className={styles.roleList}>
-        {Object.entries(roleList).map(([role, count]) => (
-          <li className={styles.roleListItem} key={role}>
-            <img src={getIconUrl(role)} alt={role} />
-            <span>×</span>
-            <span>{count}</span>
-          </li>
-        ))}
+        {gameRuleList.map((gameRule, index) => {
+          return (
+            <li key={index} className={styles.roleListItem}>
+              <span>{gameRule.roleName}</span>
+              <img src={getIconUrl(gameRule.roleId)} alt={gameRule.roleName} />
+              <span>×</span>
+              <span className={styles.roleListItemCount}>{gameRule.count}</span>
+            </li>
+          );
+        })}
       </ul>
     </ContentBox>
   );

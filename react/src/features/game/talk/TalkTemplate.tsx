@@ -5,6 +5,7 @@ import { Players } from './components/Players';
 import type { Player } from './type';
 import { Button, ContentBox, DefaultLayout } from '@/components';
 import { RoleList } from '@/features/game/components';
+import type { GameRule } from '@/type';
 
 const styles = {
   title: css({
@@ -52,12 +53,14 @@ type Props = {
   nightActLog: string | undefined;
   hostFlg: boolean;
   getMyPlayer: () => Player;
+  gameRuleList: GameRule[];
 };
 export const TalkTemplate: React.FC<Props> = ({
   players,
   nightActLog,
   hostFlg,
   getMyPlayer,
+  gameRuleList,
 }) => {
   console.log('nightActLog;', nightActLog, typeof nightActLog);
 
@@ -79,7 +82,7 @@ export const TalkTemplate: React.FC<Props> = ({
           <Players players={players} />
         </div>
         <div>
-          <RoleList />
+          <RoleList gameRuleList={gameRuleList} />
         </div>
         <div>
           <ComingOut getMyPlayer={getMyPlayer} />

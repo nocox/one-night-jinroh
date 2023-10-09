@@ -1,7 +1,6 @@
 import { css } from 'styled-system/css';
 import { Button, Modal } from '@/components';
-import { characters } from '@/features/game/character';
-import type { GameRuleList } from '@/type';
+import type { GameInfo } from '@/features/room/type';
 
 const styles = {
   head: css({
@@ -13,50 +12,41 @@ const styles = {
     margin: '0.5rem 0',
   }),
   roleList: css({
-    display: 'grid',
-    gap: '0.5rem',
     margin: '0.5rem 0',
   }),
   roleListItem: css({
     display: 'grid',
     justifyContent: 'center',
-    alignItems: 'center',
-    gridTemplateColumns: '3em 1.5em 1em 1em',
-    gap: '0.5rem',
+    gridTemplateColumns: '4em 1em 1em',
   }),
   okButton: css({
     display: 'block',
     margin: '1rem auto 0',
-  }),
-  textAlignCenter: css({
-    textAlign: 'center',
   }),
 };
 
 type Props = {
   open: boolean;
   onCloseModal: () => void;
-  gameRuleList: GameRuleList;
+  gameInfo: GameInfo;
 };
 
 export const GameStartModal: React.FC<Props> = ({
   open,
   onCloseModal,
-  gameRuleList,
+  gameInfo,
 }) => {
-  const playerCount = gameRuleList.roleList.reduce((acc, role) => {
-    return acc + role.count;
-  }, -2);
+  const { roleList, playerCount } = gameInfo;
 
-  const roleList = gameRuleList.roleList;
-
-  const getIconUrl = (roleId: number) => {
-    const character = characters.filter((character) => {
-      return character.roleId === roleId;
-    });
-
-    return character[0].iconUrl;
-  };
+  const roleCountMap: Record<string, number> = {};
+  roleList.forEach((record) => {
+    const roleName = record.roleName;
+    if (roleCountMap[roleName] === undefined) {
+      roleCountMap[roleName] = 1;
+    } else {
+      roleCountMap[roleName] += 1;
+    }
+  });
 
   return (
     <Modal open={open} onClose={onCloseModal}>
@@ -67,11 +57,8 @@ export const GameStartModal: React.FC<Props> = ({
         {roleList.map((role) => (
           <li key={role.roleId} className={styles.roleListItem}>
             <span>{role.roleName}</span>
-            <span>
-              <img src={getIconUrl(role.roleId)} alt={role.roleName} />
-            </span>
             <span>:</span>
-            <span className={styles.textAlignCenter}>{role.count}</span>
+            <span>{roleCountMap[role.roleName]}</span>
           </li>
         ))}
       </ul>

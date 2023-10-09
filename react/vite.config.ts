@@ -13,6 +13,7 @@ export default defineConfig({
         room_page: "src/features/room/RoomPage.index.tsx",
         night_page: "src/features/game/night/NightPage.index.tsx",
         talk_page: "src/features/game/talk/TalkPage.index.tsx",
+        vote_page: "src/features/game/vote/VotePage.index.tsx",
       },
       output: {
         dir: "../spring/src/main/resources/static/",

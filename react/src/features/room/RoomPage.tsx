@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { RoomTemplate } from './RoomTemplate';
 import { GameStartModal } from './components/GameStartModal';
 import { useRoomData } from './hooks';
-import { isGameInfo } from './type';
-import type { GameInfo } from './type';
-import { InvalidResponseBodyError } from '@/error';
+import { fetchGameRuleList } from '@/api';
+
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
-import type { Subscribe } from '@/type';
+import type { GameRuleList, Subscribe } from '@/type';
 
 export const RoomPage: React.FC = () => {
   const { open, onOpenModal } = useModal();
@@ -15,7 +14,9 @@ export const RoomPage: React.FC = () => {
     window.location.href = '/night';
   };
 
-  const [gameInfo, setGameInfo] = useState<GameInfo | undefined>(undefined);
+  const [gameRuleList, setGameRuleList] = useState<GameRuleList | undefined>(
+    undefined,
+  );
 
   const roomIndexResponseBody = useRoomData();
 
@@ -23,24 +24,9 @@ export const RoomPage: React.FC = () => {
 
   const subscribeGameStart: Subscribe = {
     path: `/topic/${uuid}`,
-    callback: (message) => {
-      if (message === undefined) {
-        throw new InvalidResponseBodyError(
-          `Invalid response body: ${JSON.stringify(message)}`,
-        );
-      }
-
-      const gameInfo = message.body
-        ? (JSON.parse(message.body) as unknown)
-        : undefined;
-
-      if (!isGameInfo(gameInfo)) {
-        throw new InvalidResponseBodyError(
-          `Invalid response body: ${JSON.stringify(gameInfo)}`,
-        );
-      }
-
-      setGameInfo(gameInfo);
+    callback: async () => {
+      const gameRuleList = await fetchGameRuleList();
+      setGameRuleList(gameRuleList);
       onOpenModal();
     },
   };
@@ -61,11 +47,11 @@ export const RoomPage: React.FC = () => {
   return (
     <>
       <RoomTemplate roomIndexResponseBody={roomIndexResponseBody} />
-      {gameInfo !== undefined && (
+      {gameRuleList !== undefined && (
         <GameStartModal
           open={open}
           onCloseModal={onCloseModal}
-          gameInfo={gameInfo}
+          gameRuleList={gameRuleList}
         />
       )}
     </>

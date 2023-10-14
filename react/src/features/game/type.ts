@@ -39,7 +39,7 @@ export type OtherPlayer = {
   role: Role;
 };
 
-const otherPlayerSchema = z.object({
+export const otherPlayerSchema = z.object({
   hostFlag: z.boolean(),
   id: z.number(),
   name: z.string(),

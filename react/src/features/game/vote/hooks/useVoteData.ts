@@ -4,11 +4,13 @@ import type { Player } from '@/features/game/talk/type';
 import type { OtherPlayer } from '@/features/game/type';
 
 export const useVoteData = (): {
+  gameId: number | undefined;
   nightActLog: string | undefined;
   players: Player[] | undefined;
   canVotePlayers: OtherPlayer[] | undefined;
   votingDestination: number | undefined;
 } => {
+  const [gameId, setGameId] = useState<number | undefined>();
   const [nightActLog, setNightActLog] = useState<string | undefined>();
   const [players, setPlayers] = useState<Player[] | undefined>();
   const [canVotePlayers, setCanVotePlayers] = useState<
@@ -37,6 +39,7 @@ export const useVoteData = (): {
           co: cos.find((co) => co.id === otherPlayer.id)!,
         })),
       ];
+      setGameId(voteIndexResponseBody.gameId);
       setPlayers(players);
       setNightActLog(gameIndex.nightActLog ?? undefined);
       setCanVotePlayers(voteIndex.canVotePlayers);
@@ -46,5 +49,5 @@ export const useVoteData = (): {
     void fetchVoteIndexAsync();
   }, []);
 
-  return { nightActLog, players, canVotePlayers, votingDestination };
+  return { gameId, nightActLog, players, canVotePlayers, votingDestination };
 };

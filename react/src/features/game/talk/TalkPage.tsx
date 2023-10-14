@@ -1,9 +1,9 @@
 import { TalkTemplate } from './TalkTemplate';
 import { useTalkData } from './hooks/useTalkData';
-import type { Co, CoBeans } from './type';
-import { isCoBeans } from './type';
 import { Loading } from '@/components';
 import { InvalidResponseBodyError, UnexpectedError } from '@/error';
+import { isCoBeans } from '@/features/game/type';
+import type { Co, CoBeans } from '@/features/game/type';
 import { useGameRule, useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 

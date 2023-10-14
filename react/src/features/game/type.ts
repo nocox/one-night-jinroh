@@ -1,5 +1,27 @@
 import { z } from 'zod';
 
+export type Co = {
+  id: number;
+  role: string;
+};
+
+export type CoBeans = {
+  coBeans: Co[];
+};
+
+export const coSchema = z.object({
+  id: z.number(),
+  role: z.string(),
+});
+
+export const coBeansSchema = z.object({
+  coBeans: z.array(coSchema),
+});
+
+export const isCoBeans = (value: unknown): value is CoBeans => {
+  return coBeansSchema.safeParse(value).success;
+};
+
 export type Role = {
   roleId: number;
   roleName: '人狼' | '村人' | '占い師' | '怪盗' | '狂人' | '吊人' | '不明';
@@ -17,7 +39,7 @@ export type OtherPlayer = {
   role: Role;
 };
 
-const otherPlayerSchema = z.object({
+export const otherPlayerSchema = z.object({
   hostFlag: z.boolean(),
   id: z.number(),
   name: z.string(),

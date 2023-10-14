@@ -58,7 +58,7 @@ export const VoteForm: React.FC<Props> = ({
     }
 
     await postVoteForm({ gameParticipantId: selectedPlayerId });
-    location.reload();
+    // FIXME バックエンドからのレスポンスを受け取りたい(今は何も返していない)
   };
 
   return (

@@ -22,7 +22,7 @@ export const isCoBeans = (value: unknown): value is CoBeans => {
   return coBeansSchema.safeParse(value).success;
 };
 
-export type Role = {
+export type RoleBean = {
   roleId: number;
   roleName: '人狼' | '村人' | '占い師' | '怪盗' | '狂人' | '吊人' | '不明';
 };
@@ -36,7 +36,7 @@ export type OtherPlayer = {
   hostFlag: boolean;
   id: number;
   name: string;
-  role: Role;
+  role: RoleBean;
 };
 
 export const otherPlayerSchema = z.object({
@@ -52,7 +52,7 @@ export type GameIndex = {
   otherPlayerList: OtherPlayer[];
   playerId: number;
   playerName: string;
-  playerRole: Role;
+  playerRole: RoleBean;
 };
 
 export const gameIndexSchema = z.object({

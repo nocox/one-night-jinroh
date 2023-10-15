@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { GameIndex, Role } from '@/features/game/type';
+import type { GameIndex, RoleBean } from '@/features/game/type';
 import { gameIndexSchema } from '@/features/game/type';
 
 /**
@@ -74,7 +74,7 @@ type User = {
 export type NightUranaiResult = {
   status: UranaiStatus;
   participantId: number | null;
-  roles: Role[];
+  roles: RoleBean[];
   user: User | null;
 };
 

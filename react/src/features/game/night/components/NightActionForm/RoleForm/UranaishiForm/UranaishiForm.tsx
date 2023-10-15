@@ -10,7 +10,7 @@ import type {
   NightUranaiResult,
   UranaiStatus,
 } from '@/features/game/night/type';
-import type { OtherPlayer, Role } from '@/features/game/type';
+import type { OtherPlayer, RoleBean } from '@/features/game/type';
 
 const generateActLog = (nightUranaiActionResult: NightUranaiResult) => {
   const { status, participantId, roles, user } = nightUranaiActionResult;
@@ -46,7 +46,7 @@ type Props = {
 
 export const UranaishiForm: React.FC<Props> = ({ otherPlayerList }) => {
   const [actLog, setActLog] = useState<string | undefined>();
-  const [roles, setRoles] = useState<Role[] | undefined>();
+  const [roles, setRoles] = useState<RoleBean[] | undefined>();
   const [selectedPlayerId, setSelectedPlayerId] = useState<number | undefined>(
     undefined,
   );

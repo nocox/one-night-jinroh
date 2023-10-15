@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { Character } from '@/features/game/character';
 import { coSchema, gameIndexSchema } from '@/features/game/type';
-import type { Co, GameIndex, Role } from '@/features/game/type';
+import type { Co, GameIndex, RoleBean } from '@/features/game/type';
 
 /**
  * 話し合いページ読み込み時のレスポンス
@@ -33,7 +33,7 @@ export type FetchTalkIndex = () => Promise<TalkIndexResponseBody>;
 export type Player = {
   id: number;
   name: string;
-  role: Role;
+  role: RoleBean;
   co: Co;
 };
 

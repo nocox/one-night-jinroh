@@ -1,6 +1,6 @@
 import { css } from 'styled-system/css';
 import { characters } from '@/features/game/character';
-import type { Role } from '@/features/game/type';
+import type { RoleBean } from '@/features/game/type';
 
 const styles = {
   actLog: css({
@@ -31,7 +31,7 @@ const styles = {
 
 type Props = {
   actLog: string;
-  roles: Role[];
+  roles: RoleBean[];
 };
 
 export const KaitoFormResult: React.FC<Props> = ({ actLog, roles }) => {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { fetchGameStart, finishRoom } from '../../api';
 import { RoomControllButton } from './RoomControllButton';
-import { ExhaustiveError } from '@/error';
+import { ExhaustiveError } from '@/features/error';
 
 type Props = {
   hostFlg: boolean;

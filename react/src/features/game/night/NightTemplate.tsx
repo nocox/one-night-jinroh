@@ -1,8 +1,8 @@
 import { css } from 'styled-system/css';
 import { NightActionForm } from './components/NightActionForm';
 import { RoleDescription } from './components/RoleDescription';
-import type { NightIndexResponseBody } from './type';
 import { DefaultLayout } from '@/components';
+import type { GameIndex } from '@/features/game/type';
 
 const styles = {
   title: css({
@@ -15,12 +15,11 @@ const styles = {
 };
 
 type Props = {
-  nightIndexResponseBody: NightIndexResponseBody;
+  gameIndex: GameIndex;
+  doneNightAct: boolean;
 };
 
-export const NightTemplate: React.FC<Props> = ({ nightIndexResponseBody }) => {
-  const { gameIndex, doneNightAct } = nightIndexResponseBody;
-
+export const NightTemplate: React.FC<Props> = ({ gameIndex, doneNightAct }) => {
   return (
     <DefaultLayout>
       <h2 className={styles.title}>

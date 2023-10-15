@@ -1,6 +1,6 @@
 import { css, cx } from 'styled-system/css';
 import { RoleCard } from './RoleCard';
-import { ExhaustiveError } from '@/error';
+import { ExhaustiveError } from '@/features/error';
 import { roles } from '@/features/role';
 
 const styles = {

@@ -2,7 +2,7 @@ import { useState, type FormEventHandler } from 'react';
 import { joinRoom } from '../../api';
 import { JoinRoomButton } from './JoinRoomButton';
 import { JoinRoomModal } from './JoinRoomModal';
-import { ExhaustiveError } from '@/error';
+import { ExhaustiveError } from '@/features/error';
 import { useModal } from '@/hooks/useModal';
 
 type Props = {

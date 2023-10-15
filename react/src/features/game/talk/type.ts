@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import type { Character } from '@/features/game/character';
 import { coBeanSchema, gameIndexSchema } from '@/features/game/type';
 import type { CoBean, GameIndex, RoleBean } from '@/features/game/type';
+import type { Role } from '@/features/role';
 
 /**
  * 話し合いページ読み込み時のレスポンス
@@ -43,7 +43,7 @@ export type Player = {
 
 type PostCoDto = {
   playerId: number;
-  role: Character['EnglishName'];
+  role: Role['englishName'];
 };
 
 export type PostCo = (dto: PostCoDto) => Promise<void>;

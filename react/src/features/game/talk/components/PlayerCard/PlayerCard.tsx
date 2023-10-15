@@ -1,6 +1,6 @@
 import { css } from 'styled-system/css';
-import { characters, unknownCharacter } from '@/features/game/character';
 import type { Player } from '@/features/game/talk/type';
+import { roles, unknownRole } from '@/features/role';
 
 const styles = {
   playerCard: css({
@@ -30,16 +30,15 @@ type Props = {
 };
 
 export const PlayerCard: React.FC<Props> = ({ player }) => {
-  const character = characters.filter((character) => {
-    return character.JapaneseName === player.role.roleName;
+  const role = roles.filter((role) => {
+    return role.japaneseName === player.role.roleName;
   });
 
-  const iconUrl =
-    character.length === 0 ? unknownCharacter.iconUrl : character[0].iconUrl;
+  const iconUrl = role.length === 0 ? unknownRole.iconPath : role[0].iconPath;
 
-  const coIconUrl = characters.filter(
-    (character) => character.EnglishName === player.co?.role,
-  )[0]?.coIconUrl;
+  const coIconUrl = roles.filter(
+    (role) => role.englishName === player.co?.role,
+  )[0]?.coIconPath;
 
   return (
     <div className={styles.playerCard}>

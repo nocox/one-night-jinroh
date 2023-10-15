@@ -101,7 +101,7 @@ export const UranaishiForm: React.FC<Props> = ({ otherPlayerList }) => {
       )}
 
       {actLog !== undefined && roles !== undefined && (
-        <UranaishiFormResult actLog={actLog} roles={roles} />
+        <UranaishiFormResult actLog={actLog} roleBeans={roles} />
       )}
     </>
   );

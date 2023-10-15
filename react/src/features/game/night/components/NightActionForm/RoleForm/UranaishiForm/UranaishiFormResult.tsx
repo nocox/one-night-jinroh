@@ -1,6 +1,6 @@
 import { css } from 'styled-system/css';
-import { characters } from '@/features/game/character';
 import type { RoleBean } from '@/features/game/type';
+import { roles } from '@/features/role';
 
 const styles = {
   actLog: css({
@@ -33,10 +33,10 @@ const styles = {
 
 type Props = {
   actLog: string;
-  roles: RoleBean[];
+  roleBeans: RoleBean[];
 };
 
-export const UranaishiFormResult: React.FC<Props> = ({ actLog, roles }) => {
+export const UranaishiFormResult: React.FC<Props> = ({ actLog, roleBeans }) => {
   return (
     <>
       <p className={styles.actLog}>
@@ -45,18 +45,17 @@ export const UranaishiFormResult: React.FC<Props> = ({ actLog, roles }) => {
         {actLog}
       </p>
       <ul className={styles.roles}>
-        {roles.map((role) => (
-          <li key={role.roleId}>
+        {roleBeans.map((roleBean) => (
+          <li key={roleBean.roleId}>
             <figure>
               <img
                 src={
-                  characters.filter(
-                    (character) => character.roleId === role.roleId,
-                  )[0].imgUrl
+                  roles.filter((role) => role.roleId === roleBean.roleId)[0]
+                    .imgPath
                 }
-                alt={role.roleName}
+                alt={roleBean.roleName}
               />
-              <figcaption>{role.roleName}</figcaption>
+              <figcaption>{roleBean.roleName}</figcaption>
             </figure>
           </li>
         ))}

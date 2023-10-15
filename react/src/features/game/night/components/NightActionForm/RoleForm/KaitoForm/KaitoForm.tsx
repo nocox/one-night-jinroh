@@ -73,7 +73,9 @@ export const KaitoForm: React.FC<Props> = ({ otherPlayerList }) => {
         />
       )}
 
-      {actLog !== undefined && <KaitoFormResult actLog={actLog} roles={[]} />}
+      {actLog !== undefined && (
+        <KaitoFormResult actLog={actLog} roleBeans={[]} />
+      )}
     </>
   );
 };

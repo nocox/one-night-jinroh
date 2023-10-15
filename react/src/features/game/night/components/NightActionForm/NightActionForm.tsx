@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { NightActionFormBox } from './NightActionFormBox';
 import { KaitoForm, UranaishiForm, JinrohForm } from './RoleForm';
 import { fetchDoneNightAct } from '@/features/game/night/api';
-import type { OtherPlayer, Role } from '@/features/game/type';
+import type { OtherPlayer, RoleBean } from '@/features/game/type';
 
 type Props = {
   doneNightAct: boolean;
-  playerRole: Role;
+  playerRole: RoleBean;
   otherPlayerList: OtherPlayer[];
 };
 

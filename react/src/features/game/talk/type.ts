@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import type { Character } from '@/features/game/character';
-import { coSchema, gameIndexSchema } from '@/features/game/type';
-import type { Co, GameIndex, Role } from '@/features/game/type';
+import { coBeanSchema, gameIndexSchema } from '@/features/game/type';
+import type { CoBean, GameIndex, RoleBean } from '@/features/game/type';
+import type { Role } from '@/features/role';
 
 /**
  * 話し合いページ読み込み時のレスポンス
@@ -10,13 +10,13 @@ import type { Co, GameIndex, Role } from '@/features/game/type';
 export type TalkIndexResponseBody = {
   gameId: number;
   gameIndex: GameIndex;
-  cos: Co[];
+  cos: CoBean[];
 };
 
 const talkIndexResponseBodySchema = z.object({
   gameId: z.number(),
   gameIndex: gameIndexSchema,
-  cos: z.array(coSchema),
+  cos: z.array(coBeanSchema),
 });
 
 export const isTalkIndexResponseBody = (
@@ -33,8 +33,8 @@ export type FetchTalkIndex = () => Promise<TalkIndexResponseBody>;
 export type Player = {
   id: number;
   name: string;
-  role: Role;
-  co: Co;
+  role: RoleBean;
+  co: CoBean;
 };
 
 /**
@@ -43,7 +43,7 @@ export type Player = {
 
 type PostCoDto = {
   playerId: number;
-  role: Character['EnglishName'];
+  role: Role['englishName'];
 };
 
 export type PostCo = (dto: PostCoDto) => Promise<void>;

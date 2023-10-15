@@ -1,49 +1,57 @@
 import { z } from 'zod';
 
-export type Co = {
+export type CoBean = {
   id: number;
   role: string;
 };
 
 export type CoBeans = {
-  coBeans: Co[];
+  coBeans: CoBean[];
 };
 
-export const coSchema = z.object({
+export const coBeanSchema = z.object({
   id: z.number(),
   role: z.string(),
 });
 
 export const coBeansSchema = z.object({
-  coBeans: z.array(coSchema),
+  coBeans: z.array(coBeanSchema),
 });
 
 export const isCoBeans = (value: unknown): value is CoBeans => {
   return coBeansSchema.safeParse(value).success;
 };
 
-export type Role = {
+export type RoleBean = {
   roleId: number;
   roleName: '人狼' | '村人' | '占い師' | '怪盗' | '狂人' | '吊人' | '不明';
 };
 
-const roleSchema = z.object({
+const roleBeanSchema = z.object({
   roleId: z.number(),
-  roleName: z.string(),
+  roleName: z.union([
+    z.literal('人狼'),
+    z.literal('村人'),
+    z.literal('占い師'),
+    z.literal('怪盗'),
+    z.literal('狂人'),
+    z.literal('吊人'),
+    z.literal('不明'),
+  ]),
 });
 
 export type OtherPlayer = {
   hostFlag: boolean;
   id: number;
   name: string;
-  role: Role;
+  role: RoleBean;
 };
 
 export const otherPlayerSchema = z.object({
   hostFlag: z.boolean(),
   id: z.number(),
   name: z.string(),
-  role: roleSchema,
+  role: roleBeanSchema,
 });
 
 export type GameIndex = {
@@ -52,7 +60,7 @@ export type GameIndex = {
   otherPlayerList: OtherPlayer[];
   playerId: number;
   playerName: string;
-  playerRole: Role;
+  playerRole: RoleBean;
 };
 
 export const gameIndexSchema = z.object({
@@ -61,5 +69,5 @@ export const gameIndexSchema = z.object({
   otherPlayerList: z.array(otherPlayerSchema),
   playerId: z.number(),
   playerName: z.string(),
-  playerRole: roleSchema,
+  playerRole: roleBeanSchema,
 });

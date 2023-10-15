@@ -1,6 +1,6 @@
 import { css } from 'styled-system/css';
 import { ContentBox } from '@/components';
-import { characters } from '@/features/game/character';
+import { roles } from '@/features/role';
 import type { GameRule } from '@/type';
 
 const styles = {
@@ -37,11 +37,11 @@ type Props = {
 
 export const RoleList: React.FC<Props> = ({ gameRuleList }) => {
   const getIconUrl = (roleId: number) => {
-    const character = characters.filter((character) => {
-      return character.roleId === roleId;
+    const role = roles.filter((role) => {
+      return role.roleId === roleId;
     });
 
-    return character[0].iconUrl;
+    return role[0].iconPath;
   };
 
   return (

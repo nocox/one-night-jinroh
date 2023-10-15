@@ -1,6 +1,6 @@
 import { css } from 'styled-system/css';
 import { ContentBox } from '@/components';
-import type { Character } from '@/features/game/character';
+import type { Role } from '@/features/role';
 
 const styles = {
   contentBox: css({
@@ -40,22 +40,22 @@ const styles = {
 };
 
 type Props = {
-  character: Character;
+  role: Role;
 };
 
-export const RoleDescriptionBox: React.FC<Props> = ({ character }) => {
+export const RoleDescriptionBox: React.FC<Props> = ({ role }) => {
   return (
     <ContentBox className={styles.contentBox}>
       <figure className={styles.roleImage}>
-        <img src={character.imgUrl} alt={character.JapaneseName} />
-        <figcaption>{character.JapaneseName}</figcaption>
+        <img src={role.imgPath} alt={role.japaneseName} />
+        <figcaption>{role.japaneseName}</figcaption>
       </figure>
       <div className={styles.description}>
-        <p>あなたの役職は『{character.JapaneseName}』です。</p>
+        <p>あなたの役職は『{role.japaneseName}』です。</p>
         <p>
           夜の行動
           <br />
-          {character.nightAction}
+          {role.nightAction}
         </p>
       </div>
     </ContentBox>

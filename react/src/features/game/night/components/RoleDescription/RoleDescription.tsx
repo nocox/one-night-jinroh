@@ -1,16 +1,16 @@
 import { RoleDescriptionBox } from './RoleDescriptionBox';
-import { characters } from '@/features/game/character';
+import { roles } from '@/features/role';
 
 type Props = {
   roleId: number;
 };
 
 export const RoleDescription: React.FC<Props> = ({ roleId }) => {
-  const character = characters.find((c) => c.roleId === roleId);
-  if (!character) {
+  const role = roles.find((c) => c.roleId === roleId);
+  if (!role) {
     // TODO エラー画面を表示する. 必要に応じてカスタムエラークラスを作成する.
-    throw new Error('character not found');
+    throw new Error('role not found');
   }
 
-  return <RoleDescriptionBox character={character} />;
+  return <RoleDescriptionBox role={role} />;
 };

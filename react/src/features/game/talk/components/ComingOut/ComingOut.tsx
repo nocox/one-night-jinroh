@@ -1,9 +1,9 @@
 import { css, cx } from 'styled-system/css';
 import { ContentBox } from '@/components';
-import { characters } from '@/features/game/character';
-import type { Character } from '@/features/game/character';
 import { postCo } from '@/features/game/talk/api';
 import type { Player } from '@/features/game/talk/type';
+import type { Role } from '@/features/role';
+import { roles } from '@/features/role';
 
 const styles = {
   title: css({
@@ -51,12 +51,12 @@ type Props = {
 
 export const ComingOut: React.FC<Props> = ({ getMyPlayer }) => {
   const coRoleEnglishName = getMyPlayer().co?.role;
-  const coRole = characters.filter(
-    (character) => character.EnglishName === coRoleEnglishName,
+  const coRole = roles.filter(
+    (character) => character.englishName === coRoleEnglishName,
   )[0];
 
-  const handleClick = async (character: Character) => {
-    const role = character.EnglishName;
+  const handleClick = async (character: Role) => {
+    const role = character.englishName;
     const playerId = getMyPlayer().id;
     await postCo({ playerId, role });
   };
@@ -65,14 +65,14 @@ export const ComingOut: React.FC<Props> = ({ getMyPlayer }) => {
     <ContentBox>
       <p className={styles.title}>カミングアウト</p>
       <ul className={styles.icons}>
-        {characters.map((character) => {
+        {roles.map((character) => {
           return (
             <li
               key={character.roleId}
               className={cx(
                 styles.iconsItem,
                 coRole !== undefined &&
-                  coRole.EnglishName === character.EnglishName &&
+                  coRole.englishName === character.englishName &&
                   styles.iconsItemActive,
               )}
             >
@@ -81,7 +81,7 @@ export const ComingOut: React.FC<Props> = ({ getMyPlayer }) => {
                   await handleClick(character);
                 }}
               >
-                <img src={character.iconUrl} alt={character.JapaneseName} />
+                <img src={character.iconPath} alt={character.japaneseName} />
               </button>
             </li>
           );

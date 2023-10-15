@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import type { Co, GameIndex, OtherPlayer } from '@/features/game/type';
+import type { CoBean, GameIndex, OtherPlayer } from '@/features/game/type';
 import {
-  coSchema,
+  coBeanSchema,
   gameIndexSchema,
   otherPlayerSchema,
 } from '@/features/game/type';
@@ -20,14 +20,14 @@ export type VoteIndexRequestBody = {
   gameId: number;
   gameIndex: GameIndex;
   voteIndex: VoteIndex;
-  cos: Co[];
+  cos: CoBean[];
 };
 
 const voteIndexRequestBodySchema = z.object({
   gameId: z.number(),
   gameIndex: gameIndexSchema,
   voteIndex: voteIndexSchema,
-  cos: z.array(coSchema),
+  cos: z.array(coBeanSchema),
 });
 
 export const isVoteIndexRequestBody = (

@@ -1,21 +1,21 @@
 import { z } from 'zod';
 
-export type Co = {
+export type CoBean = {
   id: number;
   role: string;
 };
 
 export type CoBeans = {
-  coBeans: Co[];
+  coBeans: CoBean[];
 };
 
-export const coSchema = z.object({
+export const coBeanSchema = z.object({
   id: z.number(),
   role: z.string(),
 });
 
 export const coBeansSchema = z.object({
-  coBeans: z.array(coSchema),
+  coBeans: z.array(coBeanSchema),
 });
 
 export const isCoBeans = (value: unknown): value is CoBeans => {

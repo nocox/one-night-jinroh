@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { Character } from '@/features/game/character';
-import { coSchema, gameIndexSchema } from '@/features/game/type';
-import type { Co, GameIndex, RoleBean } from '@/features/game/type';
+import { coBeanSchema, gameIndexSchema } from '@/features/game/type';
+import type { CoBean, GameIndex, RoleBean } from '@/features/game/type';
 
 /**
  * 話し合いページ読み込み時のレスポンス
@@ -10,13 +10,13 @@ import type { Co, GameIndex, RoleBean } from '@/features/game/type';
 export type TalkIndexResponseBody = {
   gameId: number;
   gameIndex: GameIndex;
-  cos: Co[];
+  cos: CoBean[];
 };
 
 const talkIndexResponseBodySchema = z.object({
   gameId: z.number(),
   gameIndex: gameIndexSchema,
-  cos: z.array(coSchema),
+  cos: z.array(coBeanSchema),
 });
 
 export const isTalkIndexResponseBody = (
@@ -34,7 +34,7 @@ export type Player = {
   id: number;
   name: string;
   role: RoleBean;
-  co: Co;
+  co: CoBean;
 };
 
 /**

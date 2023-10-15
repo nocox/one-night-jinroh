@@ -1,5 +1,7 @@
-import parse from 'html-react-parser';
 import { css, cx } from 'styled-system/css';
+import { RoleCard } from './RoleCard';
+import { ExhaustiveError } from '@/error';
+import { roles } from '@/features/role';
 
 const styles = {
   title: css({
@@ -8,84 +10,98 @@ const styles = {
     padding: '0.25em',
     margin: '1.5rem auto 0',
   }),
-  content: css({
-    padding: '0.25rem 0.5rem',
-  }),
-  roleBox: css({
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    gap: '0.5rem 1rem',
-    alignItems: 'center',
-    maxWidth: '640px',
-    margin: '2rem auto',
-
-    sm: {
-      gridTemplateColumns: 'minmax(120px, 128px) 1fr',
-    },
-  }),
-  roleFigure: css({
-    display: 'grid',
-    justifyItems: 'center',
-    sm: {
-      gridColumn: '1/2',
-    },
-  }),
-  roleImage: css({
-    maxWidth: '128px',
-  }),
-  roleFigCaption: css({}),
-  roleDescription: css({
-    sm: {
-      gridColumn: '2/3',
-    },
-  }),
 };
-type Role = {
-  imgSrc: string;
-  altText: string;
-  caption: string;
-  description: string;
+
+const getThemeColor = (
+  roleType: (typeof roles)[number]['roleType'],
+): string => {
+  switch (roleType) {
+    case 'murabito':
+      return '#b7ecb9';
+    case 'jinroh':
+      return '#ecd7b7';
+    case 'turibito':
+      return '#b7e2ec';
+    default:
+      throw new ExhaustiveError(roleType);
+  }
+};
+
+const getTitle = (roleType: (typeof roles)[number]['roleType']): string => {
+  switch (roleType) {
+    case 'murabito':
+      return '村人陣営';
+    case 'jinroh':
+      return '人狼陣営';
+    case 'turibito':
+      return '吊人陣営';
+    default:
+      throw new ExhaustiveError(roleType);
+  }
+};
+
+const getRoleTypeDescription = (
+  roleType: (typeof roles)[number]['roleType'],
+): React.JSX.Element => {
+  switch (roleType) {
+    case 'murabito':
+      return (
+        <>
+          人狼プレイヤーを一人でも吊ることができたら村人陣営の勝利です。
+          <br />
+          人狼プレイヤーが一人もいない平和村の場合は誰も吊らない(全員の得票数が1票以下になる)ことが勝利条件となります。
+          <br />
+          (吊人プレイヤーが勝利した場合は強制で敗北となります)
+        </>
+      );
+    case 'jinroh':
+      return (
+        <>
+          人狼プレイヤーが誰も吊られなければ人狼陣営の勝利です。
+          <br />
+          (吊人プレイヤーが勝利した場合は強制で敗北となります)
+        </>
+      );
+    case 'turibito':
+      return (
+        <>
+          吊人プレイヤーが吊られた場合、吊られたプレイヤーの勝利となり、他の陣営はすべて敗北となります。
+        </>
+      );
+    default:
+      throw new ExhaustiveError(roleType);
+  }
 };
 
 type Props = {
-  roleTitle: string;
-  backgroundColor: string;
-  description: string;
-  roles: Role[];
+  roleType: 'murabito' | 'jinroh' | 'turibito';
 };
-export const RoleExplanation: React.FC<Props> = ({
-  roleTitle,
-  backgroundColor,
-  description,
-  roles,
-}) => {
-  const customStyle = css({ backgroundColor });
 
+export const RoleExplanation: React.FC<Props> = ({ roleType }) => {
   return (
     <section>
-      <h3 className={cx(styles.title, customStyle)}>{roleTitle}</h3>
-      <div className={styles.content}>
-        {parse(description)}
-        <ul>
-          {roles.map((role, index) => {
+      <h3
+        className={cx(
+          styles.title,
+          css({ backgroundColor: getThemeColor(roleType) }),
+        )}
+      >
+        {getTitle(roleType)}
+      </h3>
+      <p>{getRoleTypeDescription(roleType)}</p>
+      <ul>
+        {roles
+          .filter((role) => {
+            return role.roleType === roleType;
+          })
+          .map((role) => {
             return (
-              <li key={index} className={styles.roleBox}>
-                <figure className={styles.roleFigure}>
-                  <img
-                    src={role.imgSrc}
-                    alt={role.altText}
-                    className={styles.roleImage}
-                  />
-                  <figcaption className={styles.roleFigCaption}>
-                    {role.caption}
-                  </figcaption>
-                </figure>
-                <p className={styles.roleDescription}>{role.description}</p>
+              <li key={role.roleId}>
+                <RoleCard role={role} />
               </li>
             );
           })}
-        </ul>
-      </div>
+      </ul>
     </section>
   );
 };

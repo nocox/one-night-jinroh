@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { NightTemplate } from './NightTemplate';
 import { useNightData } from './hooks/useNightData';
 import { Loading } from '@/components';
@@ -6,29 +5,24 @@ import { useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const NightPage: React.FC = () => {
-  const nightIndexResponseBody = useNightData();
-  const [gameId, setGameId] = useState<number>(-1);
-
-  useEffect(() => {
-    if (nightIndexResponseBody !== undefined) {
-      setGameId(nightIndexResponseBody.gameId);
-    }
-  }, [nightIndexResponseBody]);
+  const { gameId, gameIndex, doneNightAct } = useNightData();
 
   const subscribeDoneNightActionOfAllPlayer: Subscribe = {
-    path: `/topic/${gameId}`,
+    path: `/topic/${gameId ?? ''}`,
     callback: () => {
       window.location.href = '/talk';
     },
   };
 
-  useWebSocket([subscribeDoneNightActionOfAllPlayer]);
+  useWebSocket(
+    gameId !== undefined ? [subscribeDoneNightActionOfAllPlayer] : [],
+  );
 
-  return nightIndexResponseBody === undefined ? (
+  return gameIndex === undefined || doneNightAct === undefined ? (
     <Loading />
   ) : (
     <>
-      <NightTemplate nightIndexResponseBody={nightIndexResponseBody} />
+      <NightTemplate gameIndex={gameIndex} doneNightAct={doneNightAct} />
     </>
   );
 };

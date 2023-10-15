@@ -27,9 +27,17 @@ export type RoleBean = {
   roleName: '人狼' | '村人' | '占い師' | '怪盗' | '狂人' | '吊人' | '不明';
 };
 
-const roleSchema = z.object({
+const roleBeanSchema = z.object({
   roleId: z.number(),
-  roleName: z.string(),
+  roleName: z.union([
+    z.literal('人狼'),
+    z.literal('村人'),
+    z.literal('占い師'),
+    z.literal('怪盗'),
+    z.literal('狂人'),
+    z.literal('吊人'),
+    z.literal('不明'),
+  ]),
 });
 
 export type OtherPlayer = {
@@ -43,7 +51,7 @@ export const otherPlayerSchema = z.object({
   hostFlag: z.boolean(),
   id: z.number(),
   name: z.string(),
-  role: roleSchema,
+  role: roleBeanSchema,
 });
 
 export type GameIndex = {
@@ -61,5 +69,5 @@ export const gameIndexSchema = z.object({
   otherPlayerList: z.array(otherPlayerSchema),
   playerId: z.number(),
   playerName: z.string(),
-  playerRole: roleSchema,
+  playerRole: roleBeanSchema,
 });

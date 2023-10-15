@@ -17,7 +17,7 @@ import {
   isNightKaitoResult,
   isNightUranaiResult,
 } from './type';
-import { InvalidResponseBodyError, UnexpectedError } from '@/error';
+import { InvalidResponseBodyError, UnexpectedError } from '@/features/error';
 import { JINROH_API_BASE_URL } from '@/url';
 
 export const fetchNightIndex: FetchNightIndex = async () => {

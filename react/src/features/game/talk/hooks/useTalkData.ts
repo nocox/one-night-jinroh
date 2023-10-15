@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchTalkIndex } from '../api';
 import type { Player } from '../type';
-import { UnexpectedError } from '@/error';
+import { UnexpectedError } from '@/features/error';
 
 export const useTalkData = (): {
   gameId: number | undefined;

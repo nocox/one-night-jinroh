@@ -6,7 +6,7 @@ import type {
   RoomIndexResponseBody,
 } from './type';
 import { isGameStartStatus, isRoomIndexResponseBody } from './type';
-import { InvalidResponseBodyError } from '@/error';
+import { InvalidResponseBodyError } from '@/features/error';
 import { JINROH_API_BASE_URL } from '@/url';
 
 export const fetchRoomIndex: FetchRoomIndex = async () => {

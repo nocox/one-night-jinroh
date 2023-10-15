@@ -4,7 +4,7 @@ import { GameStartModal } from './components/GameStartModal';
 import { useRoomData } from './hooks';
 import { isGameInfo } from './type';
 import type { GameInfo } from './type';
-import { InvalidResponseBodyError } from '@/error';
+import { InvalidResponseBodyError } from '@/features/error';
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
 import type { Subscribe } from '@/type';

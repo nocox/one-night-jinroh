@@ -1,6 +1,6 @@
 import { isJoinedRoomStatus } from './type';
 import type { CreateRoom, JoinRoom } from './type';
-import { InvalidResponseBodyError } from '@/error';
+import { InvalidResponseBodyError } from '@/features/error';
 import { JINROH_API_BASE_URL } from '@/url';
 
 export const joinRoom: JoinRoom = async (dto) => {

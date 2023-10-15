@@ -1,6 +1,6 @@
-import { UnexpectedError } from './error';
 import { isGameRuleList, type FetchGameRuleList, type GameRule } from './type';
 import { JINROH_API_BASE_URL } from './url';
+import { UnexpectedError } from '@/features/error';
 
 // GameRuleListを取得する関数
 export const fetchGameRuleList: FetchGameRuleList = async () => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { UranaishiFormContent } from './UranaishiFormContent';
 import { UranaishiFormResult } from './UranaishiFormResult';
-import { ExhaustiveError, UnexpectedError } from '@/error';
+import { ExhaustiveError, UnexpectedError } from '@/features/error';
 import {
   fetchNightUranaishiAction,
   postNightUranaishiAction,

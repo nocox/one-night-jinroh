@@ -54,6 +54,7 @@ type Props = {
   playersWithVoteCount: GameParticipantWithVoteBean[];
   isPeaceful: boolean;
   cos: CoBean[];
+  handleClickResultButton: () => void;
 };
 
 export const TallyTemplate: React.FC<Props> = ({
@@ -63,6 +64,7 @@ export const TallyTemplate: React.FC<Props> = ({
   playersWithVoteCount,
   isPeaceful,
   cos,
+  handleClickResultButton,
 }) => {
   return (
     <DefaultLayout>
@@ -97,7 +99,11 @@ export const TallyTemplate: React.FC<Props> = ({
         <div>
           <TallyBox playersWithVoteCount={playersWithVoteCount}>
             {hostFlag ? (
-              <Button customStyles={styles.button} color={'blueFill'}>
+              <Button
+                customStyles={styles.button}
+                color={'blueFill'}
+                onClick={handleClickResultButton}
+              >
                 結果ページに移動する
               </Button>
             ) : (

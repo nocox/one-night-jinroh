@@ -1,7 +1,8 @@
-import {
-  isTallyIndexResponseBody,
-  type FetchTallyIndexResponseBody,
-  type TallyIndexResponseBody,
+import { isTallyIndexResponseBody } from './type';
+import type {
+  FetchResult,
+  FetchTallyIndexResponseBody,
+  TallyIndexResponseBody,
 } from './type';
 import { InvalidResponseBodyError, UnexpectedError } from '@/features/error';
 import { JINROH_API_BASE_URL } from '@/url';
@@ -30,3 +31,16 @@ export const fetchTallyIndexResponseBody: FetchTallyIndexResponseBody =
 
     return tallyIndexResponseBody;
   };
+
+export const fetchResult: FetchResult = async () => {
+  const res = await fetch(JINROH_API_BASE_URL + '/show-result', {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!res.ok) {
+    throw new UnexpectedError(`
+    fetchResult failed with status ${res.status}
+    `);
+  }
+};

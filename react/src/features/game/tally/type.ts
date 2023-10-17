@@ -53,3 +53,5 @@ export const isTallyIndexResponseBody = (
 };
 
 export type FetchTallyIndexResponseBody = () => Promise<TallyIndexResponseBody>;
+
+export type FetchResult = () => Promise<void>;

@@ -1,12 +1,33 @@
 import { TallyTemplate } from './TallyTemplate';
+import { fetchResult } from './api';
 import { useTallyData } from './hooks/useTallyData';
 import { Loading } from '@/components';
-import { useGameRule } from '@/hooks';
+import { useGameRule, useWebSocket } from '@/hooks';
+import type { Subscribe } from '@/type';
 
 export const TallyPage: React.FC = () => {
-  const { hostFlag, selectedPlayers, playersWithVoteCount, isPeaceful, cos } =
-    useTallyData();
+  const {
+    gameId,
+    hostFlag,
+    selectedPlayers,
+    playersWithVoteCount,
+    isPeaceful,
+    cos,
+  } = useTallyData();
   const { gameRuleList } = useGameRule();
+
+  const subscribeResult: Subscribe = {
+    path: `/topic/result/${gameId ?? ''}`,
+    callback: () => {
+      window.location.href = '/result';
+    },
+  };
+
+  useWebSocket(gameId === undefined ? [] : [subscribeResult]);
+
+  const handleClickResultButton = async () => {
+    await fetchResult();
+  };
 
   return hostFlag === undefined ||
     selectedPlayers === undefined ||
@@ -23,6 +44,7 @@ export const TallyPage: React.FC = () => {
       gameRuleList={gameRuleList}
       isPeaceful={isPeaceful}
       cos={cos}
+      handleClickResultButton={handleClickResultButton}
     />
   );
 };

@@ -27,7 +27,7 @@ export type RoleBean = {
   roleName: '人狼' | '村人' | '占い師' | '怪盗' | '狂人' | '吊人' | '不明';
 };
 
-const roleBeanSchema = z.object({
+export const roleBeanSchema = z.object({
   roleId: z.number(),
   roleName: z.union([
     z.literal('人狼'),

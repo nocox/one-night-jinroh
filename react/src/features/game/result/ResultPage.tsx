@@ -1,26 +1,38 @@
 import { ResultTemplate } from './ResultTemplate';
+import { JudgeModal } from './components/JudgeModal/JudgeModal';
 import { useResultData } from './hooks/useResultData';
 import { Loading } from '@/components';
-// import { useGameRule, useWebSocket } from '@/hooks';
+import { useWebSocket } from '@/hooks';
+import { useModal } from '@/hooks/useModal';
 // import type { Subscribe } from '@/type';
 
 export const ResultPage: React.FC = () => {
-  useResultData();
-  // const { gameRuleList } = useGameRule();
+  const { gameId, hostFlag, judgeResult, participants, holidayRoles } =
+    useResultData();
 
-  // subscribeのcallback関数を定義する
-  // const subscribeHoge: Subscribe = {
-  //   path: `${gameId ?? ''}`,
-  //   callback: () => {
-  //   },
-  // };
+  const { open, onCloseModal } = useModal(true);
 
-  // useWebSocket(gameId === undefined ? [] : []);
+  useWebSocket(gameId === undefined ? [] : []);
 
-  return (
+  return hostFlag === undefined ||
+    judgeResult === undefined ||
+    participants === undefined ||
+    holidayRoles === undefined ? (
+    <Loading />
+  ) : (
     <>
-      <Loading />
-      <ResultTemplate />
+      <ResultTemplate
+        judgeResult={judgeResult}
+        hostFlag={hostFlag}
+        participants={participants}
+        holidayRoles={holidayRoles}
+      />
+
+      <JudgeModal
+        open={open}
+        onCloseModal={onCloseModal}
+        judgeResult={judgeResult}
+      />
     </>
   );
 };

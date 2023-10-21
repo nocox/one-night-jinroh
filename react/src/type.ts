@@ -38,4 +38,4 @@ export const isGameRuleList = (value: unknown): value is GameRuleList => {
   return gameRuleListSchema.safeParse(value).success;
 };
 
-export type FetchGameRuleList = () => Promise<GameRuleList>;
+export type FetchGameRuleList = (gameId: number) => Promise<GameRuleList>;

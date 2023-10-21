@@ -2,19 +2,21 @@ import { useEffect, useState } from 'react';
 import { fetchGameRuleList } from '@/api';
 import type { GameRule } from '@/type';
 
-export const useGameRule = (): { gameRuleList: GameRule[] | undefined } => {
-  const [gameRuleList, setGameRuleList] = useState<GameRule[] | undefined>(
-    undefined,
-  );
+export const useGameRule = (
+  gameId: number | undefined,
+): { gameRuleList: GameRule[] } => {
+  const [gameRuleList, setGameRuleList] = useState<GameRule[]>([]);
 
   useEffect(() => {
     const fetchGameRuleListAsync = async () => {
-      const gameRuleList = await fetchGameRuleList();
-      setGameRuleList(gameRuleList.roleList);
+      if (gameId !== undefined) {
+        const gameRuleList = await fetchGameRuleList(gameId);
+        setGameRuleList(gameRuleList.roleList);
+      }
     };
 
     void fetchGameRuleListAsync();
-  }, []);
+  }, [gameId]);
 
   return { gameRuleList };
 };

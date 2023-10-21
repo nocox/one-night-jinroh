@@ -2,6 +2,7 @@ package com.okaka.onenightjinroh.api;
 
 import com.okaka.jinroh.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,11 +24,8 @@ public class GetGameRuleController {
     @Autowired
     RoleDao roleDao;
 
-    @RequestMapping(path = "/game-rule")
-    Response getGameRule() {
-        String strGameId = session.getAttribute("game_id").toString();
-        Long gameId = Long.valueOf(strGameId);
-
+    @RequestMapping(path = "/game-rule/{gameId}")
+    Response getGameRule(@PathVariable Long gameId) {
         GameEntity game = gameDao.select(gameId);
         Long ruleId = game.rule_id;
 

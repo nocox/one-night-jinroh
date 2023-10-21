@@ -11,7 +11,7 @@ export const TalkPage: React.FC = () => {
   const { gameId, players, nightActLog, hostFlg, setPlayers, getMyPlayer } =
     useTalkData();
 
-  const { gameRuleList } = useGameRule();
+  const { gameRuleList } = useGameRule(gameId);
 
   const subscribeEndTalk: Subscribe = {
     path: `/topic/end-talk/${gameId ?? ''}`,

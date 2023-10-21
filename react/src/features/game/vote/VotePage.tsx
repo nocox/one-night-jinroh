@@ -7,7 +7,8 @@ import type { Subscribe } from '@/type';
 export const VotePage: React.FC = () => {
   const { gameId, players, nightActLog, canVotePlayers, votingDestination } =
     useVoteData();
-  const { gameRuleList } = useGameRule();
+
+  const { gameRuleList } = useGameRule(gameId);
 
   const subscribeDoneTally: Subscribe = {
     path: `/topic/done-tally/${gameId ?? ''}`,

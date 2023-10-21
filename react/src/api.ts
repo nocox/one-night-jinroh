@@ -3,8 +3,8 @@ import { JINROH_API_BASE_URL } from './url';
 import { UnexpectedError } from '@/features/error';
 
 // GameRuleListを取得する関数
-export const fetchGameRuleList: FetchGameRuleList = async () => {
-  const res = await fetch(JINROH_API_BASE_URL + '/game-rule', {
+export const fetchGameRuleList: FetchGameRuleList = async (gameId) => {
+  const res = await fetch(`${JINROH_API_BASE_URL}/game-rule/${gameId}`, {
     method: 'GET',
     credentials: 'include',
   });

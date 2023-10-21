@@ -1,57 +1,86 @@
 import { z } from 'zod';
-import type { CoBean, GameIndex, RoleBean } from '@/features/game/type';
-import {
-  coBeanSchema,
-  gameIndexSchema,
-  roleBeanSchema,
-} from '@/features/game/type';
+import type { RoleEnglishName } from '@/features/role';
 
-export type GameParticipantWithVoteBean = {
-  id: number;
-  name: string;
-  role: RoleBean;
-  hostFlag: boolean;
-  voteCount: number;
+export type GameParticipantWithResultBean = {
+  playerName: string;
+  role: RoleEnglishName;
+  coRole: RoleEnglishName | '';
+  winOrLose: 'win' | 'lose';
+  myself: boolean;
+  comment: string;
 };
 
-type TallyResultBean = {
-  selectedPlayers: GameParticipantWithVoteBean[];
-  players: GameParticipantWithVoteBean[];
-  peacefulFlag: boolean;
+export type JudgeResult = {
+  text: string;
+  imagePath: string;
 };
 
-export type TallyIndexResponseBody = {
+export type ShowResultTermIndexBean = {
   gameId: number;
-  gameIndex: GameIndex;
-  tallyResult: TallyResultBean;
-  cos: CoBean[];
+  hostFlg: boolean;
+  judge:
+    | 'FAIL_PEACE_VILLAGE'
+    | 'SIMPLE_JINROH_WIN'
+    | 'SIMPLE_VILLAGE_WIN'
+    | 'SUCCESS_HIDE_JINROH_WIN'
+    | 'SUCCESS_PEACE_VILLAGE'
+    | 'TURIBITO_WIN';
+  participants: GameParticipantWithResultBean[];
+  holidayRoles: RoleEnglishName[];
 };
 
-const gameParticipantWithVoteBeanSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  role: roleBeanSchema,
-  hostFlag: z.boolean(),
-  voteCount: z.number(),
-});
-
-const tallyIndexResponseBodySchema = z.object({
+const showResultTermIndexBeanSchema = z.object({
   gameId: z.number(),
-  gameIndex: gameIndexSchema,
-  tallyResult: z.object({
-    selectedPlayers: z.array(gameParticipantWithVoteBeanSchema),
-    players: z.array(gameParticipantWithVoteBeanSchema),
-    peacefulFlag: z.boolean(),
-  }),
-  cos: z.array(coBeanSchema),
+  hostFlg: z.boolean(),
+  judge: z.union([
+    z.literal('FAIL_PEACE_VILLAGE'),
+    z.literal('SIMPLE_JINROH_WIN'),
+    z.literal('SIMPLE_VILLAGE_WIN'),
+    z.literal('SUCCESS_HIDE_JINROH_WIN'),
+    z.literal('SUCCESS_PEACE_VILLAGE'),
+    z.literal('TURIBITO_WIN'),
+  ]),
+  participants: z.array(
+    z.object({
+      playerName: z.string(),
+      role: z.union([
+        z.literal('murabito'),
+        z.literal('jinroh'),
+        z.literal('uranaishi'),
+        z.literal('kaito'),
+        z.literal('kyojin'),
+        z.literal('turibito'),
+      ]),
+      coRole: z.union([
+        z.literal('murabito'),
+        z.literal('jinroh'),
+        z.literal('uranaishi'),
+        z.literal('kaito'),
+        z.literal('kyojin'),
+        z.literal('turibito'),
+        z.literal(''),
+      ]),
+      winOrLose: z.union([z.literal('win'), z.literal('lose')]),
+      myself: z.boolean(),
+      comment: z.string(),
+    }),
+  ),
+  holidayRoles: z.array(
+    z.union([
+      z.literal('murabito'),
+      z.literal('jinroh'),
+      z.literal('uranaishi'),
+      z.literal('kaito'),
+      z.literal('kyojin'),
+      z.literal('turibito'),
+    ]),
+  ),
 });
 
-export const isTallyIndexResponseBody = (
+export const isShowResultTermIndexBean = (
   value: unknown,
-): value is TallyIndexResponseBody => {
-  return tallyIndexResponseBodySchema.safeParse(value).success;
+): value is ShowResultTermIndexBean => {
+  return showResultTermIndexBeanSchema.safeParse(value).success;
 };
 
-export type FetchTallyIndexResponseBody = () => Promise<TallyIndexResponseBody>;
-
-export type FetchResult = () => Promise<void>;
+export type FetchShowResultTermIndex = () => Promise<ShowResultTermIndexBean>;

@@ -10,7 +10,7 @@ import { useModal } from '@/hooks/useModal';
 import type { Subscribe } from '@/type';
 
 export const RoomPage: React.FC = () => {
-  const { open, onOpenModal } = useModal();
+  const { open, onOpenModal } = useModal(false);
   const onCloseModal = () => {
     window.location.href = '/night';
   };

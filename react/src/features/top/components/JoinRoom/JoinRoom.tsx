@@ -12,7 +12,7 @@ type Props = {
 export const JoinRoom: React.FC<Props> = ({ className }) => {
   const [roomId, setRoomId] = useState('');
   const [joinRoomResult, setJoinRoomResult] = useState('');
-  const { open, onOpenModal, onCloseModal } = useModal();
+  const { open, onOpenModal, onCloseModal } = useModal(false);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();

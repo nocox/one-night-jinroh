@@ -14,7 +14,7 @@ export const TallyPage: React.FC = () => {
     isPeaceful,
     cos,
   } = useTallyData();
-  const { gameRuleList } = useGameRule();
+  const { gameRuleList } = useGameRule(gameId);
 
   const subscribeResult: Subscribe = {
     path: `/topic/result/${gameId ?? ''}`,

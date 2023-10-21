@@ -3,7 +3,9 @@ import { useState } from 'react';
 /**
  * @param isOpen 最初から開いておくかどうか
  */
-export const useModal = (isOpen: boolean): {
+export const useModal = (
+  isOpen: boolean,
+): {
   open: boolean;
   onOpenModal: () => void;
   onCloseModal: () => void;

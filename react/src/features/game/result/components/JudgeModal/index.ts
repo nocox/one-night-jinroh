@@ -1,1 +1,1 @@
-export { JudgeModal } from './JudgeModal'
+export { JudgeModal } from './JudgeModal';

@@ -20,7 +20,7 @@ import murabitoCoIcon from '@/assets/images/co-icon/murabito.png';
 import tsuribitoCoIcon from '@/assets/images/co-icon/turibito.png';
 import uranaishiCoIcon from '@/assets/images/co-icon/uranaishi.png';
 
-type RoleEnglishName =
+export type RoleEnglishName =
   | 'murabito'
   | 'jinroh'
   | 'uranaishi'
@@ -50,6 +50,15 @@ export type Role = {
   coIconPath: string;
   nightAction: string;
   description: string;
+};
+
+export const getRoleByEnglishName = (englishName: RoleEnglishName): Role => {
+  const role = roles.find((role) => role.englishName === englishName);
+  if (!role) {
+    throw new Error(`role not found. englishName: ${englishName}`);
+  }
+
+  return role;
 };
 
 export const roles: Role[] = [

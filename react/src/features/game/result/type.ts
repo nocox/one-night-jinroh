@@ -84,3 +84,4 @@ export const isShowResultTermIndexBean = (
 };
 
 export type FetchShowResultTermIndex = () => Promise<ShowResultTermIndexBean>;
+export type FetchReturnRoom = () => Promise<void>;

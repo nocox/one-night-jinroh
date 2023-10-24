@@ -52,6 +52,7 @@ type Props = {
   hostFlag: boolean;
   participants: GameParticipantWithResultBean[];
   holidayRoles: RoleEnglishName[];
+  handleReturnRoom: () => void;
 };
 
 export const ResultTemplate: React.FC<Props> = ({
@@ -59,6 +60,7 @@ export const ResultTemplate: React.FC<Props> = ({
   hostFlag,
   participants,
   holidayRoles,
+  handleReturnRoom,
 }) => {
   return (
     <DefaultLayout>
@@ -101,7 +103,7 @@ export const ResultTemplate: React.FC<Props> = ({
       </div>
       {hostFlag && (
         <div className={styles.button}>
-          <Button>全員ルームに戻す</Button>
+          <Button onClick={handleReturnRoom}>全員ルームに戻す</Button>
         </div>
       )}
     </DefaultLayout>

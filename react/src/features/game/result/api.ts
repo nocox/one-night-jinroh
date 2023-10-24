@@ -1,6 +1,7 @@
 import { InvalidResponseBodyError, UnexpectedError } from '@/features/error';
 import { isShowResultTermIndexBean } from '@/features/game/result/type';
 import type {
+  FetchReturnRoom,
   FetchShowResultTermIndex,
   ShowResultTermIndexBean,
 } from '@/features/game/result/type';
@@ -29,4 +30,18 @@ export const fetchShowResultTermIndex: FetchShowResultTermIndex = async () => {
   }
 
   return showResultTermIndexBean;
+};
+
+export const fetchReturnRoom: FetchReturnRoom = async () => {
+  const res = await fetch(`${JINROH_API_BASE_URL}/return-room`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!res.ok) {
+    throw new UnexpectedError(`
+    failed to fetchReturnRoom. status: ${
+      res.status
+    }, body: ${await res.text()}`);
+  }
 };

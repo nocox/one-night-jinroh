@@ -15,6 +15,7 @@ export default defineConfig({
         talk_page: "src/features/game/talk/TalkPage.index.tsx",
         vote_page: "src/features/game/vote/VotePage.index.tsx",
         tally_page: "src/features/game/tally/TallyPage.index.tsx",
+        result_page: "src/features/game/result/ResultPage.index.tsx",
       },
       output: {
         dir: "../spring/src/main/resources/static/",

@@ -1,11 +1,16 @@
 import { useState } from 'react';
 
-export const useModal = (): {
+/**
+ * @param isOpen 最初から開いておくかどうか
+ */
+export const useModal = (
+  isOpen: boolean,
+): {
   open: boolean;
   onOpenModal: () => void;
   onCloseModal: () => void;
 } => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(isOpen);
 
   const onOpenModal = () => {
     setOpen(true);

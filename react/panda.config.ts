@@ -8,7 +8,7 @@ export default defineConfig({
   include: [
     './src/**/*.{js,jsx,ts,tsx}',
     './pages/**/*.{js,jsx,ts,tsx}',
-    "./stories/**/*.{js,jsx,ts,tsx}"
+    './stories/**/*.{js,jsx,ts,tsx}',
   ],
 
   // Files to exclude

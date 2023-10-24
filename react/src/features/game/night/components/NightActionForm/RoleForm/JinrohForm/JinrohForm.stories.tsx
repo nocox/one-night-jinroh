@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { JinrohFormContent } from './JinrohFormContent';
 
 const meta = {
-  title: 'features/game/night/NightActionForm/RoleForm/JinrohForm/JinrohFormContent',
+  title:
+    'features/game/night/NightActionForm/RoleForm/JinrohForm/JinrohFormContent',
   component: JinrohFormContent,
 } satisfies Meta<typeof JinrohFormContent>;
 

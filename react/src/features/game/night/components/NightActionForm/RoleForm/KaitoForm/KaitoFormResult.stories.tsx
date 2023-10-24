@@ -12,7 +12,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    actLog: '怪盗の結果: いぬと役職を交換しました．現在の役職はあなたが人狼で，いぬが怪盗です．',
+    actLog:
+      '怪盗の結果: いぬと役職を交換しました．現在の役職はあなたが人狼で，いぬが怪盗です．',
     roleBeans: [
       {
         roleId: 2,

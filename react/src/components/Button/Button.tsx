@@ -10,8 +10,10 @@ type Props = {
 
 export const Button: React.FC<Props> = ({
   children,
-  color,
-  shape,
+  fullWidth,
+  buttonType,
+  colorType,
+  radius,
   size,
   isDisabled,
   customStyles,
@@ -20,7 +22,7 @@ export const Button: React.FC<Props> = ({
   return (
     <button
       className={cx(
-        button({ color, shape, size, isDisabled }),
+        button({ fullWidth, buttonType, radius, colorType, size, isDisabled }),
         customStyles ?? '',
       )}
       {...props}

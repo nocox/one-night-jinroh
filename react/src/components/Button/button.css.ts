@@ -73,8 +73,9 @@ export const button = cva({
     },
   },
   defaultVariants: {
-    buttonType: 'default',
-    size: 'sm',
-    radius: 'sm',
+    buttonType: 'outlined',
+    colorType: 'blue',
+    size: 'md',
+    radius: 'xl',
   },
 });

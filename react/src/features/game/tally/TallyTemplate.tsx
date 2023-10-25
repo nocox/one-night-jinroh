@@ -90,6 +90,7 @@ export const TallyTemplate: React.FC<Props> = ({
           <Players
             players={playersWithVoteCount}
             selectedPlayers={selectedPlayers}
+            isPeaceful={isPeaceful}
             cos={cos}
           />
         </div>

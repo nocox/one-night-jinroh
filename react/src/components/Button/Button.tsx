@@ -1,28 +1,31 @@
-import { cx } from 'styled-system/css';
 import type { RecipeVariantProps } from 'styled-system/types/recipe';
 import { button } from './button.css.ts';
 
 type Props = {
   children: React.ReactNode;
-  customStyles?: string;
 } & React.ButtonHTMLAttributes<HTMLButtonElement> &
   RecipeVariantProps<typeof button>;
 
 export const Button: React.FC<Props> = ({
   children,
-  color,
-  shape,
+  fullWidth,
+  buttonType,
+  colorType,
+  radius,
   size,
   isDisabled,
-  customStyles,
   ...props
 }: Props) => {
   return (
     <button
-      className={cx(
-        button({ color, shape, size, isDisabled }),
-        customStyles ?? '',
-      )}
+      className={button({
+        fullWidth,
+        buttonType,
+        radius,
+        colorType,
+        size,
+        isDisabled,
+      })}
       {...props}
     >
       {children}

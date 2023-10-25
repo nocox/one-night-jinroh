@@ -62,17 +62,19 @@ export const RoomControllButton: React.FC<Props> = ({
       {hostFlg ? (
         <div className={styles.buttonWrapper}>
           <Button
-            color={'redFill'}
-            size={'large'}
-            shape={'round'}
+            colorType={'red'}
+            size={'md'}
+            radius={'sm'}
+            buttonType={'filled'}
             onClick={handleGameStart}
           >
             はじめる！
           </Button>
           <Button
-            color={'redBorder'}
-            size={'large'}
-            shape={'round'}
+            colorType={'red'}
+            size={'md'}
+            radius={'sm'}
+            buttonType={'outlined'}
             onClick={onOpenModal}
           >
             かいさん...
@@ -95,10 +97,18 @@ export const RoomControllButton: React.FC<Props> = ({
 
         <p className={styles.modal.text}>本当によろしいですか？</p>
         <div className={styles.modal.buttonWrapper}>
-          <Button color={'redBorder'} onClick={handleGameExit}>
+          <Button
+            colorType={'red'}
+            buttonType={'outlined'}
+            onClick={handleGameExit}
+          >
             かいさん
           </Button>
-          <Button color={'redFill'} onClick={onCloseModal}>
+          <Button
+            colorType={'red'}
+            buttonType={'filled'}
+            onClick={onCloseModal}
+          >
             やっぱりつづける！
           </Button>
         </div>

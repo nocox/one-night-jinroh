@@ -18,6 +18,8 @@ const styles = {
     },
   }),
   actionButton: css({
+    display: 'flex',
+    justifyContent: 'center',
     margin: '3rem auto 0',
   }),
 };
@@ -58,13 +60,11 @@ export const KaitoFormContent: React.FC<Props> = ({
         ))}
       </ul>
 
-      <Button
-        type="submit"
-        onClick={handleSubmit}
-        customStyles={styles.actionButton}
-      >
-        選んだ相手と入れ替える
-      </Button>
+      <div className={styles.actionButton}>
+        <Button type="submit" onClick={handleSubmit}>
+          選んだ相手と入れ替える
+        </Button>
+      </div>
       {errorMessage && <p>{errorMessage}</p>}
     </>
   );

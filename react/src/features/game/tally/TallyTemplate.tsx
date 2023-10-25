@@ -37,8 +37,9 @@ const styles = {
       gridColumn: '1 / 3',
     },
   }),
-  button: css({
-    display: 'block',
+  buttonWrap: css({
+    display: 'flex',
+    justifyContent: 'center',
     margin: '2rem auto 1rem',
   }),
   text: css({
@@ -99,13 +100,11 @@ export const TallyTemplate: React.FC<Props> = ({
         <div>
           <TallyBox playersWithVoteCount={playersWithVoteCount}>
             {hostFlag ? (
-              <Button
-                customStyles={styles.button}
-                color={'blueFill'}
-                onClick={handleClickResultButton}
-              >
-                結果ページに移動する
-              </Button>
+              <div className={styles.buttonWrap}>
+                <Button onClick={handleClickResultButton}>
+                  結果ページに移動する
+                </Button>
+              </div>
             ) : (
               <p className={styles.text}>
                 ホストが結果ページに移動するまでお待ちください。

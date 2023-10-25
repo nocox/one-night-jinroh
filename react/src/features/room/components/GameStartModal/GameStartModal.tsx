@@ -20,7 +20,8 @@ const styles = {
     gridTemplateColumns: '4em 1em 1em',
   }),
   okButton: css({
-    display: 'block',
+    display: 'flex',
+    justifyContent: 'center',
     margin: '1rem auto 0',
   }),
 };
@@ -62,9 +63,9 @@ export const GameStartModal: React.FC<Props> = ({
           </li>
         ))}
       </ul>
-      <Button onClick={onCloseModal} customStyles={styles.okButton}>
-        OK
-      </Button>
+      <div className={styles.okButton}>
+        <Button onClick={onCloseModal}>OK</Button>
+      </div>
     </Modal>
   );
 };

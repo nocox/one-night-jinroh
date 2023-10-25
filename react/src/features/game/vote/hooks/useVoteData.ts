@@ -9,6 +9,9 @@ export const useVoteData = (): {
   players: Player[] | undefined;
   canVotePlayers: OtherPlayer[] | undefined;
   votingDestination: number | undefined;
+  setVotingDestination: React.Dispatch<
+    React.SetStateAction<number | undefined>
+  >;
 } => {
   const [gameId, setGameId] = useState<number | undefined>();
   const [nightActLog, setNightActLog] = useState<string | undefined>();
@@ -49,5 +52,12 @@ export const useVoteData = (): {
     void fetchVoteIndexAsync();
   }, []);
 
-  return { gameId, nightActLog, players, canVotePlayers, votingDestination };
+  return {
+    gameId,
+    nightActLog,
+    players,
+    canVotePlayers,
+    votingDestination,
+    setVotingDestination,
+  };
 };

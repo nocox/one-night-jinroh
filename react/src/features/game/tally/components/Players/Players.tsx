@@ -16,10 +16,16 @@ const styles = {
 type Props = {
   players: GameParticipantWithVoteBean[];
   selectedPlayers: GameParticipantWithVoteBean[];
+  isPeaceful: boolean;
   cos: CoBean[];
 };
 
-export const Players: React.FC<Props> = ({ players, selectedPlayers, cos }) => {
+export const Players: React.FC<Props> = ({
+  players,
+  selectedPlayers,
+  isPeaceful,
+  cos,
+}) => {
   const isSelected = (player: GameParticipantWithVoteBean) => {
     const isSelected = selectedPlayers.find((selectedPlayer) => {
       return selectedPlayer.id === player.id;
@@ -35,7 +41,7 @@ export const Players: React.FC<Props> = ({ players, selectedPlayers, cos }) => {
           key={player.id}
           player={player}
           cos={cos}
-          isSelected={isSelected(player)}
+          isSelected={isSelected(player) && !isPeaceful}
         />
       ))}
     </ContentBox>

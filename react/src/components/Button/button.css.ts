@@ -69,6 +69,9 @@ export const button = cva({
         color: '#ADB5BD',
         cursor: 'not-allowed',
         border: 'none',
+        _hover: {
+          backgroundColor: '#F1F3F5',
+        },
       },
     },
   },

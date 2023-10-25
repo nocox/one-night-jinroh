@@ -86,10 +86,10 @@ export const VoteForm: React.FC<Props> = ({
           <Button
             type="submit"
             onClick={handleSubmit}
-            color={'blueFill'}
             disabled={votingDestination !== undefined}
+            isDisabled={votingDestination !== undefined}
           >
-            選んだ相手と入れ替える
+            投票する
           </Button>
         </div>
         {errorMessage && (

@@ -10,7 +10,6 @@ const styles = {
     borderRadius: '0.5rem',
   }),
   completeButton: css({
-    display: 'block',
     width: '20rem',
     margin: '3rem auto 0',
   }),
@@ -34,14 +33,16 @@ export const NightActionFormBox: React.FC<Props> = ({
   return (
     <>
       <form className={styles.form}>{children}</form>
-      <Button
-        disabled={doneNightAct}
-        isDisabled={doneNightAct}
-        customStyles={styles.completeButton}
-        onClick={handleDoneNightAct}
-      >
-        完了
-      </Button>
+      <div className={styles.completeButton}>
+        <Button
+          fullWidth
+          disabled={doneNightAct}
+          isDisabled={doneNightAct}
+          onClick={handleDoneNightAct}
+        >
+          完了
+        </Button>
+      </div>
 
       {doneNightAct && (
         <p className={styles.doneNightActText}>

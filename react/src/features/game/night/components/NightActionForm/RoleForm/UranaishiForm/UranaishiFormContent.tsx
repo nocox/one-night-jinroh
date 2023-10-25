@@ -19,6 +19,7 @@ const styles = {
     },
   }),
   actionButton: css({
+    maxWidth: '20rem',
     margin: '3rem auto 0',
   }),
 };
@@ -76,13 +77,11 @@ export const UranaishiFormContent: React.FC<Props> = ({
         </li>
       </ul>
 
-      <Button
-        type="submit"
-        onClick={handleSubmit}
-        customStyles={styles.actionButton}
-      >
-        占う
-      </Button>
+      <div className={styles.actionButton}>
+        <Button type="submit" onClick={handleSubmit} fullWidth>
+          占う
+        </Button>
+      </div>
     </>
   );
 };

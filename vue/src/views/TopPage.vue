@@ -33,7 +33,16 @@
     </section>
 
     <RoleDescription />
-    <p>ver 1.0.1</p>
+
+    <p class="contact-twitter">
+      お問い合わせ:
+      <a
+        href="https://twitter.com/yuru_jinrou"
+        target="_blank"
+        rel="noopener noreferrer"
+        >@yuru_jinrou
+      </a>
+    </p>
   </main>
 </template>
 
@@ -67,3 +76,10 @@ export default {
   methods: {},
 };
 </script>
+
+<style scoped>
+.contact-twitter {
+  text-align: center;
+  margin: 1rem auto;
+}
+</style>

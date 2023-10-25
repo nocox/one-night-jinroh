@@ -45,6 +45,9 @@ type Props = {
   gameRuleList: GameRule[];
   canVotePlayers: OtherPlayer[];
   votingDestination: number | undefined;
+  setVottingDestination: React.Dispatch<
+    React.SetStateAction<number | undefined>
+  >;
 };
 
 export const VoteTemplate: React.FC<Props> = ({
@@ -53,6 +56,7 @@ export const VoteTemplate: React.FC<Props> = ({
   gameRuleList,
   canVotePlayers,
   votingDestination,
+  setVottingDestination,
 }) => {
   return (
     <DefaultLayout>
@@ -78,6 +82,7 @@ export const VoteTemplate: React.FC<Props> = ({
           <VoteForm
             canVotePlayers={canVotePlayers}
             votingDestination={votingDestination}
+            setVotingDestination={setVottingDestination}
           />
         </div>
       </div>

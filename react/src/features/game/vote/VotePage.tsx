@@ -5,8 +5,14 @@ import { useGameRule, useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const VotePage: React.FC = () => {
-  const { gameId, players, nightActLog, canVotePlayers, votingDestination } =
-    useVoteData();
+  const {
+    gameId,
+    players,
+    nightActLog,
+    canVotePlayers,
+    votingDestination,
+    setVotingDestination,
+  } = useVoteData();
 
   const { gameRuleList } = useGameRule(gameId);
 
@@ -30,6 +36,7 @@ export const VotePage: React.FC = () => {
       gameRuleList={gameRuleList}
       canVotePlayers={canVotePlayers}
       votingDestination={votingDestination}
+      setVottingDestination={setVotingDestination}
     />
   );
 };

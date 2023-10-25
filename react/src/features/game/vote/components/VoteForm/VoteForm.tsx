@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { css } from 'styled-system/css';
 import { Button, ContentBox } from '@/components';
 import type { OtherPlayer } from '@/features/game/type';
-import { postVoteForm } from '@/features/game/vote/api';
+import { useVoteForm } from '@/features/game/vote/hooks/useVoteForm';
 
 const styles = {
   title: css({
@@ -35,31 +34,21 @@ const styles = {
 type Props = {
   canVotePlayers: OtherPlayer[];
   votingDestination: number | undefined;
+  setVotingDestination: React.Dispatch<
+    React.SetStateAction<number | undefined>
+  >;
 };
 export const VoteForm: React.FC<Props> = ({
   canVotePlayers,
   votingDestination,
+  setVotingDestination,
 }) => {
-  const [selectedPlayerId, setSelectedPlayerId] = useState<number | undefined>(
-    votingDestination,
-  );
-  const [errorMessage, setErrorMessage] = useState<string>('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedPlayerId(Number(e.target.value));
-  };
-
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (selectedPlayerId === undefined) {
-      setErrorMessage('相手を選択してください。');
-
-      return;
-    }
-
-    await postVoteForm({ gameParticipantId: selectedPlayerId });
-    // FIXME バックエンドからのレスポンスを受け取りたい(今は何も返していない)
-  };
+  const {
+    selectedPlayerId,
+    handleSelectedPlayerIdChange,
+    handleVoteSubmit,
+    errorMessage,
+  } = useVoteForm(votingDestination, setVotingDestination);
 
   return (
     <ContentBox>
@@ -74,7 +63,7 @@ export const VoteForm: React.FC<Props> = ({
                   name="votingDestination"
                   value={player.id}
                   checked={selectedPlayerId === player.id}
-                  onChange={handleChange}
+                  onChange={handleSelectedPlayerIdChange}
                   disabled={votingDestination !== undefined}
                 />
                 {player.name}
@@ -85,7 +74,7 @@ export const VoteForm: React.FC<Props> = ({
         <div className={styles.voteButtonWrapper}>
           <Button
             type="submit"
-            onClick={handleSubmit}
+            onClick={handleVoteSubmit}
             disabled={votingDestination !== undefined}
             isDisabled={votingDestination !== undefined}
           >

@@ -1,4 +1,5 @@
 import { VoteTemplate } from './VoteTemplate';
+import { VoteStartModal } from './components/VoteStartModal';
 import { useVoteData } from './hooks/useVoteData';
 import { Loading } from '@/components';
 import { useGameRule, useWebSocket } from '@/hooks';
@@ -30,13 +31,16 @@ export const VotePage: React.FC = () => {
     canVotePlayers === undefined ? (
     <Loading />
   ) : (
-    <VoteTemplate
-      nightActLog={nightActLog}
-      players={players}
-      gameRuleList={gameRuleList}
-      canVotePlayers={canVotePlayers}
-      votingDestination={votingDestination}
-      setVottingDestination={setVotingDestination}
-    />
+    <>
+      <VoteTemplate
+        nightActLog={nightActLog}
+        players={players}
+        gameRuleList={gameRuleList}
+        canVotePlayers={canVotePlayers}
+        votingDestination={votingDestination}
+        setVottingDestination={setVotingDestination}
+      />
+      <VoteStartModal />
+    </>
   );
 };

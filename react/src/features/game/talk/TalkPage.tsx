@@ -1,3 +1,4 @@
+import { TalkStartModal } from '@/features/game/talk/components/TalkStartModal';
 import { TalkTemplate } from './TalkTemplate';
 import { useTalkData } from './hooks/useTalkData';
 import { Loading } from '@/components';
@@ -63,12 +64,15 @@ export const TalkPage: React.FC = () => {
     gameRuleList === undefined ? (
     <Loading />
   ) : (
-    <TalkTemplate
-      players={players}
-      nightActLog={nightActLog}
-      hostFlg={hostFlg}
-      getMyPlayer={getMyPlayer}
-      gameRuleList={gameRuleList}
-    />
+    <>
+      <TalkTemplate
+        players={players}
+        nightActLog={nightActLog}
+        hostFlg={hostFlg}
+        getMyPlayer={getMyPlayer}
+        gameRuleList={gameRuleList}
+      />
+      <TalkStartModal />
+    </>
   );
 };

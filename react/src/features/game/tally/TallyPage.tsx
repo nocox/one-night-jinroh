@@ -1,5 +1,6 @@
 import { TallyTemplate } from './TallyTemplate';
 import { fetchResult } from './api';
+import { TallyStartModal } from './components/TallyStartModal';
 import { useTallyData } from './hooks/useTallyData';
 import { Loading } from '@/components';
 import { useGameRule, useWebSocket } from '@/hooks';
@@ -37,14 +38,17 @@ export const TallyPage: React.FC = () => {
     gameRuleList === undefined ? (
     <Loading />
   ) : (
-    <TallyTemplate
-      hostFlag={hostFlag}
-      selectedPlayers={selectedPlayers}
-      playersWithVoteCount={playersWithVoteCount}
-      gameRuleList={gameRuleList}
-      isPeaceful={isPeaceful}
-      cos={cos}
-      handleClickResultButton={handleClickResultButton}
-    />
+    <>
+      <TallyTemplate
+        hostFlag={hostFlag}
+        selectedPlayers={selectedPlayers}
+        playersWithVoteCount={playersWithVoteCount}
+        gameRuleList={gameRuleList}
+        isPeaceful={isPeaceful}
+        cos={cos}
+        handleClickResultButton={handleClickResultButton}
+      />
+      <TallyStartModal />
+    </>
   );
 };

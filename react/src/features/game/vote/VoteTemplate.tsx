@@ -4,7 +4,7 @@ import { VoteForm } from './components/VoteForm';
 import { ContentBox, DefaultLayout } from '@/components';
 import { RoleList } from '@/features/game/components';
 import type { Player } from '@/features/game/talk/type';
-import type { OtherPlayer } from '@/features/game/type';
+import type { GameParticipant } from '@/features/game/type';
 import type { GameRule } from '@/type';
 
 const styles = {
@@ -43,7 +43,7 @@ type Props = {
   nightActLog: string | undefined;
   players: Player[];
   gameRuleList: GameRule[];
-  canVotePlayers: OtherPlayer[];
+  canVotePlayers: GameParticipant[];
   votingDestination: number | undefined;
   setVottingDestination: React.Dispatch<
     React.SetStateAction<number | undefined>

@@ -1,18 +1,18 @@
 import { z } from 'zod';
-import type { CoBean, GameIndex, OtherPlayer } from '@/features/game/type';
+import type { CoBean, GameIndex, GameParticipant } from '@/features/game/type';
 import {
   coBeanSchema,
   gameIndexSchema,
-  otherPlayerSchema,
+  gameParticipantSchema,
 } from '@/features/game/type';
 
 export type VoteIndex = {
-  canVotePlayers: OtherPlayer[];
+  canVotePlayers: GameParticipant[];
   votingDestination: number | null;
 };
 
 const voteIndexSchema = z.object({
-  canVotePlayers: z.array(otherPlayerSchema),
+  canVotePlayers: z.array(gameParticipantSchema),
   votingDestination: z.number().nullable(),
 });
 

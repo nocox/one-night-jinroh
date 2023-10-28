@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { fetchVoteIndex } from '../api';
 import type { Player } from '@/features/game/talk/type';
-import type { OtherPlayer } from '@/features/game/type';
+import type { GameParticipant } from '@/features/game/type';
 
 export const useVoteData = (): {
   gameId: number | undefined;
   nightActLog: string | undefined;
   players: Player[] | undefined;
-  canVotePlayers: OtherPlayer[] | undefined;
+  canVotePlayers: GameParticipant[] | undefined;
   votingDestination: number | undefined;
   setVotingDestination: React.Dispatch<
     React.SetStateAction<number | undefined>
@@ -17,7 +17,7 @@ export const useVoteData = (): {
   const [nightActLog, setNightActLog] = useState<string | undefined>();
   const [players, setPlayers] = useState<Player[] | undefined>();
   const [canVotePlayers, setCanVotePlayers] = useState<
-    OtherPlayer[] | undefined
+    GameParticipant[] | undefined
   >();
   const [votingDestination, setVotingDestination] = useState<
     number | undefined

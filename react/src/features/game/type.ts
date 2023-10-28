@@ -40,14 +40,14 @@ export const roleBeanSchema = z.object({
   ]),
 });
 
-export type OtherPlayer = {
+export type GameParticipant = {
   hostFlag: boolean;
   id: number;
   name: string;
   role: RoleBean;
 };
 
-export const otherPlayerSchema = z.object({
+export const gameParticipantSchema = z.object({
   hostFlag: z.boolean(),
   id: z.number(),
   name: z.string(),
@@ -57,7 +57,7 @@ export const otherPlayerSchema = z.object({
 export type GameIndex = {
   hostFlag: boolean;
   nightActLog: string | null;
-  otherPlayerList: OtherPlayer[];
+  otherPlayerList: GameParticipant[];
   playerId: number;
   playerName: string;
   playerRole: RoleBean;
@@ -66,7 +66,7 @@ export type GameIndex = {
 export const gameIndexSchema = z.object({
   hostFlag: z.boolean(),
   nightActLog: z.string().nullable(),
-  otherPlayerList: z.array(otherPlayerSchema),
+  otherPlayerList: z.array(gameParticipantSchema),
   playerId: z.number(),
   playerName: z.string(),
   playerRole: roleBeanSchema,

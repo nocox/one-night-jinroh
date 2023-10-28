@@ -71,3 +71,9 @@ export const gameIndexSchema = z.object({
   playerName: z.string(),
   playerRole: roleBeanSchema,
 });
+
+export const isGameIndexSchema = (value: unknown): value is GameIndex => {
+  return gameIndexSchema.safeParse(value).success;
+};
+
+export type FetchGameIndex = () => Promise<GameIndex>;

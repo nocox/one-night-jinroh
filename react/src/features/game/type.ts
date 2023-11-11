@@ -76,4 +76,6 @@ export const isGameIndexSchema = (value: unknown): value is GameIndex => {
   return gameIndexSchema.safeParse(value).success;
 };
 
-export type FetchGameIndex = () => Promise<GameIndex>;
+type FetchGameIndexParam = 'night' | 'talk' | 'vote' | 'tally' | 'result';
+
+export type FetchGameIndex = (param: FetchGameIndexParam) => Promise<GameIndex>;

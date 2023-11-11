@@ -3,8 +3,8 @@ import type { FetchGameIndex, GameIndex } from '@/features/game/type';
 import { isGameIndexSchema } from '@/features/game/type';
 import { JINROH_API_BASE_URL } from '@/url';
 
-export const fetchGameIndex: FetchGameIndex = async () => {
-  const res = await fetch(`${JINROH_API_BASE_URL}/game-index`, {
+export const fetchGameIndex: FetchGameIndex = async (param) => {
+  const res = await fetch(`${JINROH_API_BASE_URL}/game-index?term=${param}`, {
     method: 'GET',
     credentials: 'include',
   });

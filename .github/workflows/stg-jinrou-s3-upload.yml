@@ -15,18 +15,18 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Install Vue Dependencies
+      - name: Install React Dependencies
         run: npm install
-        working-directory: ./vue
+        working-directory: ./react
 
       - name: Install NodeJS
         uses: actions/setup-node@v3
         with:
-          node-version: '16.16.0'
+          node-version: '18.15.0'
 
-      - name: Build Vue
+      - name: Build React
         run: npm run build-v2
-        working-directory: ./vue
+        working-directory: ./react
 
       - name: Build Spring boot
         run: ./gradlew bootJar

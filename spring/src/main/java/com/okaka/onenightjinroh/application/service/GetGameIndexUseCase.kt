@@ -1,9 +1,6 @@
 package com.okaka.onenightjinroh.application.service
 
-import com.okaka.onenightjinroh.application.domain.GameParticipant
-import com.okaka.onenightjinroh.application.domain.GameParticipants
-import com.okaka.onenightjinroh.application.domain.Role
-import com.okaka.onenightjinroh.application.domain.RoleNightActFormatter
+import com.okaka.onenightjinroh.application.domain.*
 import com.okaka.onenightjinroh.application.repository.GameParticipantRepository
 import com.okaka.onenightjinroh.application.repository.RoleNightActFormatterRepository
 import org.springframework.stereotype.Service
@@ -14,7 +11,7 @@ class GetGameIndexUseCase(
     private val roleNightActFormatterRepository: RoleNightActFormatterRepository
 
 ) {
-    operator fun invoke(gameId: Long, participantId: Long): Dto {
+    operator fun invoke(gameId: Long, participantId: Long, term: GameTerm): Dto {
         val gameParticipants = GameParticipants.of(gameParticipantRepository.findByGameIdWithUserAndRole(gameId))
         val roleNightActFormatter: RoleNightActFormatter? =
             roleNightActFormatterRepository.fetchNightAct(gameId, participantId).orElse(null)

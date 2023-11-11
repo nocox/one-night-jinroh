@@ -1,7 +1,9 @@
 package com.okaka.onenightjinroh.api
 
+import com.okaka.onenightjinroh.application.domain.GameTerm
 import com.okaka.onenightjinroh.application.service.GetGameIndexUseCase
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpSession
 
@@ -10,15 +12,16 @@ class GameIndexController(
     private val getGameIndexUseCase: GetGameIndexUseCase,
 ) {
 
+    // FIXME: 実装中のため一時的にrequiredをfalseにしているが、最終的にはtrueにしたい
     @RequestMapping(path = ["/game-index"])
-    fun getGameRule(session: HttpSession): Response {
+    fun getGameRule(session: HttpSession, @RequestParam(required = false, defaultValue = "night") term: String): Response {
         val strGameId: String = session.getAttribute("game_id").toString()
         val gameId = strGameId.toLong()
 
         val strGameParticipationId: String = session.getAttribute("game_participation_id").toString()
         val gameParticipantId = strGameParticipationId.toLong()
 
-        val dto = getGameIndexUseCase(gameId, gameParticipantId)
+        val dto = getGameIndexUseCase(gameId, gameParticipantId, toGameTerm(term))
         return Response(
             dto.playerId,
             dto.playerName,
@@ -51,6 +54,17 @@ class GameIndexController(
         val otherPlayerList: List<GameParticipantResponse>,
         val nightActLog: String
     )
+
+    fun toGameTerm(term: String): GameTerm {
+        return when(term) {
+            "night" -> GameTerm.NIGHT
+            "talk" -> GameTerm.TALK
+            "vote" -> GameTerm.VOTE
+            "tally" -> GameTerm.TALLY
+            "result" -> GameTerm.RESULT
+            else -> throw IllegalArgumentException()
+        }
+    }
 
     class RoleResponse(
         val roleId: Long,

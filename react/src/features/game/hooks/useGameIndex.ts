@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
 import { fetchGameIndex } from '@/features/game/api';
-import type { GameParticipant, RoleBean } from '@/features/game/type';
+import type {
+  GameParticipant,
+  RoleBean,
+  FetchGameIndexParam,
+} from '@/features/game/type';
 
-export const useGameIndex = (): {
+export const useGameIndex = (
+  param: FetchGameIndexParam,
+): {
   hostFlag: boolean | undefined;
   nightActLog: string | undefined;
   otherPlayerList: GameParticipant[] | undefined;
@@ -21,7 +27,7 @@ export const useGameIndex = (): {
 
   useEffect(() => {
     const fetchGameIndexAsync = async () => {
-      const gameIndex = await fetchGameIndex();
+      const gameIndex = await fetchGameIndex(param);
 
       setHostFlag(gameIndex.hostFlag);
       setNightActLog(gameIndex.nightActLog ?? undefined);
@@ -32,7 +38,7 @@ export const useGameIndex = (): {
     };
 
     void fetchGameIndexAsync();
-  }, []);
+  }, [param]);
 
   return {
     hostFlag,

@@ -29,7 +29,10 @@ public class RoleNightActFormatterRepository {
     public Optional<? extends RoleNightActFormatter> fetchNightAct(Long gameId, Long gameParticipantId) {
         Role role = roleRepository.findByParticipationId(gameParticipantId);
         if (role instanceof Role.Uranaishi){
-            final var uranaishiNightAct = uranaishiNightActRepository.findByParticipationId(gameParticipantId).orElseThrow();
+            final var uranaishiNightAct = uranaishiNightActRepository.findByParticipationId(gameParticipantId).orElse(null);
+            if ( uranaishiNightAct == null ) {
+                return Optional.empty();
+            }
             final var toParticipant = gameParticipantRepository.findByParticipantId(uranaishiNightAct.getToGameParticipationId());
             final var holidayRoles = holidayRolesAdapter.findByGameId(gameId).getRoles();
             return Optional.of(UranaishiNightActFormatter.from(toParticipant, uranaishiNightAct, holidayRoles));

@@ -2,7 +2,7 @@ import { css } from 'styled-system/css';
 import { NightActionForm } from './components/NightActionForm';
 import { RoleDescription } from './components/RoleDescription';
 import { DefaultLayout } from '@/components';
-import type { GameIndex } from '@/features/game/type';
+import type { GameParticipant, RoleBean } from '@/features/game/type';
 
 const styles = {
   title: css({
@@ -15,23 +15,30 @@ const styles = {
 };
 
 type Props = {
-  gameIndex: GameIndex;
+  playerName: string;
+  playerRole: RoleBean;
+  otherPlayerList: GameParticipant[];
   doneNightAct: boolean;
 };
 
-export const NightTemplate: React.FC<Props> = ({ gameIndex, doneNightAct }) => {
+export const NightTemplate: React.FC<Props> = ({
+  playerName,
+  playerRole,
+  otherPlayerList,
+  doneNightAct,
+}) => {
   return (
     <DefaultLayout>
       <h2 className={styles.title}>
-        {gameIndex.playerName}さん、夜の行動を行ってください
+        {playerName}さん、夜の行動を行ってください
       </h2>
 
-      <RoleDescription roleId={gameIndex.playerRole.roleId} />
+      <RoleDescription roleId={playerRole.roleId} />
 
       <NightActionForm
         doneNightAct={doneNightAct}
-        playerRole={gameIndex.playerRole}
-        otherPlayerList={gameIndex.otherPlayerList}
+        playerRole={playerRole}
+        otherPlayerList={otherPlayerList}
       />
     </DefaultLayout>
   );

@@ -2,7 +2,7 @@ name: Build Jinroh and Upload S3 stg
 on:
   push:
       branches:
-        - develop
+        - feature/react/setting-deploy
 jobs:
   build:
     runs-on: ubuntu-latest

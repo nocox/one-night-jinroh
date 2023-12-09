@@ -8,6 +8,7 @@ import type {
 
 export const useGameIndex = (
   param: FetchGameIndexParam,
+  gameId: number | undefined,
 ): {
   hostFlag: boolean | undefined;
   nightActLog: string | undefined;
@@ -26,6 +27,9 @@ export const useGameIndex = (
   const [playerRole, setPlayerRole] = useState<RoleBean | undefined>(undefined);
 
   useEffect(() => {
+    if (gameId === undefined) {
+      return;
+    }
     const fetchGameIndexAsync = async () => {
       const gameIndex = await fetchGameIndex(param);
 
@@ -38,7 +42,7 @@ export const useGameIndex = (
     };
 
     void fetchGameIndexAsync();
-  }, [param]);
+  }, [param, gameId]);
 
   return {
     hostFlag,

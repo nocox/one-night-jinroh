@@ -11,7 +11,7 @@ export const fetchGameIndex: FetchGameIndex = async (param) => {
 
   if (!res.ok) {
     throw new UnexpectedError(`
-      fetchVoteIndex failed: ${res.status} ${res.statusText}
+      fetchGameIndex failed: ${res.status} ${res.statusText}
     `);
   }
 
@@ -19,7 +19,7 @@ export const fetchGameIndex: FetchGameIndex = async (param) => {
 
   if (!isGameIndexSchema(gameIndex)) {
     throw new InvalidResponseBodyError(`
-      fetchVoteIndex failed: ${JSON.stringify(gameIndex)}
+      fetchGameIndex failed: ${JSON.stringify(gameIndex)}
     `);
   }
 

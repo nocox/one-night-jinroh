@@ -29,7 +29,7 @@ export type RoleEnglishName =
   | 'turibito'
   | 'unknown';
 
-type RoleJapaneseName =
+export type RoleJapaneseName =
   | '村人'
   | '人狼'
   | '占い師'

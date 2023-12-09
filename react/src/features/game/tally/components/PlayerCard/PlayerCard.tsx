@@ -1,6 +1,6 @@
 import { css, cx } from 'styled-system/css';
 import type { GameParticipantWithVoteBean } from '@/features/game/tally/type';
-import type { CoBean } from '@/features/game/type';
+import type { CoRole } from '@/features/game/type';
 import { roles, unknownRole } from '@/features/role';
 
 const styles = {
@@ -57,7 +57,7 @@ const styles = {
 
 type Props = {
   player: GameParticipantWithVoteBean;
-  cos: CoBean[];
+  cos: CoRole[];
   isSelected: boolean;
 };
 

@@ -4,7 +4,7 @@ import { useTalkData } from './hooks/useTalkData';
 import { Loading } from '@/components';
 import { InvalidResponseBodyError, UnexpectedError } from '@/features/error';
 import { isCoBeans } from '@/features/game/type';
-import type { CoBean, CoBeans } from '@/features/game/type';
+import type { CoRole, CoBeans } from '@/features/game/type';
 import { useGameRule, useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
@@ -39,7 +39,7 @@ export const TalkPage: React.FC = () => {
 
       if (players === undefined) return;
 
-      function findCo(coBeans: CoBeans, id: number): CoBean | undefined {
+      function findCo(coBeans: CoBeans, id: number): CoRole | undefined {
         const co = coBeans.coBeans.find((co) => co.id === id);
 
         return co;

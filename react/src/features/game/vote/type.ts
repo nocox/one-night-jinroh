@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import type { CoBean, GameIndex, GameParticipant } from '@/features/game/type';
+import type { CoRole, GameIndex, GameParticipant } from '@/features/game/type';
 import {
-  coBeanSchema,
+  coRoleSchema,
   gameIndexSchema,
   gameParticipantSchema,
 } from '@/features/game/type';
@@ -20,14 +20,14 @@ export type VoteIndexRequestBody = {
   gameId: number;
   gameIndex: GameIndex;
   voteIndex: VoteIndex;
-  cos: CoBean[];
+  cos: CoRole[];
 };
 
 const voteIndexRequestBodySchema = z.object({
   gameId: z.number(),
   gameIndex: gameIndexSchema,
   voteIndex: voteIndexSchema,
-  cos: z.array(coBeanSchema),
+  cos: z.array(coRoleSchema),
 });
 
 export const isVoteIndexRequestBody = (

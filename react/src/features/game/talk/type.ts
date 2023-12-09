@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { coBeanSchema, gameIndexSchema } from '@/features/game/type';
-import type { CoBean, GameIndex, RoleBean } from '@/features/game/type';
+import { coRoleSchema, gameIndexSchema } from '@/features/game/type';
+import type { CoRole, GameIndex, RoleBean } from '@/features/game/type';
 import type { Role } from '@/features/role';
 
 /**
@@ -10,13 +10,13 @@ import type { Role } from '@/features/role';
 export type TalkIndexResponseBody = {
   gameId: number;
   gameIndex: GameIndex;
-  cos: CoBean[];
+  cos: CoRole[];
 };
 
 const talkIndexResponseBodySchema = z.object({
   gameId: z.number(),
   gameIndex: gameIndexSchema,
-  cos: z.array(coBeanSchema),
+  cos: z.array(coRoleSchema),
 });
 
 export const isTalkIndexResponseBody = (
@@ -34,7 +34,7 @@ export type Player = {
   id: number;
   name: string;
   role: RoleBean;
-  co: CoBean;
+  co: CoRole;
 };
 
 /**

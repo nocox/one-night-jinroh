@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { fetchVoteIndex } from '../api';
+import { useGameIndex } from '@/features/game/hooks/useGameIndex';
 import type { Player } from '@/features/game/talk/type';
-import type { GameParticipant } from '@/features/game/type';
+import type { CoRole, GameParticipant } from '@/features/game/type';
 
 export const useVoteData = (): {
   gameId: number | undefined;
@@ -14,8 +15,8 @@ export const useVoteData = (): {
   >;
 } => {
   const [gameId, setGameId] = useState<number | undefined>();
-  const [nightActLog, setNightActLog] = useState<string | undefined>();
   const [players, setPlayers] = useState<Player[] | undefined>();
+  const [cos, setCos] = useState<CoRole[] | undefined>(undefined);
   const [canVotePlayers, setCanVotePlayers] = useState<
     GameParticipant[] | undefined
   >();
@@ -26,31 +27,46 @@ export const useVoteData = (): {
   useEffect(() => {
     const fetchVoteIndexAsync = async () => {
       const voteIndexResponseBody = await fetchVoteIndex();
-      const { gameIndex, voteIndex, cos } = voteIndexResponseBody;
+      const { voteIndex } = voteIndexResponseBody;
 
-      const players: Player[] = [
-        {
-          id: gameIndex.playerId,
-          name: gameIndex.playerName,
-          role: gameIndex.playerRole,
-          co: cos.find((co) => co.id === gameIndex.playerId)!,
-        },
-        ...gameIndex.otherPlayerList.map((otherPlayer) => ({
-          id: otherPlayer.id,
-          name: otherPlayer.name,
-          role: otherPlayer.role,
-          co: cos.find((co) => co.id === otherPlayer.id)!,
-        })),
-      ];
+      setCos(voteIndexResponseBody.cos);
       setGameId(voteIndexResponseBody.gameId);
-      setPlayers(players);
-      setNightActLog(gameIndex.nightActLog ?? undefined);
       setCanVotePlayers(voteIndex.canVotePlayers);
       setVotingDestination(voteIndex.votingDestination ?? undefined);
     };
 
     void fetchVoteIndexAsync();
   }, []);
+
+  const { nightActLog, playerId, playerName, playerRole, otherPlayerList } =
+    useGameIndex('vote', gameId);
+
+  useEffect(() => {
+    if (
+      playerId === undefined ||
+      playerName === undefined ||
+      playerRole === undefined ||
+      otherPlayerList === undefined ||
+      cos === undefined
+    )
+      return;
+
+    const players: Player[] = [
+      {
+        id: playerId,
+        name: playerName,
+        role: playerRole,
+        co: cos.find((co) => co.id === playerId)!,
+      },
+      ...otherPlayerList.map((otherPlayer) => ({
+        id: otherPlayer.id,
+        name: otherPlayer.name,
+        role: otherPlayer.role,
+        co: cos.find((co) => co.id === otherPlayer.id)!,
+      })),
+    ];
+    setPlayers(players);
+  }, [playerId, playerName, playerRole, otherPlayerList, cos]);
 
   return {
     gameId,

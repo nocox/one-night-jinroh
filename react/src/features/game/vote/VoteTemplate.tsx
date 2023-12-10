@@ -3,8 +3,7 @@ import { Players } from '../talk/components/Players';
 import { VoteForm } from './components/VoteForm';
 import { ContentBox, DefaultLayout } from '@/components';
 import { RoleList } from '@/features/game/components';
-import type { Player } from '@/features/game/talk/type';
-import type { GameParticipant } from '@/features/game/type';
+import type { GameParticipant, GameParticipantWithCoRole } from '@/features/game/type';
 import type { GameRule } from '@/type';
 
 const styles = {
@@ -41,7 +40,7 @@ const styles = {
 
 type Props = {
   nightActLog: string | undefined;
-  players: Player[];
+  players: GameParticipantWithCoRole[];
   gameRuleList: GameRule[];
   canVotePlayers: GameParticipant[];
   votingDestination: number | undefined;

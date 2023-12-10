@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { type CoRole } from '../../type';
 import { fetchTalkIndex } from '../api';
 import { UnexpectedError } from '@/features/error';
@@ -63,13 +63,13 @@ export const useTalkData = (): {
     setPlayers(players);
   }, [playerId, playerName, playerRole, otherPlayerList, cos]);
 
-  const getMyPlayer = (): Player => {
+  const getMyPlayer = useCallback((): Player => {
     if (!players) {
       throw new UnexpectedError('players is undefined');
     }
 
     return players[0];
-  };
+  }, [players]);
 
   return {
     gameId,

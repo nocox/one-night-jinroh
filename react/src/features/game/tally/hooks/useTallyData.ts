@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useGameIndex } from '@/features/game/hooks/useGameIndex';
 import { fetchTallyIndexResponseBody } from '@/features/game/tally/api';
 import type { GameParticipantWithVoteBean } from '@/features/game/tally/type';
-import type { CoBean } from '@/features/game/type';
+import type { CoRole } from '@/features/game/type';
 
 export const useTallyData = (): {
   hostFlag: boolean | undefined;
@@ -9,9 +10,8 @@ export const useTallyData = (): {
   selectedPlayers: GameParticipantWithVoteBean[] | undefined;
   playersWithVoteCount: GameParticipantWithVoteBean[] | undefined;
   isPeaceful: boolean | undefined;
-  cos: CoBean[] | undefined;
+  cos: CoRole[] | undefined;
 } => {
-  const [hostFlag, setHostFlag] = useState<boolean | undefined>();
   const [gameId, setGameId] = useState<number | undefined>();
   const [selectedPlayers, setSelectedPlayers] = useState<
     GameParticipantWithVoteBean[] | undefined
@@ -20,14 +20,13 @@ export const useTallyData = (): {
     GameParticipantWithVoteBean[] | undefined
   >();
   const [isPeaceful, setIsPeaceful] = useState<boolean | undefined>(undefined);
-  const [cos, setCos] = useState<CoBean[] | undefined>();
+  const [cos, setCos] = useState<CoRole[] | undefined>();
 
   useEffect(() => {
     const fetchTalkIndexResponseBodyAsync = async () => {
       const tallyIndexResponseBody = await fetchTallyIndexResponseBody();
-      const { tallyResult, gameId, gameIndex, cos } = tallyIndexResponseBody;
+      const { tallyResult, gameId, cos } = tallyIndexResponseBody;
 
-      setHostFlag(gameIndex.hostFlag);
       setGameId(gameId);
       setSelectedPlayers(tallyResult.selectedPlayers);
       setPlayersWithVoteCount(tallyResult.players);
@@ -37,6 +36,8 @@ export const useTallyData = (): {
 
     void fetchTalkIndexResponseBodyAsync();
   }, []);
+
+  const { hostFlag } = useGameIndex('tally', gameId);
 
   return {
     hostFlag,

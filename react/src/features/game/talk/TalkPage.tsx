@@ -9,7 +9,7 @@ import { useGameRule, useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const TalkPage: React.FC = () => {
-  const { gameId, nightActLog, hostFlg, players, setPlayers, getMyPlayer } =
+  const { gameId, nightActLog, hostFlag, players, setPlayers, getMyPlayer } =
     useTalkData();
 
   const { gameRuleList } = useGameRule(gameId);
@@ -60,7 +60,7 @@ export const TalkPage: React.FC = () => {
   );
 
   return players === undefined ||
-    hostFlg === undefined ||
+    hostFlag === undefined ||
     gameRuleList === undefined ? (
     <Loading />
   ) : (
@@ -68,7 +68,7 @@ export const TalkPage: React.FC = () => {
       <TalkTemplate
         players={players}
         nightActLog={nightActLog}
-        hostFlg={hostFlg}
+        hostFlg={hostFlag}
         getMyPlayer={getMyPlayer}
         gameRuleList={gameRuleList}
       />

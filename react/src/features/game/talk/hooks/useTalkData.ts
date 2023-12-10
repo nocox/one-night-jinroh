@@ -1,21 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
-import { type CoRole } from '../../type';
 import { fetchTalkIndex } from '../api';
 import { UnexpectedError } from '@/features/error';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
 import type { Player } from '@/features/game/talk/type';
+import type { CoRole } from '@/features/game/type';
 
 export const useTalkData = (): {
   gameId: number | undefined;
   nightActLog: string | undefined;
-  hostFlg: boolean | undefined;
+  hostFlag: boolean | undefined;
   players: Player[] | undefined;
   setPlayers: React.Dispatch<React.SetStateAction<Player[] | undefined>>;
   getMyPlayer: () => Player;
 } => {
   const [gameId, setGameId] = useState<number | undefined>(undefined);
-  const [nightActLog, setNightActLog] = useState<string | undefined>(undefined);
-  const [hostFlg, setHostFlg] = useState<boolean | undefined>(undefined);
   const [cos, setCos] = useState<CoRole[] | undefined>(undefined);
   const [players, setPlayers] = useState<Player[] | undefined>(undefined);
 
@@ -23,18 +21,20 @@ export const useTalkData = (): {
     const fetchTalkIndexAsync = async () => {
       const talkIndexResponseBody = await fetchTalkIndex();
       setGameId(talkIndexResponseBody.gameId);
-      setNightActLog(talkIndexResponseBody.gameIndex.nightActLog ?? undefined);
-      setHostFlg(talkIndexResponseBody.gameIndex.hostFlag);
       setCos(talkIndexResponseBody.cos);
     };
 
     void fetchTalkIndexAsync();
   }, []);
 
-  const { playerId, playerName, playerRole, otherPlayerList } = useGameIndex(
-    'talk',
-    gameId,
-  );
+  const {
+    playerId,
+    playerName,
+    playerRole,
+    otherPlayerList,
+    nightActLog,
+    hostFlag,
+  } = useGameIndex('talk', gameId);
 
   useEffect(() => {
     if (
@@ -74,7 +74,7 @@ export const useTalkData = (): {
   return {
     gameId,
     nightActLog,
-    hostFlg,
+    hostFlag,
     players,
     setPlayers,
     getMyPlayer,

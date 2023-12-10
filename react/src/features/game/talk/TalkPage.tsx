@@ -1,60 +1,18 @@
-import { useEffect, useState } from 'react';
 import { TalkStartModal } from '@/features/game/talk/components/TalkStartModal';
 import { TalkTemplate } from './TalkTemplate';
 import { useTalkData } from './hooks/useTalkData';
 import { Loading } from '@/components';
 import { InvalidResponseBodyError, UnexpectedError } from '@/features/error';
-import { useGameIndex } from '@/features/game/hooks/useGameIndex';
-import type { Player } from '@/features/game/talk/type';
 import { isCoBeans } from '@/features/game/type';
 import type { CoRole, CoBeans } from '@/features/game/type';
 import { useGameRule, useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const TalkPage: React.FC = () => {
-  const { gameId, nightActLog, hostFlg, cos } = useTalkData();
-  const [players, setPlayers] = useState<Player[] | undefined>(undefined);
+  const { gameId, nightActLog, hostFlg, players, setPlayers, getMyPlayer } =
+    useTalkData();
 
   const { gameRuleList } = useGameRule(gameId);
-  const { playerId, playerName, playerRole, otherPlayerList } = useGameIndex(
-    'talk',
-    gameId,
-  );
-
-  useEffect(() => {
-    if (
-      playerId === undefined ||
-      playerName === undefined ||
-      playerRole === undefined ||
-      otherPlayerList === undefined ||
-      cos === undefined
-    )
-      return;
-
-    const players: Player[] = [
-      {
-        id: playerId,
-        name: playerName,
-        role: playerRole,
-        co: cos.find((co) => co.id === playerId)!,
-      },
-      ...otherPlayerList.map((otherPlayer) => ({
-        id: otherPlayer.id,
-        name: otherPlayer.name,
-        role: otherPlayer.role,
-        co: cos.find((co) => co.id === otherPlayer.id)!,
-      })),
-    ];
-    setPlayers(players);
-  }, [playerId, playerName, playerRole, otherPlayerList, cos]);
-
-  const getMyPlayer = (): Player => {
-    if (!players) {
-      throw new UnexpectedError('players is undefined');
-    }
-
-    return players[0];
-  };
 
   const subscribeEndTalk: Subscribe = {
     path: `/topic/end-talk/${gameId ?? ''}`,

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { coRoleSchema, gameIndexSchema } from '@/features/game/type';
-import type { CoRole, GameIndex, RoleBean } from '@/features/game/type';
+import type { CoRole, GameIndex } from '@/features/game/type';
 import type { Role } from '@/features/role';
 
 /**
@@ -28,19 +28,8 @@ export const isTalkIndexResponseBody = (
 export type FetchTalkIndex = () => Promise<TalkIndexResponseBody>;
 
 /**
- * プレーヤー
- */
-export type Player = {
-  id: number;
-  name: string;
-  role: RoleBean;
-  co: CoRole;
-};
-
-/**
  * COリクエスト用
  */
-
 type PostCoDto = {
   playerId: number;
   role: Role['englishName'];

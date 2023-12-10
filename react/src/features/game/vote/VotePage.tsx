@@ -8,7 +8,7 @@ import type { Subscribe } from '@/type';
 export const VotePage: React.FC = () => {
   const {
     gameId,
-    players,
+    gameParticipantsWithCoRole,
     nightActLog,
     canVotePlayers,
     votingDestination,
@@ -26,7 +26,7 @@ export const VotePage: React.FC = () => {
 
   useWebSocket(gameId !== undefined ? [subscribeDoneTally] : []);
 
-  return players === undefined ||
+  return gameParticipantsWithCoRole === undefined ||
     gameRuleList === undefined ||
     canVotePlayers === undefined ? (
     <Loading />
@@ -34,7 +34,7 @@ export const VotePage: React.FC = () => {
     <>
       <VoteTemplate
         nightActLog={nightActLog}
-        players={players}
+        players={gameParticipantsWithCoRole}
         gameRuleList={gameRuleList}
         canVotePlayers={canVotePlayers}
         votingDestination={votingDestination}

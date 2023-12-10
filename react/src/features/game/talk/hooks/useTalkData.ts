@@ -2,20 +2,23 @@ import { useCallback, useEffect, useState } from 'react';
 import { fetchTalkIndex } from '../api';
 import { UnexpectedError } from '@/features/error';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
-import type { Player } from '@/features/game/talk/type';
-import type { CoRole } from '@/features/game/type';
+import type { CoRole, GameParticipantWithCoRole } from '@/features/game/type';
 
 export const useTalkData = (): {
   gameId: number | undefined;
   nightActLog: string | undefined;
   hostFlag: boolean | undefined;
-  players: Player[] | undefined;
-  setPlayers: React.Dispatch<React.SetStateAction<Player[] | undefined>>;
-  getMyPlayer: () => Player;
+  gameParticipantsWithCoRole: GameParticipantWithCoRole[] | undefined;
+  setGameParticipantsWithCoRole: React.Dispatch<
+    React.SetStateAction<GameParticipantWithCoRole[] | undefined>
+  >;
+  getMyPlayer: () => GameParticipantWithCoRole;
 } => {
   const [gameId, setGameId] = useState<number | undefined>(undefined);
   const [cos, setCos] = useState<CoRole[] | undefined>(undefined);
-  const [players, setPlayers] = useState<Player[] | undefined>(undefined);
+  const [gameParticipantsWithCoRole, setGameParticipantsWithCoRole] = useState<
+    GameParticipantWithCoRole[] | undefined
+  >(undefined);
 
   useEffect(() => {
     const fetchTalkIndexAsync = async () => {
@@ -38,6 +41,7 @@ export const useTalkData = (): {
 
   useEffect(() => {
     if (
+      hostFlag === undefined ||
       playerId === undefined ||
       playerName === undefined ||
       playerRole === undefined ||
@@ -46,37 +50,39 @@ export const useTalkData = (): {
     )
       return;
 
-    const players: Player[] = [
+    const gameParticipantsWithCoRole: GameParticipantWithCoRole[] = [
       {
+        hostFlag,
         id: playerId,
         name: playerName,
         role: playerRole,
         co: cos.find((co) => co.id === playerId)!,
       },
       ...otherPlayerList.map((otherPlayer) => ({
+        hostFlag: otherPlayer.hostFlag,
         id: otherPlayer.id,
         name: otherPlayer.name,
         role: otherPlayer.role,
         co: cos.find((co) => co.id === otherPlayer.id)!,
       })),
     ];
-    setPlayers(players);
-  }, [playerId, playerName, playerRole, otherPlayerList, cos]);
+    setGameParticipantsWithCoRole(gameParticipantsWithCoRole);
+  }, [playerId, playerName, playerRole, otherPlayerList, cos, hostFlag]);
 
-  const getMyPlayer = useCallback((): Player => {
-    if (!players) {
+  const getMyPlayer = useCallback((): GameParticipantWithCoRole => {
+    if (!gameParticipantsWithCoRole) {
       throw new UnexpectedError('players is undefined');
     }
 
-    return players[0];
-  }, [players]);
+    return gameParticipantsWithCoRole[0];
+  }, [gameParticipantsWithCoRole]);
 
   return {
     gameId,
     nightActLog,
     hostFlag,
-    players,
-    setPlayers,
+    gameParticipantsWithCoRole,
+    setGameParticipantsWithCoRole,
     getMyPlayer,
   };
 };

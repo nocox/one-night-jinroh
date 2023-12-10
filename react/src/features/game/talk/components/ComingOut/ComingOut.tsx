@@ -1,7 +1,7 @@
 import { css, cx } from 'styled-system/css';
 import { ContentBox } from '@/components';
 import { postCo } from '@/features/game/talk/api';
-import type { Player } from '@/features/game/talk/type';
+import type { GameParticipantWithCoRole } from '@/features/game/type';
 import type { Role } from '@/features/role';
 import { roles } from '@/features/role';
 
@@ -46,7 +46,7 @@ const styles = {
 };
 
 type Props = {
-  getMyPlayer: () => Player;
+  getMyPlayer: () => GameParticipantWithCoRole;
 };
 
 export const ComingOut: React.FC<Props> = ({ getMyPlayer }) => {

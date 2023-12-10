@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { fetchVoteIndex } from '../api';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
-import type { Player } from '@/features/game/talk/type';
-import type { CoRole, GameParticipant } from '@/features/game/type';
+import type {
+  CoRole,
+  GameParticipant,
+  GameParticipantWithCoRole,
+} from '@/features/game/type';
 
 export const useVoteData = (): {
   gameId: number | undefined;
   nightActLog: string | undefined;
-  players: Player[] | undefined;
+  gameParticipantsWithCoRole: GameParticipantWithCoRole[] | undefined;
   canVotePlayers: GameParticipant[] | undefined;
   votingDestination: number | undefined;
   setVotingDestination: React.Dispatch<
@@ -15,7 +18,9 @@ export const useVoteData = (): {
   >;
 } => {
   const [gameId, setGameId] = useState<number | undefined>();
-  const [players, setPlayers] = useState<Player[] | undefined>();
+  const [gameParticipantsWithCoRole, setGameParticipantWithCoRole] = useState<
+    GameParticipantWithCoRole[] | undefined
+  >();
   const [cos, setCos] = useState<CoRole[] | undefined>(undefined);
   const [canVotePlayers, setCanVotePlayers] = useState<
     GameParticipant[] | undefined
@@ -38,11 +43,18 @@ export const useVoteData = (): {
     void fetchVoteIndexAsync();
   }, []);
 
-  const { nightActLog, playerId, playerName, playerRole, otherPlayerList } =
-    useGameIndex('vote', gameId);
+  const {
+    nightActLog,
+    playerId,
+    playerName,
+    playerRole,
+    otherPlayerList,
+    hostFlag,
+  } = useGameIndex('vote', gameId);
 
   useEffect(() => {
     if (
+      hostFlag === undefined ||
       playerId === undefined ||
       playerName === undefined ||
       playerRole === undefined ||
@@ -51,27 +63,29 @@ export const useVoteData = (): {
     )
       return;
 
-    const players: Player[] = [
+    const gameParticipantsWithCoRole: GameParticipantWithCoRole[] = [
       {
+        hostFlag,
         id: playerId,
         name: playerName,
         role: playerRole,
         co: cos.find((co) => co.id === playerId)!,
       },
       ...otherPlayerList.map((otherPlayer) => ({
+        hostFlag: otherPlayer.hostFlag,
         id: otherPlayer.id,
         name: otherPlayer.name,
         role: otherPlayer.role,
         co: cos.find((co) => co.id === otherPlayer.id)!,
       })),
     ];
-    setPlayers(players);
-  }, [playerId, playerName, playerRole, otherPlayerList, cos]);
+    setGameParticipantWithCoRole(gameParticipantsWithCoRole);
+  }, [playerId, playerName, playerRole, otherPlayerList, cos, hostFlag]);
 
   return {
     gameId,
     nightActLog,
-    players,
+    gameParticipantsWithCoRole,
     canVotePlayers,
     votingDestination,
     setVotingDestination,

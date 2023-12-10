@@ -63,6 +63,10 @@ export type GameParticipant = {
   role: RoleBean;
 };
 
+export type GameParticipantWithCoRole = GameParticipant & {
+  co: CoRole;
+};
+
 export const gameParticipantSchema = z.object({
   hostFlag: z.boolean(),
   id: z.number(),

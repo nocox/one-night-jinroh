@@ -1,5 +1,5 @@
 import { css } from 'styled-system/css';
-import type { Player } from '@/features/game/talk/type';
+import type { GameParticipantWithCoRole } from '@/features/game/type';
 import { roles, unknownRole } from '@/features/role';
 
 const styles = {
@@ -26,7 +26,7 @@ const styles = {
 };
 
 type Props = {
-  player: Player;
+  player: GameParticipantWithCoRole;
 };
 
 export const PlayerCard: React.FC<Props> = ({ player }) => {

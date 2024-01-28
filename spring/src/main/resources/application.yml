@@ -23,6 +23,5 @@ spring:
 
   web:
     resources:
-      static-locations: file:spring/src/main/resources/static/
       cache:
         period: 0

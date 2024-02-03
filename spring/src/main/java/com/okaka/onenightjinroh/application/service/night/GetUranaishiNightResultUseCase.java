@@ -1,6 +1,6 @@
 package com.okaka.onenightjinroh.application.service.night;
 
-import com.okaka.onenightjinroh.adapter.HolidayRolesAdapter;
+import com.okaka.onenightjinroh.domaimpl.HolidayRolesRepositoryImpl;
 import com.okaka.onenightjinroh.application.domain.HolidayRoles;
 import com.okaka.onenightjinroh.application.domain.Role;
 import com.okaka.onenightjinroh.application.domain.UranaishiNightAct;
@@ -22,7 +22,7 @@ public class GetUranaishiNightResultUseCase {
     @Autowired
     ExecuteNightUranaiQueryService queryService;
     @Autowired
-    HolidayRolesAdapter holidayRolesAdapter;
+    HolidayRolesRepositoryImpl holidayRolesRepositoryImpl;
     @Autowired
     UranaishiNightActRepository uranaishiNightActRepository;
 
@@ -38,7 +38,7 @@ public class GetUranaishiNightResultUseCase {
 
     private Optional<NightUranaiResultDto> getUranaiResult(UranaishiNightAct uranaishiNightAct, Long gameId) {
         if (uranaishiNightAct.isSelectedHolidayRoles()) {
-            HolidayRoles holidayRoles = holidayRolesAdapter.findByGameId(gameId);
+            HolidayRoles holidayRoles = holidayRolesRepositoryImpl.findByGameId(gameId);
             return Optional.of(new NightUranaiResultDto(
                     holidayRoles.getRoles(),
                     NightUranaiStatus.HOLIDAY_ROLES,

@@ -1,7 +1,7 @@
 package com.okaka.onenightjinroh.application.repository;
 
 
-import com.okaka.onenightjinroh.adapter.HolidayRolesAdapter;
+import com.okaka.onenightjinroh.domaimpl.HolidayRolesRepositoryImpl;
 import com.okaka.onenightjinroh.application.domain.OtherNightActFormatter;
 import com.okaka.onenightjinroh.application.domain.Role;
 import com.okaka.onenightjinroh.application.domain.RoleNightActFormatter;
@@ -20,7 +20,7 @@ public class RoleNightActFormatterRepository {
     @Autowired
     RoleRepository roleRepository;
     @Autowired
-    HolidayRolesAdapter holidayRolesAdapter;
+    HolidayRolesRepositoryImpl holidayRolesRepositoryImpl;
     @Autowired
     GameParticipantRepository gameParticipantRepository;
     @Autowired
@@ -34,7 +34,7 @@ public class RoleNightActFormatterRepository {
                 return Optional.empty();
             }
             final var toParticipant = gameParticipantRepository.findByParticipantId(uranaishiNightAct.getToGameParticipationId());
-            final var holidayRoles = holidayRolesAdapter.findByGameId(gameId).getRoles();
+            final var holidayRoles = holidayRolesRepositoryImpl.findByGameId(gameId).getRoles();
             return Optional.of(UranaishiNightActFormatter.from(toParticipant, uranaishiNightAct, holidayRoles));
         }
         else if (role instanceof Role.Kaito) {

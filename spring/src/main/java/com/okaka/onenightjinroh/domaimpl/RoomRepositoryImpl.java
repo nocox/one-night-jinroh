@@ -1,4 +1,4 @@
-package com.okaka.onenightjinroh.application.domaimpl;
+package com.okaka.onenightjinroh.domaimpl;
 
 import com.okaka.jinroh.persistence.RoomDao;
 import com.okaka.jinroh.persistence.RoomEntity;

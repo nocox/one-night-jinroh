@@ -2,7 +2,7 @@ package com.okaka.onenightjinroh.application.service.result;
 
 import com.okaka.onenightjinroh.application.domain.KaitoNightActFormatter;
 import com.okaka.onenightjinroh.application.domain.TallyResultConsideredNightAct;
-import com.okaka.onenightjinroh.application.port.TallyResultPort;
+import com.okaka.onenightjinroh.application.repository.TallyResultRepository;
 import com.okaka.onenightjinroh.application.service.result.rules.FailPeaceVillage;
 import com.okaka.onenightjinroh.application.service.result.rules.SimpleJinrohWin;
 import com.okaka.onenightjinroh.application.service.result.rules.SimpleVillageWin;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class JudgeFacade {
     @Autowired
-    TallyResultPort tallyResultPort;
+    TallyResultRepository tallyResultRepository;
 
     List<WinLoseConditionBase> winLoseConditions = Arrays.asList(
             new SimpleVillageWin(),
@@ -32,7 +32,7 @@ public class JudgeFacade {
             new TuribitoWin());
 
     public WinLoseConditionBase judge(Long gameId, Optional<KaitoNightActFormatter> kaitoNightActFormatter) {
-        List<TallyResultConsideredNightAct> tallyResults = tallyResultPort.searchTallyResults(gameId).stream()
+        List<TallyResultConsideredNightAct> tallyResults = tallyResultRepository.searchTallyResults(gameId).stream()
                 .map(tallyResult -> new TallyResultConsideredNightAct(tallyResult, kaitoNightActFormatter))
                 .collect(Collectors.toList());
 

@@ -11,7 +11,7 @@ import com.okaka.jinroh.persistence.UserDao;
 import com.okaka.jinroh.persistence.UserEntity;
 import com.okaka.onenightjinroh.application.domain.HolidayRoles;
 import com.okaka.onenightjinroh.application.domain.Role;
-import com.okaka.onenightjinroh.application.port.HolidayRolesPort;
+import com.okaka.onenightjinroh.application.repository.HolidayRolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,9 +52,9 @@ public class StartGameUseCase {
     @Autowired
     private RoomParticipantDao roomParticipantDao;
 
-
     @Autowired
-    private HolidayRolesPort holidayRolesPort;
+    private HolidayRolesRepository holidayRolesRepository;
+
 
     public GameStartWebSocketBean startGame(Long roomId, Long hostUserId) throws NotEnoughParticipantsException {
         int participantCount = roomParticipantDao.selectParticipantCount(roomId);
@@ -85,7 +85,7 @@ public class StartGameUseCase {
                 .stream().map(roleEntity -> Role.byRoleId(roleEntity.role_id, roleEntity.role_name))
                 .collect(Collectors.toList());
         HolidayRoles holidayRoles = new HolidayRoles(gameEntity.game_id, notUseRoles);
-        holidayRolesPort.save(holidayRoles);
+        holidayRolesRepository.save(holidayRoles);
 
         return new GameStartWebSocketBean(
                 roleSelectDao.selectRoleListByRuleId(gameEntity.rule_id),

@@ -5,7 +5,7 @@ import com.okaka.onenightjinroh.application.domain.GameParticipantsConsideredNig
 import com.okaka.onenightjinroh.application.domain.GameParticipantsWithResultAndCoState;
 import com.okaka.onenightjinroh.application.domain.GameResult;
 import com.okaka.onenightjinroh.application.domain.Judge;
-import com.okaka.onenightjinroh.application.port.HolidayRolesPort;
+import com.okaka.onenightjinroh.application.repository.HolidayRolesRepository;
 import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.repository.KaitoNightActRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class GetGameResultUseCase {
     @Autowired
     GameParticipantRepository gameParticipantRepository;
     @Autowired
-    HolidayRolesPort holidayRolesPort;
+    HolidayRolesRepository holidayRolesRepository;
     @Autowired
     KaitoNightActRepository kaitoNightActRepository;
     @Autowired
@@ -35,7 +35,7 @@ public class GetGameResultUseCase {
         final var coState = coStateFactory.create(gameId);
         final var gameParticipantsWithResultAndCoState = new GameParticipantsWithResultAndCoState(gameParticipantsConsideredNightAct, condition, coState);
 
-        final var holidayRoles = holidayRolesPort.findByGameId(gameId);
+        final var holidayRoles = holidayRolesRepository.findByGameId(gameId);
         return new GameResult(gameId, gameParticipantId, new Judge(condition.getResultText()), gameParticipantsWithResultAndCoState, holidayRoles);
     }
 }

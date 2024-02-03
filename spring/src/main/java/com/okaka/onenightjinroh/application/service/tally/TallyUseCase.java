@@ -4,7 +4,7 @@ import com.okaka.onenightjinroh.application.domain.Game;
 import com.okaka.onenightjinroh.application.domain.GameParticipant;
 import com.okaka.onenightjinroh.application.domain.TallyResult;
 import com.okaka.onenightjinroh.application.domain.Vote;
-import com.okaka.onenightjinroh.application.port.TallyResultPort;
+import com.okaka.onenightjinroh.application.repository.TallyResultRepository;
 import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class TallyUseCase {
     @Autowired
     GameParticipantRepository gameParticipantRepository;
     @Autowired
-    TallyResultPort tallyResultPort;
+    TallyResultRepository tallyResultRepository;
 
     public void tally(Long gameId) {
         List<Vote> votes = voteRepository.findByGameId(gameId);
@@ -32,7 +32,7 @@ public class TallyUseCase {
             Integer voteCount = TallyResult.countVote(gameParticipationId, votes);
             boolean selected = selectedParticipant.contains(gameParticipationId);
             TallyResult tallyResult = new TallyResult(game, gameParticipant, voteCount, selected);
-            tallyResultPort.saveGameVoteTally(tallyResult);
+            tallyResultRepository.saveGameVoteTally(tallyResult);
         });
     }
 }

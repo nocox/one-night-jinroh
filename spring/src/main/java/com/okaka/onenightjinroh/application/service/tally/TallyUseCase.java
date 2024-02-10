@@ -24,7 +24,7 @@ public class TallyUseCase {
     public void tally(Long gameId) {
         List<Vote> votes = voteRepository.findByGameId(gameId);
         List<GameParticipant> gameParticipants = gameParticipantRepository.findByGameIdWithUserAndRole(gameId);
-        Game game = new Game(gameId);
+        Game game = Game.Companion.singleCreate(gameId);
         List<Long> selectedParticipant = TallyResult.selectedParticipant(votes);
 
         gameParticipants.forEach(gameParticipant -> {

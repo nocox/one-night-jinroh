@@ -7,14 +7,17 @@ import org.seasar.doma.boot.ConfigAutowireable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @ConfigAutowireable
 @Dao
 @Repository
-public interface RuleDao {
+public interface GameTermDao {
+
     @Select
-    boolean existRule(String ruleName);
+    List<GameTermEntity> selectByGameId(Long gameId);
 
     @Insert
     @Transactional
-    int insert(RuleEntity ruleEntity);
+    int insert(GameTermEntity gameTermEntity);
 }

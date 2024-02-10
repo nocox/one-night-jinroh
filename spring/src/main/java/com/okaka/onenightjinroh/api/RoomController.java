@@ -30,9 +30,6 @@ public class RoomController {
     private StartGameUseCase startGameUseCase;
 
     @Autowired
-    private StartGameValidate startGameValidate;
-
-    @Autowired
     private FinishRoomUseCase finishRoomUseCase;
 
     @RequestMapping(path = "/room-index")

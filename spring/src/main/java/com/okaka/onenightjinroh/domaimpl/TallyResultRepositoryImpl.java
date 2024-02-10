@@ -68,7 +68,7 @@ public class TallyResultRepositoryImpl implements TallyResultRepository {
     }
 
     private TallyResult mapToDomain(GameVoteTallyEntity gameVoteTallyEntity, GameParticipationEntity gameParticipationEntity, UserEntity userEntity, RoleEntity roleEntity) {
-        Game game = new Game(gameVoteTallyEntity.game_id);
+        Game game = Game.Companion.singleCreate(gameVoteTallyEntity.game_id);
         GameParticipant gameParticipant = GameParticipantRepository.toDomainFromEntity(gameParticipationEntity, userEntity, roleEntity);
         Integer voteCount = gameVoteTallyEntity.vote_count;
         boolean selected = gameVoteTallyEntity.selected;

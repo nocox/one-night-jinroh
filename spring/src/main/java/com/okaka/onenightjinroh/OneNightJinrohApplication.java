@@ -39,6 +39,9 @@ public class OneNightJinrohApplication {
 	@Autowired
 	ClsRoomStatusDao clsRoomStatusDao;
 
+	@Autowired
+	ClsGameTermDao clsGameTermDao;
+
 	// Insert data at initailizing phase using ReservationDao#insert
 	@Bean
 	CommandLineRunner runner() {
@@ -65,6 +68,12 @@ public class OneNightJinrohApplication {
 		insertRoomStatus("InGame");
 		insertRoomStatus("Finished");
 
+		insertGameTerm("night");
+		insertGameTerm("talk");
+		insertGameTerm("vote");
+		insertGameTerm("tally");
+		insertGameTerm("result");
+
 		return null;
 	}
 
@@ -86,6 +95,12 @@ public class OneNightJinrohApplication {
 	private void insertRoomStatus(String roomStatus) {
 		if (!clsRoomStatusDao.exist(roomStatus)){
 			clsRoomStatusDao.insert(new ClsRoomStatusEntity(roomStatus));
+		}
+	}
+
+	private void insertGameTerm(String gameTerm) {
+		if (!clsGameTermDao.exist(gameTerm)){
+			clsGameTermDao.insert(new ClsGameTermEntity(gameTerm));
 		}
 	}
 }

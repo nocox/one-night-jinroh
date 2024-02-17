@@ -23,6 +23,10 @@ class Game(
                 term = GameTerm.NIGHT
             )
         }
+
+        fun of(gameId: Long, roomId: Long, rule: Rule, term: GameTerm): Game {
+            return Game(gameId, roomId, rule, term)
+        }
     }
 
     fun changeTerm(term: GameTerm): Game {

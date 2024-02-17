@@ -24,6 +24,10 @@ class Rule(
                 RULE_MAP[playerNum] ?: throw IllegalArgumentException()
             )
         }
+
+        fun of( ruleId: Long, ruleName: String, roleIds: List<Long>): Rule {
+            return Rule(ruleId, ruleName, roleIds)
+        }
     }
 
 }

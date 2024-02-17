@@ -15,7 +15,7 @@ import java.util.List;
 public interface GameTermDao {
 
     @Select
-    List<GameTermEntity> selectByGameId(Long gameId);
+    GameTermEntity selectByGameId(Long gameId);
 
     @Insert
     @Transactional

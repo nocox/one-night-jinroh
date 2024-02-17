@@ -3,6 +3,7 @@ package com.okaka.onenightjinroh.domaimpl
 import com.okaka.jinroh.persistence.*
 import com.okaka.onenightjinroh.application.domain.Game
 import com.okaka.onenightjinroh.application.domain.GameTerm
+import com.okaka.onenightjinroh.application.domain.Rule
 import com.okaka.onenightjinroh.application.repository.GameRepository
 import org.springframework.stereotype.Repository
 
@@ -14,7 +15,16 @@ class GameRepositoryDomaImpl(
     private val gameTermDao: GameTermDao
 ) : GameRepository {
     override fun find(gameId: Long): Game {
-        TODO("Not yet implemented")
+        val gameEntity = gameDao.select(gameId)
+        val roomId = gameEntity.room_id
+        val ruleEntity = ruleDao.select(gameEntity.rule_id)
+        val roleEntities = ruleSelectDao.selectRoleListByRuleId(ruleEntity.rule_id)
+        val roleIds = roleEntities.map { it.role_id }
+        val rule = Rule.of(ruleEntity.rule_id, ruleEntity.rule_name, roleIds)
+        val gameTermEntity = gameTermDao.selectByGameId(gameId)
+        val gameTerm = toGameTermDomainFromEntity(gameTermEntity)
+
+        return Game.of(gameId, roomId, rule, gameTerm)
     }
 
     override fun save(game: Game) {
@@ -43,13 +53,14 @@ class GameRepositoryDomaImpl(
 
         val gameTermEntity = GameTermEntity().also {
             it.game_id = game.gameId
-            it.game_term = game.term?.let { term -> toGameTermEntityFromDomain(term) } ?: throw IllegalArgumentException()
+            it.game_term =
+                game.term?.let { term -> toGameTermEntityFromDomain(term) } ?: throw IllegalArgumentException()
         }
         gameTermDao.insert(gameTermEntity)
     }
 
     private fun toGameTermEntityFromDomain(domain: GameTerm): String =
-        when (domain){
+        when (domain) {
             GameTerm.NIGHT -> "night"
             GameTerm.TALK -> "talk"
             GameTerm.VOTE -> "vote"
@@ -57,4 +68,13 @@ class GameRepositoryDomaImpl(
             GameTerm.RESULT -> "result"
         }
 
+    private fun toGameTermDomainFromEntity(entity: GameTermEntity): GameTerm =
+        when (entity.game_term) {
+            "night" -> GameTerm.NIGHT
+            "talk" -> GameTerm.TALK
+            "vote" -> GameTerm.VOTE
+            "tally" -> GameTerm.TALLY
+            "result" -> GameTerm.RESULT
+            else -> throw IllegalArgumentException()
+        }
 }

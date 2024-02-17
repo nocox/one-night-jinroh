@@ -14,6 +14,9 @@ public interface RuleDao {
     @Select
     boolean existRule(String ruleName);
 
+    @Select
+    RuleEntity select(Long roomId);
+
     @Insert
     @Transactional
     int insert(RuleEntity ruleEntity);

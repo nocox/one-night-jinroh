@@ -2,6 +2,7 @@ package com.okaka.onenightjinroh.api;
 
 import com.okaka.onenightjinroh.api.form.CoForm;
 import com.okaka.onenightjinroh.application.service.talk.CoUseCase;
+import com.okaka.onenightjinroh.application.service.talk.DoneTalkTermUseCase;
 import com.okaka.onenightjinroh.application.service.talk.GetTalkTermIndexUseCase;
 import com.okaka.onenightjinroh.application.service.talk.TalkTermIndexBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class TalkTermController {
 
     @Autowired
     CoUseCase coUseCase;
+
+    @Autowired
+    DoneTalkTermUseCase doneTalkTermUseCase;
 
     @Autowired
     HttpSession session;
@@ -42,6 +46,7 @@ public class TalkTermController {
     public int endTalk() {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);
+        doneTalkTermUseCase.done(gameId);
         messagingTemplate.convertAndSend("/topic/end-talk/" + gameId, "");
         return 0;
     }

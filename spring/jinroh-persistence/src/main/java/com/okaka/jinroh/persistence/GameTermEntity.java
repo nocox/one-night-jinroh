@@ -2,14 +2,17 @@ package com.okaka.jinroh.persistence;
 
 import org.seasar.doma.Column;
 import org.seasar.doma.Entity;
+import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 
 @Entity
 @Table(name = "GAME_TERM")
 public class GameTermEntity {
 
+    @Id
     @Column(name = "game_id")
     private Long game_id;
+
     private String game_term;
 
     public GameTermEntity() {

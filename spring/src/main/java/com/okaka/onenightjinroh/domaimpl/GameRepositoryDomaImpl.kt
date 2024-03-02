@@ -32,31 +32,42 @@ class GameRepositoryDomaImpl(
         val ruleEntity = RuleEntity().also {
             it.rule_name = rule.ruleName
         }
-        ruleDao.insert(ruleEntity)
 
-        rule.ruleId = ruleEntity.rule_id
+        if (rule.ruleId == null) {
+            ruleDao.insert(ruleEntity)
 
-        rule.roleIds.map { roleId ->
-            ruleSelectDao.insert(RoleSelectEntity().also {
-                it.role_id = roleId
-                it.rule_id = rule.ruleId
-            })
+            rule.ruleId = ruleEntity.rule_id
+
+            rule.roleIds.map { roleId ->
+                ruleSelectDao.insert(RoleSelectEntity().also {
+                    it.role_id = roleId
+                    it.rule_id = rule.ruleId
+                })
+            }
         }
 
         val gameEntity = GameEntity().also {
             it.room_id = game.roomId
             it.rule_id = rule.ruleId
         }
-        gameDao.insert(gameEntity)
 
-        game.gameId = gameEntity.game_id
+        if (game.gameId == null) {
+            gameDao.insert(gameEntity)
+            game.gameId = gameEntity.game_id
+            gameTermDao.insert(getGameTermEntity(game))
+        } else {
+            gameEntity.game_id = game.gameId
+            gameDao.update(gameEntity)
+            gameTermDao.update(getGameTermEntity(game))
+        }
+    }
 
-        val gameTermEntity = GameTermEntity().also {
+    private fun getGameTermEntity(game: Game): GameTermEntity {
+        return GameTermEntity().also {
             it.game_id = game.gameId
             it.game_term =
                 game.term?.let { term -> toGameTermEntityFromDomain(term) } ?: throw IllegalArgumentException()
         }
-        gameTermDao.insert(gameTermEntity)
     }
 
     private fun toGameTermEntityFromDomain(domain: GameTerm): String =

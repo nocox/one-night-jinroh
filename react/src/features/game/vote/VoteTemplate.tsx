@@ -3,7 +3,10 @@ import { Players } from '../talk/components/Players';
 import { VoteForm } from './components/VoteForm';
 import { ContentBox, DefaultLayout } from '@/components';
 import { RoleList } from '@/features/game/components';
-import type { GameParticipant, GameParticipantWithCoRole } from '@/features/game/type';
+import type {
+  GameParticipant,
+  GameParticipantWithCoRole,
+} from '@/features/game/type';
 import type { GameRule } from '@/type';
 
 const styles = {

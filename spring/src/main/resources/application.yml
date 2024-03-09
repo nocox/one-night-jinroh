@@ -7,7 +7,7 @@ doma:
 com:
   okaka:
     onenightjinroh:
-      domain: http://localhost:8081
+      domain: http://localhost:8081,http://localhost:5173
 
 spring:
   datasource:
@@ -20,8 +20,8 @@ spring:
     cache: false
     mode: HTML
     encoding: UTF-8
-    prefix: file:src/main/resources/templates/
 
-  resources:
-    cache:
-      period: 0
+  web:
+    resources:
+      cache:
+        period: 0

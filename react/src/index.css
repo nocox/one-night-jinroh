@@ -1,0 +1,22 @@
+@layer reset, base, tokens, recipes, utilities;
+
+@font-face {
+  font-family: mamelon;
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/Mamelon-3-Hi-Regular.woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: mamelon;
+  font-style: bold;
+  font-weight: 700;
+  src: url('./assets/fonts/Mamelon-5-Hi-Regular.woff2');
+  font-display: swap;
+}
+
+body {
+  font-family: mamelon, sans-serif;
+  color: #212121;
+}

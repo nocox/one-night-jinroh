@@ -1,41 +1,77 @@
 plugins {
-	id 'org.springframework.boot' version '2.3.4.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-	id 'java'
+    id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion" apply false
+    id 'org.jlleitschuh.gradle.ktlint' version '11.4.0' apply false
+    id 'org.jetbrains.kotlin.plugin.spring' version "$kotlinVersion" apply false
+
+	id 'org.springframework.boot' version "$springBootVersion" apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 	id 'com.diffplug.eclipse.apt' version '3.25.0'
 	id 'org.seasar.doma.compile' version '1.1.0'
+	id 'java-library'
 }
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
+apply plugin: 'org.jetbrains.kotlin.plugin.spring'
+
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+bootJar {
+    launchScript()
+}
+
+dependencies {
+    implementation project(":jinroh-persistence")
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation("org.postgresql:postgresql:42.3.2")
+
+    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
+
+    // https://mvnrepository.com/artifact/com.j256.cloudwatchlogbackappender/cloudwatchlogbackappender
+    implementation 'com.j256.cloudwatchlogbackappender:cloudwatchlogbackappender:2.1'
+
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+
+    runtimeOnly 'com.h2database:h2'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}
+
 
 allprojects {
     task hello {task -> println "I'm $task.project.name" }
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "org.seasar.doma.compile"
+    apply plugin: "java-library"
 
     group = 'com.okaka'
     version = '0.0.1-SNAPSHOT'
 
-    apply plugin: "java"
-    apply plugin: "io.spring.dependency-management"
-    apply plugin: "org.seasar.doma.compile"
-
-
-    bootJar {
-        launchScript()
-    }
 
     java {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    compileJava {
-        options.encoding = 'UTF-8'
-    }
-
-    compileTestJava {
-        options.encoding = 'UTF-8'
-    }
-
-    test {
-        useJUnitPlatform()
     }
 
     repositories {
@@ -44,33 +80,6 @@ allprojects {
         maven {url 'https://oss.sonatype.org/content/repositories/snapshots/'}
     }
 
-    dependencyManagement {
-        imports {
-            mavenBom "org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE"
-        }
-    }
-
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.boot:spring-boot-starter-websocket'
-
-        // https://mvnrepository.com/artifact/org.postgresql/postgresql
-        implementation("org.postgresql:postgresql:42.3.2")
-
-        implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
-
-        // https://mvnrepository.com/artifact/com.j256.cloudwatchlogbackappender/cloudwatchlogbackappender
-        implementation 'com.j256.cloudwatchlogbackappender:cloudwatchlogbackappender:2.1'
-
-        implementation 'org.slf4j:slf4j-api:1.7.30'
-        implementation 'ch.qos.logback:logback-classic:1.2.3'
-
-        runtimeOnly 'com.h2database:h2'
-        testImplementation('org.springframework.boot:spring-boot-starter-test') {
-            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-        }
-    }
 
 
     eclipse {
@@ -90,8 +99,4 @@ allprojects {
             javaRuntimeName = 'JavaSE-11'
         }
     }
-}
-
-dependencies {
-    implementation project(":jinroh-persistence")
 }

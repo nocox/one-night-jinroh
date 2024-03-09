@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 public class MyServiceBean {
 
     @Value("${com.okaka.onenightjinroh.domain}")
-    private String domain;
+    private String[] domain;
 
-    public String getDomain() {
+    public String[] getDomain() {
         return domain;
     }
 }

@@ -4,13 +4,19 @@ import { useTalkData } from './hooks/useTalkData';
 import { Loading } from '@/components';
 import { InvalidResponseBodyError, UnexpectedError } from '@/features/error';
 import { isCoBeans } from '@/features/game/type';
-import type { CoBean, CoBeans } from '@/features/game/type';
+import type { CoRole, CoBeans } from '@/features/game/type';
 import { useGameRule, useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const TalkPage: React.FC = () => {
-  const { gameId, players, nightActLog, hostFlg, setPlayers, getMyPlayer } =
-    useTalkData();
+  const {
+    gameId,
+    nightActLog,
+    hostFlag,
+    gameParticipantsWithCoRole,
+    setGameParticipantsWithCoRole,
+    getMyPlayer,
+  } = useTalkData();
 
   const { gameRuleList } = useGameRule(gameId);
 
@@ -37,21 +43,21 @@ export const TalkPage: React.FC = () => {
           Invalid response body: ${JSON.stringify(coBeans)}`);
       }
 
-      if (players === undefined) return;
+      if (gameParticipantsWithCoRole === undefined) return;
 
-      function findCo(coBeans: CoBeans, id: number): CoBean | undefined {
+      function findCo(coBeans: CoBeans, id: number): CoRole | undefined {
         const co = coBeans.coBeans.find((co) => co.id === id);
 
         return co;
       }
 
-      const newPlayers = players.map((player) => {
+      const newPlayers = gameParticipantsWithCoRole.map((player) => {
         const co = findCo(coBeans, player.id);
 
         return co === undefined ? player : { ...player, co };
       });
 
-      setPlayers(newPlayers);
+      setGameParticipantsWithCoRole(newPlayers);
     },
   };
 
@@ -59,16 +65,16 @@ export const TalkPage: React.FC = () => {
     gameId !== undefined ? [subscribeEndTalk, subscribeReceiveCo] : [],
   );
 
-  return players === undefined ||
-    hostFlg === undefined ||
+  return gameParticipantsWithCoRole === undefined ||
+    hostFlag === undefined ||
     gameRuleList === undefined ? (
     <Loading />
   ) : (
     <>
       <TalkTemplate
-        players={players}
+        players={gameParticipantsWithCoRole}
         nightActLog={nightActLog}
-        hostFlg={hostFlg}
+        hostFlg={hostFlag}
         getMyPlayer={getMyPlayer}
         gameRuleList={gameRuleList}
       />

@@ -1,6 +1,6 @@
 import { css } from 'styled-system/css';
 import { Button, ContentBox } from '@/components';
-import type { OtherPlayer } from '@/features/game/type';
+import type { GameParticipant } from '@/features/game/type';
 import { useVoteForm } from '@/features/game/vote/hooks/useVoteForm';
 
 const styles = {
@@ -32,7 +32,7 @@ const styles = {
 };
 
 type Props = {
-  canVotePlayers: OtherPlayer[];
+  canVotePlayers: GameParticipant[];
   votingDestination: number | undefined;
   setVotingDestination: React.Dispatch<
     React.SetStateAction<number | undefined>

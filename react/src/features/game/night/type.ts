@@ -1,6 +1,5 @@
 import { z } from 'zod';
-import type { GameIndex, RoleBean } from '@/features/game/type';
-import { gameIndexSchema } from '@/features/game/type';
+import type { RoleBean } from '@/features/game/type';
 
 /**
  * 夜の行動ページ読み込み時
@@ -8,13 +7,11 @@ import { gameIndexSchema } from '@/features/game/type';
 export type NightIndexResponseBody = {
   doneNightAct: boolean;
   gameId: number;
-  gameIndex: GameIndex;
 };
 
 const nightIndexResponseBodySchema = z.object({
   doneNightAct: z.boolean(),
   gameId: z.number(),
-  gameIndex: gameIndexSchema,
 });
 
 export const isNightIndexResponseBody = (

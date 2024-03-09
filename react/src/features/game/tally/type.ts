@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import type { CoBean, GameIndex, RoleBean } from '@/features/game/type';
+import type { CoRole, GameIndex, RoleBean } from '@/features/game/type';
 import {
-  coBeanSchema,
+  coRoleSchema,
   gameIndexSchema,
   roleBeanSchema,
 } from '@/features/game/type';
@@ -24,7 +24,7 @@ export type TallyIndexResponseBody = {
   gameId: number;
   gameIndex: GameIndex;
   tallyResult: TallyResultBean;
-  cos: CoBean[];
+  cos: CoRole[];
 };
 
 const gameParticipantWithVoteBeanSchema = z.object({
@@ -43,7 +43,7 @@ const tallyIndexResponseBodySchema = z.object({
     players: z.array(gameParticipantWithVoteBeanSchema),
     peacefulFlag: z.boolean(),
   }),
-  cos: z.array(coBeanSchema),
+  cos: z.array(coRoleSchema),
 });
 
 export const isTallyIndexResponseBody = (

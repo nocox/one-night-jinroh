@@ -1,4 +1,4 @@
-package com.okaka.onenightjinroh.application.domaimpl;
+package com.okaka.onenightjinroh.domaimpl;
 
 import com.okaka.jinroh.persistence.RoomDao;
 import com.okaka.jinroh.persistence.RoomEntity;
@@ -10,6 +10,7 @@ import com.okaka.onenightjinroh.application.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Repository
@@ -48,7 +49,7 @@ public class RoomRepositoryImpl implements RoomRepository {
         return entity.map(it -> new Room(
                 it.room_id,
                 it.uuid,
-                new Rule(it.rule_id, null),
+                new Rule(it.rule_id, "", new ArrayList<>()),
                 dbToDomainRoomStatus(it.room_status)
         ));
     }

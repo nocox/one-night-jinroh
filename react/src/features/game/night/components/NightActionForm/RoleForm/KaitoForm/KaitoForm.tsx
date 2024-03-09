@@ -5,10 +5,10 @@ import {
   fetchNightKaitoActionResult,
   postNightKaitoAction,
 } from '@/features/game/night/api';
-import type { OtherPlayer } from '@/features/game/type';
+import type { GameParticipant } from '@/features/game/type';
 
 type Props = {
-  otherPlayerList: OtherPlayer[];
+  otherPlayerList: GameParticipant[];
 };
 
 export const KaitoForm: React.FC<Props> = ({ otherPlayerList }) => {

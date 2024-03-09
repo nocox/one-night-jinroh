@@ -1,7 +1,7 @@
 import { css } from 'styled-system/css';
 import { PlayerCard } from '../PlayerCard';
 import { ContentBox } from '@/components';
-import type { Player } from '@/features/game/talk/type';
+import type { GameParticipantWithCoRole } from '@/features/game/type';
 
 const styles = {
   players: css({
@@ -13,7 +13,7 @@ const styles = {
 };
 
 type Props = {
-  players: Player[];
+  players: GameParticipantWithCoRole[];
 };
 
 export const Players: React.FC<Props> = ({ players }) => {

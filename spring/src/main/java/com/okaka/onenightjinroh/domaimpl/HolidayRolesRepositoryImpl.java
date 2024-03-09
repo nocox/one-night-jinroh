@@ -1,11 +1,11 @@
-package com.okaka.onenightjinroh.adapter;
+package com.okaka.onenightjinroh.domaimpl;
 
 import com.okaka.jinroh.persistence.HolidayRoleDao;
 import com.okaka.jinroh.persistence.HolidayRoleEntity;
 import com.okaka.jinroh.persistence.RoleDao;
 import com.okaka.onenightjinroh.application.domain.HolidayRoles;
 import com.okaka.onenightjinroh.application.domain.Role;
-import com.okaka.onenightjinroh.application.port.HolidayRolesPort;
+import com.okaka.onenightjinroh.application.repository.HolidayRolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class HolidayRolesAdapter implements HolidayRolesPort {
+public class HolidayRolesRepositoryImpl implements HolidayRolesRepository {
     @Autowired
     private HolidayRoleDao dao;
     @Autowired

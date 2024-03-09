@@ -1,11 +1,16 @@
 import { NightTemplate } from './NightTemplate';
 import { useNightData } from './hooks/useNightData';
 import { Loading } from '@/components';
+import { useGameIndex } from '@/features/game/hooks/useGameIndex';
 import { useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const NightPage: React.FC = () => {
-  const { gameId, gameIndex, doneNightAct } = useNightData();
+  const { gameId, doneNightAct } = useNightData();
+  const { playerName, playerRole, otherPlayerList } = useGameIndex(
+    'night',
+    gameId,
+  );
 
   const subscribeDoneNightActionOfAllPlayer: Subscribe = {
     path: `/topic/${gameId ?? ''}`,
@@ -18,11 +23,19 @@ export const NightPage: React.FC = () => {
     gameId !== undefined ? [subscribeDoneNightActionOfAllPlayer] : [],
   );
 
-  return gameIndex === undefined || doneNightAct === undefined ? (
+  return playerName === undefined ||
+    playerRole === undefined ||
+    otherPlayerList === undefined ||
+    doneNightAct === undefined ? (
     <Loading />
   ) : (
     <>
-      <NightTemplate gameIndex={gameIndex} doneNightAct={doneNightAct} />
+      <NightTemplate
+        playerName={playerName}
+        playerRole={playerRole}
+        otherPlayerList={otherPlayerList}
+        doneNightAct={doneNightAct}
+      />
     </>
   );
 };

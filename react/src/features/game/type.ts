@@ -1,21 +1,37 @@
 import { z } from 'zod';
+import type { RoleEnglishName, RoleJapaneseName } from '@/features/role';
 
-export type CoBean = {
-  id: number;
-  role: string;
+type ParticipantId = number;
+
+/**
+ * 人狼ゲームにおけるプレーヤーのCOした役職および参加者IDを表す
+ */
+export type CoRole = {
+  id: ParticipantId;
+  role: RoleEnglishName; // TODO: unknownの扱いについて検討する
 };
 
+/**
+ * バックエンドからのレスポンスの型
+ */
 export type CoBeans = {
-  coBeans: CoBean[];
+  coBeans: CoRole[];
 };
 
-export const coBeanSchema = z.object({
+export const coRoleSchema = z.object({
   id: z.number(),
-  role: z.string(),
+  role: z.union([
+    z.literal('murabito'),
+    z.literal('jinroh'),
+    z.literal('uranaishi'),
+    z.literal('kaito'),
+    z.literal('kyojin'),
+    z.literal('turibito'),
+  ]),
 });
 
 export const coBeansSchema = z.object({
-  coBeans: z.array(coBeanSchema),
+  coBeans: z.array(coRoleSchema),
 });
 
 export const isCoBeans = (value: unknown): value is CoBeans => {
@@ -24,7 +40,7 @@ export const isCoBeans = (value: unknown): value is CoBeans => {
 
 export type RoleBean = {
   roleId: number;
-  roleName: '人狼' | '村人' | '占い師' | '怪盗' | '狂人' | '吊人' | '不明';
+  roleName: RoleJapaneseName;
 };
 
 export const roleBeanSchema = z.object({
@@ -40,14 +56,18 @@ export const roleBeanSchema = z.object({
   ]),
 });
 
-export type OtherPlayer = {
+export type GameParticipant = {
   hostFlag: boolean;
   id: number;
   name: string;
   role: RoleBean;
 };
 
-export const otherPlayerSchema = z.object({
+export type GameParticipantWithCoRole = GameParticipant & {
+  co: CoRole;
+};
+
+export const gameParticipantSchema = z.object({
   hostFlag: z.boolean(),
   id: z.number(),
   name: z.string(),
@@ -57,7 +77,7 @@ export const otherPlayerSchema = z.object({
 export type GameIndex = {
   hostFlag: boolean;
   nightActLog: string | null;
-  otherPlayerList: OtherPlayer[];
+  otherPlayerList: GameParticipant[];
   playerId: number;
   playerName: string;
   playerRole: RoleBean;
@@ -66,8 +86,21 @@ export type GameIndex = {
 export const gameIndexSchema = z.object({
   hostFlag: z.boolean(),
   nightActLog: z.string().nullable(),
-  otherPlayerList: z.array(otherPlayerSchema),
+  otherPlayerList: z.array(gameParticipantSchema),
   playerId: z.number(),
   playerName: z.string(),
   playerRole: roleBeanSchema,
 });
+
+export const isGameIndexSchema = (value: unknown): value is GameIndex => {
+  return gameIndexSchema.safeParse(value).success;
+};
+
+export type FetchGameIndexParam =
+  | 'night'
+  | 'talk'
+  | 'vote'
+  | 'tally'
+  | 'result';
+
+export type FetchGameIndex = (param: FetchGameIndexParam) => Promise<GameIndex>;

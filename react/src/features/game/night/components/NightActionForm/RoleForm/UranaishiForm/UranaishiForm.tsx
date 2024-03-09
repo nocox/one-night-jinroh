@@ -10,7 +10,7 @@ import type {
   NightUranaiResult,
   UranaiStatus,
 } from '@/features/game/night/type';
-import type { OtherPlayer, RoleBean } from '@/features/game/type';
+import type { GameParticipant, RoleBean } from '@/features/game/type';
 
 const generateActLog = (nightUranaiActionResult: NightUranaiResult) => {
   const { status, participantId, roles, user } = nightUranaiActionResult;
@@ -41,7 +41,7 @@ const generateActLog = (nightUranaiActionResult: NightUranaiResult) => {
 };
 
 type Props = {
-  otherPlayerList: OtherPlayer[];
+  otherPlayerList: GameParticipant[];
 };
 
 export const UranaishiForm: React.FC<Props> = ({ otherPlayerList }) => {

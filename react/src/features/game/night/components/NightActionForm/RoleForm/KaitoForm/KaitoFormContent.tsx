@@ -1,6 +1,6 @@
 import { css } from 'styled-system/css';
 import { Button } from '@/components';
-import type { OtherPlayer } from '@/features/game/type';
+import type { GameParticipant } from '@/features/game/type';
 
 const styles = {
   ul: css({
@@ -26,7 +26,7 @@ const styles = {
 
 type Props = {
   errorMessage: string;
-  otherPlayerList: OtherPlayer[];
+  otherPlayerList: GameParticipant[];
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   selectedPlayerId: number | undefined;

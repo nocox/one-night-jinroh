@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 // TODO: Listで使用している箇所全てで反映する
 public class GameParticipants {
 
-    private final List<GameParticipant> participants;
+    public final List<GameParticipant> participants;
 
     private GameParticipants(List<GameParticipant> participants) {
         this.participants = participants;

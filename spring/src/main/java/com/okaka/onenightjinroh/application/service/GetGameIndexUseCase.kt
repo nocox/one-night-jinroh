@@ -13,7 +13,8 @@ class GetGameIndexUseCase(
     private val roleNightActFormatterRepository: RoleNightActFormatterRepository
 ) {
     operator fun invoke(gameId: Long, participantId: Long, term: GameTerm): Dto {
-        if(gameRepository.find(gameId).term != term) {
+        val game = gameRepository.find(gameId)
+        if (game.term != term) {
             throw IllegalArgumentException("進行状況が一致しません")
         }
 
@@ -21,15 +22,21 @@ class GetGameIndexUseCase(
         val roleNightActFormatter: RoleNightActFormatter? =
             roleNightActFormatterRepository.fetchNightAct(gameId, participantId).orElse(null)
         val myNightActLog: String = roleNightActFormatter?.toActLog() ?: ""
+        val displayableParticipantIds = getDisplayableParticipantId(gameId, participantId)
 
-        return of(gameParticipants, participantId, myNightActLog)
+        return of(gameParticipants, participantId, myNightActLog, displayableParticipantIds)
     }
 
-    private fun of(gameParticipants: GameParticipants, participantId: Long, nightActLog: String): Dto {
+    private fun of(
+        gameParticipants: GameParticipants,
+        participantId: Long,
+        nightActLog: String,
+        displayableParticipantIds: Set<Long>
+    ): Dto {
         val myself = gameParticipants.participants.first { it.gameParticipationId == participantId }
         val otherGameParticipants = gameParticipants.participants
             .filter { it.gameParticipationId != participantId }
-            .toList()
+            .map { it.also { if (!displayableParticipantIds.contains(it.gameParticipationId)) it.setUnknownRole() } }
         return Dto(
             myself.gameParticipationId,
             myself.user.userName,
@@ -38,6 +45,24 @@ class GetGameIndexUseCase(
             otherGameParticipants,
             nightActLog
         )
+    }
+
+    // 昔のロジックをそのまま流用している。(displayChecker)
+    // Beanで返す方式でコードが組まれているので改善する必要がある。
+    // 本来は、ドメイン知識として扱いたい。
+    fun getDisplayableParticipantId(
+        gameId: Long,
+        gameParticipantId: Long,
+    ): Set<Long> {
+        val gameParticipants = GameParticipants.of(gameParticipantRepository.findByGameIdWithUserAndRole(gameId))
+        val roleNightActFormatter = roleNightActFormatterRepository.fetchNightAct(gameId, gameParticipantId)
+        val displayChecker =
+            ParticipantDisplayChecker.of(gameParticipants.mySelf(gameParticipantId), roleNightActFormatter.orElse(null))
+
+        return gameParticipants.participants.map { displayChecker.check(it) }
+            .filter { it.role.roleId != Role.UNKNOWN_ROLE_ID }
+            .map { it.id }
+            .toSet()
     }
 
     class Dto(

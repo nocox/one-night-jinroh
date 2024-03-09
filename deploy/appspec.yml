@@ -4,9 +4,6 @@ files:
   - source: one-night-jinroh-0.0.1-SNAPSHOT.jar
     destination: /var/jinrohapp
     overwrite: yes
-  - source: jinroh-env
-    destination: /var/jinrohapp
-    overwrite: no # 検証環境の物を優先するが、存在しない時はこちらを優先する
 hooks:
   ApplicationStop:
     - location: scripts/appstop.sh

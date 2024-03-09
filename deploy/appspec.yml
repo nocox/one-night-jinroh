@@ -6,7 +6,7 @@ files:
     overwrite: yes
   - source: jinroh-env
     destination: /var/jinrohapp
-    overwrite: yes
+    overwrite: no # 検証環境の物を優先するが、存在しない時はこちらを優先する
 hooks:
   ApplicationStop:
     - location: scripts/appstop.sh

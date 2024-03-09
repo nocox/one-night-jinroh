@@ -4,7 +4,7 @@ import { Players } from './components/Players/Players';
 import { TallyBox } from './components/TallyBox/TallyBox';
 import { Button, DefaultLayout } from '@/components';
 import type { GameParticipantWithVoteBean } from '@/features/game/tally/type';
-import type { CoBean } from '@/features/game/type';
+import type { CoRole } from '@/features/game/type';
 import type { GameRule } from '@/type';
 
 const styles = {
@@ -54,7 +54,7 @@ type Props = {
   selectedPlayers: GameParticipantWithVoteBean[];
   playersWithVoteCount: GameParticipantWithVoteBean[];
   isPeaceful: boolean;
-  cos: CoBean[];
+  cos: CoRole[];
   handleClickResultButton: () => void;
 };
 

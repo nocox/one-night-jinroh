@@ -2,7 +2,7 @@ import { css } from 'styled-system/css';
 import { PlayerCard } from '../PlayerCard';
 import { ContentBox } from '@/components';
 import type { GameParticipantWithVoteBean } from '@/features/game/tally/type';
-import { type CoBean } from '@/features/game/type';
+import { type CoRole } from '@/features/game/type';
 
 const styles = {
   players: css({
@@ -17,7 +17,7 @@ type Props = {
   players: GameParticipantWithVoteBean[];
   selectedPlayers: GameParticipantWithVoteBean[];
   isPeaceful: boolean;
-  cos: CoBean[];
+  cos: CoRole[];
 };
 
 export const Players: React.FC<Props> = ({

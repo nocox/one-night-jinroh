@@ -16,37 +16,40 @@ export const Default: Story = {
       {
         id: 1,
         name: 'ホストのふくろう',
+        hostFlag: true,
         role: {
           roleId: 1,
           roleName: '村人',
         },
         co: {
           id: 1,
-          role: '村人',
+          role: 'murabito',
         },
       },
       {
         id: 2,
         name: 'いぬ',
+        hostFlag: false,
         role: {
           roleId: -1,
           roleName: '不明',
         },
         co: {
           id: 1,
-          role: '村人',
+          role: 'murabito',
         },
       },
       {
         id: 3,
         name: 'ねこ',
+        hostFlag: false,
         role: {
           roleId: -1,
           roleName: '不明',
         },
         co: {
           id: 1,
-          role: '村人',
+          role: 'murabito',
         },
       },
     ],
@@ -111,6 +114,7 @@ export const DoneVote: Story = {
     players: [
       {
         id: 1,
+        hostFlag: true,
         name: 'ホストのふくろう',
         role: {
           roleId: 1,
@@ -118,31 +122,33 @@ export const DoneVote: Story = {
         },
         co: {
           id: 1,
-          role: '村人',
+          role: 'murabito',
         },
       },
       {
         id: 2,
         name: 'いぬ',
+        hostFlag: false,
         role: {
           roleId: -1,
           roleName: '不明',
         },
         co: {
           id: 1,
-          role: '村人',
+          role: 'murabito',
         },
       },
       {
         id: 3,
         name: 'ねこ',
+        hostFlag: false,
         role: {
           roleId: -1,
           roleName: '不明',
         },
         co: {
           id: 1,
-          role: '村人',
+          role: 'murabito',
         },
       },
     ],

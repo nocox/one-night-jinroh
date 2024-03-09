@@ -15,37 +15,40 @@ export const Default: Story = {
       {
         id: 1,
         name: 'ホストのふくろう',
+        hostFlag: true,
         role: {
           roleId: 1,
           roleName: '村人',
         },
         co: {
           id: 1,
-          role: '村人',
+          role: 'murabito',
         },
       },
       {
         id: 2,
         name: 'いぬ',
+        hostFlag: false,
         role: {
           roleId: -1,
           roleName: '不明',
         },
         co: {
           id: 1,
-          role: '村人',
+          role: 'murabito',
         },
       },
       {
         id: 3,
         name: 'ねこ',
+        hostFlag: false,
         role: {
           roleId: -1,
           roleName: '不明',
         },
         co: {
           id: 1,
-          role: '村人',
+          role: 'murabito',
         },
       },
     ],
@@ -54,6 +57,7 @@ export const Default: Story = {
 
     getMyPlayer: () => {
       return {
+        hostFlag: false,
         id: 1,
         name: 'ホストのふくろう',
         role: {
@@ -62,7 +66,7 @@ export const Default: Story = {
         },
         co: {
           id: 1,
-          role: '村人',
+          role: 'murabito',
         },
       };
     },

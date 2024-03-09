@@ -2,9 +2,9 @@ import { css } from 'styled-system/css';
 import { postEndTalk } from './api';
 import { ComingOut } from './components/ComingOut';
 import { Players } from './components/Players';
-import type { Player } from './type';
 import { Button, ContentBox, DefaultLayout } from '@/components';
 import { RoleList } from '@/features/game/components';
+import type { GameParticipantWithCoRole } from '@/features/game/type';
 import type { GameRule } from '@/type';
 
 const styles = {
@@ -49,10 +49,10 @@ const handleEndTalk = async () => {
 };
 
 type Props = {
-  players: Player[];
+  players: GameParticipantWithCoRole[];
   nightActLog: string | undefined;
   hostFlg: boolean;
-  getMyPlayer: () => Player;
+  getMyPlayer: () => GameParticipantWithCoRole;
   gameRuleList: GameRule[];
 };
 export const TalkTemplate: React.FC<Props> = ({

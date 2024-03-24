@@ -1,6 +1,6 @@
 import { InvalidResponseBodyError, UnexpectedError } from '@/features/error';
-import type { FetchGameIndex, GameIndex } from '@/features/game/type';
-import { isGameIndexSchema } from '@/features/game/type';
+import { isGameIndexSchema} from '@/features/game/type';
+import type { FetchGameIndex ,GameIndexResponse} from '@/features/game/type';
 import { JINROH_API_BASE_URL } from '@/url';
 
 export const fetchGameIndex: FetchGameIndex = async (param) => {
@@ -15,13 +15,13 @@ export const fetchGameIndex: FetchGameIndex = async (param) => {
     `);
   }
 
-  const gameIndex = (await res.json()) as GameIndex;
+  const response = (await res.json()) as GameIndexResponse;
 
-  if (!isGameIndexSchema(gameIndex)) {
+  if (!isGameIndexSchema(response)) {
     throw new InvalidResponseBodyError(`
-      fetchGameIndex failed: ${JSON.stringify(gameIndex)}
+      fetchGameIndex failed: ${JSON.stringify(response)}
     `);
   }
 
-  return gameIndex;
+  return response;
 };

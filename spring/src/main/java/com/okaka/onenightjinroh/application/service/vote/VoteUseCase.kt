@@ -1,16 +1,11 @@
 package com.okaka.onenightjinroh.application.service.vote
 
-import com.okaka.onenightjinroh.application.domain.GameParticipant
 import com.okaka.onenightjinroh.application.domain.GameTerm
 import com.okaka.onenightjinroh.application.domain.Vote
 import com.okaka.onenightjinroh.application.repository.GameParticipantRepository
 import com.okaka.onenightjinroh.application.repository.GameRepository
 import com.okaka.onenightjinroh.application.repository.VoteRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.function.Function
-import java.util.function.Predicate
-import java.util.stream.Collectors
 
 
 @Service
@@ -39,7 +34,7 @@ class VoteUseCase(
     }
 
     private fun doneAllVote(gameId: Long) {
-        val game = gameRepository.find(gameId)
+        val game = gameRepository.find(gameId) ?: throw IllegalArgumentException()
         val changedGame = game.changeTerm(GameTerm.TALLY)
         gameRepository.save(changedGame)
     }

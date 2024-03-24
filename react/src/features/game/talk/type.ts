@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { coRoleSchema, gameIndexSchema } from '@/features/game/type';
+import { coRoleSchema, gameIndexResponseSchema } from '@/features/game/type';
 import type { CoRole, GameIndex } from '@/features/game/type';
 import type { Role } from '@/features/role';
 
@@ -15,7 +15,7 @@ export type TalkIndexResponseBody = {
 
 const talkIndexResponseBodySchema = z.object({
   gameId: z.number(),
-  gameIndex: gameIndexSchema,
+  gameIndex: gameIndexResponseSchema,
   cos: z.array(coRoleSchema),
 });
 

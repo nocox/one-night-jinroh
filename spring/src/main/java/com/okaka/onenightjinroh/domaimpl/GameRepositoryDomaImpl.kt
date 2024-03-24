@@ -14,8 +14,8 @@ class GameRepositoryDomaImpl(
     private val ruleSelectDao: RoleSelectDao,
     private val gameTermDao: GameTermDao
 ) : GameRepository {
-    override fun find(gameId: Long): Game {
-        val gameEntity = gameDao.select(gameId)
+    override fun find(gameId: Long): Game? {
+        val gameEntity = gameDao.select(gameId) ?: return null
         val roomId = gameEntity.room_id
         val ruleEntity = ruleDao.select(gameEntity.rule_id)
         val roleEntities = ruleSelectDao.selectRoleListByRuleId(ruleEntity.rule_id)

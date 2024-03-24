@@ -2,7 +2,7 @@ import { z } from 'zod';
 import type { CoRole, GameIndex, RoleBean } from '@/features/game/type';
 import {
   coRoleSchema,
-  gameIndexSchema,
+  gameIndexResponseSchema,
   roleBeanSchema,
 } from '@/features/game/type';
 
@@ -37,7 +37,7 @@ const gameParticipantWithVoteBeanSchema = z.object({
 
 const tallyIndexResponseBodySchema = z.object({
   gameId: z.number(),
-  gameIndex: gameIndexSchema,
+  gameIndex: gameIndexResponseSchema,
   tallyResult: z.object({
     selectedPlayers: z.array(gameParticipantWithVoteBeanSchema),
     players: z.array(gameParticipantWithVoteBeanSchema),

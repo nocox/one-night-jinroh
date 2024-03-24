@@ -31,14 +31,24 @@ export const useGameIndex = (
       return;
     }
     const fetchGameIndexAsync = async () => {
-      const gameIndex = await fetchGameIndex(param);
+      const gameIndexResponse = await fetchGameIndex(param);
 
-      setHostFlag(gameIndex.hostFlag);
-      setNightActLog(gameIndex.nightActLog ?? undefined);
-      setGameParticipantList(gameIndex.otherPlayerList);
-      setPlayerId(gameIndex.playerId);
-      setPlayerName(gameIndex.playerName);
-      setPlayerRole(gameIndex.playerRole);
+      switch (gameIndexResponse.type) {
+        case "GameIndex":
+          setHostFlag(gameIndexResponse.hostFlag);
+          setNightActLog(gameIndexResponse.nightActLog ?? "");
+          setGameParticipantList(gameIndexResponse.otherPlayerList);
+          setPlayerId(gameIndexResponse.playerId);
+          setPlayerName(gameIndexResponse.playerName);
+          setPlayerRole(gameIndexResponse.playerRole);
+          break;
+        case "TermIsDifferent":
+          window.location.href = '/' + gameIndexResponse.term;
+          break;
+        case "NotStared":
+          window.location.href = '/room'
+          break;
+      }
     };
 
     void fetchGameIndexAsync();

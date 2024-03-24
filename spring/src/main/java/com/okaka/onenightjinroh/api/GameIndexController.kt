@@ -12,48 +12,71 @@ class GameIndexController(
     private val getGameIndexUseCase: GetGameIndexUseCase,
 ) {
 
-    // FIXME: 実装中のため一時的にrequiredをfalseにしているが、最終的にはtrueにしたい
     @RequestMapping(path = ["/game-index"])
-    fun getGameRule(session: HttpSession, @RequestParam(required = false, defaultValue = "night") term: String): Response {
-        val strGameId: String = session.getAttribute("game_id").toString()
-        val gameId = strGameId.toLong()
+    fun getGameRule(session: HttpSession, @RequestParam(required = true) term: String): Response {
+        val sessionGameId = session.getAttribute("game_id") ?: return GameNotStartedResponse("ゲームが始まっていません")
+        val gameId = sessionGameId.toString().toLong()
 
         val strGameParticipationId: String = session.getAttribute("game_participation_id").toString()
         val gameParticipantId = strGameParticipationId.toLong()
 
-        val dto = getGameIndexUseCase(gameId, gameParticipantId, toGameTerm(term))
-        return Response(
-            dto.playerId,
-            dto.playerName,
-            RoleResponse(
-                dto.playerRole.roleId,
-                dto.playerRole.roleName
-            ),
-            dto.hostFlag,
-            dto.otherPlayerList.map {
-                GameParticipantResponse(
-                    it.gameParticipationId,
-                    it.user.userName,
+        return when(val dto = getGameIndexUseCase(gameId, gameParticipantId, toGameTerm(term))) {
+            is GetGameIndexUseCase.GameIndexDto -> GameIndexResponse(
+                    dto.playerId,
+                    dto.playerName,
                     RoleResponse(
-                        it.role.roleId,
-                        it.role.roleName
+                        dto.playerRole.roleId,
+                        dto.playerRole.roleName
                     ),
-                    it.hostFlg
+                    dto.hostFlag,
+                    dto.otherPlayerList.map {
+                        GameParticipantResponse(
+                            it.gameParticipationId,
+                            it.user.userName,
+                            RoleResponse(
+                                it.role.roleId,
+                                it.role.roleName
+                            ),
+                            it.hostFlg
+                        )
+                    },
+                    dto.nightActLog
                 )
-            },
-            ""
-        )
+            is GetGameIndexUseCase.GameTermDto -> GameTermResponse(dto.term.code)
+            GetGameIndexUseCase.GameNotStarted -> GameNotStartedResponse("ゲームが始まっていません")
+        }
+
+
     }
 
 
-    class Response(
+    sealed interface Response {
+        val type: String
+    }
+
+    class GameIndexResponse(
         val playerId: Long,
         val playerName: String,
         val playerRole: RoleResponse,
         val hostFlag: Boolean,
         val otherPlayerList: List<GameParticipantResponse>,
-        val nightActLog: String
-    )
+        val nightActLog: String,
+    ): Response {
+        override val type: String = "GameIndex"
+    }
+
+    class GameTermResponse(
+        val term: String
+    ): Response {
+        override val type: String = "TermIsDifferent"
+    }
+
+    class GameNotStartedResponse(
+        val errorMessage: String
+    ): Response {
+        override val type: String = "NotStared"
+    }
+
 
     fun toGameTerm(term: String): GameTerm {
         return when(term) {

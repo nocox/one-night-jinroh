@@ -16,7 +16,7 @@ class GetGameRuleController(
 ) {
     @RequestMapping(path = ["/game-rule/{gameId}"])
     fun getGameRule(@PathVariable gameId: Long?): Response {
-        val game = gameDao.select(gameId)
+        val game = gameDao.select(gameId) ?: throw IllegalArgumentException()
         val gameRuleRoleList = roleSelectDao.selectRoleListByRuleId(game.rule_id)
         val roleList = roleDao.selectAll()
         val roleResponseList = roleList.map { role: RoleEntity ->

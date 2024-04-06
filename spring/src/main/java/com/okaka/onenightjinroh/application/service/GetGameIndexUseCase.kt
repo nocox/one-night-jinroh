@@ -22,48 +22,36 @@ class GetGameIndexUseCase(
         val roleNightActFormatter: RoleNightActFormatter? =
             roleNightActFormatterRepository.fetchNightAct(gameId, participantId).orElse(null)
         val myNightActLog: String = roleNightActFormatter?.toActLog() ?: ""
-        val displayableParticipantIdAndRoles = getDisplayableParticipantIdAndRoles(gameId, participantId)
+        val displayableParticipantIdToRoles = getDisplayableParticipantIdAndRoles(gameId, participantId)
 
-        return of(gameParticipants, participantId, myNightActLog, displayableParticipantIdAndRoles)
+        return of(gameParticipants, participantId, myNightActLog, displayableParticipantIdToRoles)
     }
 
     private fun of(
         gameParticipants: GameParticipants,
         participantId: Long,
         nightActLog: String,
-        displayableParticipantIdAndRoles: Map<Long, Role>,
+        displayableParticipantIdToRoles: Map<Long, Role>,
     ): Dto {
         val myself = gameParticipants.participants
             .first { it.gameParticipationId == participantId }
-            .apply {
-                val role = displayableParticipantIdAndRoles[this.gameParticipationId]
 
-                if (role != null) {
-                    this.setRole(role)
-                }
-            }
         val otherGameParticipants = gameParticipants.participants
             .filter { it.gameParticipationId != participantId }
             .map {
-                it.also {
-                    val role = displayableParticipantIdAndRoles[it.gameParticipationId]
-
-                    if (role != null) {
-                        it.setRole(role)
-                    } else {
-                        it.setUnknownRole()
-                    }
-                }
-
+                it.changeDisplayableRole(
+                    displayableParticipantIdToRoles[it.gameParticipationId]
+                )
             }
 
         return Dto(
-            myself.gameParticipationId,
-            myself.user.userName,
-            myself.role,
-            myself.hostFlg,
-            otherGameParticipants,
-            nightActLog
+            playerId = myself.gameParticipationId,
+            playerName = myself.user.userName,
+            // 怪盗の場合は自分の役職が変わるためここで取得する（NULLにはならない）
+            playerRole = displayableParticipantIdToRoles[myself.gameParticipationId]!!,
+            hostFlag = myself.hostFlg,
+            otherPlayerList = otherGameParticipants,
+            nightActLog = nightActLog
         )
     }
 
@@ -83,7 +71,7 @@ class GetGameIndexUseCase(
             .filter { it.role.roleId != Role.UNKNOWN_ROLE_ID }
 
         return participants.associate {
-            Pair(it.id, Role.byRoleId(it.role.roleId, it.role.roleName))
+            it.id to Role.byRoleId(it.role.roleId, it.role.roleName)
         }
     }
 

@@ -31,29 +31,25 @@ class GetGameIndexUseCase(
         gameParticipants: GameParticipants,
         participantId: Long,
         nightActLog: String,
-        displayableParticipantIdAndRoles: Set<Pair<Long, Role>>,
+        displayableParticipantIdAndRoles: Map<Long, Role>,
     ): Dto {
         val myself = gameParticipants.participants
             .first { it.gameParticipationId == participantId }
             .apply {
-                val idAndRole = displayableParticipantIdAndRoles.find { pair ->
-                    pair.first == this.gameParticipationId
-                }
+                val role = displayableParticipantIdAndRoles[this.gameParticipationId]
 
-                if (idAndRole != null) {
-                    this.setRole(idAndRole.second)
+                if (role != null) {
+                    this.setRole(role)
                 }
             }
         val otherGameParticipants = gameParticipants.participants
             .filter { it.gameParticipationId != participantId }
             .map {
                 it.also {
-                    val idAndRole = displayableParticipantIdAndRoles.find { pair ->
-                        pair.first == it.gameParticipationId
-                    }
+                    val role = displayableParticipantIdAndRoles[it.gameParticipationId]
 
-                    if (idAndRole != null) {
-                        it.setRole(idAndRole.second)
+                    if (role != null) {
+                        it.setRole(role)
                     } else {
                         it.setUnknownRole()
                     }
@@ -77,7 +73,7 @@ class GetGameIndexUseCase(
     fun getDisplayableParticipantIdAndRoles(
         gameId: Long,
         gameParticipantId: Long,
-    ): Set<Pair<Long, Role>> {
+    ): Map<Long, Role> {
         val gameParticipants = GameParticipants.of(gameParticipantRepository.findByGameIdWithUserAndRole(gameId))
         val roleNightActFormatter = roleNightActFormatterRepository.fetchNightAct(gameId, gameParticipantId)
         val displayChecker =
@@ -86,10 +82,9 @@ class GetGameIndexUseCase(
         val participants = gameParticipants.participants.map { displayChecker.check(it) }
             .filter { it.role.roleId != Role.UNKNOWN_ROLE_ID }
 
-        return gameParticipants.participants.map { displayChecker.check(it) }
-            .filter { it.role.roleId != Role.UNKNOWN_ROLE_ID }
-            .map { Pair(it.id, Role.byRoleId(it.role.roleId, it.role.roleName)) }
-            .toSet()
+        return participants.associate {
+            Pair(it.id, Role.byRoleId(it.role.roleId, it.role.roleName))
+        }
     }
 
     class Dto(

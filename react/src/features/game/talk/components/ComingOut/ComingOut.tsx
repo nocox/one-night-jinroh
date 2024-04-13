@@ -43,6 +43,9 @@ const styles = {
       border: '5px solid lightgreen',
     },
   }),
+  iconImage: css({
+    userSelect: 'none',
+  }),
 };
 
 type Props = {
@@ -81,7 +84,17 @@ export const ComingOut: React.FC<Props> = ({ getMyPlayer }) => {
                   await handleClick(character);
                 }}
               >
-                <img src={character.iconPath} alt={character.japaneseName} />
+                <img
+                  src={character.iconPath}
+                  alt={character.japaneseName}
+                  className={styles.iconImage}
+                  onDragStart={(e) => {
+                    e.preventDefault();
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                  }}
+                />
               </button>
             </li>
           );

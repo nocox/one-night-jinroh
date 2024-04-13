@@ -22,52 +22,36 @@ class GetGameIndexUseCase(
         val roleNightActFormatter: RoleNightActFormatter? =
             roleNightActFormatterRepository.fetchNightAct(gameId, participantId).orElse(null)
         val myNightActLog: String = roleNightActFormatter?.toActLog() ?: ""
-        val displayableParticipantIdAndRoles = getDisplayableParticipantIdAndRoles(gameId, participantId)
+        val displayableParticipantIdToRoles = getDisplayableParticipantIdAndRoles(gameId, participantId)
 
-        return of(gameParticipants, participantId, myNightActLog, displayableParticipantIdAndRoles)
+        return of(gameParticipants, participantId, myNightActLog, displayableParticipantIdToRoles)
     }
 
     private fun of(
         gameParticipants: GameParticipants,
         participantId: Long,
         nightActLog: String,
-        displayableParticipantIdAndRoles: Set<Pair<Long, Role>>,
+        displayableParticipantIdToRoles: Map<Long, Role>,
     ): Dto {
         val myself = gameParticipants.participants
             .first { it.gameParticipationId == participantId }
-            .apply {
-                val idAndRole = displayableParticipantIdAndRoles.find { pair ->
-                    pair.first == this.gameParticipationId
-                }
 
-                if (idAndRole != null) {
-                    this.setRole(idAndRole.second)
-                }
-            }
         val otherGameParticipants = gameParticipants.participants
             .filter { it.gameParticipationId != participantId }
             .map {
-                it.also {
-                    val idAndRole = displayableParticipantIdAndRoles.find { pair ->
-                        pair.first == it.gameParticipationId
-                    }
-
-                    if (idAndRole != null) {
-                        it.setRole(idAndRole.second)
-                    } else {
-                        it.setUnknownRole()
-                    }
-                }
-
+                it.changeDisplayableRole(
+                    displayableParticipantIdToRoles[it.gameParticipationId]
+                )
             }
 
         return Dto(
-            myself.gameParticipationId,
-            myself.user.userName,
-            myself.role,
-            myself.hostFlg,
-            otherGameParticipants,
-            nightActLog
+            playerId = myself.gameParticipationId,
+            playerName = myself.user.userName,
+            // 怪盗の場合は自分の役職が変わるためここで取得する（NULLにはならない）
+            playerRole = displayableParticipantIdToRoles[myself.gameParticipationId]!!,
+            hostFlag = myself.hostFlg,
+            otherPlayerList = otherGameParticipants,
+            nightActLog = nightActLog
         )
     }
 
@@ -77,7 +61,7 @@ class GetGameIndexUseCase(
     fun getDisplayableParticipantIdAndRoles(
         gameId: Long,
         gameParticipantId: Long,
-    ): Set<Pair<Long, Role>> {
+    ): Map<Long, Role> {
         val gameParticipants = GameParticipants.of(gameParticipantRepository.findByGameIdWithUserAndRole(gameId))
         val roleNightActFormatter = roleNightActFormatterRepository.fetchNightAct(gameId, gameParticipantId)
         val displayChecker =
@@ -86,10 +70,9 @@ class GetGameIndexUseCase(
         val participants = gameParticipants.participants.map { displayChecker.check(it) }
             .filter { it.role.roleId != Role.UNKNOWN_ROLE_ID }
 
-        return gameParticipants.participants.map { displayChecker.check(it) }
-            .filter { it.role.roleId != Role.UNKNOWN_ROLE_ID }
-            .map { Pair(it.id, Role.byRoleId(it.role.roleId, it.role.roleName)) }
-            .toSet()
+        return participants.associate {
+            it.id to Role.byRoleId(it.role.roleId, it.role.roleName)
+        }
     }
 
     class Dto(

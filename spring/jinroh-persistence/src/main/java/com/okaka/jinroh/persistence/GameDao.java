@@ -1,5 +1,6 @@
 package com.okaka.jinroh.persistence;
 
+import org.jetbrains.annotations.Nullable;
 import org.seasar.doma.Dao;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface GameDao {
 
     @Select
+    @Nullable
     GameEntity select(Long gameId);
 
     @Select

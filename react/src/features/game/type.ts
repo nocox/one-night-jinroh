@@ -74,7 +74,10 @@ export const gameParticipantSchema = z.object({
   role: roleBeanSchema,
 });
 
+export type GameIndexResponse = GameIndex | TermIsDifferent | NotStared
+
 export type GameIndex = {
+  type: "GameIndex";
   hostFlag: boolean;
   nightActLog: string | null;
   otherPlayerList: GameParticipant[];
@@ -83,7 +86,17 @@ export type GameIndex = {
   playerRole: RoleBean;
 };
 
-export const gameIndexSchema = z.object({
+export type TermIsDifferent = {
+  type: "TermIsDifferent"
+  term: string
+}
+
+export type NotStared = {
+  type: "NotStared"
+  errorMessage: string
+}
+
+const gameIndexSchemaSchema = z.object({
   hostFlag: z.boolean(),
   nightActLog: z.string().nullable(),
   otherPlayerList: z.array(gameParticipantSchema),
@@ -92,8 +105,24 @@ export const gameIndexSchema = z.object({
   playerRole: roleBeanSchema,
 });
 
-export const isGameIndexSchema = (value: unknown): value is GameIndex => {
-  return gameIndexSchema.safeParse(value).success;
+const termIsDifferentSchema = z.object({
+  term: z.union([
+    z.literal("night"),
+    z.literal("talk"),
+    z.literal("vote"),
+    z.literal("tally"),
+    z.literal("result")
+  ])
+});
+
+const notStaredSchema = z.object({
+  errorMessage: z.string()
+});
+
+export const gameIndexResponseSchema = z.union([gameIndexSchemaSchema, termIsDifferentSchema, notStaredSchema])
+
+export const isGameIndexSchema = (value: unknown): value is GameIndexResponse => {
+  return gameIndexResponseSchema.safeParse(value).success;
 };
 
 export type FetchGameIndexParam =
@@ -103,4 +132,4 @@ export type FetchGameIndexParam =
   | 'tally'
   | 'result';
 
-export type FetchGameIndex = (param: FetchGameIndexParam) => Promise<GameIndex>;
+export type FetchGameIndex = (param: FetchGameIndexParam) => Promise<GameIndexResponse>;

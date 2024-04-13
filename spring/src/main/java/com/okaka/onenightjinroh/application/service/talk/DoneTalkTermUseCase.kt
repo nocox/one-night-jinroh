@@ -9,7 +9,7 @@ class DoneTalkTermUseCase(
     private val gameRepository: GameRepository,
 ) {
     fun done(gameId: Long) {
-        val game = gameRepository.find(gameId)
+        val game = gameRepository.find(gameId) ?: throw IllegalArgumentException()
         val changedGame = game.changeTerm(GameTerm.VOTE)
         gameRepository.save(changedGame)
     }

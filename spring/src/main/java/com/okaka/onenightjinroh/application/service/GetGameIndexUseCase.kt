@@ -13,9 +13,9 @@ class GetGameIndexUseCase(
     private val roleNightActFormatterRepository: RoleNightActFormatterRepository,
 ) {
     operator fun invoke(gameId: Long, participantId: Long, term: GameTerm): Dto {
-        val game = gameRepository.find(gameId)
+        val game = gameRepository.find(gameId) ?: return GameNotStarted
         if (game.term != term) {
-            throw IllegalArgumentException("進行状況が一致しません")
+            return GameTermDto(game.term!!)
         }
 
         val gameParticipants = GameParticipants.of(gameParticipantRepository.findByGameIdWithUserAndRole(gameId))
@@ -32,10 +32,9 @@ class GetGameIndexUseCase(
         participantId: Long,
         nightActLog: String,
         displayableParticipantIdToRoles: Map<Long, Role>,
-    ): Dto {
+    ): GameIndexDto {
         val myself = gameParticipants.participants
             .first { it.gameParticipationId == participantId }
-
         val otherGameParticipants = gameParticipants.participants
             .filter { it.gameParticipationId != participantId }
             .map {
@@ -44,7 +43,7 @@ class GetGameIndexUseCase(
                 )
             }
 
-        return Dto(
+        return GameIndexDto(
             playerId = myself.gameParticipationId,
             playerName = myself.user.userName,
             // 怪盗の場合は自分の役職が変わるためここで取得する（NULLにはならない）
@@ -75,12 +74,20 @@ class GetGameIndexUseCase(
         }
     }
 
-    class Dto(
+    sealed interface Dto
+
+    class GameIndexDto(
         val playerId: Long,
         val playerName: String,
         val playerRole: Role,
         val hostFlag: Boolean,
         val otherPlayerList: List<GameParticipant>,
         val nightActLog: String,
-    )
+    ) : Dto
+
+    class GameTermDto(
+        val term: GameTerm
+    ) : Dto
+
+    object GameNotStarted : Dto
 }

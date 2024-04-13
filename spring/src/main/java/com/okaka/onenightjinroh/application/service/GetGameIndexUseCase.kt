@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class GetGameIndexUseCase(
     private val gameRepository: GameRepository,
     private val gameParticipantRepository: GameParticipantRepository,
-    private val roleNightActFormatterRepository: RoleNightActFormatterRepository
+    private val roleNightActFormatterRepository: RoleNightActFormatterRepository,
 ) {
     operator fun invoke(gameId: Long, participantId: Long, term: GameTerm): Dto {
         val game = gameRepository.find(gameId) ?: return GameNotStarted
@@ -22,47 +22,56 @@ class GetGameIndexUseCase(
         val roleNightActFormatter: RoleNightActFormatter? =
             roleNightActFormatterRepository.fetchNightAct(gameId, participantId).orElse(null)
         val myNightActLog: String = roleNightActFormatter?.toActLog() ?: ""
-        val displayableParticipantIds = getDisplayableParticipantId(gameId, participantId)
+        val displayableParticipantIdToRoles = getDisplayableParticipantIdAndRoles(gameId, participantId)
 
-        return of(gameParticipants, participantId, myNightActLog, displayableParticipantIds)
+        return of(gameParticipants, participantId, myNightActLog, displayableParticipantIdToRoles)
     }
 
     private fun of(
         gameParticipants: GameParticipants,
         participantId: Long,
         nightActLog: String,
-        displayableParticipantIds: Set<Long>
+        displayableParticipantIdToRoles: Map<Long, Role>,
     ): GameIndexDto {
-        val myself = gameParticipants.participants.first { it.gameParticipationId == participantId }
+        val myself = gameParticipants.participants
+            .first { it.gameParticipationId == participantId }
         val otherGameParticipants = gameParticipants.participants
             .filter { it.gameParticipationId != participantId }
-            .map { it.also { if (!displayableParticipantIds.contains(it.gameParticipationId)) it.setUnknownRole() } }
+            .map {
+                it.changeDisplayableRole(
+                    displayableParticipantIdToRoles[it.gameParticipationId]
+                )
+            }
+
         return GameIndexDto(
-            myself.gameParticipationId,
-            myself.user.userName,
-            myself.role,
-            myself.hostFlg,
-            otherGameParticipants,
-            nightActLog
+            playerId = myself.gameParticipationId,
+            playerName = myself.user.userName,
+            // 怪盗の場合は自分の役職が変わるためここで取得する（NULLにはならない）
+            playerRole = displayableParticipantIdToRoles[myself.gameParticipationId]!!,
+            hostFlag = myself.hostFlg,
+            otherPlayerList = otherGameParticipants,
+            nightActLog = nightActLog
         )
     }
 
     // 昔のロジックをそのまま流用している。(displayChecker)
     // Beanで返す方式でコードが組まれているので改善する必要がある。
     // 本来は、ドメイン知識として扱いたい。
-    fun getDisplayableParticipantId(
+    fun getDisplayableParticipantIdAndRoles(
         gameId: Long,
         gameParticipantId: Long,
-    ): Set<Long> {
+    ): Map<Long, Role> {
         val gameParticipants = GameParticipants.of(gameParticipantRepository.findByGameIdWithUserAndRole(gameId))
         val roleNightActFormatter = roleNightActFormatterRepository.fetchNightAct(gameId, gameParticipantId)
         val displayChecker =
             ParticipantDisplayChecker.of(gameParticipants.mySelf(gameParticipantId), roleNightActFormatter.orElse(null))
 
-        return gameParticipants.participants.map { displayChecker.check(it) }
+        val participants = gameParticipants.participants.map { displayChecker.check(it) }
             .filter { it.role.roleId != Role.UNKNOWN_ROLE_ID }
-            .map { it.id }
-            .toSet()
+
+        return participants.associate {
+            it.id to Role.byRoleId(it.role.roleId, it.role.roleName)
+        }
     }
 
     sealed interface Dto

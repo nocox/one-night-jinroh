@@ -9,7 +9,7 @@
     <div class="uranai" v-else-if="roleName == '占い師'">
       <nightUranaiAction :canSelectedPlayers="otherPlayerList" />
     </div>
-    <div class="no-action" v-else>村人・狂人・吊人はアクションなし</div>
+    <div class="no-action" v-else>村人・狂人・吊り人はアクションなし</div>
   </div>
 </template>
 

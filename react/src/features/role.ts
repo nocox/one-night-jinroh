@@ -3,13 +3,13 @@ import murabitoImage from '@/assets/images/chara/chara2.png';
 import uranaishiImage from '@/assets/images/chara/chara3.png';
 import kaitoImage from '@/assets/images/chara/chara4.png';
 import kyojinImage from '@/assets/images/chara/chara5.png';
-import tsuribitoImage from '@/assets/images/chara/chara6.png';
+import turibitoImage from '@/assets/images/chara/chara6.png';
 
 import jinrohIcon from '@/assets/images/chara-icon/jinroh.png';
 import kaitoIcon from '@/assets/images/chara-icon/kaito.png';
 import kyojinIcon from '@/assets/images/chara-icon/kyojin.png';
 import murabitoIcon from '@/assets/images/chara-icon/murabito.png';
-import tsuribitoIcon from '@/assets/images/chara-icon/turibito.png';
+import turibitoIcon from '@/assets/images/chara-icon/turibito.png';
 import unknownIcon from '@/assets/images/chara-icon/unknown.png';
 import uranaishiIcon from '@/assets/images/chara-icon/uranaishi.png';
 
@@ -17,7 +17,7 @@ import jinrohCoIcon from '@/assets/images/co-icon/jinroh.png';
 import kaitoCoIcon from '@/assets/images/co-icon/kaito.png';
 import kyojinCoIcon from '@/assets/images/co-icon/kyojin.png';
 import murabitoCoIcon from '@/assets/images/co-icon/murabito.png';
-import tsuribitoCoIcon from '@/assets/images/co-icon/turibito.png';
+import turibitoCoIcon from '@/assets/images/co-icon/turibito.png';
 import uranaishiCoIcon from '@/assets/images/co-icon/uranaishi.png';
 
 export type RoleEnglishName =
@@ -35,7 +35,7 @@ export type RoleJapaneseName =
   | '占い師'
   | '怪盗'
   | '狂人'
-  | '吊人'
+  | '吊り人'
   | '不明';
 
 type RoleType = 'murabito' | 'jinroh' | 'turibito';
@@ -128,13 +128,13 @@ export const roles: Role[] = [
     roleId: 6,
     roleType: 'turibito',
     englishName: 'turibito',
-    japaneseName: '吊人',
-    imgPath: tsuribitoImage,
-    iconPath: tsuribitoIcon,
-    coIconPath: tsuribitoCoIcon,
+    japaneseName: '吊り人',
+    imgPath: turibitoImage,
+    iconPath: turibitoIcon,
+    coIconPath: turibitoCoIcon,
     nightAction: '夜の行動はありません。',
     description:
-      '丈夫な縄を自分の首にかけてぶら下がる不思議な遊びが大好きな吊人さん。 吊られるのが目的です。吊られると一人勝ちとなります。',
+      '丈夫な縄を自分の首にかけてぶら下がる不思議な遊びが大好きな吊り人さん。 吊られるのが目的です。吊られると一人勝ちとなります。',
   },
 ];
 

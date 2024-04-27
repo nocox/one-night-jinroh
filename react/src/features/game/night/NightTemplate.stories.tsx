@@ -124,7 +124,7 @@ export const Turibito: Story = {
     playerName: 'ホストのふくろう',
     playerRole: {
       roleId: 6,
-      roleName: '吊人',
+      roleName: '吊り人',
     },
     otherPlayerList: [
       {

@@ -22,22 +22,51 @@ export const useTallyData = (): {
   const [isPeaceful, setIsPeaceful] = useState<boolean | undefined>(undefined);
   const [cos, setCos] = useState<CoRole[] | undefined>();
 
+  const { hostFlag, otherPlayerList, playerId, playerName, playerRole } =
+    useGameIndex('tally', gameId);
+
   useEffect(() => {
-    const fetchTalkIndexResponseBodyAsync = async () => {
+    if (
+      hostFlag === undefined ||
+      otherPlayerList === undefined ||
+      playerId === undefined ||
+      playerName === undefined ||
+      playerRole === undefined
+    ) {
+      return;
+    }
+
+    const fetchTallyIndexResponseBodyAsync = async () => {
       const tallyIndexResponseBody = await fetchTallyIndexResponseBody();
       const { tallyResult, gameId, cos } = tallyIndexResponseBody;
 
+      const playersWithVoteCount: GameParticipantWithVoteBean[] = [
+        {
+          id: playerId,
+          name: playerName,
+          role: playerRole,
+          hostFlag,
+          voteCount: tallyResult.players
+            .filter((player) => player.id === playerId)
+            .map((player) => player.voteCount)[0],
+        },
+        ...otherPlayerList.map((player) => ({
+          ...player,
+          voteCount: tallyResult.players
+            .filter((playerWithVote) => player.id === playerWithVote.id)
+            .map((playerWithVote) => playerWithVote.voteCount)[0],
+        })),
+      ];
+
       setGameId(gameId);
       setSelectedPlayers(tallyResult.selectedPlayers);
-      setPlayersWithVoteCount(tallyResult.players);
+      setPlayersWithVoteCount(playersWithVoteCount);
       setIsPeaceful(tallyResult.peacefulFlag);
       setCos(cos);
     };
 
-    void fetchTalkIndexResponseBodyAsync();
-  }, []);
-
-  const { hostFlag } = useGameIndex('tally', gameId);
+    void fetchTallyIndexResponseBodyAsync();
+  }, [hostFlag, otherPlayerList, playerId, playerName, playerRole]);
 
   return {
     hostFlag,

@@ -34,19 +34,19 @@ export const useGameIndex = (
       const gameIndexResponse = await fetchGameIndex(param);
 
       switch (gameIndexResponse.type) {
-        case "GameIndex":
+        case 'GameIndex':
           setHostFlag(gameIndexResponse.hostFlag);
-          setNightActLog(gameIndexResponse.nightActLog ?? "");
+          setNightActLog(gameIndexResponse.nightActLog ?? '');
           setGameParticipantList(gameIndexResponse.otherPlayerList);
           setPlayerId(gameIndexResponse.playerId);
           setPlayerName(gameIndexResponse.playerName);
           setPlayerRole(gameIndexResponse.playerRole);
           break;
-        case "TermIsDifferent":
+        case 'TermIsDifferent':
           window.location.href = '/' + gameIndexResponse.term;
           break;
-        case "NotStared":
-          window.location.href = '/room'
+        case 'NotStared':
+          window.location.href = '/room';
           break;
       }
     };

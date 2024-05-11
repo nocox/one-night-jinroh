@@ -11,7 +11,7 @@ public class TuribitoWin implements WinLoseConditionBase {
 
     @Override
     public boolean condition(List<TallyResultConsideredNightAct> tallyResults) {
-        // 選ばれた人の1人が吊人だったら
+        // 選ばれた人の1人が吊り人だったら
         List<TallyResultConsideredNightAct> selectedPlayers = RuleUtils.getSelectedPlayers(tallyResults);
         return RuleUtils.containsRole(selectedPlayers, 6L);
     }

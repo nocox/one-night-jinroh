@@ -34,7 +34,7 @@ const getTitle = (roleType: (typeof roles)[number]['roleType']): string => {
     case 'jinroh':
       return '人狼陣営';
     case 'turibito':
-      return '吊人陣営';
+      return '吊り人陣営';
     default:
       throw new ExhaustiveError(roleType);
   }
@@ -51,7 +51,7 @@ const getRoleTypeDescription = (
           <br />
           人狼プレイヤーが一人もいない平和村の場合は誰も吊らない(全員の得票数が1票以下になる)ことが勝利条件となります。
           <br />
-          (吊人プレイヤーが勝利した場合は強制で敗北となります)
+          (吊り人プレイヤーが勝利した場合は強制で敗北となります)
         </>
       );
     case 'jinroh':
@@ -59,13 +59,13 @@ const getRoleTypeDescription = (
         <>
           人狼プレイヤーが誰も吊られなければ人狼陣営の勝利です。
           <br />
-          (吊人プレイヤーが勝利した場合は強制で敗北となります)
+          (吊り人プレイヤーが勝利した場合は強制で敗北となります)
         </>
       );
     case 'turibito':
       return (
         <>
-          吊人プレイヤーが吊られた場合、吊られたプレイヤーの勝利となり、他の陣営はすべて敗北となります。
+          吊り人プレイヤーが吊られた場合、吊られたプレイヤーの勝利となり、他の陣営はすべて敗北となります。
         </>
       );
     default:

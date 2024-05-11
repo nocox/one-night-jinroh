@@ -51,7 +51,7 @@ export const roleBeanSchema = z.object({
     z.literal('占い師'),
     z.literal('怪盗'),
     z.literal('狂人'),
-    z.literal('吊人'),
+    z.literal('吊り人'),
     z.literal('不明'),
   ]),
 });

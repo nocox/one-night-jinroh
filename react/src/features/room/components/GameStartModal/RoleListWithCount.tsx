@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const RoleListWithCount: React.FC<Props> = ({ roleList }) => {
-  const roleCount = roleList
+  const roleCountMap = roleList
     .sort((a, b) => {
       return a.roleId - b.roleId;
     })
@@ -29,7 +29,7 @@ export const RoleListWithCount: React.FC<Props> = ({ roleList }) => {
 
   return (
     <ul className={styles.roleList}>
-      {Object.entries(roleCount).map((role, index) => {
+      {Object.entries(roleCountMap).map((role, index) => {
         return (
           <li key={index} className={styles.roleListItem}>
             <span>{role[0]}</span>

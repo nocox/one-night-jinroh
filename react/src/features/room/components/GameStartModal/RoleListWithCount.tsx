@@ -12,29 +12,45 @@ const styles = {
   }),
 };
 
+type Role = {
+  roleId: number;
+  roleName: string;
+};
+
+type RoleGroups = {
+  [K in string]: Role[];
+};
+
+/**
+ * roleListを役職ごとにグルーピングする
+ * @param roleList
+ * @return RoleGroups
+ */
+const groupBy = (roleList: GameInfo['roleList']) => {
+  return roleList.reduce<RoleGroups>((acc, role) => {
+    if (acc[role.roleName] === undefined) {
+      acc[role.roleName] = [role];
+    } else {
+      acc[role.roleName].push(role);
+    }
+
+    return acc;
+  }, {});
+};
+
 type Props = {
   roleList: GameInfo['roleList'];
 };
 
 export const RoleListWithCount: React.FC<Props> = ({ roleList }) => {
-  const roleCountMap = roleList
-    .sort((a, b) => {
-      return a.roleId - b.roleId;
-    })
-    .reduce<Record<string, number>>((acc, role) => {
-      acc[role.roleName] = (acc[role.roleName] || 0) + 1;
-
-      return acc;
-    }, {});
-
   return (
     <ul className={styles.roleList}>
-      {Object.entries(roleCountMap).map((role, index) => {
+      {Object.entries(groupBy(roleList)).map((role, index) => {
         return (
           <li key={index} className={styles.roleListItem}>
             <span>{role[0]}</span>
             <span>:</span>
-            <span>{role[1]}</span>
+            <span>{role[1].length}</span>
           </li>
         );
       })}

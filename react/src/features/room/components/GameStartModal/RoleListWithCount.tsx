@@ -12,26 +12,19 @@ const styles = {
   }),
 };
 
-type Role = {
-  roleId: number;
-  roleName: string;
-};
-
-type RoleGroups = {
-  [K in string]: Role[];
+type RoleCounts = {
+  [K in string]: number;
 };
 
 /**
- * roleListを役職ごとにグルーピングする
- * @param roleList
- * @return RoleGroups
+ * ゲーム内に存在する役職ごとの数を数える
  */
-const groupBy = (roleList: GameInfo['roleList']) => {
-  return roleList.reduce<RoleGroups>((acc, role) => {
+const countRole = (roleList: GameInfo['roleList']) => {
+  return roleList.reduce<RoleCounts>((acc, role) => {
     if (acc[role.roleName] === undefined) {
-      acc[role.roleName] = [role];
+      acc[role.roleName] = 1;
     } else {
-      acc[role.roleName].push(role);
+      acc[role.roleName] += 1;
     }
 
     return acc;
@@ -45,12 +38,12 @@ type Props = {
 export const RoleListWithCount: React.FC<Props> = ({ roleList }) => {
   return (
     <ul className={styles.roleList}>
-      {Object.entries(groupBy(roleList)).map(([roleName, roles], index) => {
+      {Object.entries(countRole(roleList)).map(([roleName, count], index) => {
         return (
           <li key={index} className={styles.roleListItem}>
             <span>{roleName}</span>
             <span>:</span>
-            <span>{roles.length}</span>
+            <span>{count}</span>
           </li>
         );
       })}

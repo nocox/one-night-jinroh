@@ -45,12 +45,12 @@ type Props = {
 export const RoleListWithCount: React.FC<Props> = ({ roleList }) => {
   return (
     <ul className={styles.roleList}>
-      {Object.entries(groupBy(roleList)).map((role, index) => {
+      {Object.entries(groupBy(roleList)).map(([roleName, roles], index) => {
         return (
           <li key={index} className={styles.roleListItem}>
-            <span>{role[0]}</span>
+            <span>{roleName}</span>
             <span>:</span>
-            <span>{role[1].length}</span>
+            <span>{roles.length}</span>
           </li>
         );
       })}

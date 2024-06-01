@@ -30,6 +30,7 @@ const styles = {
   }),
   playerWrapper: css({
     display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(150px,200px))',
     justifyContent: 'center',
     alignItems: 'center',
     gap: '1rem',

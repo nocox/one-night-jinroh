@@ -22,6 +22,15 @@ export const useTallyData = (): {
   const [isPeaceful, setIsPeaceful] = useState<boolean | undefined>(undefined);
   const [cos, setCos] = useState<CoRole[] | undefined>();
 
+  useEffect(() => {
+    const fetchTallyIndexResponseBodyAsync = async () => {
+      const tallyIndexResponseBody = await fetchTallyIndexResponseBody();
+      const { gameId } = tallyIndexResponseBody;
+      setGameId(gameId);
+    };
+    void fetchTallyIndexResponseBodyAsync();
+  }, []);
+
   const { hostFlag, otherPlayerList, playerId, playerName, playerRole } =
     useGameIndex('tally', gameId);
 

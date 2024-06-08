@@ -28,6 +28,8 @@ export const useGameIndex = (
 
   useEffect(() => {
     if (gameId === undefined) {
+      console.warn('gameId is undefined');
+
       return;
     }
     const fetchGameIndexAsync = async () => {

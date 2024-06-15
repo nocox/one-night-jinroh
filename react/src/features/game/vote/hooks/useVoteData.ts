@@ -1,13 +1,15 @@
+import type React from 'react';
 import { useEffect, useState } from 'react';
 import { fetchVoteIndex } from '../api';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
+import { toGameParticipantsWithCoRole } from '@/features/game/service/gameParticipantService';
 import type {
   CoRole,
   GameParticipant,
   GameParticipantWithCoRole,
 } from '@/features/game/type';
 
-export const useVoteData = (): {
+type UseVoteData = () => {
   gameId: number | undefined;
   nightActLog: string | undefined;
   gameParticipantsWithCoRole: GameParticipantWithCoRole[] | undefined;
@@ -16,7 +18,9 @@ export const useVoteData = (): {
   setVotingDestination: React.Dispatch<
     React.SetStateAction<number | undefined>
   >;
-} => {
+};
+
+export const useVoteData: UseVoteData = () => {
   const [gameId, setGameId] = useState<number | undefined>();
   const [gameParticipantsWithCoRole, setGameParticipantWithCoRole] = useState<
     GameParticipantWithCoRole[] | undefined
@@ -30,7 +34,7 @@ export const useVoteData = (): {
   >();
 
   useEffect(() => {
-    const fetchVoteIndexAsync = async () => {
+    void (async () => {
       const voteIndexResponseBody = await fetchVoteIndex();
       const { voteIndex } = voteIndexResponseBody;
 
@@ -38,9 +42,7 @@ export const useVoteData = (): {
       setGameId(voteIndexResponseBody.gameId);
       setCanVotePlayers(voteIndex.canVotePlayers);
       setVotingDestination(voteIndex.votingDestination ?? undefined);
-    };
-
-    void fetchVoteIndexAsync();
+    })();
   }, []);
 
   const {
@@ -63,22 +65,14 @@ export const useVoteData = (): {
     )
       return;
 
-    const gameParticipantsWithCoRole: GameParticipantWithCoRole[] = [
-      {
-        hostFlag,
-        id: playerId,
-        name: playerName,
-        role: playerRole,
-        co: cos.find((co) => co.id === playerId)!,
-      },
-      ...otherPlayerList.map((otherPlayer) => ({
-        hostFlag: otherPlayer.hostFlag,
-        id: otherPlayer.id,
-        name: otherPlayer.name,
-        role: otherPlayer.role,
-        co: cos.find((co) => co.id === otherPlayer.id)!,
-      })),
-    ];
+    const gameParticipantsWithCoRole = toGameParticipantsWithCoRole(
+      otherPlayerList,
+      hostFlag,
+      playerId,
+      playerName,
+      playerRole,
+      cos,
+    );
     setGameParticipantWithCoRole(gameParticipantsWithCoRole);
   }, [playerId, playerName, playerRole, otherPlayerList, cos, hostFlag]);
 

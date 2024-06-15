@@ -3,12 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { fetchTalkIndex } from '../api';
 import { UnexpectedError } from '@/features/error';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
-import type {
-  CoRole,
-  GameParticipant,
-  GameParticipantWithCoRole,
-  RoleBean,
-} from '@/features/game/type';
+import { toGameParticipantsWithCoRole } from '@/features/game/service/gameParticipantService';
+import type { CoRole, GameParticipantWithCoRole } from '@/features/game/type';
 
 type UseTalkData = () => {
   gameId: number | undefined;
@@ -93,33 +89,4 @@ export const useTalkData: UseTalkData = () => {
     setGameParticipantsWithCoRole,
     getMyPlayer,
   };
-};
-
-/**
- * 参加者にCoRoleを付与したGameParticipantWithCoRoleの配列を返す
- */
-const toGameParticipantsWithCoRole = (
-  otherPlayerList: GameParticipant[],
-  hostFlag: boolean,
-  playerId: number,
-  playerName: string,
-  playerRole: RoleBean,
-  cos: CoRole[],
-): GameParticipantWithCoRole[] => {
-  return [
-    {
-      hostFlag,
-      id: playerId,
-      name: playerName,
-      role: playerRole,
-      co: cos.find((co) => co.id === playerId)!,
-    },
-    ...otherPlayerList.map((otherPlayer) => ({
-      hostFlag: otherPlayer.hostFlag,
-      id: otherPlayer.id,
-      name: otherPlayer.name,
-      role: otherPlayer.role,
-      co: cos.find((co) => co.id === otherPlayer.id)!,
-    })),
-  ];
 };

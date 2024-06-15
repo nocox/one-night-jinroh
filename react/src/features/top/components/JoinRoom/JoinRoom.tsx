@@ -23,6 +23,7 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
 
       switch (status) {
         case 'JOIN_SUCCESS':
+        case 'ALREADY_JOINED':
           location.href = '/room';
           setJoinRoomResult('');
           break;

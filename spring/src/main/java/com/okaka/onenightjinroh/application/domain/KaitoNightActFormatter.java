@@ -16,9 +16,9 @@ public class KaitoNightActFormatter implements RoleNightActFormatter {
 
     public Role considerRole(GameParticipant participant) {
         Long myId = participant.getGameParticipationId();
-        if( myId.equals(toParticipant.getGameParticipationId()) ) {
+        if (myId.equals(toParticipant.getGameParticipationId())) {
             return fromParticipant.getRole();
-        } else if(myId.equals(fromParticipant.getGameParticipationId())) {
+        } else if (myId.equals(fromParticipant.getGameParticipationId())) {
             return toParticipant.getRole();
         } else {
             return participant.getRole();
@@ -36,6 +36,10 @@ public class KaitoNightActFormatter implements RoleNightActFormatter {
 
     @Override
     public boolean showableParticipant(Long participantId) {
+        // 怪盗が何も選んでいない場合は、何も見えない。
+        if (toParticipant == null) {
+            return false;
+        }
         return toParticipant.getGameParticipationId().equals(participantId);
     }
 
@@ -45,5 +49,21 @@ public class KaitoNightActFormatter implements RoleNightActFormatter {
 
     public GameParticipant getFromParticipant() {
         return fromParticipant;
+    }
+
+
+    public static KaitoNightActFormatter empty() {
+        return new KaitoNightActFormatter.EmptyNightActFormatter(null, null);
+    }
+
+    public static class EmptyNightActFormatter extends KaitoNightActFormatter {
+        public EmptyNightActFormatter(GameParticipant toParticipant, GameParticipant fromParticipant) {
+            super(toParticipant, fromParticipant);
+        }
+
+        @Override
+        public String toActLog() {
+            return "怪盗の結果: " + "今回は誰とも役職交換をしませんでした";
+        }
     }
 }

@@ -25,6 +25,7 @@ export const Default: Story = {
           id: 1,
           role: 'murabito',
         },
+        isMyself: true,
       },
       {
         id: 2,
@@ -38,6 +39,7 @@ export const Default: Story = {
           id: 1,
           role: 'murabito',
         },
+        isMyself: false,
       },
       {
         id: 3,
@@ -51,6 +53,7 @@ export const Default: Story = {
           id: 1,
           role: 'murabito',
         },
+        isMyself: false,
       },
     ],
     gameRuleList: [
@@ -94,6 +97,7 @@ export const Default: Story = {
           roleId: -1,
           roleName: '不明',
         },
+        isMyself: false,
       },
       {
         hostFlag: false,
@@ -103,6 +107,7 @@ export const Default: Story = {
           roleId: -1,
           roleName: '不明',
         },
+        isMyself: false,
       },
     ],
     votingDestination: undefined,
@@ -124,6 +129,7 @@ export const DoneVote: Story = {
           id: 1,
           role: 'murabito',
         },
+        isMyself: true,
       },
       {
         id: 2,
@@ -137,6 +143,7 @@ export const DoneVote: Story = {
           id: 1,
           role: 'murabito',
         },
+        isMyself: false,
       },
       {
         id: 3,
@@ -150,6 +157,7 @@ export const DoneVote: Story = {
           id: 1,
           role: 'murabito',
         },
+        isMyself: false,
       },
     ],
     gameRuleList: [
@@ -193,6 +201,7 @@ export const DoneVote: Story = {
           roleId: -1,
           roleName: '不明',
         },
+        isMyself: false,
       },
       {
         hostFlag: false,
@@ -202,6 +211,7 @@ export const DoneVote: Story = {
           roleId: -1,
           roleName: '不明',
         },
+        isMyself: false,
       },
     ],
     votingDestination: 2,

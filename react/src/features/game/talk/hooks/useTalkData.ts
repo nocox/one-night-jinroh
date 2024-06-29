@@ -57,6 +57,7 @@ export const useTalkData = (): {
         name: playerName,
         role: playerRole,
         co: cos.find((co) => co.id === playerId)!,
+        isMyself: true,
       },
       ...otherPlayerList.map((otherPlayer) => ({
         hostFlag: otherPlayer.hostFlag,
@@ -64,6 +65,7 @@ export const useTalkData = (): {
         name: otherPlayer.name,
         role: otherPlayer.role,
         co: cos.find((co) => co.id === otherPlayer.id)!,
+        isMyself: false,
       })),
     ];
     setGameParticipantsWithCoRole(gameParticipantsWithCoRole);

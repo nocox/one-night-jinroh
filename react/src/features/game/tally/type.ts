@@ -12,6 +12,7 @@ export type GameParticipantWithVoteBean = {
   role: RoleBean;
   hostFlag: boolean;
   voteCount: number;
+  isMyself: boolean;
 };
 
 type TallyResultBean = {
@@ -33,6 +34,7 @@ const gameParticipantWithVoteBeanSchema = z.object({
   role: roleBeanSchema,
   hostFlag: z.boolean(),
   voteCount: z.number(),
+  isMyself: z.boolean(),
 });
 
 const tallyIndexResponseBodySchema = z.object({

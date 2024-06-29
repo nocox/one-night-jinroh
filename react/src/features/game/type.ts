@@ -61,6 +61,7 @@ export type GameParticipant = {
   id: number;
   name: string;
   role: RoleBean;
+  isMyself: boolean;
 };
 
 export type GameParticipantWithCoRole = GameParticipant & {
@@ -72,6 +73,7 @@ export const gameParticipantSchema = z.object({
   id: z.number(),
   name: z.string(),
   role: roleBeanSchema,
+  isMyself: z.boolean(),
 });
 
 export type GameIndexResponse = GameIndex | TermIsDifferent | NotStared;

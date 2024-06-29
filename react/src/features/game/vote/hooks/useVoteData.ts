@@ -70,6 +70,7 @@ export const useVoteData = (): {
         name: playerName,
         role: playerRole,
         co: cos.find((co) => co.id === playerId)!,
+        isMyself: true,
       },
       ...otherPlayerList.map((otherPlayer) => ({
         hostFlag: otherPlayer.hostFlag,
@@ -77,6 +78,7 @@ export const useVoteData = (): {
         name: otherPlayer.name,
         role: otherPlayer.role,
         co: cos.find((co) => co.id === otherPlayer.id)!,
+        isMyself: false,
       })),
     ];
     setGameParticipantWithCoRole(gameParticipantsWithCoRole);

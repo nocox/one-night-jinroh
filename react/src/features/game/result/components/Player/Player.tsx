@@ -62,6 +62,7 @@ export const Player: React.FC<Props> = ({ participant }) => {
         className={cx(styles.playerName, participant.myself && styles.myself)}
       >
         {participant.playerName}
+        {participant.myself && '(あなた)'}
       </figcaption>
     </figure>
   );

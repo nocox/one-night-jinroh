@@ -7,7 +7,10 @@ import { JINROH_API_BASE_URL } from '@/url';
 export const useWebSocket = (callbacks: Subscribe[]): void => {
   useEffect(() => {
     const socket = new SockJS(JINROH_API_BASE_URL + '/jinroh-websocket');
-    const options = {debug: true, protocols: Stomp.VERSIONS.supportedProtocols() };
+    const options = {
+      debug: true,
+      protocols: Stomp.VERSIONS.supportedProtocols(),
+    };
     const stompClient = Stomp.over(socket, options);
 
     stompClient.connect({}, () => {
@@ -17,8 +20,8 @@ export const useWebSocket = (callbacks: Subscribe[]): void => {
     });
 
     socket.onclose = () => {
-      if (confirm("サーバとの接続が切れました。再接続しますか？")) {
-        location.reload()
+      if (confirm('サーバとの接続が切れました。再接続しますか？')) {
+        location.reload();
       }
     };
 

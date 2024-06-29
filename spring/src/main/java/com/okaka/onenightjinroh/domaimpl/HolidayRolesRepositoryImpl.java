@@ -21,10 +21,7 @@ public class HolidayRolesRepositoryImpl implements HolidayRolesRepository {
 
     @Override
     public HolidayRoles findByGameId(Long gameId) {
-        List<Long> roleIds = dao.selectByGameId(gameId).stream()
-                .map(entity -> entity.role_id)
-                .collect(Collectors.toList());
-        List<Role> roles = roleDao.selectByRoleIds(roleIds).stream()
+        List<Role> roles = dao.selectByGameId(gameId).stream()
                 .map(entity -> Role.byRoleId(entity.role_id, entity.role_name))
                 .collect(Collectors.toList());
         return new HolidayRoles(gameId, roles);

@@ -12,9 +12,9 @@ class Rule(
                 4 to listOf(1L,2L,3L,4L,5L,6L),
                 5 to listOf(1L,2L,3L,4L,5L,6L,1L),
                 6 to listOf(1L,2L,3L,4L,5L,6L,1L,2L),
-                7 to listOf(1L,2L,3L,4L,5L,6L,1L,2L,3L),
-                8 to listOf(1L,2L,3L,4L,5L,6L,1L,2L,3L,4L),
-                9 to listOf(1L,2L,3L,4L,5L,6L,1L,2L,3L,4L,5L),
+                7 to listOf(1L,2L,3L,4L,5L,6L,1L,1L,2L),
+                8 to listOf(1L,2L,3L,4L,5L,6L,1L,1L,2L,4L),
+                9 to listOf(1L,2L,3L,4L,5L,6L,1L,1L,2L,4L,5L),
             )
 
         fun createByParticipantCount(playerNum: Int): Rule {

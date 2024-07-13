@@ -45,8 +45,8 @@ export const UranaishiFormResult: React.FC<Props> = ({ actLog, roleBeans }) => {
         {actLog}
       </p>
       <ul className={styles.roles}>
-        {roleBeans.map((roleBean) => (
-          <li key={roleBean.roleId}>
+        {roleBeans.map((roleBean, index) => (
+          <li key={`${index}-${roleBean.roleId}`}>
             <figure>
               <img
                 src={

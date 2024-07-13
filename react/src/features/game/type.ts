@@ -65,7 +65,7 @@ export type GameParticipant = {
 };
 
 export type GameParticipantWithCoRole = GameParticipant & {
-  co: CoRole;
+  co: CoRole | null;
 };
 
 export const gameParticipantSchema = z.object({

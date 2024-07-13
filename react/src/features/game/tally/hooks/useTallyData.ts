@@ -58,12 +58,14 @@ export const useTallyData = (): {
           voteCount: tallyResult.players
             .filter((player) => player.id === playerId)
             .map((player) => player.voteCount)[0],
+          isMyself: true,
         },
         ...otherPlayerList.map((player) => ({
           ...player,
           voteCount: tallyResult.players
             .filter((playerWithVote) => player.id === playerWithVote.id)
             .map((playerWithVote) => playerWithVote.voteCount)[0],
+          isMyself: false,
         })),
       ];
 

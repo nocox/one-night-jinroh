@@ -46,7 +46,10 @@ export const PlayerCard: React.FC<Props> = ({ player }) => {
       {coIconUrl && (
         <img className={styles.coIcon} src={coIconUrl} alt={player.co?.role} />
       )}
-      <span className={styles.playerName}>{player.name}</span>
+      <span className={styles.playerName}>
+        {player.name}
+        {player.isMyself && '(あなた)'}
+      </span>
     </div>
   );
 };

@@ -12,6 +12,7 @@ export type GameParticipantWithVoteBean = {
   role: RoleBean;
   hostFlag: boolean;
   voteCount: number;
+  isMyself: boolean;
 };
 
 type TallyResultBean = {

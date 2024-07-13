@@ -24,6 +24,7 @@ export const Default: Story = {
           id: 1,
           role: 'murabito',
         },
+        isMyself: true,
       },
       {
         id: 2,
@@ -37,6 +38,7 @@ export const Default: Story = {
           id: 1,
           role: 'murabito',
         },
+        isMyself: false,
       },
       {
         id: 3,
@@ -50,6 +52,7 @@ export const Default: Story = {
           id: 1,
           role: 'murabito',
         },
+        isMyself: false,
       },
     ],
     nightActLog: '夜の行動ログ',
@@ -68,6 +71,7 @@ export const Default: Story = {
           id: 1,
           role: 'murabito',
         },
+        isMyself: true,
       };
     },
     gameRuleList: [

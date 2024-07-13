@@ -61,6 +61,7 @@ export type GameParticipant = {
   id: number;
   name: string;
   role: RoleBean;
+  isMyself: boolean;
 };
 
 export type GameParticipantWithCoRole = GameParticipant & {

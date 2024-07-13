@@ -22,6 +22,7 @@ export const toGameParticipantsWithCoRole = (
     name: playerName,
     role: playerRole,
     co: cos.find((co) => co.id === playerId) ?? null,
+    isMyself: true,
   },
   ...otherPlayerList.map((otherPlayer) => ({
     hostFlag: otherPlayer.hostFlag,
@@ -29,5 +30,6 @@ export const toGameParticipantsWithCoRole = (
     name: otherPlayer.name,
     role: otherPlayer.role,
     co: cos.find((co) => co.id === playerId) ?? null,
+    isMyself: false,
   })),
 ];

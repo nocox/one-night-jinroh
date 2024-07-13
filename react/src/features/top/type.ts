@@ -4,7 +4,11 @@ type JoinRoomDto = {
   roomId: string;
 };
 
-type JoinedRoomStatus = 'JOIN_SUCCESS' | 'ROOM_NOT_EXIST' | 'PARTICPANT_LIMIT' | 'ALREADY_JOINED';
+type JoinedRoomStatus =
+  | 'JOIN_SUCCESS'
+  | 'ROOM_NOT_EXIST'
+  | 'PARTICPANT_LIMIT'
+  | 'ALREADY_JOINED';
 
 const joinedRoomStatusSchema = z.union([
   z.literal('JOIN_SUCCESS'),

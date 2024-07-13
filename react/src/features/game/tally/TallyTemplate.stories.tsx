@@ -27,6 +27,7 @@ export const Default: Story = {
         role: { roleId: 1, roleName: '村人' },
         hostFlag: true,
         voteCount: 2,
+        isMyself: true,
       },
     ],
     playersWithVoteCount: [
@@ -36,6 +37,7 @@ export const Default: Story = {
         role: { roleId: 1, roleName: '村人' },
         hostFlag: true,
         voteCount: 2,
+        isMyself: true,
       },
       {
         id: 2,
@@ -43,6 +45,7 @@ export const Default: Story = {
         role: { roleId: 0, roleName: '不明' },
         hostFlag: false,
         voteCount: 0,
+        isMyself: false,
       },
       {
         id: 3,
@@ -50,6 +53,7 @@ export const Default: Story = {
         role: { roleId: 0, roleName: '不明' },
         hostFlag: false,
         voteCount: 0,
+        isMyself: false,
       },
     ],
     isPeaceful: false,
@@ -79,6 +83,7 @@ export const SelectedManyPlayers: Story = {
         role: { roleId: 1, roleName: '村人' },
         hostFlag: true,
         voteCount: 2,
+        isMyself: true,
       },
       {
         id: 2,
@@ -86,6 +91,7 @@ export const SelectedManyPlayers: Story = {
         role: { roleId: 0, roleName: '不明' },
         hostFlag: true,
         voteCount: 2,
+        isMyself: false,
       },
     ],
     playersWithVoteCount: [
@@ -95,6 +101,7 @@ export const SelectedManyPlayers: Story = {
         role: { roleId: 1, roleName: '村人' },
         hostFlag: true,
         voteCount: 2,
+        isMyself: true,
       },
       {
         id: 2,
@@ -102,6 +109,7 @@ export const SelectedManyPlayers: Story = {
         role: { roleId: 0, roleName: '不明' },
         hostFlag: false,
         voteCount: 0,
+        isMyself: false,
       },
       {
         id: 3,
@@ -109,6 +117,7 @@ export const SelectedManyPlayers: Story = {
         role: { roleId: 0, roleName: '不明' },
         hostFlag: false,
         voteCount: 0,
+        isMyself: false,
       },
       {
         id: 4,
@@ -116,6 +125,7 @@ export const SelectedManyPlayers: Story = {
         role: { roleId: 0, roleName: '不明' },
         hostFlag: false,
         voteCount: 0,
+        isMyself: false,
       },
     ],
     isPeaceful: false,
@@ -146,6 +156,7 @@ export const Peaceful: Story = {
         role: { roleId: 1, roleName: '村人' },
         hostFlag: true,
         voteCount: 2,
+        isMyself: true,
       },
       {
         id: 2,
@@ -153,6 +164,7 @@ export const Peaceful: Story = {
         role: { roleId: 0, roleName: '不明' },
         hostFlag: true,
         voteCount: 1,
+        isMyself: false,
       },
       {
         id: 3,
@@ -160,6 +172,7 @@ export const Peaceful: Story = {
         role: { roleId: 0, roleName: '不明' },
         hostFlag: true,
         voteCount: 1,
+        isMyself: false,
       },
     ],
     playersWithVoteCount: [
@@ -169,6 +182,7 @@ export const Peaceful: Story = {
         role: { roleId: 1, roleName: '村人' },
         hostFlag: true,
         voteCount: 1,
+        isMyself: true,
       },
       {
         id: 2,
@@ -176,6 +190,7 @@ export const Peaceful: Story = {
         role: { roleId: 0, roleName: '不明' },
         hostFlag: false,
         voteCount: 1,
+        isMyself: false,
       },
       {
         id: 3,
@@ -183,6 +198,7 @@ export const Peaceful: Story = {
         role: { roleId: 0, roleName: '不明' },
         hostFlag: false,
         voteCount: 1,
+        isMyself: false,
       },
     ],
     isPeaceful: true,

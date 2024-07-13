@@ -21,6 +21,7 @@ export const Default: Story = {
           roleId: 1,
           roleName: '村人',
         },
+        isMyself: true,
       },
       {
         hostFlag: false,
@@ -30,6 +31,7 @@ export const Default: Story = {
           roleId: 2,
           roleName: '人狼',
         },
+        isMyself: false,
       },
     ],
     errorMessage: '',
@@ -48,6 +50,7 @@ export const WithErrorMessage: Story = {
           roleId: 1,
           roleName: '村人',
         },
+        isMyself: true,
       },
       {
         hostFlag: false,
@@ -57,6 +60,7 @@ export const WithErrorMessage: Story = {
           roleId: 2,
           roleName: '人狼',
         },
+        isMyself: false,
       },
     ],
     errorMessage: '交換相手を選択してください。',

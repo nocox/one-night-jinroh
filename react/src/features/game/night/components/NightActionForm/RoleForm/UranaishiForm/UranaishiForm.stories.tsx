@@ -21,6 +21,7 @@ export const Default: Story = {
           roleId: 1,
           roleName: '村人',
         },
+        isMyself: true,
       },
       {
         hostFlag: false,
@@ -30,6 +31,7 @@ export const Default: Story = {
           roleId: 2,
           roleName: '人狼',
         },
+        isMyself: false,
       },
     ],
     selectedPlayerId: undefined,

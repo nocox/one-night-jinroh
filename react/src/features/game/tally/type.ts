@@ -34,7 +34,6 @@ const gameParticipantWithVoteBeanSchema = z.object({
   role: roleBeanSchema,
   hostFlag: z.boolean(),
   voteCount: z.number(),
-  isMyself: z.boolean(),
 });
 
 const tallyIndexResponseBodySchema = z.object({

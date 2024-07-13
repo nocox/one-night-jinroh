@@ -1,11 +1,8 @@
 package com.okaka.onenightjinroh.application.repository;
 
 
+import com.okaka.onenightjinroh.application.domain.*;
 import com.okaka.onenightjinroh.domaimpl.HolidayRolesRepositoryImpl;
-import com.okaka.onenightjinroh.application.domain.OtherNightActFormatter;
-import com.okaka.onenightjinroh.application.domain.Role;
-import com.okaka.onenightjinroh.application.domain.RoleNightActFormatter;
-import com.okaka.onenightjinroh.application.domain.UranaishiNightActFormatter;
 
 import java.util.Optional;
 
@@ -38,7 +35,7 @@ public class RoleNightActFormatterRepository {
             return Optional.of(UranaishiNightActFormatter.from(toParticipant, uranaishiNightAct, holidayRoles));
         }
         else if (role instanceof Role.Kaito) {
-            return kaitoNightActRepository.findByParticipationId(gameParticipantId);
+            return Optional.of(kaitoNightActRepository.findByParticipationId(gameParticipantId).orElse(KaitoNightActFormatter.empty()));
         }
         return Optional.of(new OtherNightActFormatter());
     }

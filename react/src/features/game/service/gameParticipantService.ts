@@ -29,7 +29,7 @@ export const toGameParticipantsWithCoRole = (
     id: otherPlayer.id,
     name: otherPlayer.name,
     role: otherPlayer.role,
-    co: cos.find((co) => co.id === playerId) ?? null,
+    co: cos.find((co) => co.id === otherPlayer.id) ?? null,
     isMyself: false,
   })),
 ];

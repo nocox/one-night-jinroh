@@ -65,6 +65,7 @@ public class RoomController {
 
         finishRoomUseCase.invoke(userId, uuid);
 
+        session.removeAttribute("room_uuid");
         messagingTemplate.convertAndSend("/topic/receive-finish-room/" + uuid, "");
         return 0;
     }

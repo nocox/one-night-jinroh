@@ -1,4 +1,5 @@
 import type {
+  ExitRoom,
   FetchGameStart,
   FetchRoomIndex,
   FinishRoom,
@@ -54,5 +55,16 @@ export const finishRoom: FinishRoom = async () => {
 
   if (res.status !== 200) {
     throw new Error('Failed to finish room');
+  }
+};
+
+export const exitRoom: ExitRoom = async () => {
+  const res = await fetch(JINROH_API_BASE_URL + '/exit-room', {
+    method: 'POST',
+    credentials: 'include',
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to exit room');
   }
 };

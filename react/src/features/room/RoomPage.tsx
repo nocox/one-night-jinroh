@@ -8,6 +8,7 @@ import { InvalidResponseBodyError } from '@/features/error';
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
 import type { Subscribe } from '@/type';
+import { exitRoom } from "@/features/room/api.ts";
 
 export const RoomPage: React.FC = () => {
   const { open, onOpenModal } = useModal(false);
@@ -47,11 +48,11 @@ export const RoomPage: React.FC = () => {
 
   const subscribeFinishRoom: Subscribe = {
     path: `/topic/receive-finish-room/${uuid}`,
-    callback: () => {
+    callback: async () => {
       if (!hostFlg) {
         window.alert('ホストがルームを解散しました');
       }
-
+      await exitRoom()
       window.location.href = '/';
     },
   };

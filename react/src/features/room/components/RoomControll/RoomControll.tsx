@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { fetchGameStart, finishRoom } from '../../api';
+import {exitRoom, fetchGameStart, finishRoom} from '../../api';
 import { RoomControllButton } from './RoomControllButton';
 import { ExhaustiveError } from '@/features/error';
 
@@ -39,8 +39,10 @@ export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
 
   const handleGameExit = async () => {
     try {
-      await finishRoom();
-      // TODO: 解散処理を実装する（ Web Socket で解散のメッセージを受信する）
+      const finishStatus = await finishRoom();
+      if (finishStatus === "ROOM_NOT_EXIST") {
+        await exitRoom()
+      }
     } catch (error) {
       console.log(error); // TODO: ErrorFallback を実装する
     }

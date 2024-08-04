@@ -1,6 +1,6 @@
 import { createRoom } from '../../api';
 import makeBtn from './make_room.png';
-import {finishRoom} from "@/features/room/api.ts";
+import {exitRoom, finishRoom} from "@/features/room/api.ts";
 
 type Props = {
   className: string;
@@ -17,7 +17,10 @@ export const MakeRoomButton: React.FC<Props> = ({ className }) => {
           break;
         case "OTHER_ROOM_JOINED":
           if (window.confirm("すでに参加済みのルームがあります。退出しますか？")){
-            await finishRoom()
+            const finishStatus = await finishRoom()
+            if (finishStatus === "ROOM_NOT_EXIST") {
+              await exitRoom()
+            }
           } else {
             location.href = '/room';
           }

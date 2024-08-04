@@ -4,7 +4,7 @@ import { JoinRoomButton } from './JoinRoomButton';
 import { JoinRoomModal } from './JoinRoomModal';
 import { ExhaustiveError } from '@/features/error';
 import { useModal } from '@/hooks/useModal';
-import { finishRoom } from "@/features/room/api.ts";
+import {exitRoom, finishRoom} from "@/features/room/api.ts";
 
 type Props = {
   className: string;
@@ -30,7 +30,10 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
           break;
         case 'OTHER_ROOM_JOINED':
           if (window.confirm("すでに参加済みのルームがあります。退出しますか？")){
-            await finishRoom()
+            const finishStatus = await finishRoom()
+            if (finishStatus === "ROOM_NOT_EXIST") {
+              await exitRoom()
+            }
             setJoinRoomResult('参加済みのルームを退出しました。参加したいルームIDを入力してください。');
           } else {
             location.href = '/room';

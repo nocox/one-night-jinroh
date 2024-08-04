@@ -24,6 +24,8 @@ export type GameInfo = {
   }>;
 };
 
+export type FinishRoomStatus = 'FINISHED_ROOM' | 'ROOM_NOT_EXIST';
+
 const userSchema = z.object({
   userId: z.number(),
   name: z.string(),
@@ -42,6 +44,11 @@ const gameStartStatusSchema = z.union([
   z.literal('NOT_ENOUGH_PARTICIPANTS'),
 ]);
 
+const finishRoomStatusSchema = z.union([
+  z.literal('FINISHED_ROOM'),
+  z.literal('ROOM_NOT_EXIST'),
+]);
+
 export const isRoomIndexResponseBody = (
   value: unknown,
 ): value is RoomIndexResponseBody => {
@@ -56,6 +63,12 @@ export const isGameInfo = (value: unknown): value is GameInfo => {
   return gameInfoSchema.safeParse(value).success;
 };
 
+export const isFinishRoomStatus = (
+    value: unknown,
+): value is FinishRoomStatus => {
+  return finishRoomStatusSchema.safeParse(value).success;
+};
+
 export const gameInfoSchema = z.object({
   gameId: z.number(),
   playerCount: z.number(),
@@ -67,7 +80,9 @@ export const gameInfoSchema = z.object({
   ),
 });
 
+
+
 export type FetchRoomIndex = () => Promise<RoomIndexResponseBody>;
 export type FetchGameStart = () => Promise<GameStartStatus>;
-export type FinishRoom = () => Promise<void>;
+export type FinishRoom = () => Promise<FinishRoomStatus>;
 export type ExitRoom = () => Promise<void>;

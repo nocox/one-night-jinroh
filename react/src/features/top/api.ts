@@ -1,4 +1,4 @@
-import { isJoinedRoomStatus } from './type';
+import {isCreateRoomStatus, isJoinedRoomStatus} from './type';
 import type { CreateRoom, JoinRoom } from './type';
 import { InvalidResponseBodyError } from '@/features/error';
 import { JINROH_API_BASE_URL } from '@/url';
@@ -26,7 +26,11 @@ export const createRoom: CreateRoom = async () => {
     credentials: 'include',
   });
 
-  if (res.status !== 200) {
-    throw new Error('CREATE_ROOM_FAILED');
+  const status = await res.text();
+
+  if (!isCreateRoomStatus(status)) {
+    throw new InvalidResponseBodyError();
   }
+
+  return status
 };

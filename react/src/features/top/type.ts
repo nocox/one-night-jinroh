@@ -8,13 +8,15 @@ type JoinedRoomStatus =
   | 'JOIN_SUCCESS'
   | 'ROOM_NOT_EXIST'
   | 'PARTICPANT_LIMIT'
-  | 'ALREADY_JOINED';
+  | 'ALREADY_JOINED'
+  | 'OTHER_ROOM_JOINED';
 
 const joinedRoomStatusSchema = z.union([
   z.literal('JOIN_SUCCESS'),
   z.literal('ROOM_NOT_EXIST'),
   z.literal('PARTICPANT_LIMIT'),
   z.literal('ALREADY_JOINED'),
+  z.literal('OTHER_ROOM_JOINED'),
 ]);
 
 export const isJoinedRoomStatus = (

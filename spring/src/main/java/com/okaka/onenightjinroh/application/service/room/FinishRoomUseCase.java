@@ -24,10 +24,10 @@ public class FinishRoomUseCase {
         RoomParticipant roomParticipant = roomParticipantRepository.findByUserId(userId).orElseThrow(IllegalArgumentException::new);
         Room room = existRoomValidate.existRoom(roomUuid).orElseThrow(IllegalArgumentException::new);
 
-        if (!roomParticipant.hostFlg) {
-            // Note: この場合、悪意がある可能性があるので、ログとか流すべきかも
-            throw new IllegalArgumentException();
-        }
+        // ルーム解散を特別に一旦ホスト以外もできるようにした。不要なルームを残さないため。 (24/7)
+        // if (!roomParticipant.hostFlg) {
+        //     throw new IllegalArgumentException();
+        // }
 
         if (RoomStatus.Finished.equals(room.getStatus())) {
             throw new IllegalArgumentException();

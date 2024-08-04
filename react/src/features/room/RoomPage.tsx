@@ -20,7 +20,7 @@ export const RoomPage: React.FC = () => {
 
   const roomIndexResponseBody = useRoomData();
 
-  const { uuid, hostFlg } = roomIndexResponseBody;
+  const { uuid } = roomIndexResponseBody;
 
   const subscribeGameStart: Subscribe = {
     path: `/topic/${uuid}`,
@@ -49,9 +49,7 @@ export const RoomPage: React.FC = () => {
   const subscribeFinishRoom: Subscribe = {
     path: `/topic/receive-finish-room/${uuid}`,
     callback: async () => {
-      if (!hostFlg) {
-        window.alert('ホストがルームを解散しました');
-      }
+      window.alert('ルームが解散されました');
       await exitRoom()
       window.location.href = '/';
     },

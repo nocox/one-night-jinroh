@@ -16,8 +16,10 @@ class JoinRoomController(
 ) {
     @RequestMapping(path = ["/join-room"])
     fun joinedRoom(@RequestParam uuid: String?, session: HttpSession): String {
-        if (session.getAttribute("room_uuid") != null) {
+        if (session.getAttribute("room_uuid") == uuid) {
             return "ALREADY_JOINED"
+        } else if (session.getAttribute("room_uuid") != null) {
+            return "OTHER_ROOM_JOINED"
         }
 
         try {

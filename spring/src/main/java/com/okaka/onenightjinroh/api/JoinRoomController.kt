@@ -2,8 +2,8 @@ package com.okaka.onenightjinroh.api
 
 import com.okaka.onenightjinroh.application.service.top.JoinedRoomUseCase
 import com.okaka.onenightjinroh.application.service.top.JoinedRoomUseCaseDto
-import com.okaka.onenightjinroh.application.service.top.ParticipantLimitException
-import com.okaka.onenightjinroh.application.service.top.RoomNotExistException
+import com.okaka.onenightjinroh.application.exception.ParticipantLimitException
+import com.okaka.onenightjinroh.application.exception.RoomNotExistException
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -16,8 +16,10 @@ class JoinRoomController(
 ) {
     @RequestMapping(path = ["/join-room"])
     fun joinedRoom(@RequestParam uuid: String?, session: HttpSession): String {
-        if (session.getAttribute("room_uuid") != null) {
+        if (session.getAttribute("room_uuid") == uuid) {
             return "ALREADY_JOINED"
+        } else if (session.getAttribute("room_uuid") != null) {
+            return "OTHER_ROOM_JOINED"
         }
 
         try {

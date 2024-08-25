@@ -1,19 +1,24 @@
 package com.okaka.onenightjinroh.api;
 
 import com.okaka.onenightjinroh.application.domain.Room;
+import com.okaka.onenightjinroh.application.exception.RoomNotExistException;
 import com.okaka.onenightjinroh.application.service.room.*;
 import com.okaka.onenightjinroh.application.validater.ExistRoomValidate;
 import com.okaka.onenightjinroh.application.validater.StartGameValidate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpSession;
 
 @RestController
 public class RoomController {
 
+    private static final Logger log = LoggerFactory.getLogger(RoomController.class);
     @Autowired
     HttpSession session;
 
@@ -31,6 +36,8 @@ public class RoomController {
 
     @Autowired
     private FinishRoomUseCase finishRoomUseCase;
+    @Autowired
+    private View error;
 
     @RequestMapping(path = "/room-index")
     RoomIndexBean getRoom() {
@@ -56,16 +63,5 @@ public class RoomController {
         } catch (NotEnoughParticipantsException e) {
             return "NOT_ENOUGH_PARTICIPANTS";
         }
-    }
-
-    @RequestMapping(path = "/room-finish")
-    int finishRoom() {
-        String uuid = session.getAttribute("room_uuid").toString();
-        Long userId = Long.valueOf(session.getAttribute("user_id").toString());
-
-        finishRoomUseCase.invoke(userId, uuid);
-
-        messagingTemplate.convertAndSend("/topic/receive-finish-room/" + uuid, "");
-        return 0;
     }
 }

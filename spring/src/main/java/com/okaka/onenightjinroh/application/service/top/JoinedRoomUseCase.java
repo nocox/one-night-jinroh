@@ -8,6 +8,8 @@ import com.okaka.jinroh.persistence.*;
 import com.okaka.jinroh.persistence.RoomParticipantEntity;
 import com.okaka.onenightjinroh.application.domain.Room;
 import com.okaka.onenightjinroh.application.repository.UserRepository;
+import com.okaka.onenightjinroh.application.exception.ParticipantLimitException;
+import com.okaka.onenightjinroh.application.exception.RoomNotExistException;
 import com.okaka.onenightjinroh.application.validater.ExistRoomValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

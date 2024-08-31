@@ -21,8 +21,6 @@ export const MakeRoomButton: React.FC<Props> = ({ className }) => {
             if (finishStatus === "ROOM_NOT_EXIST") {
               await exitRoom()
             }
-          } else {
-            location.href = '/room';
           }
           break;
       }

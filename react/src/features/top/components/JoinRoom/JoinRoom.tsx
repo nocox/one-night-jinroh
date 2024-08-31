@@ -36,7 +36,6 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
             }
             setJoinRoomResult('参加済みのルームを退出しました。参加したいルームIDを入力してください。');
           } else {
-            location.href = '/room';
             setJoinRoomResult('');
           }
           break;

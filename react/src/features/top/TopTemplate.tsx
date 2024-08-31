@@ -1,5 +1,6 @@
 import { css } from 'styled-system/css';
 
+import React from "react";
 import { JoinRoom } from './components/JoinRoom';
 import { MakeRoomButton } from './components/MakeRoomButton';
 import { NewsField } from './components/NewsField';
@@ -7,6 +8,8 @@ import { RoleExplanation } from './components/RoleExplanation';
 import { TitleCharacters } from './components/TitleCharacters';
 import { TitleLogo } from './components/TitleLogo';
 import { DefaultLayout } from '@/components';
+import { BackToRoomButton } from "./components/BackToRoomButton";
+import { FetchJoinedRoomStatus } from "@/features/top/type.ts";
 
 const styles = {
   roomButtonWrapper: css({
@@ -33,7 +36,11 @@ const styles = {
   }),
 };
 
-export const TopTemplate: React.FC = () => {
+type Props = {
+  joinedRoomStatus: FetchJoinedRoomStatus
+}
+
+export const TopTemplate: React.FC<Props> = ({joinedRoomStatus}) => {
   return (
     <DefaultLayout>
       <h1>
@@ -43,6 +50,9 @@ export const TopTemplate: React.FC = () => {
       <div className={styles.roomButtonWrapper}>
         <MakeRoomButton className={styles.roomButton} />
         <JoinRoom className={styles.roomButton} />
+      </div>
+      <div className={styles.roomButtonWrapper}>
+        <BackToRoomButton className={styles.roomButton} joinedRoomStatus={joinedRoomStatus}/>
       </div>
 
       <TitleCharacters />

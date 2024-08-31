@@ -41,5 +41,24 @@ export const isCreateRoomStatus = (
   return createRoomStatusSchema.safeParse(value).success;
 };
 
+
+export type FetchJoinedRoomStatus =
+    | 'NOT_JOINED_ROOM'
+    | 'JOINED_ROOM';
+
+const fetchJoinedRoomStatusSchema = z.union([
+  z.literal('NOT_JOINED_ROOM'),
+  z.literal('JOINED_ROOM'),
+]);
+
+export const isFetchJoinedRoomStatus = (
+    value: unknown,
+): value is FetchJoinedRoomStatus => {
+  return fetchJoinedRoomStatusSchema.safeParse(value).success;
+};
+
+
+
 export type JoinRoom = (dto: JoinRoomDto) => Promise<JoinedRoomStatus>;
 export type CreateRoom = () => Promise<CreateRoomStatus>;
+export type FetchJoinedRoom = () => Promise<FetchJoinedRoomStatus>

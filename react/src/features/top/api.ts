@@ -1,4 +1,4 @@
-import {isCreateRoomStatus, isJoinedRoomStatus} from './type';
+import {FetchJoinedRoom, isCreateRoomStatus, isFetchJoinedRoomStatus, isJoinedRoomStatus} from './type';
 import type { CreateRoom, JoinRoom } from './type';
 import { InvalidResponseBodyError } from '@/features/error';
 import { JINROH_API_BASE_URL } from '@/url';
@@ -33,4 +33,20 @@ export const createRoom: CreateRoom = async () => {
   }
 
   return status
+};
+
+export const fetchJoinedRoom: FetchJoinedRoom = async () => {
+
+  const res = await fetch(JINROH_API_BASE_URL + '/joined-room', {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  const status = await res.text();
+
+  if (!isFetchJoinedRoomStatus(status)) {
+    throw new InvalidResponseBodyError();
+  }
+
+  return status;
 };

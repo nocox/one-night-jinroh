@@ -1,10 +1,9 @@
-import { isTallyIndexResponseBody } from './type';
 import type {
   FetchResult,
   FetchTallyIndexResponseBody,
   TallyIndexResponseBody,
 } from './type';
-import { InvalidResponseBodyError, UnexpectedError } from '@/features/error';
+import { UnexpectedError } from '@/features/error';
 import { JINROH_API_BASE_URL } from '@/url';
 
 export const fetchTallyIndexResponseBody: FetchTallyIndexResponseBody =
@@ -20,16 +19,7 @@ export const fetchTallyIndexResponseBody: FetchTallyIndexResponseBody =
     `);
     }
 
-    const tallyIndexResponseBody = (await res.json()) as TallyIndexResponseBody;
-
-    if (!isTallyIndexResponseBody(tallyIndexResponseBody)) {
-      throw new InvalidResponseBodyError(`
-      fetchTallyIndexResponseBody failed with invalid response body
-      ${JSON.stringify(tallyIndexResponseBody)}
-    `);
-    }
-
-    return tallyIndexResponseBody;
+    return (await res.json()) as TallyIndexResponseBody;
   };
 
 export const fetchResult: FetchResult = async () => {

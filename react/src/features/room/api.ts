@@ -3,15 +3,11 @@ import type {
   FetchGameStart,
   FetchRoomIndex,
   FinishRoom,
+  FinishRoomStatus,
   GameStartStatus,
   RoomIndexResponseBody,
 } from './type';
-import {
-  isGameStartStatus,
-  isRoomIndexResponseBody,
-  isFinishRoomStatus,
-} from './type';
-import { InvalidResponseBodyError } from '@/features/error';
+
 import { JINROH_API_BASE_URL } from '@/url';
 
 export const fetchRoomIndex: FetchRoomIndex = async () => {
@@ -19,17 +15,8 @@ export const fetchRoomIndex: FetchRoomIndex = async () => {
     method: 'GET',
     credentials: 'include',
   });
-  const roomIndexResponseBody = (await res.json()) as RoomIndexResponseBody;
 
-  if (!isRoomIndexResponseBody(roomIndexResponseBody)) {
-    throw new InvalidResponseBodyError(
-      `responseBody is not in the expected format. body: ${JSON.stringify(
-        roomIndexResponseBody,
-      )}`,
-    );
-  }
-
-  return roomIndexResponseBody;
+  return (await res.json()) as RoomIndexResponseBody;
 };
 
 export const fetchGameStart: FetchGameStart = async () => {
@@ -38,17 +25,7 @@ export const fetchGameStart: FetchGameStart = async () => {
     credentials: 'include',
   });
 
-  const gameStartStatus = (await res.text()) as GameStartStatus;
-
-  if (!isGameStartStatus(gameStartStatus)) {
-    throw new InvalidResponseBodyError(
-      `responseBody is not in the expected format. body: ${JSON.stringify(
-        gameStartStatus,
-      )}`,
-    );
-  }
-
-  return gameStartStatus;
+  return (await res.text()) as GameStartStatus;
 };
 
 export const finishRoom: FinishRoom = async () => {
@@ -57,13 +34,7 @@ export const finishRoom: FinishRoom = async () => {
     credentials: 'include',
   });
 
-  const status = await res.text();
-
-  if (!isFinishRoomStatus(status)) {
-    throw new Error('Failed to finish room');
-  }
-
-  return status;
+  return (await res.text()) as FinishRoomStatus;
 };
 
 export const exitRoom: ExitRoom = async () => {

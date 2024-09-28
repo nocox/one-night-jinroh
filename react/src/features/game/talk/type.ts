@@ -1,5 +1,3 @@
-import { z } from 'zod';
-import { coRoleSchema, gameIndexResponseSchema } from '@/features/game/type';
 import type { CoRole, GameIndex } from '@/features/game/type';
 import type { Role } from '@/features/role';
 
@@ -11,18 +9,6 @@ export type TalkIndexResponseBody = {
   gameId: number;
   gameIndex: GameIndex;
   cos: CoRole[];
-};
-
-const talkIndexResponseBodySchema = z.object({
-  gameId: z.number(),
-  gameIndex: gameIndexResponseSchema,
-  cos: z.array(coRoleSchema),
-});
-
-export const isTalkIndexResponseBody = (
-  value: unknown,
-): value is TalkIndexResponseBody => {
-  return talkIndexResponseBodySchema.safeParse(value).success;
 };
 
 export type FetchTalkIndex = () => Promise<TalkIndexResponseBody>;

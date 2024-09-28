@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import type { RoleBean } from '@/features/game/type';
 
 /**
@@ -9,17 +8,6 @@ export type NightIndexResponseBody = {
   gameId: number;
 };
 
-const nightIndexResponseBodySchema = z.object({
-  doneNightAct: z.boolean(),
-  gameId: z.number(),
-});
-
-export const isNightIndexResponseBody = (
-  value: unknown,
-): value is NightIndexResponseBody => {
-  return nightIndexResponseBodySchema.safeParse(value).success;
-};
-
 export type FetchNightIndex = () => Promise<NightIndexResponseBody>;
 
 /**
@@ -28,17 +16,6 @@ export type FetchNightIndex = () => Promise<NightIndexResponseBody>;
 export type NightKaitoResult = {
   actLog: string;
   selectedParticipantId: number;
-};
-
-const nightKaitoResultSchema = z.object({
-  actLog: z.string(),
-  selectedParticipantId: z.number(),
-});
-
-export const isNightKaitoResult = (
-  value: unknown,
-): value is NightKaitoResult => {
-  return nightKaitoResultSchema.safeParse(value).success;
 };
 
 type NightKaitoActionDto = {
@@ -75,29 +52,6 @@ export type NightUranaiResult = {
   user: User | null;
 };
 
-const nightUranaiResultSchema = z.object({
-  status: z.string(),
-  participantId: z.number().nullable(),
-  roles: z.array(
-    z.object({
-      roleId: z.number(),
-      roleName: z.string(),
-    }),
-  ),
-  user: z
-    .object({
-      userId: z.number(),
-      userName: z.string(),
-    })
-    .nullable(),
-});
-
-export const isNightUranaiResult = (
-  value: unknown,
-): value is NightUranaiResult => {
-  return nightUranaiResultSchema.safeParse(value).success;
-};
-
 type PostNightUranaishiActionDto = {
   status: UranaiStatus;
   participantId: number | undefined;
@@ -115,16 +69,6 @@ export type FetchNightUranaishiAction = () => Promise<
  */
 export type NightJinrohPlayers = {
   playerNames: string[];
-};
-
-const nightJinrohPlayersSchema = z.object({
-  playerNames: z.array(z.string()),
-});
-
-export const isNightJinrohPlayers = (
-  value: unknown,
-): value is NightJinrohPlayers => {
-  return nightJinrohPlayersSchema.safeParse(value).success;
 };
 
 export type FetchNightJinrohPlayers = () => Promise<NightJinrohPlayers>;

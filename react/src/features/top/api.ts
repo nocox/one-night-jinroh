@@ -1,6 +1,9 @@
-import { isCreateRoomStatus, isJoinedRoomStatus } from './type';
-import type { CreateRoom, JoinRoom } from './type';
-import { InvalidResponseBodyError } from '@/features/error';
+import type {
+  CreateRoom,
+  CreateRoomStatus,
+  JoinRoom,
+  JoinedRoomStatus,
+} from './type';
 import { JINROH_API_BASE_URL } from '@/url';
 
 export const joinRoom: JoinRoom = async (dto) => {
@@ -11,13 +14,7 @@ export const joinRoom: JoinRoom = async (dto) => {
     credentials: 'include',
   });
 
-  const status = await res.text();
-
-  if (!isJoinedRoomStatus(status)) {
-    throw new InvalidResponseBodyError();
-  }
-
-  return status;
+  return (await res.text()) as JoinedRoomStatus;
 };
 
 export const createRoom: CreateRoom = async () => {
@@ -26,11 +23,5 @@ export const createRoom: CreateRoom = async () => {
     credentials: 'include',
   });
 
-  const status = await res.text();
-
-  if (!isCreateRoomStatus(status)) {
-    throw new InvalidResponseBodyError();
-  }
-
-  return status;
+  return (await res.text()) as CreateRoomStatus;
 };

@@ -1,4 +1,4 @@
-import { isGameRuleList, type FetchGameRuleList, type GameRule } from './type';
+import { type FetchGameRuleList, type GameRule } from './type';
 import { JINROH_API_BASE_URL } from './url';
 import { UnexpectedError } from '@/features/error';
 
@@ -17,15 +17,5 @@ export const fetchGameRuleList: FetchGameRuleList = async (gameId) => {
     );
   }
 
-  const fetchedGameRuleList = (await res.json()) as GameRule[];
-
-  if (!isGameRuleList(fetchedGameRuleList)) {
-    throw new UnexpectedError(
-      `responseBody is not in the expected format. body: ${JSON.stringify(
-        fetchedGameRuleList,
-      )}`,
-    );
-  }
-
-  return fetchedGameRuleList;
+  return (await res.json()) as GameRule[];
 };

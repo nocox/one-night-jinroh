@@ -1,5 +1,4 @@
-import { InvalidResponseBodyError, UnexpectedError } from '@/features/error';
-import { isShowResultTermIndexBean } from '@/features/game/result/type';
+import { UnexpectedError } from '@/features/error';
 import type {
   FetchReturnRoom,
   FetchShowResultTermIndex,
@@ -20,16 +19,7 @@ export const fetchShowResultTermIndex: FetchShowResultTermIndex = async () => {
     }, body: ${await res.text()}`);
   }
 
-  const showResultTermIndexBean = (await res.json()) as ShowResultTermIndexBean;
-
-  if (!isShowResultTermIndexBean(showResultTermIndexBean)) {
-    throw new InvalidResponseBodyError(`
-    responseBody is not in the expected format. body: ${JSON.stringify(
-      showResultTermIndexBean,
-    )}`);
-  }
-
-  return showResultTermIndexBean;
+  return (await res.json()) as ShowResultTermIndexBean;
 };
 
 export const fetchReturnRoom: FetchReturnRoom = async () => {

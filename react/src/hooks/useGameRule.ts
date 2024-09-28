@@ -11,7 +11,7 @@ export const useGameRule = (
     const fetchGameRuleListAsync = async () => {
       if (gameId !== undefined) {
         const gameRuleList = await fetchGameRuleList(gameId);
-        setGameRuleList(gameRuleList.roleList);
+        setGameRuleList(gameRuleList);
       }
     };
 

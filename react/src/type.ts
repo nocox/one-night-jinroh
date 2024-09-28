@@ -12,4 +12,8 @@ export type GameRule = {
   count: number;
 };
 
-export type FetchGameRuleList = (gameId: number) => Promise<GameRule[]>;
+export type GameRuleList = {
+  roleList: GameRule[];
+};
+
+export type FetchGameRuleList = (gameId: number) => Promise<GameRuleList>;

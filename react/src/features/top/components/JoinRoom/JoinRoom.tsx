@@ -1,10 +1,11 @@
+import type React from 'react';
 import { useState, type FormEventHandler } from 'react';
 import { joinRoom } from '../../api';
 import { JoinRoomButton } from './JoinRoomButton';
 import { JoinRoomModal } from './JoinRoomModal';
 import { ExhaustiveError } from '@/features/error';
+import { exitRoom, finishRoom } from '@/features/room/api';
 import { useModal } from '@/hooks/useModal';
-import {exitRoom, finishRoom} from "@/features/room/api.ts";
 
 type Props = {
   className: string;
@@ -29,12 +30,16 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
           setJoinRoomResult('');
           break;
         case 'OTHER_ROOM_JOINED':
-          if (window.confirm("すでに参加済みのルームがあります。退出しますか？")){
-            const finishStatus = await finishRoom()
-            if (finishStatus === "ROOM_NOT_EXIST") {
-              await exitRoom()
+          if (
+            window.confirm('すでに参加済みのルームがあります。退出しますか？')
+          ) {
+            const finishStatus = await finishRoom();
+            if (finishStatus === 'ROOM_NOT_EXIST') {
+              await exitRoom();
             }
-            setJoinRoomResult('参加済みのルームを退出しました。参加したいルームIDを入力してください。');
+            setJoinRoomResult(
+              '参加済みのルームを退出しました。参加したいルームIDを入力してください。',
+            );
           } else {
             location.href = '/room';
             setJoinRoomResult('');

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {exitRoom, fetchGameStart, finishRoom} from '../../api';
+import { exitRoom, fetchGameStart, finishRoom } from '../../api';
 import { RoomControllButton } from './RoomControllButton';
 import { ExhaustiveError } from '@/features/error';
 
@@ -40,8 +40,8 @@ export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
   const handleGameExit = async () => {
     try {
       const finishStatus = await finishRoom();
-      if (finishStatus === "ROOM_NOT_EXIST") {
-        await exitRoom()
+      if (finishStatus === 'ROOM_NOT_EXIST') {
+        await exitRoom();
       }
     } catch (error) {
       console.log(error); // TODO: ErrorFallback を実装する

@@ -5,10 +5,10 @@ import { useRoomData } from './hooks';
 import { isGameInfo } from './type';
 import type { GameInfo } from './type';
 import { InvalidResponseBodyError } from '@/features/error';
+import { exitRoom } from '@/features/room/api';
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
 import type { Subscribe } from '@/type';
-import { exitRoom } from "@/features/room/api.ts";
 
 export const RoomPage: React.FC = () => {
   const { open, onOpenModal } = useModal(false);
@@ -50,7 +50,7 @@ export const RoomPage: React.FC = () => {
     path: `/topic/receive-finish-room/${uuid}`,
     callback: async () => {
       window.alert('ルームが解散されました');
-      await exitRoom()
+      await exitRoom();
       window.location.href = '/';
     },
   };

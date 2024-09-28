@@ -1,12 +1,16 @@
-import {
+import type {
   ExitRoom,
   FetchGameStart,
   FetchRoomIndex,
   FinishRoom,
-  GameStartStatus, isFinishRoomStatus,
+  GameStartStatus,
   RoomIndexResponseBody,
 } from './type';
-import { isGameStartStatus, isRoomIndexResponseBody } from './type';
+import {
+  isGameStartStatus,
+  isRoomIndexResponseBody,
+  isFinishRoomStatus,
+} from './type';
 import { InvalidResponseBodyError } from '@/features/error';
 import { JINROH_API_BASE_URL } from '@/url';
 
@@ -53,13 +57,13 @@ export const finishRoom: FinishRoom = async () => {
     credentials: 'include',
   });
 
-  const status = await res.text()
+  const status = await res.text();
 
   if (!isFinishRoomStatus(status)) {
     throw new Error('Failed to finish room');
   }
 
-  return status
+  return status;
 };
 
 export const exitRoom: ExitRoom = async () => {

@@ -1,6 +1,7 @@
-import { createRoom } from '../../api';
+import type React from 'react';
 import makeBtn from './make_room.png';
-import {exitRoom, finishRoom} from "@/features/room/api.ts";
+import { exitRoom, finishRoom } from '@/features/room/api';
+import { createRoom } from '@/features/top/api';
 
 type Props = {
   className: string;
@@ -12,21 +13,22 @@ export const MakeRoomButton: React.FC<Props> = ({ className }) => {
       const status = await createRoom();
 
       switch (status) {
-        case "CREATE_ROOM_SUCCESS":
+        case 'CREATE_ROOM_SUCCESS':
           location.href = '/room';
           break;
-        case "OTHER_ROOM_JOINED":
-          if (window.confirm("すでに参加済みのルームがあります。退出しますか？")){
-            const finishStatus = await finishRoom()
-            if (finishStatus === "ROOM_NOT_EXIST") {
-              await exitRoom()
+        case 'OTHER_ROOM_JOINED':
+          if (
+            window.confirm('すでに参加済みのルームがあります。退出しますか？')
+          ) {
+            const finishStatus = await finishRoom();
+            if (finishStatus === 'ROOM_NOT_EXIST') {
+              await exitRoom();
             }
           } else {
             location.href = '/room';
           }
           break;
       }
-
     } catch (error) {
       console.log(error); // TODO: ErrorFallbackを実装する
     }

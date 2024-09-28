@@ -11,7 +11,6 @@ type JoinedRoomStatus =
   | 'ALREADY_JOINED'
   | 'OTHER_ROOM_JOINED';
 
-
 const joinedRoomStatusSchema = z.union([
   z.literal('JOIN_SUCCESS'),
   z.literal('ROOM_NOT_EXIST'),
@@ -26,9 +25,7 @@ export const isJoinedRoomStatus = (
   return joinedRoomStatusSchema.safeParse(value).success;
 };
 
-type CreateRoomStatus =
-    | 'CREATE_ROOM_SUCCESS'
-    | 'OTHER_ROOM_JOINED';
+type CreateRoomStatus = 'CREATE_ROOM_SUCCESS' | 'OTHER_ROOM_JOINED';
 
 const createRoomStatusSchema = z.union([
   z.literal('CREATE_ROOM_SUCCESS'),

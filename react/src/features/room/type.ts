@@ -64,7 +64,7 @@ export const isGameInfo = (value: unknown): value is GameInfo => {
 };
 
 export const isFinishRoomStatus = (
-    value: unknown,
+  value: unknown,
 ): value is FinishRoomStatus => {
   return finishRoomStatusSchema.safeParse(value).success;
 };
@@ -79,8 +79,6 @@ export const gameInfoSchema = z.object({
     }),
   ),
 });
-
-
 
 export type FetchRoomIndex = () => Promise<RoomIndexResponseBody>;
 export type FetchGameStart = () => Promise<GameStartStatus>;

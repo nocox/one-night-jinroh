@@ -5,7 +5,7 @@ import {fetchGameId} from "./api.ts";
 import {useNightData} from './hooks/useNightData';
 import {Loading} from '@/components';
 import {useGameIndex} from '@/features/game/hooks/useGameIndex';
-import {useWebSocket} from "@/hooks";
+import {useWebSocketGameWrapper} from "@/hooks";
 import type {Subscribe} from '@/type';
 
 // MEMO: GameIdをゲームページに渡す実装をお試し中。とりあえず夜の行動ページだけ反映中。
@@ -52,7 +52,7 @@ const InGameNightPage: React.FC<Props> = ({gameId}) => {
     },
   };
 
-  useWebSocket([subscribeDoneNightActionOfAllPlayer]);
+  useWebSocketGameWrapper(gameId, [subscribeDoneNightActionOfAllPlayer])
 
   return playerName === undefined ||
   playerRole === undefined ||

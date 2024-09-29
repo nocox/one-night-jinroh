@@ -1,17 +1,16 @@
-import type {
+import {
   FetchDoneNightAct,
   FetchNightIndex,
   FetchNightJinrohPlayers,
   FetchNightKaitoActionResult,
   FetchNightUranaishiAction,
+  FetchGameIdResponseBody,
   NightIndexResponseBody,
   NightJinrohPlayers,
   NightKaitoResult,
   NightUranaiResult,
   PostNightKaitoAction,
   PostNightUranaishiAction,
-} from './type';
-import {
   isNightIndexResponseBody,
   isNightJinrohPlayers,
   isNightKaitoResult,
@@ -19,6 +18,15 @@ import {
 } from './type';
 import { InvalidResponseBodyError, UnexpectedError } from '@/features/error';
 import { JINROH_API_BASE_URL } from '@/url';
+
+export const fetchGameId = async (): Promise<FetchGameIdResponseBody> => {
+  const response = await fetch(JINROH_API_BASE_URL + '/fetch-game-id', {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  return (await response.json()) as FetchGameIdResponseBody;
+}
 
 export const fetchNightIndex: FetchNightIndex = async () => {
   const response = await fetch(JINROH_API_BASE_URL + '/night-index', {

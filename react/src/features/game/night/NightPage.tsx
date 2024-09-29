@@ -1,41 +1,72 @@
-import { NightTemplate } from './NightTemplate';
-import { useNightData } from './hooks/useNightData';
-import { Loading } from '@/components';
-import { useGameIndex } from '@/features/game/hooks/useGameIndex';
-import { useWebSocket } from '@/hooks';
-import type { Subscribe } from '@/type';
+import type React from "react";
+import {useState} from "react";
+import {NightTemplate} from './NightTemplate';
+import {fetchGameId} from "./api.ts";
+import {useNightData} from './hooks/useNightData';
+import {Loading} from '@/components';
+import {useGameIndex} from '@/features/game/hooks/useGameIndex';
+import {useWebSocket} from "@/hooks";
+import type {Subscribe} from '@/type';
 
+// MEMO: GameIdをゲームページに渡す実装をお試し中。とりあえず夜の行動ページだけ反映中。
 export const NightPage: React.FC = () => {
-  const { gameId, doneNightAct } = useNightData();
+    const [gameId, setGameId] = useState<number | undefined>(undefined);
+
+    void fetchGameId().then((res) => {
+        switch (res.resultCode) {
+            case "IN_GAME":
+                setGameId(res.gameId);
+                break
+            case "NOT_IN_GAME":
+                setGameId(undefined)
+                break
+        }
+    })
+
+    return gameId === undefined ? (
+        <div>
+            <p>gameId取得できなかったよ</p>
+
+            <a href="/">Topへ戻る</a>
+        </div>
+    ) : (
+        <InGameNightPage gameId={gameId}/>
+    )
+};
+
+type Props = {
+  gameId: number
+}
+
+const InGameNightPage: React.FC<Props> = ({gameId}) => {
+  const { doneNightAct } = useNightData();
   const { playerName, playerRole, otherPlayerList } = useGameIndex(
-    'night',
-    gameId,
+      'night',
+      gameId,
   );
 
   const subscribeDoneNightActionOfAllPlayer: Subscribe = {
-    path: `/topic/${gameId ?? ''}`,
+    path: `/topic/${gameId}`,
     callback: () => {
       window.location.href = '/talk';
     },
   };
 
-  useWebSocket(
-    gameId !== undefined ? [subscribeDoneNightActionOfAllPlayer] : [],
-  );
+  useWebSocket([subscribeDoneNightActionOfAllPlayer]);
 
   return playerName === undefined ||
-    playerRole === undefined ||
-    otherPlayerList === undefined ||
-    doneNightAct === undefined ? (
-    <Loading />
+  playerRole === undefined ||
+  otherPlayerList === undefined ||
+  doneNightAct === undefined ? (
+      <Loading />
   ) : (
-    <>
-      <NightTemplate
-        playerName={playerName}
-        playerRole={playerRole}
-        otherPlayerList={otherPlayerList}
-        doneNightAct={doneNightAct}
-      />
-    </>
+      <>
+        <NightTemplate
+            playerName={playerName}
+            playerRole={playerRole}
+            otherPlayerList={otherPlayerList}
+            doneNightAct={doneNightAct}
+        />
+      </>
   );
-};
+}

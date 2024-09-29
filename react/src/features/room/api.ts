@@ -1,13 +1,12 @@
 import {
-  ExitRoom,
-  FetchGameStart,
-  FetchRoomIndex,
-  FinishRoom,
-  GameStartStatus, isFinishRoomStatus,
-  RoomIndexResponseBody,
-} from './type';
-import { isGameStartStatus, isRoomIndexResponseBody } from './type';
-import { InvalidResponseBodyError } from '@/features/error';
+  type ExitRoom,
+  type FetchGameStart,
+  type FetchRoomIndex,
+  type FinishRoom,
+  type GameStartStatus,
+  type RoomIndexResponseBody,
+ isGameStartStatus, isRoomIndexResponseBody, isFinishRoomStatus } from './type';
+import {InvalidResponseBodyError} from '@/features/error';
 import { JINROH_API_BASE_URL } from '@/url';
 
 export const fetchRoomIndex: FetchRoomIndex = async () => {
@@ -46,6 +45,23 @@ export const fetchGameStart: FetchGameStart = async () => {
 
   return gameStartStatus;
 };
+
+export const joinGame = async (dto: {gameId: number}): Promise<string> => {
+  const {gameId} = dto
+  const res = await fetch(JINROH_API_BASE_URL + '/join-game' + '?gameId=' + gameId.toString(), {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to join game');
+  }
+
+  return "JOIN_GAME_SUCCESS"
+}
 
 export const finishRoom: FinishRoom = async () => {
   const res = await fetch(JINROH_API_BASE_URL + '/room-finish', {

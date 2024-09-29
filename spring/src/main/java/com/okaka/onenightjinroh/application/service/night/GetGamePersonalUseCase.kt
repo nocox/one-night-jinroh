@@ -1,33 +1,28 @@
-package com.okaka.onenightjinroh.application.service.night;
+package com.okaka.onenightjinroh.application.service.night
 
-import com.okaka.jinroh.persistence.GameDao;
-import com.okaka.jinroh.persistence.GameEntity;
-import com.okaka.jinroh.persistence.GameParticipationDao;
-import com.okaka.jinroh.persistence.GameParticipationEntity;
-import com.okaka.jinroh.persistence.RoomEntity;
-import com.okaka.onenightjinroh.application.domain.Room;
-import com.okaka.onenightjinroh.application.validater.ExistRoomValidate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.okaka.onenightjinroh.application.repository.GameParticipantRepository
+import com.okaka.onenightjinroh.application.repository.GameRepository
+import com.okaka.onenightjinroh.application.validater.ExistRoomValidate
+import org.springframework.stereotype.Service
 
 @Service
-public class GetGamePersonalUseCase {
+class GetGamePersonalUseCase(
+    private val existRoomValidate: ExistRoomValidate,
+    private val gameRepository: GameRepository,
+    private val gameParticipantRepository: GameParticipantRepository,
+) {
+    fun get(gameId: Long, uuid: String, userId: Long): Long {
+        // gameIdが存在することを確認
+        val game = gameRepository.find(gameId) ?: throw IllegalArgumentException()
 
-    @Autowired
-    ExistRoomValidate existRoomValidate;
+        // 参加ルームが正しいことを確認。
+        val room = existRoomValidate.existRoom(uuid).orElseThrow { IllegalArgumentException() }
+        if(game.roomId != room.roomId) throw IllegalArgumentException()
 
-    @Autowired
-    GameDao gameDao;
 
-    @Autowired
-    GameParticipationDao gameParticipationDao;
+        val gameParticipantId = gameParticipantRepository.findIdByGameIdAndUserId(gameId, userId)
 
-    public GamePersonalBean get(String uuid, Long userId) {
-        Room room = existRoomValidate.existRoom(uuid).orElseThrow(IllegalArgumentException::new);
-
-        GameEntity gameEntity = gameDao.selectByRoomId(room.getRoomId());
-        GameParticipationEntity gameParticipationEntity = gameParticipationDao.selectGameParticipant(gameEntity.game_id, userId);
-
-        return new GamePersonalBean(gameEntity.game_id, gameParticipationEntity.game_participation_id);
+        return gameParticipantId
     }
+
 }

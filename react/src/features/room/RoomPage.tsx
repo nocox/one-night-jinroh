@@ -1,5 +1,7 @@
+import type React from 'react';
 import { useState } from 'react';
 import { RoomTemplate } from './RoomTemplate';
+import { exitRoom, joinGame } from "./api.ts";
 import { GameStartModal } from './components/GameStartModal';
 import { useRoomData } from './hooks';
 import { isGameInfo } from './type';
@@ -8,12 +10,16 @@ import { InvalidResponseBodyError } from '@/features/error';
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
 import type { Subscribe } from '@/type';
-import { exitRoom } from "@/features/room/api.ts";
 
 export const RoomPage: React.FC = () => {
   const { open, onOpenModal } = useModal(false);
-  const onCloseModal = () => {
-    window.location.href = '/night';
+
+  const onStartGame = (gameId: number) => {
+      void joinGame({gameId}).then((res) => {
+          if (res === 'JOIN_GAME_SUCCESS') {
+              window.location.href = '/night';
+          }
+      })
   };
 
   const [gameInfo, setGameInfo] = useState<GameInfo | undefined>(undefined);
@@ -63,7 +69,7 @@ export const RoomPage: React.FC = () => {
       {gameInfo !== undefined && (
         <GameStartModal
           open={open}
-          onCloseModal={onCloseModal}
+          onStartGame={onStartGame}
           gameInfo={gameInfo}
         />
       )}

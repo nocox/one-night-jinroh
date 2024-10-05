@@ -1,5 +1,5 @@
-import {JINROH_API_BASE_URL} from './url';
-import {UnexpectedError} from '@/features/error';
+import { JINROH_API_BASE_URL } from './url';
+import { UnexpectedError } from '@/features/error';
 
 type FetchOptions = {
   headers?: HeadersInit;
@@ -9,12 +9,11 @@ type FetchOptions = {
 export async function fetchGetWrapper<T>(
   path: string,
   params?: Record<string, string>,
-  {
-    headers = {},
-    credentials = 'include',
-  }: FetchOptions = {},
+  { headers = {}, credentials = 'include' }: FetchOptions = {},
 ): Promise<T> {
-  const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
+  const queryString = params
+    ? '?' + new URLSearchParams(params).toString()
+    : '';
 
   const res = await fetch(JINROH_API_BASE_URL + path + queryString, {
     method: 'GET',
@@ -43,13 +42,8 @@ type PostOptions = {
 
 export async function fetchPostWrapper<T>(
   path: string,
-  {
-    headers = {},
-    body,
-    credentials = 'include',
-  }: PostOptions = {},
+  { headers = {}, body, credentials = 'include' }: PostOptions = {},
 ): Promise<T> {
-
   const res = await fetch(JINROH_API_BASE_URL + path, {
     method: 'POST',
     headers: {

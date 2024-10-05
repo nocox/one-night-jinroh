@@ -1,24 +1,58 @@
-import { JINROH_API_BASE_URL } from './url';
-import { UnexpectedError } from '@/features/error';
+import {JINROH_API_BASE_URL} from './url';
+import {UnexpectedError} from '@/features/error';
 
 type FetchOptions = {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  headers?: HeadersInit;
+  params?: Record<string, string>;
+  credentials?: RequestCredentials;
+};
+
+export async function fetchGetWrapper<T>(
+  path: string,
+  {
+    headers = {},
+    params,
+    credentials = 'include',
+  }: FetchOptions = {},
+): Promise<T> {
+  const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
+
+  const res = await fetch(JINROH_API_BASE_URL + path + queryString, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+    credentials,
+  });
+
+  if (!res.ok) {
+    const errorTxt = await res.text();
+    throw new UnexpectedError(
+      `Failed to fetch: ${res.status}, Body: ${errorTxt}.`,
+    );
+  }
+
+  return (await res.json()) as T;
+}
+
+type PostOptions = {
   headers?: HeadersInit;
   body?: unknown;
   credentials?: RequestCredentials;
 };
 
-export async function fetchWraper<T>(
+export async function fetchPostWrapper<T>(
   path: string,
   {
-    method = 'GET',
     headers = {},
     body,
     credentials = 'include',
-  }: FetchOptions = {},
+  }: PostOptions = {},
 ): Promise<T> {
+
   const res = await fetch(JINROH_API_BASE_URL + path, {
-    method,
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       ...headers,

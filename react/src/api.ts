@@ -3,15 +3,14 @@ import {UnexpectedError} from '@/features/error';
 
 type FetchOptions = {
   headers?: HeadersInit;
-  params?: Record<string, string>;
   credentials?: RequestCredentials;
 };
 
 export async function fetchGetWrapper<T>(
   path: string,
+  params?: Record<string, string>,
   {
     headers = {},
-    params,
     credentials = 'include',
   }: FetchOptions = {},
 ): Promise<T> {

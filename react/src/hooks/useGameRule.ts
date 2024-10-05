@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchWraper } from '@/api';
+import { fetchGetWrapper } from '@/api';
 import type { GameRule, GameRuleList } from '@/type';
 
 export const useGameRule = (
@@ -10,9 +10,9 @@ export const useGameRule = (
   useEffect(() => {
     const fetchGameRuleListAsync = async () => {
       if (gameId !== undefined) {
-        const gameRuleList = await fetchWraper<GameRuleList>(
-          `/game-rule/${gameId}`,
-        );
+        const gameRuleList = await fetchGetWrapper<GameRuleList>('/game-rule', {
+          gameId: gameId.toString(),
+        });
 
         setGameRuleList(gameRuleList.roleList);
       }

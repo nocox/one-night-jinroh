@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { fetchGameIndex } from '@/features/game/api';
-import type {
-  GameParticipant,
-  RoleBean,
-  FetchGameIndexParam,
+import { fetchGetWrapper } from '@/api';
+import {
+  type GameParticipant,
+  type RoleBean,
+  type FetchGameIndexParam,
+  type GameIndexResponse,
 } from '@/features/game/type';
 
 export const useGameIndex = (
@@ -32,9 +33,13 @@ export const useGameIndex = (
 
       return;
     }
-    const fetchGameIndexAsync = async () => {
-      const gameIndexResponse = await fetchGameIndex(param);
-
+    const fetchData = async () => {
+      const gameIndexResponse = await fetchGetWrapper<GameIndexResponse>(
+        '/game-index',
+        {
+          term: param,
+        },
+      );
       switch (gameIndexResponse.type) {
         case 'GameIndex':
           setHostFlag(gameIndexResponse.hostFlag);
@@ -53,7 +58,7 @@ export const useGameIndex = (
       }
     };
 
-    void fetchGameIndexAsync();
+    void fetchData();
   }, [param, gameId]);
 
   return {

@@ -1,11 +1,9 @@
+import type React from 'react';
 import { useEffect, useState } from 'react';
 import { UranaishiFormContent } from './UranaishiFormContent';
 import { UranaishiFormResult } from './UranaishiFormResult';
+import { fetchGetWrapper, fetchPostWrapper } from '@/api';
 import { ExhaustiveError, UnexpectedError } from '@/features/error';
-import {
-  fetchNightUranaishiAction,
-  postNightUranaishiAction,
-} from '@/features/game/night/api';
 import type {
   NightUranaiResult,
   UranaiStatus,
@@ -54,11 +52,12 @@ export const UranaishiForm: React.FC<Props> = ({ otherPlayerList }) => {
     useState<UranaiStatus>('HOLIDAY_ROLES');
 
   useEffect(() => {
-    const fetchNightUranaishiActionResultAsync = async () => {
+    const fetchData = async () => {
       // TODO: 誰も占わなずに行動を完了したとき、ページリロードするとバックエンドで500エラーが起きているため修正が必要
-      const nightUranaiActionResult = await fetchNightUranaishiAction();
+      const nightUranaiActionResult =
+        await fetchGetWrapper<NightUranaiResult | null>('/night/uranai');
 
-      if (nightUranaiActionResult === undefined) {
+      if (!nightUranaiActionResult) {
         return;
       }
 
@@ -66,7 +65,7 @@ export const UranaishiForm: React.FC<Props> = ({ otherPlayerList }) => {
       setRoles(nightUranaiActionResult.roles);
     };
 
-    void fetchNightUranaishiActionResultAsync();
+    void fetchData();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,8 +81,12 @@ export const UranaishiForm: React.FC<Props> = ({ otherPlayerList }) => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const dto = { participantId: selectedPlayerId, status: uranaiStatus };
-    const nightUranaiActionResult = await postNightUranaishiAction(dto);
+    const body = { participantId: selectedPlayerId, status: uranaiStatus };
+    const nightUranaiActionResult = await fetchPostWrapper<NightUranaiResult>(
+      '/night/uranai',
+      { body },
+    );
+
     setActLog(generateActLog(nightUranaiActionResult));
     setRoles(nightUranaiActionResult.roles);
   };

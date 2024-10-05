@@ -11,11 +11,3 @@ export type VoteIndexRequestBody = {
   voteIndex: VoteIndex;
   cos: CoRole[];
 };
-
-export type FetchVoteIndex = () => Promise<VoteIndexRequestBody>;
-
-type PostVoteFormDto = {
-  gameParticipantId: number;
-};
-
-export type PostVoteForm = (dto: PostVoteFormDto) => Promise<void>;

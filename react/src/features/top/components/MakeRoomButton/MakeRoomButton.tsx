@@ -1,7 +1,8 @@
 import type React from 'react';
 import makeBtn from './make_room.png';
+import { fetchGetWrapper } from '@/api';
 import { exitRoom, finishRoom } from '@/features/room/api';
-import { createRoom } from '@/features/top/api';
+import type { CreateRoomStatus } from '@/features/top/type';
 
 type Props = {
   className: string;
@@ -10,7 +11,7 @@ type Props = {
 export const MakeRoomButton: React.FC<Props> = ({ className }) => {
   const handleClick = async () => {
     try {
-      const status = await createRoom();
+      const status = await fetchGetWrapper<CreateRoomStatus>('/create-room');
 
       switch (status) {
         case 'CREATE_ROOM_SUCCESS':

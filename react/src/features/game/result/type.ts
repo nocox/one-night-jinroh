@@ -27,6 +27,3 @@ export type ShowResultTermIndexBean = {
   participants: GameParticipantWithResultBean[];
   holidayRoles: RoleEnglishName[];
 };
-
-export type FetchShowResultTermIndex = () => Promise<ShowResultTermIndexBean>;
-export type FetchReturnRoom = () => Promise<void>;

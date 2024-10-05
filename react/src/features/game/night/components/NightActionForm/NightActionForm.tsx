@@ -1,7 +1,8 @@
+import type React from 'react';
 import { useState } from 'react';
 import { NightActionFormBox } from './NightActionFormBox';
 import { KaitoForm, UranaishiForm, JinrohForm } from './RoleForm';
-import { fetchDoneNightAct } from '@/features/game/night/api';
+import { fetchGetWrapper } from '@/api';
 import type { GameParticipant, RoleBean } from '@/features/game/type';
 
 type Props = {
@@ -31,7 +32,7 @@ export const NightActionForm: React.FC<Props> = ({
   }
 
   const handleDoneNightAct = async () => {
-    setIsDoneNightAct(await fetchDoneNightAct());
+    setIsDoneNightAct(await fetchGetWrapper<true>('/done-night-act'));
   };
 
   return (

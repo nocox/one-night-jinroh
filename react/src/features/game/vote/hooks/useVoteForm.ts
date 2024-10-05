@@ -1,5 +1,6 @@
+import type React from 'react';
 import { useState } from 'react';
-import { postVoteForm } from '@/features/game/vote//api';
+import { fetchPostWrapper } from '@/api';
 
 export const useVoteForm = (
   votingDestination: number | undefined,
@@ -35,7 +36,9 @@ export const useVoteForm = (
       return;
     }
 
-    await postVoteForm({ gameParticipantId: selectedPlayerId });
+    await fetchPostWrapper('/vote', {
+      body: { gameParticipantId: selectedPlayerId },
+    });
     setVotingDestination(selectedPlayerId);
   };
 

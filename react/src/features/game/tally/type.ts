@@ -21,7 +21,3 @@ export type TallyIndexResponseBody = {
   tallyResult: TallyResultBean;
   cos: CoRole[];
 };
-
-export type FetchTallyIndexResponseBody = () => Promise<TallyIndexResponseBody>;
-
-export type FetchResult = () => Promise<void>;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { fetchRoomIndex } from '../api';
 import type { RoomIndexResponseBody } from '../type';
+import { fetchGetWrapper } from '@/api';
 
 export const useRoomData = (): RoomIndexResponseBody => {
   const [roomIndexResponseBody, setRoomIndexResponseBody] =
@@ -14,10 +14,10 @@ export const useRoomData = (): RoomIndexResponseBody => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetchRoomIndex();
-        setRoomIndexResponseBody(response);
-      } catch (error) {
-        console.log(error); // TODO: ErrorFallbackを実装する
+        const res = await fetchGetWrapper<RoomIndexResponseBody>('/room-index');
+        setRoomIndexResponseBody(res);
+      } catch (err) {
+        console.log(err);
       }
     };
 

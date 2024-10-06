@@ -4,9 +4,10 @@ import {exitRoom, finishRoom} from "@/features/room/api.ts";
 
 type Props = {
   className: string;
+  refetchJoinedRoomStatus: ()=>void;
 };
 
-export const MakeRoomButton: React.FC<Props> = ({ className }) => {
+export const MakeRoomButton: React.FC<Props> = ({ className, refetchJoinedRoomStatus }) => {
   const handleClick = async () => {
     try {
       const status = await createRoom();
@@ -21,6 +22,7 @@ export const MakeRoomButton: React.FC<Props> = ({ className }) => {
             if (finishStatus === "ROOM_NOT_EXIST") {
               await exitRoom()
             }
+            refetchJoinedRoomStatus()
           }
           break;
       }

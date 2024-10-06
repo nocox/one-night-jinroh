@@ -38,9 +38,15 @@ const styles = {
 
 type Props = {
   joinedRoomStatus: FetchJoinedRoomStatus
+  refetchJoinedRoomStatus: () => void;
+  loadingJoinedRoomStatus: boolean;
 }
 
-export const TopTemplate: React.FC<Props> = ({joinedRoomStatus}) => {
+export const TopTemplate: React.FC<Props> = ({
+                                               joinedRoomStatus,
+                                               refetchJoinedRoomStatus,
+                                               loadingJoinedRoomStatus
+                                             }) => {
   return (
     <DefaultLayout>
       <h1>
@@ -48,11 +54,11 @@ export const TopTemplate: React.FC<Props> = ({joinedRoomStatus}) => {
       </h1>
 
       <div className={styles.roomButtonWrapper}>
-        <MakeRoomButton className={styles.roomButton} />
-        <JoinRoom className={styles.roomButton} />
+        <MakeRoomButton className={styles.roomButton} refetchJoinedRoomStatus={refetchJoinedRoomStatus}/>
+        <JoinRoom className={styles.roomButton} refetchJoinedRoomStatus={refetchJoinedRoomStatus}/>
       </div>
       <div className={styles.roomButtonWrapper}>
-        <BackToRoomButton className={styles.roomButton} joinedRoomStatus={joinedRoomStatus}/>
+        <BackToRoomButton className={styles.roomButton} joinedRoomStatus={joinedRoomStatus} loading={loadingJoinedRoomStatus}/>
       </div>
 
       <TitleCharacters />

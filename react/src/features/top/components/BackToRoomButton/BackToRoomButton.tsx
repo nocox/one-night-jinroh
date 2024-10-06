@@ -3,9 +3,14 @@ import {FetchJoinedRoomStatus} from "@/features/top/type.ts";
 type Props = {
     className: string;
     joinedRoomStatus: FetchJoinedRoomStatus;
+    loading: boolean;
 };
 
-export const BackToRoomButton: React.FC<Props> = ({className, joinedRoomStatus}) => {
+export const BackToRoomButton: React.FC<Props> = ({className, joinedRoomStatus, loading}) => {
+    if (loading) {
+        <div>loading...</div>
+    }
+
     if (joinedRoomStatus === 'NOT_JOINED_ROOM') {
         return <></>
     } else {

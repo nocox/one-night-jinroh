@@ -1,10 +1,9 @@
+import type React from 'react';
 import { useEffect, useState } from 'react';
 import { KaitoFormContent } from './KaitoFormContent';
 import { KaitoFormResult } from './KaitoFormResult';
-import {
-  fetchNightKaitoActionResult,
-  postNightKaitoAction,
-} from '@/features/game/night/api';
+import { fetchGetWrapper, fetchPostWrapper } from '@/api';
+import type { NightKaitoResult } from '@/features/game/night/type';
 import type { GameParticipant } from '@/features/game/type';
 
 type Props = {
@@ -32,16 +31,23 @@ export const KaitoForm: React.FC<Props> = ({ otherPlayerList }) => {
       return;
     }
 
-    const dto = { participantId: selectedPlayerId };
-    const nightKaitoActionResult = await postNightKaitoAction(dto);
+    const body = { participantId: selectedPlayerId };
+    const nightKaitoActionResult = await fetchPostWrapper<NightKaitoResult>(
+      '/night/kaito',
+      {
+        body,
+      },
+    );
     setActLog(nightKaitoActionResult.actLog);
   };
 
   useEffect(() => {
-    async function fetchNightKaitoActionResultAsync() {
-      const result = await fetchNightKaitoActionResult!();
+    const fetchData = async () => {
+      const result = await fetchGetWrapper<NightKaitoResult | null>(
+        '/night/kaito',
+      );
 
-      if (result === undefined) {
+      if (!result) {
         return;
       }
       setSelectedPlayerId(result.selectedParticipantId);
@@ -56,9 +62,9 @@ export const KaitoForm: React.FC<Props> = ({ otherPlayerList }) => {
 
       // FIXME フロントエンドで表示制御できるようにする
       setActLog(result.actLog);
-    }
+    };
 
-    void fetchNightKaitoActionResultAsync();
+    void fetchData();
   }, [otherPlayerList]);
 
   return (

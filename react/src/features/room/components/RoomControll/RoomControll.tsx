@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import {exitRoom, fetchGameStart, finishRoom} from '../../api';
+import { exitRoom, finishRoom } from '../../api';
 import { RoomControllButton } from './RoomControllButton';
+import { fetchGetWrapper } from '@/api';
 import { ExhaustiveError } from '@/features/error';
+import type { GameStartStatus } from '@/features/room/type';
 
 type Props = {
   hostFlg: boolean;
@@ -12,7 +14,9 @@ export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
 
   const handleGameStart = async () => {
     try {
-      const gameStartStatus = await fetchGameStart();
+      const gameStartStatus = await fetchGetWrapper<GameStartStatus>(
+        '/game-start',
+      );
       switch (gameStartStatus) {
         case 'SUCCESS':
           console.log('ゲームスタート');
@@ -40,8 +44,8 @@ export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
   const handleGameExit = async () => {
     try {
       const finishStatus = await finishRoom();
-      if (finishStatus === "ROOM_NOT_EXIST") {
-        await exitRoom()
+      if (finishStatus === 'ROOM_NOT_EXIST') {
+        await exitRoom();
       }
     } catch (error) {
       console.log(error); // TODO: ErrorFallback を実装する

@@ -1,17 +1,22 @@
+import type React from 'react';
 import { useState, type FormEventHandler } from 'react';
-import { joinRoom } from '../../api';
 import { JoinRoomButton } from './JoinRoomButton';
 import { JoinRoomModal } from './JoinRoomModal';
+import { fetchGetWrapper } from '@/api';
 import { ExhaustiveError } from '@/features/error';
+import { exitRoom, finishRoom } from '@/features/room/api';
+import type { JoinedRoomStatus } from '@/features/top/type';
 import { useModal } from '@/hooks/useModal';
-import {exitRoom, finishRoom} from "@/features/room/api.ts";
 
 type Props = {
   className: string;
-  refetchJoinedRoomStatus: ()=>void;
+  refetchJoinedRoomStatus: () => void;
 };
 
-export const JoinRoom: React.FC<Props> = ({ className, refetchJoinedRoomStatus }) => {
+export const JoinRoom: React.FC<Props> = ({
+  className,
+  refetchJoinedRoomStatus,
+}) => {
   const [roomId, setRoomId] = useState('');
   const [joinRoomResult, setJoinRoomResult] = useState('');
   const { open, onOpenModal, onCloseModal } = useModal(false);
@@ -20,8 +25,9 @@ export const JoinRoom: React.FC<Props> = ({ className, refetchJoinedRoomStatus }
     event.preventDefault();
 
     try {
-      const dto = { roomId };
-      const status = await joinRoom(dto);
+      const status = await fetchGetWrapper<JoinedRoomStatus>('/join-room', {
+        uuid: roomId.toString(),
+      });
 
       switch (status) {
         case 'JOIN_SUCCESS':
@@ -30,14 +36,17 @@ export const JoinRoom: React.FC<Props> = ({ className, refetchJoinedRoomStatus }
           setJoinRoomResult('');
           break;
         case 'OTHER_ROOM_JOINED':
-          if (window.confirm("すでに参加済みのルームがあります。退出しますか？")){
-            const finishStatus = await finishRoom()
-            if (finishStatus === "ROOM_NOT_EXIST") {
-              await exitRoom()
+          if (
+            window.confirm('すでに参加済みのルームがあります。退出しますか？')
+          ) {
+            const finishStatus = await finishRoom();
+            if (finishStatus === 'ROOM_NOT_EXIST') {
+              await exitRoom();
             }
-            refetchJoinedRoomStatus()
-            setJoinRoomResult('参加済みのルームを退出しました。参加したいルームIDを入力してください。');
-
+            refetchJoinedRoomStatus();
+            setJoinRoomResult(
+              '参加済みのルームを退出しました。参加したいルームIDを入力してください。',
+            );
           } else {
             setJoinRoomResult('');
           }

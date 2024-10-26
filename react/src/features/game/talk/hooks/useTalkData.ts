@@ -1,9 +1,10 @@
 import type React from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import { fetchTalkIndex } from '../api';
+import { fetchGetWrapper } from '@/api';
 import { UnexpectedError } from '@/features/error';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
 import { toGameParticipantsWithCoRole } from '@/features/game/service/gameParticipantService';
+import { type TalkIndexResponseBody } from '@/features/game/talk/type';
 import type { CoRole, GameParticipantWithCoRole } from '@/features/game/type';
 
 type UseTalkData = () => {
@@ -28,7 +29,8 @@ export const useTalkData: UseTalkData = () => {
   useEffect(() => {
     void (async () => {
       try {
-        const talkIndexResponseBody = await fetchTalkIndex();
+        const talkIndexResponseBody =
+          await fetchGetWrapper<TalkIndexResponseBody>('/talk-index');
         setGameId(talkIndexResponseBody.gameId);
         setCos(talkIndexResponseBody.cos);
       } catch (e) {

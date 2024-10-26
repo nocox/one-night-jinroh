@@ -1,5 +1,3 @@
-import { z } from 'zod';
-
 export type RoomIndexResponseBody = {
   uuid: string;
   userList: User[];
@@ -26,63 +24,5 @@ export type GameInfo = {
 
 export type FinishRoomStatus = 'FINISHED_ROOM' | 'ROOM_NOT_EXIST';
 
-const userSchema = z.object({
-  userId: z.number(),
-  name: z.string(),
-  hostFlg: z.boolean(),
-});
-
-const roomIndexResponseBodySchema = z.object({
-  uuid: z.string(),
-  userList: z.array(userSchema),
-  hostFlg: z.boolean(),
-  myselfUserId: z.number(),
-});
-
-const gameStartStatusSchema = z.union([
-  z.literal('SUCCESS'),
-  z.literal('NOT_ENOUGH_PARTICIPANTS'),
-]);
-
-const finishRoomStatusSchema = z.union([
-  z.literal('FINISHED_ROOM'),
-  z.literal('ROOM_NOT_EXIST'),
-]);
-
-export const isRoomIndexResponseBody = (
-  value: unknown,
-): value is RoomIndexResponseBody => {
-  return roomIndexResponseBodySchema.safeParse(value).success;
-};
-
-export const isGameStartStatus = (value: unknown): value is GameStartStatus => {
-  return gameStartStatusSchema.safeParse(value).success;
-};
-
-export const isGameInfo = (value: unknown): value is GameInfo => {
-  return gameInfoSchema.safeParse(value).success;
-};
-
-export const isFinishRoomStatus = (
-    value: unknown,
-): value is FinishRoomStatus => {
-  return finishRoomStatusSchema.safeParse(value).success;
-};
-
-export const gameInfoSchema = z.object({
-  gameId: z.number(),
-  playerCount: z.number(),
-  roleList: z.array(
-    z.object({
-      roleId: z.number(),
-      roleName: z.string(),
-    }),
-  ),
-});
-
-
-
-export type FetchRoomIndex = () => Promise<RoomIndexResponseBody>;
-export type FetchGameStart = () => Promise<GameStartStatus>;
 export type FinishRoom = () => Promise<FinishRoomStatus>;
 export type ExitRoom = () => Promise<void>;

@@ -1,7 +1,8 @@
+import type React from 'react';
 import { css } from 'styled-system/css';
-import { postEndTalk } from './api';
 import { ComingOut } from './components/ComingOut';
 import { Players } from './components/Players';
+import { fetchPostWrapper } from '@/api';
 import { Button, ContentBox, DefaultLayout } from '@/components';
 import { RoleList } from '@/features/game/components';
 import type { GameParticipantWithCoRole } from '@/features/game/type';
@@ -45,7 +46,7 @@ const styles = {
 };
 
 const handleEndTalk = async () => {
-  await postEndTalk();
+  await fetchPostWrapper('/end-talk');
 };
 
 type Props = {

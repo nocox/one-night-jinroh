@@ -1,32 +1,38 @@
-import { createRoom } from '../../api';
+import type React from 'react';
 import makeBtn from './make_room.png';
-import {exitRoom, finishRoom} from "@/features/room/api.ts";
+import { fetchGetWrapper } from '@/api';
+import { exitRoom, finishRoom } from '@/features/room/api';
+import type { CreateRoomStatus } from '@/features/top/type';
 
 type Props = {
   className: string;
-  refetchJoinedRoomStatus: ()=>void;
+  refetchJoinedRoomStatus: () => void;
 };
 
-export const MakeRoomButton: React.FC<Props> = ({ className, refetchJoinedRoomStatus }) => {
+export const MakeRoomButton: React.FC<Props> = ({
+  className,
+  refetchJoinedRoomStatus,
+}) => {
   const handleClick = async () => {
     try {
-      const status = await createRoom();
+      const status = await fetchGetWrapper<CreateRoomStatus>('/create-room');
 
       switch (status) {
-        case "CREATE_ROOM_SUCCESS":
+        case 'CREATE_ROOM_SUCCESS':
           location.href = '/room';
           break;
-        case "OTHER_ROOM_JOINED":
-          if (window.confirm("すでに参加済みのルームがあります。退出しますか？")){
-            const finishStatus = await finishRoom()
-            if (finishStatus === "ROOM_NOT_EXIST") {
-              await exitRoom()
+        case 'OTHER_ROOM_JOINED':
+          if (
+            window.confirm('すでに参加済みのルームがあります。退出しますか？')
+          ) {
+            const finishStatus = await finishRoom();
+            if (finishStatus === 'ROOM_NOT_EXIST') {
+              await exitRoom();
             }
-            refetchJoinedRoomStatus()
+            refetchJoinedRoomStatus();
           }
           break;
       }
-
     } catch (error) {
       console.log(error); // TODO: ErrorFallbackを実装する
     }

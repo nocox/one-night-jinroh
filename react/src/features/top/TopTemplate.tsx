@@ -1,5 +1,7 @@
+import type React from 'react';
 import { css } from 'styled-system/css';
 
+import { BackToRoomButton } from './components/BackToRoomButton';
 import { JoinRoom } from './components/JoinRoom';
 import { MakeRoomButton } from './components/MakeRoomButton';
 import { NewsField } from './components/NewsField';
@@ -7,6 +9,7 @@ import { RoleExplanation } from './components/RoleExplanation';
 import { TitleCharacters } from './components/TitleCharacters';
 import { TitleLogo } from './components/TitleLogo';
 import { DefaultLayout } from '@/components';
+import { type FetchJoinedRoomStatus } from '@/features/top/type';
 
 const styles = {
   roomButtonWrapper: css({
@@ -33,7 +36,17 @@ const styles = {
   }),
 };
 
-export const TopTemplate: React.FC = () => {
+type Props = {
+  joinedRoomStatus: FetchJoinedRoomStatus;
+  refetchJoinedRoomStatus: () => void;
+  loadingJoinedRoomStatus: boolean;
+};
+
+export const TopTemplate: React.FC<Props> = ({
+  joinedRoomStatus,
+  refetchJoinedRoomStatus,
+  loadingJoinedRoomStatus,
+}) => {
   return (
     <DefaultLayout>
       <h1>
@@ -41,8 +54,21 @@ export const TopTemplate: React.FC = () => {
       </h1>
 
       <div className={styles.roomButtonWrapper}>
-        <MakeRoomButton className={styles.roomButton} />
-        <JoinRoom className={styles.roomButton} />
+        <MakeRoomButton
+          className={styles.roomButton}
+          refetchJoinedRoomStatus={refetchJoinedRoomStatus}
+        />
+        <JoinRoom
+          className={styles.roomButton}
+          refetchJoinedRoomStatus={refetchJoinedRoomStatus}
+        />
+      </div>
+      <div className={styles.roomButtonWrapper}>
+        <BackToRoomButton
+          className={styles.roomButton}
+          joinedRoomStatus={joinedRoomStatus}
+          loading={loadingJoinedRoomStatus}
+        />
       </div>
 
       <TitleCharacters />

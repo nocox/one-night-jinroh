@@ -6,9 +6,13 @@ import type { CreateRoomStatus } from '@/features/top/type';
 
 type Props = {
   className: string;
+  refetchJoinedRoomStatus: () => void;
 };
 
-export const MakeRoomButton: React.FC<Props> = ({ className }) => {
+export const MakeRoomButton: React.FC<Props> = ({
+  className,
+  refetchJoinedRoomStatus,
+}) => {
   const handleClick = async () => {
     try {
       const status = await fetchGetWrapper<CreateRoomStatus>('/create-room');
@@ -25,8 +29,7 @@ export const MakeRoomButton: React.FC<Props> = ({ className }) => {
             if (finishStatus === 'ROOM_NOT_EXIST') {
               await exitRoom();
             }
-          } else {
-            location.href = '/room';
+            refetchJoinedRoomStatus();
           }
           break;
       }

@@ -10,9 +10,13 @@ import { useModal } from '@/hooks/useModal';
 
 type Props = {
   className: string;
+  refetchJoinedRoomStatus: () => void;
 };
 
-export const JoinRoom: React.FC<Props> = ({ className }) => {
+export const JoinRoom: React.FC<Props> = ({
+  className,
+  refetchJoinedRoomStatus,
+}) => {
   const [roomId, setRoomId] = useState('');
   const [joinRoomResult, setJoinRoomResult] = useState('');
   const { open, onOpenModal, onCloseModal } = useModal(false);
@@ -39,11 +43,11 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
             if (finishStatus === 'ROOM_NOT_EXIST') {
               await exitRoom();
             }
+            refetchJoinedRoomStatus();
             setJoinRoomResult(
               '参加済みのルームを退出しました。参加したいルームIDを入力してください。',
             );
           } else {
-            location.href = '/room';
             setJoinRoomResult('');
           }
           break;

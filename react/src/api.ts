@@ -1,31 +1,65 @@
-import { isGameRuleList, type FetchGameRuleList, type GameRule } from './type';
 import { JINROH_API_BASE_URL } from './url';
 import { UnexpectedError } from '@/features/error';
 
-// GameRuleListを取得する関数
-export const fetchGameRuleList: FetchGameRuleList = async (gameId) => {
-  const res = await fetch(`${JINROH_API_BASE_URL}/game-rule/${gameId}`, {
+type FetchOptions = {
+  headers?: HeadersInit;
+  credentials?: RequestCredentials;
+};
+
+export async function fetchGetWrapper<T>(
+  path: string,
+  params?: Record<string, string>,
+  { headers = {}, credentials = 'include' }: FetchOptions = {},
+): Promise<T> {
+  const queryString = params
+    ? '?' + new URLSearchParams(params).toString()
+    : '';
+
+  const res = await fetch(JINROH_API_BASE_URL + path + queryString, {
     method: 'GET',
-    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+    credentials,
   });
 
   if (!res.ok) {
+    const errorTxt = await res.text();
     throw new UnexpectedError(
-      `failed to fetchGameRuleList. status: ${
-        res.status
-      }, body: ${await res.text()}`,
+      `Failed to fetch: ${res.status}, Body: ${errorTxt}.`,
     );
   }
 
-  const fetchedGameRuleList = (await res.json()) as GameRule[];
+  return (await res.json()) as T;
+}
 
-  if (!isGameRuleList(fetchedGameRuleList)) {
-    throw new UnexpectedError(
-      `responseBody is not in the expected format. body: ${JSON.stringify(
-        fetchedGameRuleList,
-      )}`,
-    );
-  }
-
-  return fetchedGameRuleList;
+type PostOptions = {
+  headers?: HeadersInit;
+  body?: unknown;
+  credentials?: RequestCredentials;
 };
+
+export async function fetchPostWrapper<T>(
+  path: string,
+  { headers = {}, body, credentials = 'include' }: PostOptions = {},
+): Promise<T> {
+  const res = await fetch(JINROH_API_BASE_URL + path, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+    credentials,
+  });
+
+  if (!res.ok) {
+    const errorTxt = await res.text();
+    throw new UnexpectedError(
+      `Failed to fetch: ${res.status}, Body: ${errorTxt}.`,
+    );
+  }
+
+  return (await res.json()) as T;
+}

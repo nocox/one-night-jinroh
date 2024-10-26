@@ -1,7 +1,8 @@
+import type React from 'react';
 import { TallyTemplate } from './TallyTemplate';
-import { fetchResult } from './api';
 import { TallyStartModal } from './components/TallyStartModal';
 import { useTallyData } from './hooks/useTallyData';
+import { fetchGetWrapper } from '@/api';
 import { Loading } from '@/components';
 import { useGameRule, useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
@@ -27,7 +28,7 @@ export const TallyPage: React.FC = () => {
   useWebSocket(gameId === undefined ? [] : [subscribeResult]);
 
   const handleClickResultButton = async () => {
-    await fetchResult();
+    await fetchGetWrapper('/show-result');
   };
 
   return hostFlag === undefined ||

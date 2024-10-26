@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { fetchVoteIndex } from '../api';
+import { fetchGetWrapper } from '@/api';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
 import { toGameParticipantsWithCoRole } from '@/features/game/service/gameParticipantService';
 import type {
@@ -8,6 +8,7 @@ import type {
   GameParticipant,
   GameParticipantWithCoRole,
 } from '@/features/game/type';
+import { type VoteIndexRequestBody } from '@/features/game/vote/type';
 
 type UseVoteData = () => {
   gameId: number | undefined;
@@ -35,7 +36,9 @@ export const useVoteData: UseVoteData = () => {
 
   useEffect(() => {
     void (async () => {
-      const voteIndexResponseBody = await fetchVoteIndex();
+      const voteIndexResponseBody = await fetchGetWrapper<VoteIndexRequestBody>(
+        '/vote-index',
+      );
       const { voteIndex } = voteIndexResponseBody;
 
       setCos(voteIndexResponseBody.cos);

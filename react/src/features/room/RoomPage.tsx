@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { RoomTemplate } from './RoomTemplate';
 import { GameStartModal } from './components/GameStartModal';
 import { useRoomData } from './hooks';
-import { isGameInfo } from './type';
 import type { GameInfo } from './type';
 import { InvalidResponseBodyError } from '@/features/error';
 import { exitRoom } from '@/features/room/api';
@@ -32,14 +31,8 @@ export const RoomPage: React.FC = () => {
       }
 
       const gameInfo = message.body
-        ? (JSON.parse(message.body) as unknown)
+        ? (JSON.parse(message.body) as GameInfo)
         : undefined;
-
-      if (!isGameInfo(gameInfo)) {
-        throw new InvalidResponseBodyError(
-          `Invalid response body: ${JSON.stringify(gameInfo)}`,
-        );
-      }
 
       setGameInfo(gameInfo);
       onOpenModal();

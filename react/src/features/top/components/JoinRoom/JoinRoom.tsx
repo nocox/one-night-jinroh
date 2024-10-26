@@ -1,10 +1,11 @@
 import type React from 'react';
 import { useState, type FormEventHandler } from 'react';
-import { joinRoom } from '../../api';
 import { JoinRoomButton } from './JoinRoomButton';
 import { JoinRoomModal } from './JoinRoomModal';
+import { fetchGetWrapper } from '@/api';
 import { ExhaustiveError } from '@/features/error';
 import { exitRoom, finishRoom } from '@/features/room/api';
+import type { JoinedRoomStatus } from '@/features/top/type';
 import { useModal } from '@/hooks/useModal';
 
 type Props = {
@@ -20,8 +21,9 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
     event.preventDefault();
 
     try {
-      const dto = { roomId };
-      const status = await joinRoom(dto);
+      const status = await fetchGetWrapper<JoinedRoomStatus>('/join-room', {
+        uuid: roomId.toString(),
+      });
 
       switch (status) {
         case 'JOIN_SUCCESS':

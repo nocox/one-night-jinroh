@@ -18,7 +18,7 @@ export const BackToRoomButton: React.FC<Props> = ({className, joinedRoomStatus, 
             <button className={className} onClick={() => {
                 location.href = '/room';
             }}>
-                へやにもどる
+                直前の部屋に再入室する
             </button>
         )
     }

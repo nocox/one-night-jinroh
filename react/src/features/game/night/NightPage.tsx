@@ -1,3 +1,4 @@
+import type React from 'react';
 import { NightTemplate } from './NightTemplate';
 import { useNightData } from './hooks/useNightData';
 import { Loading } from '@/components';
@@ -7,10 +8,14 @@ import type { Subscribe } from '@/type';
 
 export const NightPage: React.FC = () => {
   const { gameId, doneNightAct } = useNightData();
-  const { playerName, playerRole, otherPlayerList } = useGameIndex(
+  const { playerName, playerRole, otherPlayerList, error } = useGameIndex(
     'night',
     gameId,
   );
+
+  if (error) {
+    throw error;
+  }
 
   const subscribeDoneNightActionOfAllPlayer: Subscribe = {
     path: `/topic/${gameId ?? ''}`,

@@ -5,7 +5,7 @@ import { JoinRoomModal } from './JoinRoomModal';
 import { fetchGetWrapper } from '@/api';
 import { ExhaustiveError } from '@/features/error';
 import { exitRoom, finishRoom } from '@/features/room/api';
-import type { JoinedRoomStatus } from '@/features/top/type';
+import {type JoinedRoomStatusResponse} from '@/features/top/type';
 import { useModal } from '@/hooks/useModal';
 
 type Props = {
@@ -25,11 +25,11 @@ export const JoinRoom: React.FC<Props> = ({
     event.preventDefault();
 
     try {
-      const status = await fetchGetWrapper<JoinedRoomStatus>('/join-room', {
+      const res = await fetchGetWrapper<JoinedRoomStatusResponse>('/join-room', {
         uuid: roomId.toString(),
       });
 
-      switch (status) {
+      switch (res.status) {
         case 'JOIN_SUCCESS':
         case 'ALREADY_JOINED':
           location.href = '/room';
@@ -58,7 +58,7 @@ export const JoinRoom: React.FC<Props> = ({
           setJoinRoomResult('ルームの参加者上限に達しています');
           break;
         default:
-          throw new ExhaustiveError(status);
+          throw new ExhaustiveError(res.status);
       }
     } catch (error) {
       console.log(error); // TODO: ErrorFallbackを実装する

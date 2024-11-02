@@ -8,6 +8,10 @@ export type JoinedRoomStatus =
 export type FetchJoinedRoomStatus = 'NOT_JOINED_ROOM' | 'JOINED_ROOM';
 export type CreateRoomStatus = 'CREATE_ROOM_SUCCESS' | 'OTHER_ROOM_JOINED';
 
+export type JoinedRoomStatusResponse = {
+    status: JoinedRoomStatus
+}
+
 export type FetchJoinedRoomStatusResponse = {
     status: FetchJoinedRoomStatus
 }

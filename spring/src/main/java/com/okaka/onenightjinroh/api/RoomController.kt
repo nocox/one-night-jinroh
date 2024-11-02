@@ -31,7 +31,7 @@ private val startGameUseCase: StartGameUseCase,
         }
 
     @RequestMapping(path = ["/game-start"])
-    fun startGame(): String {
+    fun startGame(): Response {
         val uuid = session.getAttribute("room_uuid").toString()
         val userId = session.getAttribute("user_id").toString().toLong()
 
@@ -41,9 +41,16 @@ private val startGameUseCase: StartGameUseCase,
             val gameStartWebSocketBean = startGameUseCase.startGame(room.getRoomId(), userId)
             // ここでブロードキャストする
             messagingTemplate.convertAndSend("/topic/" + room.uuid, gameStartWebSocketBean)
-            return "SUCCESS"
+            return Response(status = ResponseStatus.SUCCESS)
         } catch (e: NotEnoughParticipantsException) {
-            return "NOT_ENOUGH_PARTICIPANTS"
+            return Response(status = ResponseStatus.NOT_ENOUGH_PARTICIPANTS)
         }
+    }
+
+    data class Response(val status: ResponseStatus)
+
+    enum class ResponseStatus{
+        SUCCESS,
+        NOT_ENOUGH_PARTICIPANTS
     }
 }

@@ -13,6 +13,10 @@ export type User = {
 
 export type GameStartStatus = 'SUCCESS' | 'NOT_ENOUGH_PARTICIPANTS';
 
+export type GameStartStatusResponse = {
+  status: GameStartStatus
+}
+
 export type GameInfo = {
   gameId: number;
   playerCount: number;

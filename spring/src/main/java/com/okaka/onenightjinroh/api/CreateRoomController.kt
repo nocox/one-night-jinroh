@@ -10,15 +10,24 @@ class CreateRoomController(
     private val createRoomUseCase: CreateRoomUseCase
 ) {
     @RequestMapping(path = ["/create-room"])
-    fun createRoom(session: HttpSession): String {
+    fun createRoom(session: HttpSession): Response {
         if (session.getAttribute("room_uuid") != null) {
-            return "OTHER_ROOM_JOINED"
+            return Response(status = ResponseStatus.OTHER_ROOM_JOINED)
         }
 
         val dto = createRoomUseCase.createRoom()
 
         session.setAttribute("user_id", dto.userEntity.user_id)
         session.setAttribute("room_uuid", dto.room.uuid)
-        return "CREATE_ROOM_SUCCESS"
+        return Response(status = ResponseStatus.CREATE_ROOM_SUCCESS)
+    }
+
+    data class Response(
+        val status: ResponseStatus
+    )
+
+    enum class ResponseStatus{
+        OTHER_ROOM_JOINED,
+        CREATE_ROOM_SUCCESS
     }
 }

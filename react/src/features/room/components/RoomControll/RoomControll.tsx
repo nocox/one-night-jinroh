@@ -3,7 +3,7 @@ import { exitRoom, finishRoom } from '../../api';
 import { RoomControllButton } from './RoomControllButton';
 import { fetchGetWrapper } from '@/api';
 import { ExhaustiveError } from '@/features/error';
-import type { GameStartStatus } from '@/features/room/type';
+import {type GameStartStatusResponse} from '@/features/room/type';
 
 type Props = {
   hostFlg: boolean;
@@ -14,10 +14,10 @@ export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
 
   const handleGameStart = async () => {
     try {
-      const gameStartStatus = await fetchGetWrapper<GameStartStatus>(
+      const res = await fetchGetWrapper<GameStartStatusResponse>(
         '/game-start',
       );
-      switch (gameStartStatus) {
+      switch (res.status) {
         case 'SUCCESS':
           console.log('ゲームスタート');
           break;
@@ -25,7 +25,7 @@ export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
           setErrorMessage('参加人数が足りていません！');
           break;
         default:
-          throw new ExhaustiveError(gameStartStatus);
+          throw new ExhaustiveError(res.status);
       }
     } catch (error) {
       console.log(error); // TODO: ErrorFallback を実装する

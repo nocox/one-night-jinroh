@@ -15,23 +15,33 @@ class JoinRoomController(
     private val joinedRoomUseCase: JoinedRoomUseCase
 ) {
     @RequestMapping(path = ["/join-room"])
-    fun joinedRoom(@RequestParam uuid: String?, session: HttpSession): String {
+    fun joinedRoom(@RequestParam uuid: String?, session: HttpSession): Response {
         if (session.getAttribute("room_uuid") == uuid) {
-            return "ALREADY_JOINED"
+            return Response(status = ResponseStatus.ALREADY_JOINED)
         } else if (session.getAttribute("room_uuid") != null) {
-            return "OTHER_ROOM_JOINED"
+            return Response(status = ResponseStatus.OTHER_ROOM_JOINED)
         }
 
         try {
             val dto: JoinedRoomUseCaseDto = joinedRoomUseCase.joinedRoom(uuid)
             session.setAttribute("user_id", dto.userEntity.user_id)
             session.setAttribute("room_uuid", uuid)
-            return "JOIN_SUCCESS"
+            return Response(status = ResponseStatus.JOIN_SUCCESS)
         } catch (e: RoomNotExistException) {
-            return "ROOM_NOT_EXIST"
+            return Response(status = ResponseStatus.ROOM_NOT_EXIST)
         } catch (e: ParticipantLimitException) {
-            return "PARTICPANT_LIMIT"
+            return Response(status = ResponseStatus.PARTICPANT_LIMIT)
         }
+    }
+
+    data class Response(val status: ResponseStatus)
+
+    enum class ResponseStatus{
+        ALREADY_JOINED,
+        OTHER_ROOM_JOINED,
+        JOIN_SUCCESS,
+        ROOM_NOT_EXIST,
+        PARTICPANT_LIMIT
     }
 }
 

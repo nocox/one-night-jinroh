@@ -7,11 +7,18 @@ import javax.servlet.http.HttpSession
 @RestController
 class FetchJoinedRoom {
     @RequestMapping(path = ["/joined-room"])
-    fun getJoinedRoom(session: HttpSession) : String {
+    fun getJoinedRoom(session: HttpSession) : Response {
         if (session.getAttribute("room_uuid") != null ) {
-            return "JOINED_ROOM"
+            return Response(status = ResponseStatus.JOINED_ROOM)
         } else {
-            return "NOT_JOINED_ROOM"
+            return Response(status = ResponseStatus.NOT_JOINED_ROOM)
         }
+    }
+
+    data class Response(val status: ResponseStatus)
+
+    enum class ResponseStatus{
+        JOINED_ROOM,
+        NOT_JOINED_ROOM
     }
 }

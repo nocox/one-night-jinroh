@@ -14,18 +14,25 @@ class FinishRoomController(
 
 ) {
     @RequestMapping(path = ["/room-finish"])
-    fun finishRoom(session: HttpSession): String {
+    fun finishRoom(session: HttpSession): Response {
         val uuid: String = session.getAttribute("room_uuid").toString()
         val userId: Long = session.getAttribute("user_id").toString().toLong()
 
         try {
             finishRoomUseCase.invoke(userId, uuid)
         } catch (e: RoomNotExistException) {
-            return "ROOM_NOT_EXIST"
+            return  Response(status = ResponseStatus.ROOM_NOT_EXIST)
         }
 
         session.removeAttribute("room_uuid")
         messagingTemplate.convertAndSend("/topic/receive-finish-room/$uuid", "")
-        return "FINISHED_ROOM"
+        return Response(status = ResponseStatus.FINISHED_ROOM)
+    }
+
+    data class Response(val status: ResponseStatus)
+
+    enum class ResponseStatus{
+        ROOM_NOT_EXIST,
+        FINISHED_ROOM
     }
 }

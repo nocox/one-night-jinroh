@@ -1,10 +1,10 @@
-import type { ExitRoom, FinishRoom, FinishRoomStatus } from './type';
+import type {ExitRoom, FinishRoom, FinishRoomStatusResponse} from './type';
 import { fetchGetWrapper, fetchPostWrapper } from '@/api';
 
 export const finishRoom: FinishRoom = async () => {
-  const res = await fetchGetWrapper<Response>('/room-finish');
+  const res = await fetchGetWrapper<FinishRoomStatusResponse>('/room-finish');
 
-  return (await res.text()) as FinishRoomStatus;
+  return res.status;
 };
 
 export const exitRoom: ExitRoom = async () => {

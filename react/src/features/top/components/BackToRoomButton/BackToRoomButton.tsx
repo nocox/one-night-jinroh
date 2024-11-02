@@ -1,4 +1,11 @@
+import {css} from "../../../../../styled-system/css";
 import { type FetchJoinedRoomStatus } from '@/features/top/type';
+
+const styles = {
+  joinedButtonWrapper: css({
+    flex: 1
+  }),
+}
 
 type Props = {
   className: string;
@@ -7,7 +14,6 @@ type Props = {
 };
 
 export const BackToRoomButton: React.FC<Props> = ({
-  className,
   joinedRoomStatus,
   loading,
 }) => {
@@ -20,7 +26,7 @@ export const BackToRoomButton: React.FC<Props> = ({
   } else {
     return (
       <button
-        className={className}
+        className={styles.joinedButtonWrapper}
         onClick={() => {
           location.href = '/room';
         }}

@@ -28,5 +28,9 @@ export type GameInfo = {
 
 export type FinishRoomStatus = 'FINISHED_ROOM' | 'ROOM_NOT_EXIST';
 
+export type FinishRoomStatusResponse = {
+  status: FinishRoomStatus
+}
+
 export type FinishRoom = () => Promise<FinishRoomStatus>;
 export type ExitRoom = () => Promise<void>;

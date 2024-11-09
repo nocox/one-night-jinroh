@@ -63,6 +63,16 @@ export type FetchGameIndexParam =
   | 'tally'
   | 'result';
 
+
+export type FetchGameIdResponse =
+    {
+      resultCode: "IN_GAME"
+      gameId: number
+    } |
+    {
+      resultCode: "NOT_IN_GAME"
+    }
+
 export type FetchGameIndex = (
   param: FetchGameIndexParam,
 ) => Promise<GameIndexResponse>;

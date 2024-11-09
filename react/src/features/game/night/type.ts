@@ -1,14 +1,5 @@
 import type { RoleBean } from '@/features/game/type';
 
-export type FetchGameIdResponseBody =
-    {
-      resultCode: "IN_GAME"
-      gameId: number
-    } |
-    {
-      resultCode: "NOT_IN_GAME"
-    }
-
 /**
  * 夜の行動ページ読み込み時
  */

@@ -1,12 +1,12 @@
 import type React from 'react';
 import { useState } from 'react';
 import { RoomTemplate } from './RoomTemplate';
-import { exitRoom, joinGame } from "./api.ts";
+import { exitRoom } from "./api.ts";
 import { GameStartModal } from './components/GameStartModal';
 import { useRoomData } from './hooks';
 import type { GameInfo } from './type';
+import {fetchPostWrapper} from "@/api";
 import { InvalidResponseBodyError } from '@/features/error';
-import { exitRoom } from '@/features/room/api';
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
 import type { Subscribe } from '@/type';
@@ -15,7 +15,7 @@ export const RoomPage: React.FC = () => {
   const { open, onOpenModal } = useModal(false);
 
   const onStartGame = (gameId: number) => {
-      void joinGame({gameId}).then((res) => {
+      void fetchPostWrapper('/join-game' + '?gameId=' + gameId.toString()).then((res) => {
           if (res === 'JOIN_GAME_SUCCESS') {
               window.location.href = '/night';
           }

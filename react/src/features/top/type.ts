@@ -1,64 +1,21 @@
-import { z } from 'zod';
-
-type JoinRoomDto = {
-  roomId: string;
-};
-
-type JoinedRoomStatus =
+export type JoinedRoomStatus =
   | 'JOIN_SUCCESS'
   | 'ROOM_NOT_EXIST'
   | 'PARTICPANT_LIMIT'
   | 'ALREADY_JOINED'
   | 'OTHER_ROOM_JOINED';
 
+export type FetchJoinedRoomStatus = 'NOT_JOINED_ROOM' | 'JOINED_ROOM';
+export type CreateRoomStatus = 'CREATE_ROOM_SUCCESS' | 'OTHER_ROOM_JOINED';
 
-const joinedRoomStatusSchema = z.union([
-  z.literal('JOIN_SUCCESS'),
-  z.literal('ROOM_NOT_EXIST'),
-  z.literal('PARTICPANT_LIMIT'),
-  z.literal('ALREADY_JOINED'),
-  z.literal('OTHER_ROOM_JOINED'),
-]);
+export type JoinedRoomStatusResponse = {
+    status: JoinedRoomStatus
+}
 
-export const isJoinedRoomStatus = (
-  value: unknown,
-): value is JoinedRoomStatus => {
-  return joinedRoomStatusSchema.safeParse(value).success;
-};
+export type FetchJoinedRoomStatusResponse = {
+    status: FetchJoinedRoomStatus
+}
 
-type CreateRoomStatus =
-    | 'CREATE_ROOM_SUCCESS'
-    | 'OTHER_ROOM_JOINED';
-
-const createRoomStatusSchema = z.union([
-  z.literal('CREATE_ROOM_SUCCESS'),
-  z.literal('OTHER_ROOM_JOINED'),
-]);
-
-export const isCreateRoomStatus = (
-  value: unknown,
-): value is CreateRoomStatus => {
-  return createRoomStatusSchema.safeParse(value).success;
-};
-
-
-export type FetchJoinedRoomStatus =
-    | 'NOT_JOINED_ROOM'
-    | 'JOINED_ROOM';
-
-const fetchJoinedRoomStatusSchema = z.union([
-  z.literal('NOT_JOINED_ROOM'),
-  z.literal('JOINED_ROOM'),
-]);
-
-export const isFetchJoinedRoomStatus = (
-    value: unknown,
-): value is FetchJoinedRoomStatus => {
-  return fetchJoinedRoomStatusSchema.safeParse(value).success;
-};
-
-
-
-export type JoinRoom = (dto: JoinRoomDto) => Promise<JoinedRoomStatus>;
-export type CreateRoom = () => Promise<CreateRoomStatus>;
-export type FetchJoinedRoom = () => Promise<FetchJoinedRoomStatus>
+export type CreateRoomStatusResponse = {
+    status: CreateRoomStatus
+}

@@ -1,13 +1,17 @@
+import type React from 'react';
 import { useEffect, useState } from 'react';
 import { JinrohFormContent } from './JinrohFormContent';
-import { fetchNightJinrohPlayers } from '@/features/game/night/api';
+import { fetchGetWrapper } from '@/api';
+import type { NightJinrohPlayers } from '@/features/game/night/type';
 
 export const JinrohForm: React.FC = () => {
   const [playerNames, setPlayerNames] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchNightJinrohPlayersAsync = async () => {
-      const result = await fetchNightJinrohPlayers();
+      const result = await fetchGetWrapper<NightJinrohPlayers>(
+        '/night/jinroh/index',
+      );
 
       setPlayerNames(result.playerNames);
     };

@@ -1,50 +1,5 @@
-import {
-  type ExitRoom,
-  type FetchGameStart,
-  type FetchRoomIndex,
-  type FinishRoom,
-  type GameStartStatus,
-  type RoomIndexResponseBody,
- isGameStartStatus, isRoomIndexResponseBody, isFinishRoomStatus } from './type';
-import {InvalidResponseBodyError} from '@/features/error';
-import { JINROH_API_BASE_URL } from '@/url';
-
-export const fetchRoomIndex: FetchRoomIndex = async () => {
-  const res = await fetch(JINROH_API_BASE_URL + '/room-index', {
-    method: 'GET',
-    credentials: 'include',
-  });
-  const roomIndexResponseBody = (await res.json()) as RoomIndexResponseBody;
-
-  if (!isRoomIndexResponseBody(roomIndexResponseBody)) {
-    throw new InvalidResponseBodyError(
-      `responseBody is not in the expected format. body: ${JSON.stringify(
-        roomIndexResponseBody,
-      )}`,
-    );
-  }
-
-  return roomIndexResponseBody;
-};
-
-export const fetchGameStart: FetchGameStart = async () => {
-  const res = await fetch(JINROH_API_BASE_URL + '/game-start', {
-    method: 'GET',
-    credentials: 'include',
-  });
-
-  const gameStartStatus = (await res.text()) as GameStartStatus;
-
-  if (!isGameStartStatus(gameStartStatus)) {
-    throw new InvalidResponseBodyError(
-      `responseBody is not in the expected format. body: ${JSON.stringify(
-        gameStartStatus,
-      )}`,
-    );
-  }
-
-  return gameStartStatus;
-};
+import type {ExitRoom, FinishRoom, FinishRoomStatusResponse} from './type';
+import { fetchGetWrapper, fetchPostWrapper } from '@/api';
 
 export const joinGame = async (dto: {gameId: number}): Promise<string> => {
   const {gameId} = dto
@@ -64,27 +19,11 @@ export const joinGame = async (dto: {gameId: number}): Promise<string> => {
 }
 
 export const finishRoom: FinishRoom = async () => {
-  const res = await fetch(JINROH_API_BASE_URL + '/room-finish', {
-    method: 'GET',
-    credentials: 'include',
-  });
+  const res = await fetchGetWrapper<FinishRoomStatusResponse>('/room-finish');
 
-  const status = await res.text()
-
-  if (!isFinishRoomStatus(status)) {
-    throw new Error('Failed to finish room');
-  }
-
-  return status
+  return res.status;
 };
 
 export const exitRoom: ExitRoom = async () => {
-  const res = await fetch(JINROH_API_BASE_URL + '/exit-room', {
-    method: 'POST',
-    credentials: 'include',
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to exit room');
-  }
+  await fetchPostWrapper('/exit-room');
 };

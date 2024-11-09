@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
+import { fetchGetWrapper } from '@/api';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
-import { fetchTallyIndexResponseBody } from '@/features/game/tally/api';
-import type { GameParticipantWithVoteBean } from '@/features/game/tally/type';
+import {
+  type GameParticipantWithVoteBean,
+  type TallyIndexResponseBody,
+} from '@/features/game/tally/type';
 import type { CoRole } from '@/features/game/type';
 
 export const useTallyData = (): {
@@ -23,12 +26,13 @@ export const useTallyData = (): {
   const [cos, setCos] = useState<CoRole[] | undefined>();
 
   useEffect(() => {
-    const fetchTallyIndexResponseBodyAsync = async () => {
-      const tallyIndexResponseBody = await fetchTallyIndexResponseBody();
+    const fetchData = async () => {
+      const tallyIndexResponseBody =
+        await fetchGetWrapper<TallyIndexResponseBody>('/tally-index');
       const { gameId } = tallyIndexResponseBody;
       setGameId(gameId);
     };
-    void fetchTallyIndexResponseBodyAsync();
+    void fetchData();
   }, []);
 
   const { hostFlag, otherPlayerList, playerId, playerName, playerRole } =
@@ -45,8 +49,9 @@ export const useTallyData = (): {
       return;
     }
 
-    const fetchTallyIndexResponseBodyAsync = async () => {
-      const tallyIndexResponseBody = await fetchTallyIndexResponseBody();
+    const fetchData = async () => {
+      const tallyIndexResponseBody =
+        await fetchGetWrapper<TallyIndexResponseBody>('/tally-index');
       const { tallyResult, gameId, cos } = tallyIndexResponseBody;
 
       const playersWithVoteCount: GameParticipantWithVoteBean[] = [
@@ -76,7 +81,7 @@ export const useTallyData = (): {
       setCos(cos);
     };
 
-    void fetchTallyIndexResponseBodyAsync();
+    void fetchData();
   }, [hostFlag, otherPlayerList, playerId, playerName, playerRole]);
 
   return {

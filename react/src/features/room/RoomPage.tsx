@@ -4,9 +4,9 @@ import { RoomTemplate } from './RoomTemplate';
 import { exitRoom, joinGame } from "./api.ts";
 import { GameStartModal } from './components/GameStartModal';
 import { useRoomData } from './hooks';
-import { isGameInfo } from './type';
 import type { GameInfo } from './type';
 import { InvalidResponseBodyError } from '@/features/error';
+import { exitRoom } from '@/features/room/api';
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
 import type { Subscribe } from '@/type';
@@ -38,14 +38,8 @@ export const RoomPage: React.FC = () => {
       }
 
       const gameInfo = message.body
-        ? (JSON.parse(message.body) as unknown)
+        ? (JSON.parse(message.body) as GameInfo)
         : undefined;
-
-      if (!isGameInfo(gameInfo)) {
-        throw new InvalidResponseBodyError(
-          `Invalid response body: ${JSON.stringify(gameInfo)}`,
-        );
-      }
 
       setGameInfo(gameInfo);
       onOpenModal();
@@ -56,7 +50,7 @@ export const RoomPage: React.FC = () => {
     path: `/topic/receive-finish-room/${uuid}`,
     callback: async () => {
       window.alert('ルームが解散されました');
-      await exitRoom()
+      await exitRoom();
       window.location.href = '/';
     },
   };

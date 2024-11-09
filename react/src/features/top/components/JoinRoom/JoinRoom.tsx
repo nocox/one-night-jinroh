@@ -1,16 +1,22 @@
+import type React from 'react';
 import { useState, type FormEventHandler } from 'react';
-import { joinRoom } from '../../api';
 import { JoinRoomButton } from './JoinRoomButton';
 import { JoinRoomModal } from './JoinRoomModal';
+import { fetchGetWrapper } from '@/api';
 import { ExhaustiveError } from '@/features/error';
+import { exitRoom, finishRoom } from '@/features/room/api';
+import {type JoinedRoomStatusResponse} from '@/features/top/type';
 import { useModal } from '@/hooks/useModal';
-import {exitRoom, finishRoom} from "@/features/room/api.ts";
 
 type Props = {
   className: string;
+  refetchJoinedRoomStatus: () => void;
 };
 
-export const JoinRoom: React.FC<Props> = ({ className }) => {
+export const JoinRoom: React.FC<Props> = ({
+  className,
+  refetchJoinedRoomStatus,
+}) => {
   const [roomId, setRoomId] = useState('');
   const [joinRoomResult, setJoinRoomResult] = useState('');
   const { open, onOpenModal, onCloseModal } = useModal(false);
@@ -19,22 +25,28 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
     event.preventDefault();
 
     try {
-      const dto = { roomId };
-      const status = await joinRoom(dto);
+      const res = await fetchGetWrapper<JoinedRoomStatusResponse>('/join-room', {
+        uuid: roomId.toString(),
+      });
 
-      switch (status) {
+      switch (res.status) {
         case 'JOIN_SUCCESS':
         case 'ALREADY_JOINED':
           location.href = '/room';
           setJoinRoomResult('');
           break;
         case 'OTHER_ROOM_JOINED':
-          if (window.confirm("すでに参加済みのルームがあります。退出しますか？")){
-            const finishStatus = await finishRoom()
-            if (finishStatus === "ROOM_NOT_EXIST") {
-              await exitRoom()
+          if (
+            window.confirm('すでに参加済みのルームがあります。退出しますか？')
+          ) {
+            const finishStatus = await finishRoom();
+            if (finishStatus === 'ROOM_NOT_EXIST') {
+              await exitRoom();
             }
-            setJoinRoomResult('参加済みのルームを退出しました。参加したいルームIDを入力してください。');
+            refetchJoinedRoomStatus();
+            setJoinRoomResult(
+              '参加済みのルームを退出しました。参加したいルームIDを入力してください。',
+            );
           } else {
             setJoinRoomResult('');
           }
@@ -46,7 +58,7 @@ export const JoinRoom: React.FC<Props> = ({ className }) => {
           setJoinRoomResult('ルームの参加者上限に達しています');
           break;
         default:
-          throw new ExhaustiveError(status);
+          throw new ExhaustiveError(res.status);
       }
     } catch (error) {
       console.log(error); // TODO: ErrorFallbackを実装する

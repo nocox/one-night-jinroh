@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
+import { fetchGetWrapper } from '@/api';
 import murabitoWinImagePath from '@/assets/images/result/result1.png';
 import jinrohWinImagePath from '@/assets/images/result/result2.png';
 import turibitoWinImagePath from '@/assets/images/result/result3.png';
 import { ExhaustiveError } from '@/features/error';
-import { fetchShowResultTermIndex } from '@/features/game/result/api';
 import type {
   GameParticipantWithResultBean,
   JudgeResult,
+  ShowResultTermIndexBean,
 } from '@/features/game/result/type';
 import type { RoleEnglishName } from '@/features/role';
 
@@ -75,9 +76,10 @@ export const useResultData = (): {
   >([]);
 
   useEffect(() => {
-    const fetchShowResultTermIndexAsync = async () => {
-      const result = await fetchShowResultTermIndex();
-      console.log({ result });
+    const fetchData = async () => {
+      const result = await fetchGetWrapper<ShowResultTermIndexBean>(
+        '/result-index',
+      );
 
       setGameId(result.gameId);
       setHostFlag(result.hostFlg);
@@ -86,7 +88,7 @@ export const useResultData = (): {
       setHolidayRoles(result.holidayRoles);
     };
 
-    void fetchShowResultTermIndexAsync();
+    void fetchData();
   }, []);
 
   return { gameId, hostFlag, judgeResult, participants, holidayRoles };

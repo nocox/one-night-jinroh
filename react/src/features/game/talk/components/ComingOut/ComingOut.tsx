@@ -1,6 +1,7 @@
+import type React from 'react';
 import { css, cx } from 'styled-system/css';
+import { fetchPostWrapper } from '@/api';
 import { ContentBox } from '@/components';
-import { postCo } from '@/features/game/talk/api';
 import type { GameParticipantWithCoRole } from '@/features/game/type';
 import type { Role } from '@/features/role';
 import { roles } from '@/features/role';
@@ -59,9 +60,11 @@ export const ComingOut: React.FC<Props> = ({ getMyPlayer }) => {
   )[0];
 
   const handleClick = async (character: Role) => {
-    const role = character.englishName;
-    const playerId = getMyPlayer().id;
-    await postCo({ playerId, role });
+    const body = {
+      role: character.englishName,
+      playerId: getMyPlayer().id,
+    };
+    await fetchPostWrapper('/co', { body });
   };
 
   return (

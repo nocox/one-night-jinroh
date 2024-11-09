@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { fetchGameIndex } from '@/features/game/api';
-import type {
-  GameParticipant,
-  RoleBean,
-  FetchGameIndexParam,
+import { fetchGetWrapper } from '@/api';
+import {
+  type GameParticipant,
+  type RoleBean,
+  type FetchGameIndexParam,
+  type GameIndexResponse,
 } from '@/features/game/type';
 
 export const useGameIndex = (
@@ -16,6 +17,7 @@ export const useGameIndex = (
   playerId: number | undefined;
   playerName: string | undefined;
   playerRole: RoleBean | undefined;
+  error: Error | undefined;
 } => {
   const [hostFlag, setHostFlag] = useState<boolean | undefined>(undefined);
   const [nightActLog, setNightActLog] = useState<string | undefined>(undefined);
@@ -25,6 +27,7 @@ export const useGameIndex = (
   const [playerId, setPlayerId] = useState<number | undefined>(undefined);
   const [playerName, setPlayerName] = useState<string | undefined>(undefined);
   const [playerRole, setPlayerRole] = useState<RoleBean | undefined>(undefined);
+  const [error, setError] = useState<Error | undefined>(undefined);
 
   useEffect(() => {
     if (gameId === undefined) {
@@ -32,28 +35,36 @@ export const useGameIndex = (
 
       return;
     }
-    const fetchGameIndexAsync = async () => {
-      const gameIndexResponse = await fetchGameIndex(param);
-
-      switch (gameIndexResponse.type) {
-        case 'GameIndex':
-          setHostFlag(gameIndexResponse.hostFlag);
-          setNightActLog(gameIndexResponse.nightActLog ?? '');
-          setGameParticipantList(gameIndexResponse.otherPlayerList);
-          setPlayerId(gameIndexResponse.playerId);
-          setPlayerName(gameIndexResponse.playerName);
-          setPlayerRole(gameIndexResponse.playerRole);
-          break;
-        case 'TermIsDifferent':
-          window.location.href = '/' + gameIndexResponse.term;
-          break;
-        case 'NotStared':
-          window.location.href = '/room';
-          break;
+    const fetchData = async () => {
+      try {
+        const gameIndexResponse = await fetchGetWrapper<GameIndexResponse>(
+          '/game-index',
+          {
+            term: param,
+          },
+        );
+        switch (gameIndexResponse.type) {
+          case 'GameIndex':
+            setHostFlag(gameIndexResponse.hostFlag);
+            setNightActLog(gameIndexResponse.nightActLog ?? '');
+            setGameParticipantList(gameIndexResponse.otherPlayerList);
+            setPlayerId(gameIndexResponse.playerId);
+            setPlayerName(gameIndexResponse.playerName);
+            setPlayerRole(gameIndexResponse.playerRole);
+            break;
+          case 'TermIsDifferent':
+            window.location.href = '/' + gameIndexResponse.term;
+            break;
+          case 'NotStared':
+            window.location.href = '/room';
+            break;
+        }
+      } catch (err) {
+        setError(err as Error);
       }
     };
 
-    void fetchGameIndexAsync();
+    void fetchData();
   }, [param, gameId]);
 
   return {
@@ -63,5 +74,6 @@ export const useGameIndex = (
     playerId,
     playerName,
     playerRole,
+    error,
   };
 };

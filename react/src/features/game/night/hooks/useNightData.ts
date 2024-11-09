@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { fetchNightIndex } from '@/features/game/night/api';
+import { fetchGetWrapper } from '@/api';
+import type { NightIndexResponseBody } from '@/features/game/night/type';
 
 export const useNightData = (): {
   gameId: number | undefined;
@@ -11,12 +12,13 @@ export const useNightData = (): {
   );
 
   useEffect(() => {
-    const fetchNightIndexAsync = async () => {
-      const { gameId, doneNightAct } = await fetchNightIndex();
+    const fetchData = async () => {
+      const { gameId, doneNightAct } =
+        await fetchGetWrapper<NightIndexResponseBody>('/night-index');
       setGameId(gameId);
       setDoneNightAct(doneNightAct);
     };
-    void fetchNightIndexAsync();
+    void fetchData();
   }, []);
 
   return { gameId, doneNightAct };

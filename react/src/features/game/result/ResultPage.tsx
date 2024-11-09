@@ -1,8 +1,9 @@
+import type React from 'react';
 import { ResultTemplate } from './ResultTemplate';
 import { JudgeModal } from './components/JudgeModal/JudgeModal';
 import { useResultData } from './hooks/useResultData';
+import { fetchGetWrapper } from '@/api';
 import { Loading } from '@/components';
-import { fetchReturnRoom } from '@/features/game/result/api';
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
 import type { Subscribe } from '@/type';
@@ -22,7 +23,7 @@ export const ResultPage: React.FC = () => {
   };
 
   const handleReturnRoom = async () => {
-    await fetchReturnRoom();
+    await fetchGetWrapper('/return-room');
   };
 
   useWebSocket(gameId === undefined ? [] : [subscribeReturnRoom]);

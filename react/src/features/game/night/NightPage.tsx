@@ -1,12 +1,12 @@
-import type React from "react";
+import type React from 'react';
 import {useState} from "react";
-import {NightTemplate} from './NightTemplate';
+import { NightTemplate } from './NightTemplate';
 import {fetchGameId} from "./api.ts";
-import {useNightData} from './hooks/useNightData';
-import {Loading} from '@/components';
-import {useGameIndex} from '@/features/game/hooks/useGameIndex';
+import { useNightData } from './hooks/useNightData';
+import { Loading } from '@/components';
+import { useGameIndex } from '@/features/game/hooks/useGameIndex';
 import {useWebSocketGameWrapper} from "@/hooks";
-import type {Subscribe} from '@/type';
+import type { Subscribe } from '@/type';
 
 // MEMO: GameIdをゲームページに渡す実装をお試し中。とりあえず夜の行動ページだけ反映中。
 export const NightPage: React.FC = () => {
@@ -40,10 +40,14 @@ type Props = {
 
 const InGameNightPage: React.FC<Props> = ({gameId}) => {
   const { doneNightAct } = useNightData();
-  const { playerName, playerRole, otherPlayerList } = useGameIndex(
+  const { playerName, playerRole, otherPlayerList, error } = useGameIndex(
       'night',
       gameId,
   );
+
+  if (error) {
+    throw error;
+  }
 
   const subscribeDoneNightActionOfAllPlayer: Subscribe = {
     path: `/topic/${gameId}`,

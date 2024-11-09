@@ -34,3 +34,7 @@ export type FinishRoomStatusResponse = {
 
 export type FinishRoom = () => Promise<FinishRoomStatus>;
 export type ExitRoom = () => Promise<void>;
+
+export type FetchJoinGameResponse = {
+  status: 'JOIN_GAME_SUCCESS' | 'JOIN_GAME_FAILED'
+}

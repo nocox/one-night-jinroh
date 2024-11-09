@@ -12,7 +12,7 @@ class JoinGameController(
 ) {
 
     @PostMapping(path = ["/join-game"])
-    fun joinGame(@RequestParam gameId: Long, session: HttpSession): String {
+    fun joinGame(@RequestParam gameId: Long, session: HttpSession): Response {
 
         val uuid: String = session.getAttribute("room_uuid").toString()
         val strUserId: String = session.getAttribute("user_id").toString()
@@ -24,6 +24,13 @@ class JoinGameController(
         session.setAttribute("game_id", gameId)
         session.setAttribute("game_participation_id", gameParticipantId)
 
-        return "JOIN_GAME_SUCCESS"
+        return Response(status = ResponseStatus.JOIN_GAME_SUCCESS)
+    }
+
+    data class Response(val status: ResponseStatus)
+
+    enum class ResponseStatus{
+        JOIN_GAME_SUCCESS,
+        JOIN_GAME_FAILED
     }
 }

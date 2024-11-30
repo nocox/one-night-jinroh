@@ -6,11 +6,17 @@ import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpSession
 
 @RestController
-class ExitRoomController {
-    @PostMapping(path = ["/exit-room"])
-    fun exitRoom(model: Model, session: HttpSession): Int {
+class LeaveRoomController {
+    @PostMapping(path = ["/leave-room"])
+    fun exitRoom(model: Model, session: HttpSession): Response {
         session.removeAttribute("room_uuid")
         session.removeAttribute("user_id")
-        return 0
+        return Response(ResponseStatus.SUCCESS)
     }
+
+    enum class ResponseStatus{
+        SUCCESS,
+    }
+
+    data class Response(val status: ResponseStatus)
 }

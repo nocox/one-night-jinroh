@@ -1,18 +1,10 @@
 import type React from 'react';
 import { css } from 'styled-system/css';
+import {fetchPostWrapper} from "@/api";
 import { Button } from '@/components';
-import { JINROH_API_BASE_URL } from '@/url';
 
 const reset = async () => {
-  const res = await fetch(JINROH_API_BASE_URL + '/exit-room', {
-    method: 'POST',
-    credentials: 'include',
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to exit room');
-  }
-
+  await fetchPostWrapper( '/leave-room')
   window.location.href = '/';
 };
 

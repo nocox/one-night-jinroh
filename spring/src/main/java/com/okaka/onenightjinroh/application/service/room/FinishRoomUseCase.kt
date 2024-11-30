@@ -9,19 +9,18 @@ import org.springframework.stereotype.Service
 
 @Service
 class FinishRoomUseCase(
-    private val roomParticipantRepository: RoomParticipantRepository,
     private val roomRepository: RoomRepository,
     private val existRoomValidate: ExistRoomValidate,
 ) {
     fun invoke(userId: Long?, roomUuid: String?) {
-        val roomParticipant = roomParticipantRepository.findByUserId(userId).orElseThrow { IllegalArgumentException() }
         val room = existRoomValidate.existRoom(roomUuid).orElseThrow { RoomNotExistException("")}
 
-
         // ルーム解散を特別に一旦ホスト以外もできるようにした。不要なルームを残さないため。 (24/7)
+        // val roomParticipant = roomParticipantRepository.findByUserId(userId).orElseThrow { IllegalArgumentException() }
         // if (!roomParticipant.hostFlg) {
         //     throw new IllegalArgumentException();
         // }
+
         require(RoomStatus.Finished != room.getStatus())
 
         val finishedRoom = room.finishRoom()

@@ -5,9 +5,9 @@ import { useNightData } from './hooks/useNightData';
 import {fetchGetWrapper} from "@/api";
 import { Loading } from '@/components';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
+import {type FetchGameIdResponse} from "@/features/game/type";
 import {useWebSocketGameWrapper} from "@/hooks";
 import type { Subscribe } from '@/type';
-import {FetchGameIdResponse} from "@/features/game/type";
 
 // MEMO: GameIdをゲームページに渡す実装をお試し中。とりあえず夜の行動ページだけ反映中。
 export const NightPage: React.FC = () => {

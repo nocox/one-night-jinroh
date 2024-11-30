@@ -8,5 +8,5 @@ export const finishRoom: FinishRoom = async () => {
 };
 
 export const exitRoom: ExitRoom = async () => {
-  await fetchPostWrapper('/exit-room');
+  await fetchPostWrapper('/leave-room');
 };

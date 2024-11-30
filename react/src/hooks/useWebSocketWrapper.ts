@@ -6,10 +6,10 @@ import type {Subscribe} from "@/type";
 export const useWebSocketGameWrapper = (gameId: number, subscribes: Subscribe[]): void => {
     const defaultSubscribes: Subscribe[] = [
         {
-            path: `/topic/${gameId}/game-finish`,
-            callback: () => {
-                // FIXME: この後退出処理を実装
-                console.log("game finish")
+            path: `/topic/${gameId}/leave-game`,
+            callback: async () => {
+                await fetchPostWrapper('/leave-game');
+                window.location.href = '/';
             },
         },
         {

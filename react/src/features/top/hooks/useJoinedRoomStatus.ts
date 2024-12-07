@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { fetchGetWrapper } from '@/api';
-import type {FetchJoinedRoomStatus, FetchJoinedRoomStatusResponse} from '@/features/top/type';
+import type {
+  FetchJoinedRoomStatus,
+  FetchJoinedRoomStatusResponse,
+} from '@/features/top/type';
 
 export const useJoinedRoomStatus = (): {
   joinedRoomStatus: FetchJoinedRoomStatus;
@@ -18,7 +21,7 @@ export const useJoinedRoomStatus = (): {
         const res = await fetchGetWrapper<FetchJoinedRoomStatusResponse>(
           '/joined-room',
         );
-        const status = res.status
+        const status = res.status;
         setJoinedRoomStatus(status);
       } catch (error) {
         // エラー処理

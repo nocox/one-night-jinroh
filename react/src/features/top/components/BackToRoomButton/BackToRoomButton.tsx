@@ -1,11 +1,11 @@
-import {css} from "../../../../../styled-system/css";
+import { css } from '../../../../../styled-system/css';
 import { type FetchJoinedRoomStatus } from '@/features/top/type';
 
 const styles = {
   joinedButtonWrapper: css({
-    flex: 1
+    flex: 1,
   }),
-}
+};
 
 type Props = {
   className: string;

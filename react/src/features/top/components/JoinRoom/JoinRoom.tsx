@@ -5,7 +5,7 @@ import { JoinRoomModal } from './JoinRoomModal';
 import { fetchGetWrapper } from '@/api';
 import { ExhaustiveError } from '@/features/error';
 import { exitRoom, finishRoom } from '@/features/room/api';
-import {type JoinedRoomStatusResponse} from '@/features/top/type';
+import { type JoinedRoomStatusResponse } from '@/features/top/type';
 import { useModal } from '@/hooks/useModal';
 
 type Props = {
@@ -25,9 +25,12 @@ export const JoinRoom: React.FC<Props> = ({
     event.preventDefault();
 
     try {
-      const res = await fetchGetWrapper<JoinedRoomStatusResponse>('/join-room', {
-        uuid: roomId.toString(),
-      });
+      const res = await fetchGetWrapper<JoinedRoomStatusResponse>(
+        '/join-room',
+        {
+          uuid: roomId.toString(),
+        },
+      );
 
       switch (res.status) {
         case 'JOIN_SUCCESS':

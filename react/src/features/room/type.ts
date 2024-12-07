@@ -14,8 +14,8 @@ export type User = {
 export type GameStartStatus = 'SUCCESS' | 'NOT_ENOUGH_PARTICIPANTS';
 
 export type GameStartStatusResponse = {
-  status: GameStartStatus
-}
+  status: GameStartStatus;
+};
 
 export type GameInfo = {
   gameId: number;
@@ -29,8 +29,8 @@ export type GameInfo = {
 export type FinishRoomStatus = 'FINISHED_ROOM' | 'ROOM_NOT_EXIST';
 
 export type FinishRoomStatusResponse = {
-  status: FinishRoomStatus
-}
+  status: FinishRoomStatus;
+};
 
 export type FinishRoom = () => Promise<FinishRoomStatus>;
 export type ExitRoom = () => Promise<void>;

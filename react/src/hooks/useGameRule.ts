@@ -10,7 +10,10 @@ export const useGameRule = (
   useEffect(() => {
     const fetchGameRuleListAsync = async () => {
       if (gameId !== undefined) {
-        const gameRuleList = await fetchGetWrapper<GameRuleList>(`/game-rule/${gameId.toString()}`, {});
+        const gameRuleList = await fetchGetWrapper<GameRuleList>(
+          `/game-rule/${gameId.toString()}`,
+          {},
+        );
         setGameRuleList(gameRuleList.roleList);
       }
     };

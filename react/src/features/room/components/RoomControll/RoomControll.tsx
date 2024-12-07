@@ -3,7 +3,7 @@ import { exitRoom, finishRoom } from '../../api';
 import { RoomControllButton } from './RoomControllButton';
 import { fetchGetWrapper } from '@/api';
 import { ExhaustiveError } from '@/features/error';
-import {type GameStartStatusResponse} from '@/features/room/type';
+import { type GameStartStatusResponse } from '@/features/room/type';
 
 type Props = {
   hostFlg: boolean;
@@ -14,9 +14,7 @@ export const RoomControll: React.FC<Props> = ({ hostFlg }) => {
 
   const handleGameStart = async () => {
     try {
-      const res = await fetchGetWrapper<GameStartStatusResponse>(
-        '/game-start',
-      );
+      const res = await fetchGetWrapper<GameStartStatusResponse>('/game-start');
       switch (res.status) {
         case 'SUCCESS':
           console.log('ゲームスタート');

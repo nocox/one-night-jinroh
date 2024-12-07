@@ -1,40 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { fetchGetWrapper } from '@/api';
-import type {FetchJoinedRoomStatus, FetchJoinedRoomStatusResponse} from '@/features/top/type';
+import type {
+  FetchJoinedRoomStatus,
+  FetchJoinedRoomStatusResponse,
+} from '@/features/top/type';
 
 export const useJoinedRoomStatus = (): {
-  joinedRoomStatus: FetchJoinedRoomStatus;
+  joinedRoomStatus: FetchJoinedRoomStatus | undefined;
   refetch: () => void;
   loading: boolean;
 } => {
-  const [loading, setLoading] = useState(true);
-  const [joinedRoomStatus, setJoinedRoomStatus] =
-    useState<FetchJoinedRoomStatus>('NOT_JOINED_ROOM');
-  const [refetchKey, setRefetchKey] = useState(0);
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['joined-room'],
+    queryFn: async () =>
+      await fetchGetWrapper<FetchJoinedRoomStatusResponse>('/joined-room'),
+  });
 
-  useEffect(() => {
-    const fetchJoinedRoomAsync = async () => {
-      try {
-        const res = await fetchGetWrapper<FetchJoinedRoomStatusResponse>(
-          '/joined-room',
-        );
-        const status = res.status
-        setJoinedRoomStatus(status);
-      } catch (error) {
-        // エラー処理
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    void fetchJoinedRoomAsync();
-  }, [refetchKey]);
-
-  const refetch = () => {
-    setLoading(true);
-    setRefetchKey(refetchKey + 1);
-  };
-
-  return { joinedRoomStatus, refetch, loading };
+  return { joinedRoomStatus: data?.status, refetch, loading: isLoading };
 };

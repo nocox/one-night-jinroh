@@ -1,4 +1,4 @@
-import type {ExitRoom, FinishRoom, FinishRoomStatusResponse} from './type';
+import type { ExitRoom, FinishRoom, FinishRoomStatusResponse } from './type';
 import { fetchGetWrapper, fetchPostWrapper } from '@/api';
 
 export const finishRoom: FinishRoom = async () => {

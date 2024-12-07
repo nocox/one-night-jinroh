@@ -32,11 +32,13 @@ export const NightActionForm: React.FC<Props> = ({
   }
 
   const handleDoneNightAct = () => {
-    fetchGetWrapper('/done-night-act').then(() => {
-      setIsDoneNightAct(true)
-    }).catch(() => {
-      setIsDoneNightAct(false)
-    })
+    fetchGetWrapper('/done-night-act')
+      .then(() => {
+        setIsDoneNightAct(true);
+      })
+      .catch(() => {
+        setIsDoneNightAct(false);
+      });
   };
 
   return (

@@ -26,6 +26,13 @@ class FinishRoomController(
 
         session.removeAttribute("room_uuid")
         messagingTemplate.convertAndSend("/topic/receive-finish-room/$uuid", "")
+
+        // ゲームが存在したら参加者に削除依頼
+        val gameId = session.getAttribute("game_id")
+        if (gameId != null) {
+            messagingTemplate.convertAndSend("/topic/${gameId}/leave-room", "")
+        }
+
         return Response(status = ResponseStatus.FINISHED_ROOM)
     }
 

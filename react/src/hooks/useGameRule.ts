@@ -1,25 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { fetchGetWrapper } from '@/api';
 import type { GameRule, GameRuleList } from '@/type';
 
 export const useGameRule = (
   gameId: number | undefined,
 ): { gameRuleList: GameRule[] } => {
-  const [gameRuleList, setGameRuleList] = useState<GameRule[]>([]);
-
-  useEffect(() => {
-    const fetchGameRuleListAsync = async () => {
+  const { data } = useQuery({
+    queryKey: ['game-rule', gameId],
+    queryFn: async () => {
       if (gameId !== undefined) {
-        const gameRuleList = await fetchGetWrapper<GameRuleList>(
+        return await fetchGetWrapper<GameRuleList>(
           `/game-rule/${gameId.toString()}`,
-          {},
         );
-        setGameRuleList(gameRuleList.roleList);
       }
-    };
+    },
+    enabled: gameId !== undefined,
+  });
 
-    void fetchGameRuleListAsync();
-  }, [gameId]);
-
-  return { gameRuleList };
+  return { gameRuleList: data?.roleList ?? [] };
 };

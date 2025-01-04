@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { fetchGetWrapper } from '@/api';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
 import {
@@ -15,25 +16,21 @@ export const useTallyData = (): {
   isPeaceful: boolean | undefined;
   cos: CoRole[] | undefined;
 } => {
-  const [gameId, setGameId] = useState<number | undefined>();
-  const [selectedPlayers, setSelectedPlayers] = useState<
-    GameParticipantWithVoteBean[] | undefined
-  >();
   const [playersWithVoteCount, setPlayersWithVoteCount] = useState<
     GameParticipantWithVoteBean[] | undefined
   >();
-  const [isPeaceful, setIsPeaceful] = useState<boolean | undefined>(undefined);
-  const [cos, setCos] = useState<CoRole[] | undefined>();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const tallyIndexResponseBody =
-        await fetchGetWrapper<TallyIndexResponseBody>('/tally-index');
-      const { gameId } = tallyIndexResponseBody;
-      setGameId(gameId);
-    };
-    void fetchData();
-  }, []);
+  const { data } = useQuery({
+    queryKey: ['talk-index'],
+    queryFn: async () =>
+      await fetchGetWrapper<TallyIndexResponseBody>('/tally-index'),
+  });
+
+  const gameId = data?.gameId;
+  const cos = data?.cos;
+  const tallyResult = data?.tallyResult;
+  const selectedPlayers = tallyResult?.selectedPlayers;
+  const isPeaceful = tallyResult?.peacefulFlag;
 
   const { hostFlag, otherPlayerList, playerId, playerName, playerRole } =
     useGameIndex('tally', gameId);
@@ -44,45 +41,41 @@ export const useTallyData = (): {
       otherPlayerList === undefined ||
       playerId === undefined ||
       playerName === undefined ||
-      playerRole === undefined
+      playerRole === undefined ||
+      tallyResult === undefined
     ) {
       return;
     }
 
-    const fetchData = async () => {
-      const tallyIndexResponseBody =
-        await fetchGetWrapper<TallyIndexResponseBody>('/tally-index');
-      const { tallyResult, gameId, cos } = tallyIndexResponseBody;
+    const playersWithVoteCount: GameParticipantWithVoteBean[] = [
+      {
+        id: playerId,
+        name: playerName,
+        role: playerRole,
+        hostFlag,
+        voteCount: tallyResult.players
+          .filter((player) => player.id === playerId)
+          .map((player) => player.voteCount)[0],
+        isMyself: true,
+      },
+      ...otherPlayerList.map((player) => ({
+        ...player,
+        voteCount: tallyResult.players
+          .filter((playerWithVote) => player.id === playerWithVote.id)
+          .map((playerWithVote) => playerWithVote.voteCount)[0],
+        isMyself: false,
+      })),
+    ];
 
-      const playersWithVoteCount: GameParticipantWithVoteBean[] = [
-        {
-          id: playerId,
-          name: playerName,
-          role: playerRole,
-          hostFlag,
-          voteCount: tallyResult.players
-            .filter((player) => player.id === playerId)
-            .map((player) => player.voteCount)[0],
-          isMyself: true,
-        },
-        ...otherPlayerList.map((player) => ({
-          ...player,
-          voteCount: tallyResult.players
-            .filter((playerWithVote) => player.id === playerWithVote.id)
-            .map((playerWithVote) => playerWithVote.voteCount)[0],
-          isMyself: false,
-        })),
-      ];
-
-      setGameId(gameId);
-      setSelectedPlayers(tallyResult.selectedPlayers);
-      setPlayersWithVoteCount(playersWithVoteCount);
-      setIsPeaceful(tallyResult.peacefulFlag);
-      setCos(cos);
-    };
-
-    void fetchData();
-  }, [hostFlag, otherPlayerList, playerId, playerName, playerRole]);
+    setPlayersWithVoteCount(playersWithVoteCount);
+  }, [
+    hostFlag,
+    otherPlayerList,
+    playerId,
+    playerName,
+    playerRole,
+    tallyResult,
+  ]);
 
   return {
     hostFlag,

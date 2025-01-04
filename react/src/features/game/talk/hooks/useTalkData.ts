@@ -1,11 +1,12 @@
 import type React from 'react';
 import { useCallback, useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { fetchGetWrapper } from '@/api';
 import { UnexpectedError } from '@/features/error';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
 import { toGameParticipantsWithCoRole } from '@/features/game/service/gameParticipantService';
 import { type TalkIndexResponseBody } from '@/features/game/talk/type';
-import type { CoRole, GameParticipantWithCoRole } from '@/features/game/type';
+import type { GameParticipantWithCoRole } from '@/features/game/type';
 
 type UseTalkData = () => {
   gameId: number | undefined;
@@ -19,25 +20,19 @@ type UseTalkData = () => {
 };
 
 export const useTalkData: UseTalkData = () => {
-  const [gameId, setGameId] = useState<number | undefined>(undefined);
-  const [cos, setCos] = useState<CoRole[] | undefined>(undefined);
   const [gameParticipantsWithCoRole, setGameParticipantsWithCoRole] = useState<
     GameParticipantWithCoRole[] | undefined
   >(undefined);
 
-  // gameId と cos を取得
-  useEffect(() => {
-    void (async () => {
-      try {
-        const talkIndexResponseBody =
-          await fetchGetWrapper<TalkIndexResponseBody>('/talk-index');
-        setGameId(talkIndexResponseBody.gameId);
-        setCos(talkIndexResponseBody.cos);
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, []);
+  const { data } = useQuery({
+    queryKey: ['talk-index'],
+    queryFn: async () => {
+      return await fetchGetWrapper<TalkIndexResponseBody>('/talk-index');
+    },
+  });
+
+  const gameId = data?.gameId;
+  const cos = data?.cos;
 
   const {
     playerId,

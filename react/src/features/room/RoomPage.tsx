@@ -1,12 +1,14 @@
 import type React from 'react';
 import { useState } from 'react';
+import {BackToGameButton} from "@/features/room/components/BackToGameButton";
 import { RoomTemplate } from './RoomTemplate';
 import { exitRoom } from "./api.ts";
 import { GameStartModal } from './components/GameStartModal';
 import { useRoomData } from './hooks';
 import type {FetchJoinGameResponse, GameInfo} from './type';
-import {fetchPostWrapper} from "@/api";
+import {fetchGetWrapper, fetchPostWrapper} from "@/api";
 import { InvalidResponseBodyError } from '@/features/error';
+import type {FetchGameIdResponse} from "@/features/game/type";
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
 import type { Subscribe } from '@/type';
@@ -21,6 +23,19 @@ export const RoomPage: React.FC = () => {
           }
       })
   };
+
+  const [gameId, setGameId] = useState<number | undefined>(undefined);
+
+  void fetchGetWrapper<FetchGameIdResponse>('/fetch-game-id').then((res) => {
+    switch (res.resultCode) {
+      case "IN_GAME":
+        setGameId(res.gameId);
+        break
+      case "NOT_IN_GAME":
+        setGameId(undefined)
+        break
+    }
+  })
 
   const [gameInfo, setGameInfo] = useState<GameInfo | undefined>(undefined);
 
@@ -60,6 +75,9 @@ export const RoomPage: React.FC = () => {
   return (
     <>
       <RoomTemplate roomIndexResponseBody={roomIndexResponseBody} />
+      {gameId !== undefined && (
+          <BackToGameButton/>
+      )}
       {gameInfo !== undefined && (
         <GameStartModal
           open={open}

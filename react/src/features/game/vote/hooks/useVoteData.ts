@@ -1,10 +1,10 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { fetchGetWrapper } from '@/api';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
 import { toGameParticipantsWithCoRole } from '@/features/game/service/gameParticipantService';
 import type {
-  CoRole,
   GameParticipant,
   GameParticipantWithCoRole,
 } from '@/features/game/type';
@@ -22,31 +22,23 @@ type UseVoteData = () => {
 };
 
 export const useVoteData: UseVoteData = () => {
-  const [gameId, setGameId] = useState<number | undefined>();
   const [gameParticipantsWithCoRole, setGameParticipantWithCoRole] = useState<
     GameParticipantWithCoRole[] | undefined
-  >();
-  const [cos, setCos] = useState<CoRole[] | undefined>(undefined);
-  const [canVotePlayers, setCanVotePlayers] = useState<
-    GameParticipant[] | undefined
   >();
   const [votingDestination, setVotingDestination] = useState<
     number | undefined
   >();
 
-  useEffect(() => {
-    void (async () => {
-      const voteIndexResponseBody = await fetchGetWrapper<VoteIndexRequestBody>(
-        '/vote-index',
-      );
-      const { voteIndex } = voteIndexResponseBody;
+  const { data } = useQuery({
+    queryKey: ['vote-index'],
+    queryFn: async () => {
+      return await fetchGetWrapper<VoteIndexRequestBody>('/vote-index');
+    },
+  });
 
-      setCos(voteIndexResponseBody.cos);
-      setGameId(voteIndexResponseBody.gameId);
-      setCanVotePlayers(voteIndex.canVotePlayers);
-      setVotingDestination(voteIndex.votingDestination ?? undefined);
-    })();
-  }, []);
+  const gameId = data?.gameId;
+  const cos = data?.cos;
+  const canVotePlayers = data?.voteIndex.canVotePlayers;
 
   const {
     nightActLog,

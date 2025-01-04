@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { fetchGetWrapper } from '@/api';
 import murabitoWinImagePath from '@/assets/images/result/result1.png';
 import jinrohWinImagePath from '@/assets/images/result/result2.png';
@@ -13,14 +13,17 @@ import type { RoleEnglishName } from '@/features/role';
 
 const getJudgeResult = (
   judge:
+    | undefined
     | 'FAIL_PEACE_VILLAGE'
     | 'SIMPLE_JINROH_WIN'
     | 'SIMPLE_VILLAGE_WIN'
     | 'SUCCESS_HIDE_JINROH_WIN'
     | 'SUCCESS_PEACE_VILLAGE'
     | 'TURIBITO_WIN',
-): JudgeResult => {
+): JudgeResult | undefined => {
   switch (judge) {
+    case undefined:
+      return undefined;
     case 'FAIL_PEACE_VILLAGE':
       return {
         text: '平和村失敗',
@@ -63,33 +66,17 @@ export const useResultData = (): {
   participants: GameParticipantWithResultBean[] | undefined;
   holidayRoles: RoleEnglishName[] | undefined;
 } => {
-  const [hostFlag, setHostFlag] = useState<boolean | undefined>();
-  const [gameId, setGameId] = useState<number | undefined>();
-  const [judgeResult, setJudgeResult] = useState<
-    { text: string; imagePath: string } | undefined
-  >();
-  const [participants, setParticipants] = useState<
-    GameParticipantWithResultBean[] | undefined
-  >([]);
-  const [holidayRoles, setHolidayRoles] = useState<
-    RoleEnglishName[] | undefined
-  >([]);
+  const { data } = useQuery({
+    queryKey: ['result-index'],
+    queryFn: async () =>
+      await fetchGetWrapper<ShowResultTermIndexBean>('/result-index'),
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetchGetWrapper<ShowResultTermIndexBean>(
-        '/result-index',
-      );
-
-      setGameId(result.gameId);
-      setHostFlag(result.hostFlg);
-      setJudgeResult(getJudgeResult(result.judge));
-      setParticipants(result.participants);
-      setHolidayRoles(result.holidayRoles);
-    };
-
-    void fetchData();
-  }, []);
-
-  return { gameId, hostFlag, judgeResult, participants, holidayRoles };
+  return {
+    gameId: data?.gameId,
+    hostFlag: data?.hostFlg,
+    judgeResult: getJudgeResult(data?.judge),
+    participants: data?.participants,
+    holidayRoles: data?.holidayRoles,
+  };
 };

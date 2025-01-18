@@ -9,11 +9,15 @@ export const useRoomData = (): {
   myselfUserId: RoomIndexResponseBody['myselfUserId'] | undefined;
   isLoading: boolean;
 } => {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['joined-room'],
     queryFn: async () =>
       await fetchGetWrapper<Promise<RoomIndexResponseBody>>('/room-index'),
   });
+
+  if (error) {
+    throw error;
+  }
 
   return {
     uuid: data?.uuid,

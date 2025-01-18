@@ -31,6 +31,10 @@ export const useGameIndex = (
     enabled: gameId !== undefined,
   });
 
+  if (error) {
+    throw error;
+  }
+
   switch (data?.type) {
     case 'GameIndex':
       break;

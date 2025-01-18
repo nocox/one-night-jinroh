@@ -20,11 +20,15 @@ export const useTallyData = (): {
     GameParticipantWithVoteBean[] | undefined
   >();
 
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ['talk-index'],
     queryFn: async () =>
       await fetchGetWrapper<TallyIndexResponseBody>('/tally-index'),
   });
+
+  if (error) {
+    throw error;
+  }
 
   const gameId = data?.gameId;
   const cos = data?.cos;

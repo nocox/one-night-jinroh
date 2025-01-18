@@ -66,11 +66,15 @@ export const useResultData = (): {
   participants: GameParticipantWithResultBean[] | undefined;
   holidayRoles: RoleEnglishName[] | undefined;
 } => {
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ['result-index'],
     queryFn: async () =>
       await fetchGetWrapper<ShowResultTermIndexBean>('/result-index'),
   });
+
+  if (error) {
+    throw error;
+  }
 
   return {
     gameId: data?.gameId,

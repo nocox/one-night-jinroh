@@ -29,12 +29,16 @@ export const useVoteData: UseVoteData = () => {
     number | undefined
   >();
 
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ['vote-index'],
     queryFn: async () => {
       return await fetchGetWrapper<VoteIndexRequestBody>('/vote-index');
     },
   });
+
+  if (error) {
+    throw error;
+  }
 
   const gameId = data?.gameId;
   const cos = data?.cos;

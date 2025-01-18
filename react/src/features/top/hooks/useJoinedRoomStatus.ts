@@ -10,11 +10,15 @@ export const useJoinedRoomStatus = (): {
   refetch: () => void;
   loading: boolean;
 } => {
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading, refetch, error } = useQuery({
     queryKey: ['joined-room'],
     queryFn: async () =>
       await fetchGetWrapper<FetchJoinedRoomStatusResponse>('/joined-room'),
   });
+
+  if (error) {
+    throw error;
+  }
 
   return { joinedRoomStatus: data?.status, refetch, loading: isLoading };
 };

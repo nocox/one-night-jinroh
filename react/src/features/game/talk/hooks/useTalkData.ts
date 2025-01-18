@@ -24,12 +24,16 @@ export const useTalkData: UseTalkData = () => {
     GameParticipantWithCoRole[] | undefined
   >(undefined);
 
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ['talk-index'],
     queryFn: async () => {
       return await fetchGetWrapper<TalkIndexResponseBody>('/talk-index');
     },
   });
+
+  if (error) {
+    throw error;
+  }
 
   const gameId = data?.gameId;
   const cos = data?.cos;

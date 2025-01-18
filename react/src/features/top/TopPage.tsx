@@ -1,6 +1,6 @@
 import type React from 'react';
 import { TopTemplate } from './TopTemplate';
-import {Loading} from "@/components";
+import { Loading } from '@/components';
 import { useJoinedRoomStatus } from '@/features/top/hooks/useJoinedRoomStatus';
 
 export const TopPage: React.FC = () => {

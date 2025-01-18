@@ -8,14 +8,10 @@ import type { Subscribe } from '@/type';
 
 export const NightPage: React.FC = () => {
   const { gameId, doneNightAct } = useNightData();
-  const { playerName, playerRole, otherPlayerList, error } = useGameIndex(
+  const { playerName, playerRole, otherPlayerList } = useGameIndex(
     'night',
     gameId,
   );
-
-  if (error) {
-    throw error;
-  }
 
   const subscribeDoneNightActionOfAllPlayer: Subscribe = {
     path: `/topic/${gameId ?? ''}`,

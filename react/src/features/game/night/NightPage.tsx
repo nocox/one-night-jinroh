@@ -13,14 +13,11 @@ import type { Subscribe } from '@/type';
 export const NightPage: React.FC = () => {
     const [gameId, setGameId] = useState<number | undefined>(undefined);
 
-    void fetchGetWrapper<FetchGameIdResponse>('/fetch-game-id').then((res) => {
-        switch (res.resultCode) {
-            case "IN_GAME":
-                setGameId(res.gameId);
-                break
-            case "NOT_IN_GAME":
-                setGameId(undefined)
-                break
+    void fetchGetWrapper<FetchGameIdResponse>('/fetch-game-id').then((res: FetchGameIdResponse) => {
+        if (res.resultCode === "IN_GAME") {
+            setGameId(res.gameId);
+        } else if (res.resultCode === "NOT_IN_GAME") {
+            setGameId(undefined)
         }
     })
 

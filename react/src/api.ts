@@ -1,3 +1,5 @@
+import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { JINROH_API_BASE_URL } from './url';
 import { UnexpectedError } from '@/features/error';
 
@@ -62,4 +64,18 @@ export async function fetchPostWrapper<T>(
   }
 
   return (await res.json()) as T;
+}
+
+export function useQueryWrapper<T>(
+  options: UseQueryOptions<T, Error>,
+): UseQueryResult<T | undefined, Error> {
+  const useQueryResult = useQuery({
+    ...options,
+  });
+
+  if (useQueryResult.error) {
+    throw useQueryResult.error;
+  }
+
+  return useQueryResult;
 }

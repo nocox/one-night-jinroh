@@ -11,6 +11,12 @@ class LeaveRoomController {
     fun exitRoom(model: Model, session: HttpSession): Response {
         session.removeAttribute("room_uuid")
         session.removeAttribute("user_id")
+
+        val gameId = session.getAttribute("game_id")
+        if (gameId != null) {
+            session.removeAttribute("game_id")
+            session.removeAttribute("game_participation_id")
+        }
         return Response(ResponseStatus.SUCCESS)
     }
 

@@ -24,10 +24,8 @@ class FetchGameIdController {
     class SuccessResponse(val gameId: String) : Response {
         override val resultCode: String = "IN_GAME"
     }
+
     object FailResponse : Response {
         override val resultCode: String = "NOT_IN_GAME"
-
     }
-
 }
-

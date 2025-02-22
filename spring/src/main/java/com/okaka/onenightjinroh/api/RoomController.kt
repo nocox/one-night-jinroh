@@ -1,14 +1,13 @@
 package com.okaka.onenightjinroh.api
 
-import com.okaka.onenightjinroh.application.service.room.*
+import com.okaka.onenightjinroh.application.service.room.GetRoomIndexUseCase
+import com.okaka.onenightjinroh.application.service.room.NotEnoughParticipantsException
+import com.okaka.onenightjinroh.application.service.room.RoomIndexBean
+import com.okaka.onenightjinroh.application.service.room.StartGameUseCase
 import com.okaka.onenightjinroh.application.validater.ExistRoomValidate
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.servlet.View
 import javax.servlet.http.HttpSession
 
 @RestController

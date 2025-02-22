@@ -1,43 +1,38 @@
-package com.okaka.onenightjinroh.api;
+package com.okaka.onenightjinroh.api
 
-import com.okaka.onenightjinroh.application.domain.GameResult;
-import com.okaka.onenightjinroh.application.service.result.GetGameResultUseCase;
-import com.okaka.onenightjinroh.application.service.result.ReturnRoomUseCase;
-import com.okaka.onenightjinroh.application.service.result.ShowResultTermIndexBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpSession;
+import com.okaka.onenightjinroh.application.service.result.GetGameResultUseCase
+import com.okaka.onenightjinroh.application.service.result.ShowResultTermIndexBean
+import org.springframework.messaging.simp.SimpMessagingTemplate
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpSession
 
 @RestController
-public class ShowResultTermController {
-    @Autowired
-    HttpSession session;
+class ShowResultTermController(
+    private val session: HttpSession,
+    private val useCase: GetGameResultUseCase,
+    private val messagingTemplate: SimpMessagingTemplate,
+) {
+    @get:RequestMapping(path = ["/result-index"])
+    val showResultTermIndex: ShowResultTermIndexBean
+        get() {
+            val strGameId = session.getAttribute("game_id").toString()
+            val gameId = strGameId.toLong()
+            val strGameParticipationId = session.getAttribute("game_participation_id").toString()
+            val gameParticipantId = strGameParticipationId.toLong()
 
-    @Autowired
-    GetGameResultUseCase useCase;
+            val gameResult = useCase.invoke(gameId, gameParticipantId)
+            return ShowResultTermIndexBean.fromDomain(gameResult)
+        }
 
-    @Autowired
-    ReturnRoomUseCase returnRoomUseCase;
+    @RequestMapping(path = ["/return-room"])
+    fun returnRoom(): Int {
+        val gameId = session.getAttribute("game_id").toString().toLong()
 
-    @RequestMapping(path = "/result-index")
-    public ShowResultTermIndexBean getShowResultTermIndex() {
-        String strGameId = session.getAttribute("game_id").toString();
-        Long gameId = Long.valueOf(strGameId);
-        String strGameParticipationId = session.getAttribute("game_participation_id").toString();
-        Long gameParticipantId = Long.valueOf(strGameParticipationId);
+        session.removeAttribute("game_id")
+        session.removeAttribute("game_participation_id")
 
-        GameResult gameResult = useCase.invoke(gameId, gameParticipantId);
-        return ShowResultTermIndexBean.fromDomain(gameResult);
-    }
-
-    @RequestMapping(path = "/return-room")
-    public int returnRoom() {
-        String strGameId = session.getAttribute("game_id").toString();
-        Long gameId = Long.valueOf(strGameId);
-
-        returnRoomUseCase.invoke(gameId);
-        return 0;
+        messagingTemplate.convertAndSend("/topic/return-room/$gameId", "")
+        return 0
     }
 }

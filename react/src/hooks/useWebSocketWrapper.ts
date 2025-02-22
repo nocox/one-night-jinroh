@@ -6,19 +6,19 @@ import type {Subscribe} from "@/type";
 export const useWebSocketGameWrapper = (gameId: number, subscribes: Subscribe[]): void => {
     const defaultSubscribes: Subscribe[] = [
         {
-            path: `/topic/${gameId}/leave-game`,
-            callback: async () => {
-                await fetchPostWrapper('/leave-game');
-                window.location.href = '/';
-            },
-        },
-        {
             path: `/topic/${gameId}/leave-room`,
             callback: async () => {
                 await fetchPostWrapper('/leave-room');
                 window.location.href = '/';
             },
-        }
+        },
+        {
+            path: `/topic/${gameId}/leave-game`,
+            callback: async () => {
+                await fetchPostWrapper('/leave-game');
+                window.location.href = '/room';
+            },
+        },
     ]
     useWebSocket(defaultSubscribes.concat(subscribes));
 }

@@ -9,8 +9,6 @@ import javax.servlet.http.HttpSession
 class LeaveGameController {
     @PostMapping(path = ["/leave-game"])
     fun exitRoom(model: Model, session: HttpSession): Response {
-        session.removeAttribute("room_uuid")
-        session.removeAttribute("user_id")
         session.removeAttribute("game_id")
         session.removeAttribute("game_participation_id")
         return Response(ResponseStatus.SUCCESS)

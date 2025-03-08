@@ -3,6 +3,7 @@ package com.okaka.onenightjinroh.domaimpl
 import com.okaka.jinroh.persistence.*
 import com.okaka.onenightjinroh.application.domain.Game
 import com.okaka.onenightjinroh.application.domain.GameTerm
+import com.okaka.onenightjinroh.application.domain.Role
 import com.okaka.onenightjinroh.application.domain.Rule
 import com.okaka.onenightjinroh.application.repository.GameRepository
 import org.springframework.stereotype.Repository
@@ -25,6 +26,26 @@ class GameRepositoryDomaImpl(
         val gameTerm = toGameTermDomainFromEntity(gameTermEntity)
 
         return Game.of(gameId, roomId, rule, gameTerm)
+    }
+
+    override fun findByRoomId(roomId: Long): List<Game> {
+        val gameWithStateRaws = gameDao.selectByRoomId(roomId)
+
+        if (gameWithStateRaws.isEmpty()) return emptyList()
+
+        return gameWithStateRaws.groupBy { it.gameId }
+            .map { (gameId, raws) ->
+                val firstRaw = raws.first()
+
+                require(raws.all { it.roomId == firstRaw.roomId && it.gameTerm == firstRaw.gameTerm }) {
+                    "Inconsistent data: gameId=$gameId has multiple roomId or gameTerm values"
+                }
+
+                val roleIds = raws.map { it.roleId }.distinct()
+                val rule = Rule.of(firstRaw.ruleId, firstRaw.ruleName, roleIds)
+                val term = toGameTermDomainFromEntity(GameTermEntity(gameId, firstRaw.gameTerm))
+                Game.of(gameId, firstRaw.roomId, rule, term)
+            }
     }
 
     override fun save(game: Game) {

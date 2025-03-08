@@ -70,6 +70,11 @@ public class GameParticipantRepository {
         return GameParticipants.of(findByGameIdWithUserAndRole(gameId));
     }
 
+    public Long findIdByGameIdAndUserId(Long gameId, Long userId) {
+        GameParticipationEntity entity = gameParticipationDao.selectGameParticipant(gameId, userId);
+        return entity.game_participation_id;
+    }
+
     public static Map<Long, GameParticipant> toMapGameParticipant(List<GameParticipant> GameParticipants){
         Map<Long, GameParticipant> gameParticipantMap = new HashMap<>();
         GameParticipants.forEach(gameParticipant -> {

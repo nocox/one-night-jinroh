@@ -9,6 +9,8 @@ import org.seasar.doma.boot.ConfigAutowireable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @ConfigAutowireable
 @Dao
 @Repository
@@ -19,7 +21,7 @@ public interface GameDao {
     GameEntity select(Long gameId);
 
     @Select
-    GameEntity selectByRoomId(Long roomId);
+    List<GameWithStateRaw> selectByRoomId(Long roomId);
 
     @Insert
     @Transactional

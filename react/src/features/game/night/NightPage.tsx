@@ -3,44 +3,55 @@ import { NightTemplate } from './NightTemplate';
 import { useNightData } from './hooks/useNightData';
 import { Loading } from '@/components';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
-import { useWebSocket } from '@/hooks';
+import { useWebSocketGameWrapper } from '@/hooks';
+import { GameIdProvider } from '@/components/GameIdProvider';
 import type { Subscribe } from '@/type';
 
 export const NightPage: React.FC = () => {
-  const { gameId, doneNightAct } = useNightData();
-  const { playerName, playerRole, otherPlayerList, error } = useGameIndex(
-    'night',
-    gameId,
-  );
+    return (
+        <GameIdProvider>
+            {(gameId) => <InGameNightPage gameId={gameId} />}
+        </GameIdProvider>
+    );
+};
 
-  if (error) {
-    throw error;
-  }
+type Props = {
+    gameId: number;
+};
 
-  const subscribeDoneNightActionOfAllPlayer: Subscribe = {
-    path: `/topic/${gameId ?? ''}`,
-    callback: () => {
-      window.location.href = '/talk';
-    },
-  };
+const InGameNightPage: React.FC<Props> = ({gameId}) => {
+    const { doneNightAct } = useNightData();
+    const { playerName, playerRole, otherPlayerList, error } = useGameIndex(
+        'night',
+        gameId,
+    );
 
-  useWebSocket(
-    gameId !== undefined ? [subscribeDoneNightActionOfAllPlayer] : [],
-  );
+    if (error) {
+        throw error;
+    }
 
-  return playerName === undefined ||
-    playerRole === undefined ||
-    otherPlayerList === undefined ||
-    doneNightAct === undefined ? (
-    <Loading />
-  ) : (
-    <>
-      <NightTemplate
-        playerName={playerName}
-        playerRole={playerRole}
-        otherPlayerList={otherPlayerList}
-        doneNightAct={doneNightAct}
-      />
-    </>
-  );
+    const subscribeDoneNightActionOfAllPlayer: Subscribe = {
+        path: `/topic/${gameId}`,
+        callback: () => {
+            window.location.href = '/talk';
+        },
+    };
+
+    useWebSocketGameWrapper(gameId, [subscribeDoneNightActionOfAllPlayer])
+
+    return playerName === undefined ||
+        playerRole === undefined ||
+        otherPlayerList === undefined ||
+        doneNightAct === undefined ? (
+        <Loading />
+    ) : (
+        <>
+            <NightTemplate
+                playerName={playerName}
+                playerRole={playerRole}
+                otherPlayerList={otherPlayerList}
+                doneNightAct={doneNightAct}
+            />
+        </>
+    );
 };

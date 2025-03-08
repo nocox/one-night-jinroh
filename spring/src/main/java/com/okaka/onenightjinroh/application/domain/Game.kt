@@ -17,7 +17,7 @@ class Game(
 
         fun startGame(roomId: Long, participantCount: Int): Game {
             return Game(
-                null,
+                null, // 本当はここで生成したい
                 roomId,
                 Rule.createByParticipantCount(participantCount),
                 term = GameTerm.NIGHT

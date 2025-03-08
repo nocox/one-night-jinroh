@@ -63,15 +63,12 @@ public class NightController {
 
     @RequestMapping(path = "/night-index")
     NightTermIndexBean getNightTermIndex() {
-        String uuid = session.getAttribute("room_uuid").toString();
-        String strUserId = session.getAttribute("user_id").toString();
-        Long userId = Long.valueOf(strUserId);
+        String strGameId = session.getAttribute("game_id").toString();
+        Long gameId = Long.valueOf(strGameId);
+        String strGameParticipationId = session.getAttribute("game_participation_id").toString();
+        Long gameParticipantId = Long.valueOf(strGameParticipationId);
 
-        GamePersonalBean gamePersonalBean = getGamePersonalUseCase.get(uuid, userId);
-        session.setAttribute("game_id", gamePersonalBean.getGameId());
-        session.setAttribute("game_participation_id", gamePersonalBean.getGameParticipationId());
-
-        return getNightTermIndexUseCase.get(gamePersonalBean.getGameId(), gamePersonalBean.getGameParticipationId());
+        return getNightTermIndexUseCase.get(gameId, gameParticipantId);
     }
 
     @RequestMapping(path = "/done-night-act")

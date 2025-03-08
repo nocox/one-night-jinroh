@@ -2,7 +2,7 @@ import type React from 'react';
 import { ResultTemplate } from './ResultTemplate';
 import { JudgeModal } from './components/JudgeModal/JudgeModal';
 import { useResultData } from './hooks/useResultData';
-import { fetchGetWrapper } from '@/api';
+import {fetchGetWrapper, fetchPostWrapper} from '@/api';
 import { Loading } from '@/components';
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
@@ -16,8 +16,9 @@ export const ResultPage: React.FC = () => {
 
   const subscribeReturnRoom: Subscribe = {
     path: `/topic/return-room/${gameId ?? ''}`,
-    callback: () => {
+    callback: async() => {
       onCloseModal();
+      await fetchPostWrapper('/leave-game');
       window.location.href = '/room';
     },
   };

@@ -27,3 +27,6 @@ dist-ssr
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# AI関連のナレッジを格納する
+.knowledge

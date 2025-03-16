@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 
-export const useTermRouter = (
+export const useRedirectByTerm = (
   type: 'GameIndex' | 'TermIsDifferent' | 'NotStared' | undefined,
   term: 'night' | 'talk' | 'vote' | 'tally' | 'result',
 ): void => {

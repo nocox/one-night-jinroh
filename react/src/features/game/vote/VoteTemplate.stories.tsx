@@ -110,7 +110,7 @@ export const Default: Story = {
         isMyself: false,
       },
     ],
-    votingDestination: undefined,
+    votingDestination: null,
   },
 };
 export const DoneVote: Story = {

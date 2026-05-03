@@ -1,21 +1,21 @@
 import type React from 'react';
 import { NightTemplate } from './NightTemplate';
-import { useNightData } from './hooks/useNightData';
+import { useNightIndex } from './hooks/useNightIndex';
 import { Loading } from '@/components';
 import { useGameIndex } from '@/features/game/hooks/useGameIndex';
+import { useRedirectByTerm } from '@/features/game/hooks/useRedirectByTerm';
+import { isGameIndex } from '@/features/game/type';
 import { useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const NightPage: React.FC = () => {
-  const { gameId, doneNightAct } = useNightData();
-  const { playerName, playerRole, otherPlayerList, error } = useGameIndex(
-    'night',
-    gameId,
-  );
+  const nightIndexResult = useNightIndex();
+  const { gameId } = nightIndexResult.data ?? {};
 
-  if (error) {
-    throw error;
-  }
+  const gameIndexResult = useGameIndex('night', gameId);
+
+  const gameIndexResultType = gameIndexResult.data?.type;
+  useRedirectByTerm(gameIndexResultType, 'night');
 
   const subscribeDoneNightActionOfAllPlayer: Subscribe = {
     path: `/topic/${gameId ?? ''}`,
@@ -28,19 +28,21 @@ export const NightPage: React.FC = () => {
     gameId !== undefined ? [subscribeDoneNightActionOfAllPlayer] : [],
   );
 
-  return playerName === undefined ||
-    playerRole === undefined ||
-    otherPlayerList === undefined ||
-    doneNightAct === undefined ? (
+  const isLoadingNightIndex = nightIndexResult.isLoading;
+  const isLoadingGameIndex = gameIndexResult.isLoading;
+
+  return isLoadingNightIndex ||
+    isLoadingGameIndex ||
+    nightIndexResult.data === undefined ? (
     <Loading />
   ) : (
-    <>
+    isGameIndex(gameIndexResult.data) && (
       <NightTemplate
-        playerName={playerName}
-        playerRole={playerRole}
-        otherPlayerList={otherPlayerList}
-        doneNightAct={doneNightAct}
+        playerName={gameIndexResult.data.playerName}
+        playerRole={gameIndexResult.data.playerRole}
+        otherPlayerList={gameIndexResult.data.otherPlayerList}
+        doneNightAct={nightIndexResult.data?.doneNightAct}
       />
-    </>
+    )
   );
 };

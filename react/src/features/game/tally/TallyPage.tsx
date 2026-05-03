@@ -15,9 +15,11 @@ export const TallyPage: React.FC = () => {
     playersWithVoteCount,
     isPeaceful,
     cos,
+    isLoading,
   } = useTallyData();
-  const { gameRuleList } = useGameRule(gameId);
 
+  const gameRuleResult = useGameRule(gameId);
+  const { roleList } = gameRuleResult.data ?? {};
   const subscribeResult: Subscribe = {
     path: `/topic/result/${gameId ?? ''}`,
     callback: () => {
@@ -31,12 +33,14 @@ export const TallyPage: React.FC = () => {
     await fetchGetWrapper('/show-result');
   };
 
-  return hostFlag === undefined ||
+  return isLoading ||
+    gameRuleResult.isLoading ||
+    hostFlag === undefined ||
     selectedPlayers === undefined ||
     playersWithVoteCount === undefined ||
     isPeaceful === undefined ||
     cos === undefined ||
-    gameRuleList === undefined ? (
+    roleList === undefined ? (
     <Loading />
   ) : (
     <>
@@ -44,7 +48,7 @@ export const TallyPage: React.FC = () => {
         hostFlag={hostFlag}
         selectedPlayers={selectedPlayers}
         playersWithVoteCount={playersWithVoteCount}
-        gameRuleList={gameRuleList}
+        gameRuleList={roleList}
         isPeaceful={isPeaceful}
         cos={cos}
         handleClickResultButton={handleClickResultButton}

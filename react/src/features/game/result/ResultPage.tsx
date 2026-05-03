@@ -4,13 +4,17 @@ import { JudgeModal } from './components/JudgeModal/JudgeModal';
 import { useResultData } from './hooks/useResultData';
 import { fetchGetWrapper } from '@/api';
 import { Loading } from '@/components';
+import { useJudgeResult } from '@/features/game/result/hooks/useJudgeResult';
 import { useWebSocket } from '@/hooks';
 import { useModal } from '@/hooks/useModal';
 import type { Subscribe } from '@/type';
 
 export const ResultPage: React.FC = () => {
-  const { gameId, hostFlag, judgeResult, participants, holidayRoles } =
-    useResultData();
+  const { data, isLoading } = useResultData();
+
+  const { gameId, judge, hostFlg, participants, holidayRoles } = data ?? {};
+
+  const judgeResult = useJudgeResult(judge);
 
   const { open, onCloseModal } = useModal(true);
 
@@ -28,8 +32,9 @@ export const ResultPage: React.FC = () => {
 
   useWebSocket(gameId === undefined ? [] : [subscribeReturnRoom]);
 
-  return hostFlag === undefined ||
+  return isLoading ||
     judgeResult === undefined ||
+    hostFlg === undefined ||
     participants === undefined ||
     holidayRoles === undefined ? (
     <Loading />
@@ -37,7 +42,7 @@ export const ResultPage: React.FC = () => {
     <>
       <ResultTemplate
         judgeResult={judgeResult}
-        hostFlag={hostFlag}
+        hostFlag={hostFlg}
         participants={participants}
         holidayRoles={holidayRoles}
         handleReturnRoom={handleReturnRoom}

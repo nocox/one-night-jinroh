@@ -29,7 +29,7 @@ module.exports = {
     'jsx-a11y',
     'react',
     'react-hooks',
-    '@tanstack/query'
+    '@tanstack/query',
   ],
   rules: {
     'react-refresh/only-export-components': [

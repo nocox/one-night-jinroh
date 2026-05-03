@@ -51,7 +51,7 @@ const handleEndTalk = async () => {
 
 type Props = {
   players: GameParticipantWithCoRole[];
-  nightActLog: string | undefined;
+  nightActLog: string | null;
   hostFlg: boolean;
   getMyPlayer: () => GameParticipantWithCoRole;
   gameRuleList: GameRule[];

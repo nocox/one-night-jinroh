@@ -56,13 +56,15 @@ export type NotStared = {
   errorMessage: string;
 };
 
+export const isGameIndex = (
+  gameIndex: GameIndexResponse | undefined,
+): gameIndex is GameIndex => {
+  return gameIndex?.type === 'GameIndex';
+};
+
 export type FetchGameIndexParam =
   | 'night'
   | 'talk'
   | 'vote'
   | 'tally'
   | 'result';
-
-export type FetchGameIndex = (
-  param: FetchGameIndexParam,
-) => Promise<GameIndexResponse>;

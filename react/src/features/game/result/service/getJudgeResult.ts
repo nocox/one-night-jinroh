@@ -1,8 +1,8 @@
-import murabitoWinImagePath from "@/assets/images/result/result1.png";
-import jinrohWinImagePath from "@/assets/images/result/result2.png";
-import turibitoWinImagePath from "@/assets/images/result/result3.png";
-import {ExhaustiveError} from "@/features/error";
-import type {JudgeResult} from "@/features/game/result/type";
+import murabitoWinImagePath from '@/assets/images/result/result1.png';
+import jinrohWinImagePath from '@/assets/images/result/result2.png';
+import turibitoWinImagePath from '@/assets/images/result/result3.png';
+import { ExhaustiveError } from '@/features/error';
+import type { JudgeResult } from '@/features/game/result/type';
 
 export const getJudgeResult = (
   judge:

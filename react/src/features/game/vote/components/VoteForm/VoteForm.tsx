@@ -33,10 +33,8 @@ const styles = {
 
 type Props = {
   canVotePlayers: GameParticipant[];
-  votingDestination: number | undefined;
-  setVotingDestination: React.Dispatch<
-    React.SetStateAction<number | undefined>
-  >;
+  votingDestination: number | null;
+  setVotingDestination: React.Dispatch<React.SetStateAction<number | null>>;
 };
 export const VoteForm: React.FC<Props> = ({
   canVotePlayers,
@@ -64,7 +62,7 @@ export const VoteForm: React.FC<Props> = ({
                   value={player.id}
                   checked={selectedPlayerId === player.id}
                   onChange={handleSelectedPlayerIdChange}
-                  disabled={votingDestination !== undefined}
+                  disabled={votingDestination !== null}
                 />
                 {player.name}
               </label>
@@ -75,8 +73,8 @@ export const VoteForm: React.FC<Props> = ({
           <Button
             type="submit"
             onClick={handleVoteSubmit}
-            disabled={votingDestination !== undefined}
-            isDisabled={votingDestination !== undefined}
+            disabled={votingDestination !== null}
+            isDisabled={votingDestination !== null}
           >
             投票する
           </Button>
@@ -86,7 +84,7 @@ export const VoteForm: React.FC<Props> = ({
             {errorMessage}
           </p>
         )}
-        {votingDestination !== undefined && (
+        {votingDestination !== null && (
           <p className={css({ textAlign: 'center' })}>
             投票完了！他のプレイヤーが投票するまでまっててね！
           </p>

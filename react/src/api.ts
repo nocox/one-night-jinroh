@@ -67,8 +67,8 @@ export async function fetchPostWrapper<T>(
 }
 
 export function useQueryWrapper<T>(
-  options: UseQueryOptions<T, Error>,
-): UseQueryResult<T | undefined, Error> {
+  options: UseQueryOptions<T>,
+): UseQueryResult<T> {
   const useQueryResult = useQuery({
     ...options,
   });

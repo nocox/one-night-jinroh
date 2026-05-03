@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import { useEffect } from 'react';
 
 export const useRedirectByTerm = (
   type: 'GameIndex' | 'TermIsDifferent' | 'NotStared' | undefined,

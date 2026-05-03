@@ -7,21 +7,25 @@ import {
   type TallyIndexResponseBody,
 } from '@/features/game/tally/type';
 import type { CoRole } from '@/features/game/type';
+import { isGameIndex } from '@/features/game/type';
 
-export const useTallyData = (): {
+type UseTallyDataResult = {
   hostFlag: boolean | undefined;
   gameId: number | undefined;
   selectedPlayers: GameParticipantWithVoteBean[] | undefined;
   playersWithVoteCount: GameParticipantWithVoteBean[] | undefined;
   isPeaceful: boolean | undefined;
   cos: CoRole[] | undefined;
-} => {
+  isLoading: boolean;
+};
+
+export const useTallyData = (): UseTallyDataResult => {
   const [playersWithVoteCount, setPlayersWithVoteCount] = useState<
     GameParticipantWithVoteBean[] | undefined
   >();
 
-  const { data } = useQuery({
-    queryKey: ['talk-index'],
+  const { data, isLoading } = useQuery({
+    queryKey: ['tally-index'],
     queryFn: async () =>
       await fetchGetWrapper<TallyIndexResponseBody>('/tally-index'),
   });
@@ -32,33 +36,26 @@ export const useTallyData = (): {
   const selectedPlayers = tallyResult?.selectedPlayers;
   const isPeaceful = tallyResult?.peacefulFlag;
 
-  const { hostFlag, otherPlayerList, playerId, playerName, playerRole } =
-    useGameIndex('tally', gameId);
+  const gameIndexResult = useGameIndex('tally', gameId);
+  const gameIndex = gameIndexResult.data;
 
   useEffect(() => {
-    if (
-      hostFlag === undefined ||
-      otherPlayerList === undefined ||
-      playerId === undefined ||
-      playerName === undefined ||
-      playerRole === undefined ||
-      tallyResult === undefined
-    ) {
+    if (!isGameIndex(gameIndex) || tallyResult === undefined) {
       return;
     }
 
     const playersWithVoteCount: GameParticipantWithVoteBean[] = [
       {
-        id: playerId,
-        name: playerName,
-        role: playerRole,
-        hostFlag,
+        id: gameIndex.playerId,
+        name: gameIndex.playerName,
+        role: gameIndex.playerRole,
+        hostFlag: gameIndex.hostFlag,
         voteCount: tallyResult.players
-          .filter((player) => player.id === playerId)
+          .filter((player) => player.id === gameIndex.playerId)
           .map((player) => player.voteCount)[0],
         isMyself: true,
       },
-      ...otherPlayerList.map((player) => ({
+      ...gameIndex.otherPlayerList.map((player) => ({
         ...player,
         voteCount: tallyResult.players
           .filter((playerWithVote) => player.id === playerWithVote.id)
@@ -68,21 +65,15 @@ export const useTallyData = (): {
     ];
 
     setPlayersWithVoteCount(playersWithVoteCount);
-  }, [
-    hostFlag,
-    otherPlayerList,
-    playerId,
-    playerName,
-    playerRole,
-    tallyResult,
-  ]);
+  }, [gameIndex, tallyResult]);
 
   return {
-    hostFlag,
+    hostFlag: isGameIndex(gameIndex) ? gameIndex.hostFlag : undefined,
     gameId,
     selectedPlayers,
     playersWithVoteCount,
     isPeaceful,
     cos,
+    isLoading: isLoading || gameIndexResult.isLoading,
   };
 };

@@ -1,5 +1,5 @@
-import type { UseQueryResult} from '@tanstack/react-query';
-import {fetchGetWrapper, useQueryWrapper} from '@/api';
+import type { UseQueryResult } from '@tanstack/react-query';
+import { fetchGetWrapper, useQueryWrapper } from '@/api';
 import {
   type FetchGameIndexParam,
   type GameIndexResponse,
@@ -9,8 +9,8 @@ export const useGameIndex = (
   param: FetchGameIndexParam,
   gameId: number | undefined,
 ): UseQueryResult<GameIndexResponse | undefined> =>
-   useQueryWrapper({
-    queryKey: ['game-index', gameId],
+  useQueryWrapper({
+    queryKey: ['game-index', gameId, param],
     queryFn: async () => {
       if (gameId !== undefined) {
         return await fetchGetWrapper<GameIndexResponse>('/game-index', {

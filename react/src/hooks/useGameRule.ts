@@ -1,11 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
-import { fetchGetWrapper } from '@/api';
-import type { GameRule, GameRuleList } from '@/type';
+import { type UseQueryResult } from '@tanstack/react-query';
+import { fetchGetWrapper, useQueryWrapper } from '@/api';
+import type { GameRuleList } from '@/type';
 
 export const useGameRule = (
   gameId: number | undefined,
-): { gameRuleList: GameRule[] } => {
-  const { data } = useQuery({
+): UseQueryResult<GameRuleList | undefined> =>
+  useQueryWrapper({
     queryKey: ['game-rule', gameId],
     queryFn: async () => {
       if (gameId !== undefined) {
@@ -16,6 +16,3 @@ export const useGameRule = (
     },
     enabled: gameId !== undefined,
   });
-
-  return { gameRuleList: data?.roleList ?? [] };
-};

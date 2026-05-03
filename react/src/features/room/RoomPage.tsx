@@ -1,8 +1,10 @@
+import type React from 'react';
 import { useState } from 'react';
 import { RoomTemplate } from './RoomTemplate';
 import { GameStartModal } from './components/GameStartModal';
 import { useRoomData } from './hooks';
 import type { GameInfo } from './type';
+import { Loading } from '@/components';
 import { InvalidResponseBodyError } from '@/features/error';
 import { exitRoom } from '@/features/room/api';
 import { useWebSocket } from '@/hooks';
@@ -16,13 +18,10 @@ export const RoomPage: React.FC = () => {
   };
 
   const [gameInfo, setGameInfo] = useState<GameInfo | undefined>(undefined);
-
-  const roomIndexResponseBody = useRoomData();
-
-  const { uuid } = roomIndexResponseBody;
+  const { uuid, userList, hostFlg, myselfUserId, isLoading } = useRoomData();
 
   const subscribeGameStart: Subscribe = {
-    path: `/topic/${uuid}`,
+    path: `/topic/${uuid ?? ''}`,
     callback: (message) => {
       if (message === undefined) {
         throw new InvalidResponseBodyError(
@@ -40,7 +39,7 @@ export const RoomPage: React.FC = () => {
   };
 
   const subscribeFinishRoom: Subscribe = {
-    path: `/topic/receive-finish-room/${uuid}`,
+    path: `/topic/receive-finish-room/${uuid ?? ''}`,
     callback: async () => {
       window.alert('ルームが解散されました');
       await exitRoom();
@@ -48,11 +47,28 @@ export const RoomPage: React.FC = () => {
     },
   };
 
-  useWebSocket([subscribeGameStart, subscribeFinishRoom]);
+  useWebSocket(
+    uuid !== undefined ? [subscribeGameStart, subscribeFinishRoom] : [],
+  );
+
+  if (
+    uuid === undefined ||
+    userList === undefined ||
+    hostFlg === undefined ||
+    myselfUserId === undefined ||
+    isLoading
+  ) {
+    return <Loading />;
+  }
 
   return (
     <>
-      <RoomTemplate roomIndexResponseBody={roomIndexResponseBody} />
+      <RoomTemplate
+        uuid={uuid}
+        userList={userList}
+        hostFlg={hostFlg}
+        myselfUserId={myselfUserId}
+      />
       {gameInfo !== undefined && (
         <GameStartModal
           open={open}

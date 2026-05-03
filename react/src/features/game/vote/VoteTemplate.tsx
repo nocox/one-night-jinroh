@@ -42,14 +42,12 @@ const styles = {
 };
 
 type Props = {
-  nightActLog: string | undefined;
+  nightActLog: string | null;
   players: GameParticipantWithCoRole[];
   gameRuleList: GameRule[];
   canVotePlayers: GameParticipant[];
-  votingDestination: number | undefined;
-  setVottingDestination: React.Dispatch<
-    React.SetStateAction<number | undefined>
-  >;
+  votingDestination: number | null;
+  setVottingDestination: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 export const VoteTemplate: React.FC<Props> = ({

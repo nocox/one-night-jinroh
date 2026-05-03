@@ -3,10 +3,8 @@ import { useState } from 'react';
 import { fetchPostWrapper } from '@/api';
 
 export const useVoteForm = (
-  votingDestination: number | undefined,
-  setVotingDestination: React.Dispatch<
-    React.SetStateAction<number | undefined>
-  >,
+  votingDestination: number | null,
+  setVotingDestination: React.Dispatch<React.SetStateAction<number | null>>,
 ): {
   selectedPlayerId: number | undefined;
   errorMessage: string;
@@ -18,7 +16,7 @@ export const useVoteForm = (
   ) => Promise<void> | void;
 } => {
   const [selectedPlayerId, setSelectedPlayerId] = useState<number | undefined>(
-    votingDestination,
+    votingDestination ?? undefined,
   );
   const [errorMessage, setErrorMessage] = useState<string>('');
 

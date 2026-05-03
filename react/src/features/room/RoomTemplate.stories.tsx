@@ -11,17 +11,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    roomIndexResponseBody: {
-      uuid: '1234567890',
-      userList: [
-        {
-          userId: 1,
-          name: 'ホストのふくろう',
-          hostFlg: true,
-        },
-      ],
-      hostFlg: true,
-      myselfUserId: 1,
-    },
+    uuid: '1234567890',
+    userList: [
+      {
+        userId: 1,
+        name: 'ホストのふくろう',
+        hostFlg: true,
+      },
+    ],
+    hostFlg: true,
+    myselfUserId: 1,
   },
 };

@@ -1,5 +1,6 @@
 import type React from 'react';
 import { TopTemplate } from './TopTemplate';
+import { Loading } from '@/components';
 import { useJoinedRoomStatus } from '@/features/top/hooks/useJoinedRoomStatus';
 
 export const TopPage: React.FC = () => {
@@ -8,6 +9,10 @@ export const TopPage: React.FC = () => {
     refetch: refetchJoinedRoomStatus,
     loading: loadingJoinedRoomStatus,
   } = useJoinedRoomStatus();
+
+  if (joinedRoomStatus === undefined || loadingJoinedRoomStatus) {
+    return <Loading />;
+  }
 
   return (
     <>

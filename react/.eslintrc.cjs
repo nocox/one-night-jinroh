@@ -14,6 +14,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
     'plugin:storybook/recommended',
+    'plugin:@tanstack/query/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -28,6 +29,7 @@ module.exports = {
     'jsx-a11y',
     'react',
     'react-hooks',
+    '@tanstack/query',
   ],
   rules: {
     'react-refresh/only-export-components': [

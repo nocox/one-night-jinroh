@@ -1,23 +1,33 @@
+import type React from 'react';
 import { TalkStartModal } from '@/features/game/talk/components/TalkStartModal';
 import { TalkTemplate } from './TalkTemplate';
-import { useTalkData } from './hooks/useTalkData';
 import { Loading } from '@/components';
 import { UnexpectedError } from '@/features/error';
+import { useGameIndex } from '@/features/game/hooks/useGameIndex';
+import { useParticipantsWithCoRole } from '@/features/game/hooks/useParticipantsWithCoRole';
+import { useRedirectByTerm } from '@/features/game/hooks/useRedirectByTerm';
+import { useTalkIndex } from '@/features/game/talk/hooks/useTalkIndex';
 import type { CoRole, CoBeans } from '@/features/game/type';
 import { useGameRule, useWebSocket } from '@/hooks';
 import type { Subscribe } from '@/type';
 
 export const TalkPage: React.FC = () => {
-  const {
-    gameId,
-    nightActLog,
-    hostFlag,
-    gameParticipantsWithCoRole,
-    setGameParticipantsWithCoRole,
-    getMyPlayer,
-  } = useTalkData();
+  const talkIndexResult = useTalkIndex();
+  const { gameId, cos } = talkIndexResult.data ?? {};
 
-  const { gameRuleList } = useGameRule(gameId);
+  const gameIndexResult = useGameIndex('talk', gameId);
+  const { type } = gameIndexResult.data ?? {};
+
+  useRedirectByTerm(type, 'talk');
+
+  const gameRuleResult = useGameRule(gameId);
+  const { roleList } = gameRuleResult.data ?? {};
+
+  const {
+    gameParticipantsWithCoRole,
+    getMyPlayer,
+    setGameParticipantsWithCoRole,
+  } = useParticipantsWithCoRole(gameIndexResult.data, cos);
 
   const subscribeEndTalk: Subscribe = {
     path: `/topic/end-talk/${gameId ?? ''}`,
@@ -59,18 +69,21 @@ export const TalkPage: React.FC = () => {
     gameId !== undefined ? [subscribeEndTalk, subscribeReceiveCo] : [],
   );
 
-  return gameParticipantsWithCoRole === undefined ||
-    hostFlag === undefined ||
-    gameRuleList === undefined ? (
+  return gameIndexResult.isLoading ||
+    gameIndexResult.data === undefined ||
+    talkIndexResult.isLoading ||
+    gameParticipantsWithCoRole === undefined ||
+    roleList === undefined ||
+    gameIndexResult.data.type !== 'GameIndex' ? ( // ATTENTION: GameIndexのみを受け取ることができるコンポーネントを切り出してもいいかもしれない
     <Loading />
   ) : (
     <>
       <TalkTemplate
         players={gameParticipantsWithCoRole}
-        nightActLog={nightActLog}
-        hostFlg={hostFlag}
+        nightActLog={gameIndexResult.data.nightActLog}
+        hostFlg={gameIndexResult.data.hostFlag}
         getMyPlayer={getMyPlayer}
-        gameRuleList={gameRuleList}
+        gameRuleList={roleList}
       />
       <TalkStartModal />
     </>

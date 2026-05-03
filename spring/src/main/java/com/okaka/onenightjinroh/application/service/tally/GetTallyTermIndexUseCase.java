@@ -7,7 +7,7 @@ import com.okaka.onenightjinroh.application.domain.CoStateFactory;
 import com.okaka.onenightjinroh.application.domain.GameParticipants;
 import com.okaka.onenightjinroh.application.domain.ParticipantDisplayChecker;
 import com.okaka.onenightjinroh.application.domain.RoleNightActFormatter;
-import com.okaka.onenightjinroh.application.port.TallyResultPort;
+import com.okaka.onenightjinroh.application.repository.TallyResultRepository;
 import com.okaka.onenightjinroh.application.repository.GameParticipantRepository;
 import com.okaka.onenightjinroh.application.repository.RoleNightActFormatterRepository;
 import com.okaka.onenightjinroh.application.service.talk.CoStateBean;
@@ -27,7 +27,7 @@ public class GetTallyTermIndexUseCase {
     @Autowired
     RoleNightActFormatterRepository roleNightActFormatterRepository;
     @Autowired
-    TallyResultPort tallyResultPort;
+    TallyResultRepository tallyResultRepository;
     @Autowired
     CoStateFactory coStateFactory;
 
@@ -42,7 +42,7 @@ public class GetTallyTermIndexUseCase {
 
         GameIndexBean gameIndexBean = GameIndexBean.of(participantBeans, gameParticipantId, null);
         
-        TallyResultBean tallyResultBean = TallyResultBeanFactory.create(tallyResultPort.searchTallyResults(gameId));
+        TallyResultBean tallyResultBean = TallyResultBeanFactory.create(tallyResultRepository.searchTallyResults(gameId));
 
         CoState coState = coStateFactory.create(gameId);
         CoStateBean coBean = CoStateBean.fromDomain(coState);

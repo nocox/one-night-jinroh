@@ -1,6 +1,5 @@
 package com.okaka.jinroh.persistence;
 
-import org.seasar.doma.boot.ConfigAutowireable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

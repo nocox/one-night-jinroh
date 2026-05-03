@@ -6,7 +6,7 @@
       <p>
         人狼プレイヤーが一人もいない平和村の場合は誰も吊らない(全員の得票数が1票以下になる)ことが勝利条件となります。
       </p>
-      <p>(吊人プレイヤーが勝利した場合は強制で敗北となります)</p>
+      <p>(吊り人プレイヤーが勝利した場合は強制で敗北となります)</p>
       <CharaDescription :role="roleMap.murabito" />
       <CharaDescription :role="roleMap.uranaishi" />
       <CharaDescription :role="roleMap.kaito" />
@@ -15,16 +15,16 @@
     <section>
       <h3 class="jinroh">人狼陣営</h3>
       <p>人狼プレイヤーが誰も吊られなければ人狼陣営の勝利です。</p>
-      <p>(吊人プレイヤーが勝利した場合は強制で敗北となります)</p>
+      <p>(吊り人プレイヤーが勝利した場合は強制で敗北となります)</p>
       <CharaDescription :role="roleMap.jinroh" />
       <CharaDescription :role="roleMap.kyojin" />
     </section>
 
     <section>
-      <h3 class="turibito">吊人陣営</h3>
+      <h3 class="turibito">吊り人陣営</h3>
       <p>
-        吊人プレイヤーが吊られた場合、吊られたプレイヤーの勝利となり、他の陣営はすべて敗北となります。
-        <CharaDescription :role="roleMap.tsuribito" />
+        吊り人プレイヤーが吊られた場合、吊られたプレイヤーの勝利となり、他の陣営はすべて敗北となります。
+        <CharaDescription :role="roleMap.turibito" />
       </p>
     </section>
   </section>
@@ -75,10 +75,10 @@ export default {
                         狂人が吊られても人狼陣営の敗北にはなりません。
                         プレイヤーに人狼がいない平和村の場合、勝利条件は「人間 SIDE」となります(村人と同じ扱いとなります)。</p>`,
         },
-        tsuribito: {
+        turibito: {
           name: "吊り人",
           img: this.$getRole("turibito").img,
-          description: `<p>丈夫な縄を自分の首にかけてぶら下がる不思議な遊びが大好きな吊人さん。
+          description: `<p>丈夫な縄を自分の首にかけてぶら下がる不思議な遊びが大好きな吊り人さん。
                         吊られるのが目的です。吊られると一人勝ちとなります。</p>`,
         },
       },

@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface HolidayRoleDao {
     @Select
-    List<HolidayRoleEntity> selectByGameId(Long gameId);
+    List<RoleEntity> selectByGameId(Long gameId);
 
     @Insert
     @Transactional

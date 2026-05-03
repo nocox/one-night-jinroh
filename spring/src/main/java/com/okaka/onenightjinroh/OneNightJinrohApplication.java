@@ -8,13 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication(scanBasePackages = "com.okaka")
-@RestController
 public class OneNightJinrohApplication {
 	private static final Logger logger = LoggerFactory.getLogger(OneNightJinrohApplication.class);
 
@@ -22,9 +20,6 @@ public class OneNightJinrohApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OneNightJinrohApplication.class, args);
 	}
-
-	@Autowired
-	ReservationAdapter reservationAdapter;
 
 	@Autowired
 	TEventDao tEventDao;
@@ -43,6 +38,9 @@ public class OneNightJinrohApplication {
 
 	@Autowired
 	ClsRoomStatusDao clsRoomStatusDao;
+
+	@Autowired
+	ClsGameTermDao clsGameTermDao;
 
 	// Insert data at initailizing phase using ReservationDao#insert
 	@Bean
@@ -70,6 +68,12 @@ public class OneNightJinrohApplication {
 		insertRoomStatus("InGame");
 		insertRoomStatus("Finished");
 
+		insertGameTerm("night");
+		insertGameTerm("talk");
+		insertGameTerm("vote");
+		insertGameTerm("tally");
+		insertGameTerm("result");
+
 		return null;
 	}
 
@@ -91,6 +95,12 @@ public class OneNightJinrohApplication {
 	private void insertRoomStatus(String roomStatus) {
 		if (!clsRoomStatusDao.exist(roomStatus)){
 			clsRoomStatusDao.insert(new ClsRoomStatusEntity(roomStatus));
+		}
+	}
+
+	private void insertGameTerm(String gameTerm) {
+		if (!clsGameTermDao.exist(gameTerm)){
+			clsGameTermDao.insert(new ClsGameTermEntity(gameTerm));
 		}
 	}
 }

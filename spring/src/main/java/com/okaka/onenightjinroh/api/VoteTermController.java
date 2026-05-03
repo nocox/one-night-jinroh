@@ -2,10 +2,10 @@ package com.okaka.onenightjinroh.api;
 
 import com.okaka.onenightjinroh.application.service.tally.TallyUseCase;
 import com.okaka.onenightjinroh.application.service.vote.GetVoteTermIndexUseCase;
-import com.okaka.onenightjinroh.application.service.vote.IsAllVoteUseCase;
 import com.okaka.onenightjinroh.application.service.vote.VoteForm;
 import com.okaka.onenightjinroh.application.service.vote.VoteTermIndexBean;
 import com.okaka.onenightjinroh.application.service.vote.VoteUseCase;
+import com.okaka.onenightjinroh.application.service.vote.VoteUseCase.VoteStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,9 +29,6 @@ public class VoteTermController {
     VoteUseCase voteUseCase;
 
     @Autowired
-    IsAllVoteUseCase isAllVoteUseCase;
-
-    @Autowired
     TallyUseCase tallyUseCase;
 
     @RequestMapping(path = "/vote-index")
@@ -49,11 +46,17 @@ public class VoteTermController {
     public int vote(@RequestBody VoteForm voteForm) {
         String strGameParticipationId = session.getAttribute("game_participation_id").toString();
         Long gameParticipantId = Long.valueOf(strGameParticipationId);
-        voteUseCase.vote(gameParticipantId, voteForm.getGameParticipantId());
 
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);
-        if (isAllVoteUseCase.is(gameId)) {
+
+        VoteStatus voteStatus = voteUseCase.vote(
+                gameId,
+                gameParticipantId,
+                voteForm.getGameParticipantId()
+        );
+
+        if (voteStatus instanceof VoteStatus.AllVoted) {
             tallyUseCase.tally(gameId);
             messagingTemplate.convertAndSend("/topic/done-tally/" + gameId, "");
         }

@@ -21,6 +21,19 @@ public class GameParticipant {
         this.gameParticipationId = gameParticipationId;
     }
 
+    public GameParticipant changeDisplayableRole(Role role) {
+        return new GameParticipant(
+                this.gameParticipationId,
+                this.game,
+                this.user,
+                role != null ?
+                        role :
+                        Role.byRoleId(UNKNOWN_ROLE_ID, "不明"),
+                this.hostFlg
+        );
+    }
+
+
     public GameParticipant setUnknownRole() {
         this.role = Role.byRoleId(UNKNOWN_ROLE_ID, "不明");
         return this;

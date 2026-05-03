@@ -27,7 +27,7 @@ public class ParticipantDisplayChecker {
                 return GameParticipantBean.ofChangedKaito(participant);
             }
             if (isMyself(participant)) {
-                if( roleNightActs == null ){
+                if( roleNightActs == null || ((KaitoNightActFormatter) roleNightActs).getToParticipant() == null ){
                     return GameParticipantBean.ofRoleOpen(participant);
                 }
                 return GameParticipantBean.ofChangedRole(participant, getKaitoChangedRole());

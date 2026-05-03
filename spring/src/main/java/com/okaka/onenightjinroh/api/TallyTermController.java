@@ -1,6 +1,7 @@
 package com.okaka.onenightjinroh.api;
 
 import com.okaka.onenightjinroh.application.service.tally.GetTallyTermIndexUseCase;
+import com.okaka.onenightjinroh.application.service.tally.ShowResultUseCase;
 import com.okaka.onenightjinroh.application.service.tally.TallyTermIndexBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -16,6 +17,9 @@ public class TallyTermController {
 
     @Autowired
     GetTallyTermIndexUseCase getTallyTermIndexUseCase;
+
+    @Autowired
+    ShowResultUseCase showResultUseCase;
 
     @Autowired
     SimpMessagingTemplate messagingTemplate;
@@ -34,6 +38,7 @@ public class TallyTermController {
     public int showResult() {
         String strGameId = session.getAttribute("game_id").toString();
         Long gameId = Long.valueOf(strGameId);
+        showResultUseCase.invoke(gameId);
         messagingTemplate.convertAndSend("/topic/result/" + gameId, "");
         return 0;
     }

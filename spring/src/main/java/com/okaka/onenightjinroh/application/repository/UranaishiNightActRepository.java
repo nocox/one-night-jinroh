@@ -26,10 +26,10 @@ public class UranaishiNightActRepository {
     public Optional<UranaishiNightAct> findByParticipationId(Long participationId) {
         return dao.selectByFromParticipationId(participationId)
                 .map(act -> new UranaishiNightAct(
-                act.getUranaishiNightActId(),
-                act.getFromGameParticipationId(),
-                act.getToGameParticipationId(),
-                act.isSelectedHolidayRoles())
-        );
+                        act.getUranaishiNightActId(),
+                        act.getFromGameParticipationId(),
+                        act.getToGameParticipationId(),
+                        act.isSelectedHolidayRoles())
+                );
     }
 }

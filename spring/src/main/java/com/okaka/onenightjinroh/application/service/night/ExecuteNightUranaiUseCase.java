@@ -1,6 +1,6 @@
 package com.okaka.onenightjinroh.application.service.night;
 
-import com.okaka.onenightjinroh.adapter.HolidayRolesAdapter;
+import com.okaka.onenightjinroh.domaimpl.HolidayRolesRepositoryImpl;
 import com.okaka.onenightjinroh.application.domain.HolidayRoles;
 import com.okaka.onenightjinroh.application.domain.Role;
 import com.okaka.onenightjinroh.application.domain.UranaishiNightAct;
@@ -19,7 +19,7 @@ public class ExecuteNightUranaiUseCase {
     @Autowired
     ExecuteNightUranaiQueryService queryService;
     @Autowired
-    HolidayRolesAdapter holidayRolesAdapter;
+    HolidayRolesRepositoryImpl holidayRolesRepositoryImpl;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -34,7 +34,7 @@ public class ExecuteNightUranaiUseCase {
                 uranaishiNightActRepository.save(UranaishiNightAct.bySelectedPlayer(fromParticipantId, toParticipantId));
                 return new NightUranaiResultDto(roles, status, toParticipantId, user);
             case HOLIDAY_ROLES:
-                HolidayRoles holidayRoles = holidayRolesAdapter.findByGameId(gameId);
+                HolidayRoles holidayRoles = holidayRolesRepositoryImpl.findByGameId(gameId);
                 uranaishiNightActRepository.save(UranaishiNightAct.bySelectedHolidayRoles(fromParticipantId));
                 return new NightUranaiResultDto(holidayRoles.getRoles(), status, null, null);
             case NOT_CHOOSE:
